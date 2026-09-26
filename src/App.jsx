@@ -15,6 +15,9 @@ import ryusei from './assets/横浜流星.png'
 import whiteWhale from './assets/白鯨.png'
 import psychoGoreman from './assets/サイコ・ゴアマン.png'
 import logo from './assets/ロゴ.png'
+import menu1 from './assets/menu_1.png'
+import menu2 from './assets/menu_2.png'
+import menu3 from './assets/menu_3.png'
 
 function App() {
   const [screen, setScreen] = useState('opening')
@@ -519,10 +522,16 @@ if (piece.name === '武器人間') {
   return (
   <>
     {screen === 'opening' && (
-      <div className="opening">
-        <img src={logo} alt="映画将棋" />
-      </div>
-    )}
+  <div className="opening">
+    <img src={logo} alt="映画将棋" />
+
+    <div className="menu-buttons">
+      <img src={menu1} alt="メニュー1" />
+      <img src={menu2} alt="メニュー2" />
+      <img src={menu3} alt="メニュー3" />
+    </div>
+  </div>
+)}
 
     {screen !== 'opening' && (
       <div className="game">
