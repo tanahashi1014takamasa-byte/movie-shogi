@@ -129,3 +129,8 @@ body {
 .hand-box.opponent-hand-box .opponent-hand-piece {
   transform: rotate(180deg);
 }
+
+.opening img {
+  width: 300px;
+  height: auto;
+}
