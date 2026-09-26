@@ -14,8 +14,10 @@ import yoshizawa from './assets/吉沢亮.png'
 import ryusei from './assets/横浜流星.png'
 import whiteWhale from './assets/白鯨.png'
 import psychoGoreman from './assets/サイコ・ゴアマン.png'
+import logo from './assets/ロゴ.png'
 
 function App() {
+  const [screen, setScreen] = useState('opening')
   const [selectedPiece, setSelectedPiece] = useState(null)
   const [playerHand, setPlayerHand] = useState([])
   const [opponentHand, setOpponentHand] = useState([])
@@ -515,7 +517,15 @@ if (piece.name === '武器人間') {
 ])
 
   return (
-    <div className="game">
+  <>
+    {screen === 'opening' && (
+      <div className="opening">
+        <img src={logo} alt="映画将棋" />
+      </div>
+    )}
+
+    {screen !== 'opening' && (
+      <div className="game">
 
       <div className="hand-box opponent-hand-box">
   {opponentHand.map((piece, index) => (
@@ -701,7 +711,9 @@ setSelectedPiece(null)
     />
   ))}
 </div>
-    </div>
+          </div>
+    )}
+  </>
   )
 }
 
