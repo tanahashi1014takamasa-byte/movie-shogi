@@ -109,3 +109,16 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.menu-buttons img {
+  width: 300px;
+  height: auto;
+}
