@@ -131,6 +131,10 @@ body {
 }
 
 .opening img {
-  width: 400px;
+  width: 350px;
   height: auto;
+}
+
+.opening {
+  background: #000;
 }
