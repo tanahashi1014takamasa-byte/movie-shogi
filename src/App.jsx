@@ -18,12 +18,17 @@ import logo from './assets/ロゴ.png'
 import menu1 from './assets/menu_1.png'
 import menu2 from './assets/menu_2.png'
 import menu3 from './assets/menu_3.png'
+import syogiSound from './assets/syogi_s01.mp3'
 
 function App() {
   const [screen, setScreen] = useState('opening')
   const [selectedPiece, setSelectedPiece] = useState(null)
   const [playerHand, setPlayerHand] = useState([])
   const [opponentHand, setOpponentHand] = useState([])
+  const playSyogiSound = () => {
+  const audio = new Audio(syogiSound)
+  audio.play()
+}
   const getLegalMoves = (piece, pieces) => {
   if (!piece) return []
 
@@ -581,6 +586,7 @@ legalMoves.some((move) =>
   key={index}
   onClick={() => {
   if (legalMoves.some((move) => move.row === row && move.col === col)) {
+    playSyogiSound()
   const capturedPieces = pieces.filter((p) => {
 if (selectedPiece?.name === '白鯨') {
   const secondRow =
