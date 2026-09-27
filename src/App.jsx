@@ -533,7 +533,7 @@ if (piece.name === '武器人間') {
     <img src={logo} alt="映画将棋" />
 
     <div className="menu-buttons">
-      <img src={menu1} alt="メニュー1" onClick={() => setScreen('game')} />
+      <img src={menu1} alt="メニュー1" onClick={() => setScreen('turn-select')} />
       <img src={menu2} alt="メニュー2" />
       <img src={menu3} alt="メニュー3" />
     </div>
