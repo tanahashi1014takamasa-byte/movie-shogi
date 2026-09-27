@@ -153,4 +153,5 @@ body {
   font-weight: bold;
   white-space: nowrap;
   margin: 0 auto;
+  margin-left: -20px;
 }
