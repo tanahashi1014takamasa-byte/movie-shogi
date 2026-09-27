@@ -25,9 +25,11 @@ function App() {
   const [selectedPiece, setSelectedPiece] = useState(null)
   const [playerHand, setPlayerHand] = useState([])
   const [opponentHand, setOpponentHand] = useState([])
-  const playSyogiSound = () => {
-  const audio = new Audio(syogiSound)
-  audio.play()
+  const syogiAudio = new Audio(syogiSound)
+
+const playSyogiSound = () => {
+  syogiAudio.currentTime = 0
+  syogiAudio.play()
 }
   const getLegalMoves = (piece, pieces) => {
   if (!piece) return []
