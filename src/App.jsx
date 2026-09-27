@@ -588,8 +588,8 @@ if (piece.name === '武器人間') {
   setScreen('game')
 }}>先手</button>
     <button onClick={() => {
-  setPlayerSide('opponent')
-  setTurn('player')
+  setPlayerSide('player')
+setTurn('opponent')
   setScreen('game')
 }}>後手</button>
   </div>
