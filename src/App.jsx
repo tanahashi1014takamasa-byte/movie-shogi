@@ -602,6 +602,7 @@ legalMoves.some((move) =>
   key={index}
   onClick={() => {
   if (screen !== 'game') return
+  
 
   if (legalMoves.some((move) => move.row === row && move.col === col)) {
     playSyogiSound()
@@ -718,6 +719,7 @@ setSelectedPiece(null)
   alt={piece.name}
   onClick={(e) => {
   if (screen !== 'game') return
+  if ((piece.side ?? 'player') !== playerSide) return
 
   if (
     selectedPiece &&
