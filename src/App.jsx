@@ -44,6 +44,9 @@ if (moves.length === 0) return
 const cpuMove = moves[Math.floor(Math.random() * moves.length)]
 
 const timer = setTimeout(() => {
+
+new Audio(syogiSound).play()
+
   setPieces((currentPieces) =>
     currentPieces.map((piece) =>
       piece === cpuMove.piece
