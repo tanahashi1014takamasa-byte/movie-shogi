@@ -23,6 +23,7 @@ import syogiSound from './assets/syogi_s01.mp3'
 function App() {
   const [screen, setScreen] = useState('opening')
   const [playerSide, setPlayerSide] = useState(null)
+  const [turn, setTurn] = useState('player')
   const [selectedPiece, setSelectedPiece] = useState(null)
   const [playerHand, setPlayerHand] = useState([])
   const [opponentHand, setOpponentHand] = useState([])
@@ -549,6 +550,7 @@ if (piece.name === '武器人間') {
 }}>先手</button>
     <button onClick={() => {
   setPlayerSide('opponent')
+  setTurn('opponent')
   setScreen('game')
 }}>後手</button>
   </div>
@@ -709,6 +711,7 @@ if (capturedPieces.some((captured) => captured.name === '国宝')) {
     )
 )
 setSelectedPiece(null)
+setTurn(turn === 'player' ? 'opponent' : 'player')
   }
 }}
 >
@@ -720,6 +723,7 @@ setSelectedPiece(null)
   onClick={(e) => {
   if (screen !== 'game') return
   if ((piece.side ?? 'player') !== playerSide) return
+  if ((piece.side ?? 'player') !== turn) return
 
   if (
     selectedPiece &&
