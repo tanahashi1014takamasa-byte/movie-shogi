@@ -29,8 +29,8 @@ function App() {
   if (turn !== (playerSide === 'player' ? 'opponent' : 'player')) return
 
   const cpuPieces = pieces.filter(
-    (piece) => (piece.side ?? 'player') === 'opponent'
-  )
+  (piece) => (piece.side ?? 'player') === 'player'
+)
 
   const moves = cpuPieces.flatMap((piece) =>
     getLegalMoves(piece, pieces).map((move) => ({
