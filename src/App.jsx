@@ -536,6 +536,8 @@ if (piece.name === '武器人間') {
     {screen !== 'opening' && (
       <div className="game">
 
+        <button className="home-button" onClick={() => setScreen('opening')}></button>
+
       <div className="hand-box opponent-hand-box">
   {opponentHand.map((piece, index) => (
     <img
