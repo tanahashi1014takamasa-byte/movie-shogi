@@ -163,9 +163,12 @@ body {
 }
 
 .turn-select {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   gap: 30px;
-  margin-top: 40px;
   padding: 25px;
   background: #8b5a2b;
   border: 6px solid #5c3718;
