@@ -130,6 +130,10 @@ code {
 }
 
 
+.game {
+  position: relative;
+}
+
 
 .home-button {
   position: absolute;
