@@ -28,7 +28,7 @@ function App() {
   if (screen !== 'game') return
   if (turn !== (playerSide === 'player' ? 'opponent' : 'player')) return
 
-  const cpuPieces = pieces.filter(
+ const cpuPieces = pieces.filter(
   (piece) => (piece.side ?? 'player') === 'player'
 )
 
