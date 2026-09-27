@@ -540,6 +540,13 @@ if (piece.name === '武器人間') {
   </div>
 )}
 
+{screen === 'turn-select' && (
+  <div className="turn-select">
+    <button onClick={() => setScreen('game')}>先手</button>
+    <button onClick={() => setScreen('game')}>後手</button>
+  </div>
+)}
+
     {screen !== 'opening' && (
       <div className="game">
 
