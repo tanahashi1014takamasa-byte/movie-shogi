@@ -594,6 +594,8 @@ legalMoves.some((move) =>
   }`}
   key={index}
   onClick={() => {
+  if (screen !== 'game') return
+
   if (legalMoves.some((move) => move.row === row && move.col === col)) {
     playSyogiSound()
   const capturedPieces = pieces.filter((p) => {
