@@ -26,12 +26,12 @@ function App() {
   const [turn, setTurn] = useState('player')
   useEffect(() => {
   if (screen !== 'game') return
-  if (turn !== (playerSide === 'player' ? 'opponent' : 'player')) return
+  if (turn !== 'opponent') return
+  if (playerSide !== 'player') return
 
-  const cpuSide = playerSide === 'player' ? 'opponent' : 'player'
-const cpuPieces = pieces.filter(
-  (piece) => (piece.side ?? 'player') === cpuSide
-)
+  const cpuPieces = pieces.filter(
+    (piece) => (piece.side ?? 'player') === 'opponent'
+  )
 
   const moves = cpuPieces.flatMap((piece) =>
     getLegalMoves(piece, pieces).map((move) => ({
@@ -590,7 +590,7 @@ if (piece.name === '武器人間') {
 }}>先手</button>
     <button onClick={() => {
   setPlayerSide('opponent')
-  setTurn('player')
+  setTurn('opponent')
   setScreen('game')
 }}>後手</button>
   </div>
