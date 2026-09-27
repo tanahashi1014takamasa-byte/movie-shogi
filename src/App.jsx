@@ -59,7 +59,7 @@ syogiAudio.play()
     )
   )
 
-  setTurn('player')
+  setTurn(playerSide)
 }, 1000)
 
 return () => clearTimeout(timer)
