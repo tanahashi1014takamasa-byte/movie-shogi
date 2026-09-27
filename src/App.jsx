@@ -27,7 +27,7 @@ function App() {
   useEffect(() => {
   if (screen !== 'game') return
   if (turn !== 'opponent') return
-  if (playerSide !== 'player') return
+  
 
   const cpuPieces = pieces.filter(
     (piece) => (piece.side ?? 'player') === 'opponent'
