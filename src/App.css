@@ -141,8 +141,8 @@ body {
 }
 
 .home-button {
-  position: absolute;
-  bottom: -5px;
+  position: relative;
+  bottom: auto;
   left: 20px;
   width: 80px;
   height: 45px;
