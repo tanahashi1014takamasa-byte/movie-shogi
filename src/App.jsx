@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 import cube from './assets/キューブ.png'
@@ -24,6 +24,39 @@ function App() {
   const [screen, setScreen] = useState('opening')
   const [playerSide, setPlayerSide] = useState(null)
   const [turn, setTurn] = useState('player')
+  useEffect(() => {
+  if (screen !== 'game') return
+  if (turn !== 'opponent') return
+  if (playerSide !== 'player') return
+
+  const cpuPieces = pieces.filter(
+    (piece) => (piece.side ?? 'player') === 'opponent'
+  )
+
+  const moves = cpuPieces.flatMap((piece) =>
+    getLegalMoves(piece, pieces).map((move) => ({
+      piece,
+      move,
+    }))
+  )
+if (moves.length === 0) return
+
+const cpuMove = moves[Math.floor(Math.random() * moves.length)]
+setPieces((currentPieces) =>
+  currentPieces.map((piece) =>
+    piece === cpuMove.piece
+      ? {
+          ...piece,
+          row: cpuMove.move.row,
+          col: cpuMove.move.col,
+        }
+      : piece
+  )
+)
+
+setTurn('player')
+
+}, [turn, screen, playerSide])
   const [selectedPiece, setSelectedPiece] = useState(null)
   const [playerHand, setPlayerHand] = useState([])
   const [opponentHand, setOpponentHand] = useState([])
