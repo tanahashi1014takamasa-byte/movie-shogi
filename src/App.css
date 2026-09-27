@@ -172,3 +172,10 @@ body {
   transform: translate(-50%, -50%);
   z-index: 100;
 }
+
+.turn-select button {
+  width: 140px;
+  height: 70px;
+  font-size: 28px;
+  font-weight: bold;
+}
