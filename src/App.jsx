@@ -45,7 +45,7 @@ const cpuMove = moves[Math.floor(Math.random() * moves.length)]
 
 const timer = setTimeout(() => {
 
-new Audio(syogiSound).play()
+syogiAudio.play()
 
   setPieces((currentPieces) =>
     currentPieces.map((piece) =>
