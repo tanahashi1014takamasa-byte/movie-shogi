@@ -710,6 +710,8 @@ setSelectedPiece(null)
   src={piece.image}
   alt={piece.name}
   onClick={(e) => {
+  if (screen !== 'game') return
+
   if (
     selectedPiece &&
     piece.name === '白鯨' &&
