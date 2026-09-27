@@ -42,19 +42,21 @@ function App() {
 if (moves.length === 0) return
 
 const cpuMove = moves[Math.floor(Math.random() * moves.length)]
-setPieces((currentPieces) =>
-  currentPieces.map((piece) =>
-    piece === cpuMove.piece
-      ? {
-          ...piece,
-          row: cpuMove.move.row,
-          col: cpuMove.move.col,
-        }
-      : piece
+setTimeout(() => {
+  setPieces((currentPieces) =>
+    currentPieces.map((piece) =>
+      piece === cpuMove.piece
+        ? {
+            ...piece,
+            row: cpuMove.move.row,
+            col: cpuMove.move.col,
+          }
+        : piece
+    )
   )
-)
 
-setTurn('player')
+  setTurn('player')
+}, 1000)
 
 }, [turn, screen, playerSide])
   const [selectedPiece, setSelectedPiece] = useState(null)
