@@ -129,8 +129,13 @@ code {
   margin-top: 30px;
 }
 
+.game {
+  position: relative;
+}
+
 .home-button {
   position: absolute;
   bottom: 5px;
   left: 20px;
 }
+
