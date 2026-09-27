@@ -42,7 +42,8 @@ function App() {
 if (moves.length === 0) return
 
 const cpuMove = moves[Math.floor(Math.random() * moves.length)]
-setTimeout(() => {
+
+const timer = setTimeout(() => {
   setPieces((currentPieces) =>
     currentPieces.map((piece) =>
       piece === cpuMove.piece
@@ -58,6 +59,7 @@ setTimeout(() => {
   setTurn('player')
 }, 1000)
 
+return () => clearTimeout(timer)
 }, [turn, screen, playerSide])
   const [selectedPiece, setSelectedPiece] = useState(null)
   const [playerHand, setPlayerHand] = useState([])
