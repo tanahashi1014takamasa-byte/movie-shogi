@@ -26,14 +26,12 @@ function App() {
   const [turn, setTurn] = useState('player')
   useEffect(() => {
   if (screen !== 'game') return
-  if (turn !== (playerSide === 'player' ? 'opponent' : 'player')) return
-  
+  if (turn !== 'opponent') return
+  if (playerSide !== 'player') return
 
-  const cpuSide = playerSide === 'player' ? 'opponent' : 'player'
-
-const cpuPieces = pieces.filter(
-  (piece) => (piece.side ?? 'player') === cpuSide
-)
+  const cpuPieces = pieces.filter(
+    (piece) => (piece.side ?? 'player') === 'opponent'
+  )
 
   const moves = cpuPieces.flatMap((piece) =>
     getLegalMoves(piece, pieces).map((move) => ({
@@ -61,7 +59,7 @@ syogiAudio.play()
     )
   )
 
-  setTurn(playerSide)
+  setTurn('player')
 }, 1000)
 
 return () => clearTimeout(timer)
