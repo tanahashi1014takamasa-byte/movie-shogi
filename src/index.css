@@ -138,7 +138,7 @@ code {
 }
 
 .white-whale.opponent-piece {
-  transform: rotate(180deg) translateY(20px);
+  transform: rotate(180deg) translateY(-40px);
   transform-origin: center;
 }
 
