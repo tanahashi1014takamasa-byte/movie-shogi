@@ -22,6 +22,7 @@ import syogiSound from './assets/syogi_s01.mp3'
 
 function App() {
   const [screen, setScreen] = useState('opening')
+  const [playerSide, setPlayerSide] = useState(null)
   const [selectedPiece, setSelectedPiece] = useState(null)
   const [playerHand, setPlayerHand] = useState([])
   const [opponentHand, setOpponentHand] = useState([])
@@ -542,8 +543,14 @@ if (piece.name === '武器人間') {
 
 {screen === 'turn-select' && (
   <div className="turn-select">
-    <button onClick={() => setScreen('game')}>先手</button>
-    <button onClick={() => setScreen('game')}>後手</button>
+    <button onClick={() => {
+  setPlayerSide('player')
+  setScreen('game')
+}}>先手</button>
+    <button onClick={() => {
+  setPlayerSide('opponent')
+  setScreen('game')
+}}>後手</button>
   </div>
 )}
 
