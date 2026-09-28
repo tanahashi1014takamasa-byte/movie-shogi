@@ -53,6 +53,7 @@ const captureMoves = moves.filter(({ piece, move }) =>
     (target) =>
       target.row === move.row &&
       target.col === move.col &&
+      target.name !== 'ミスト' &&
       (target.side ?? 'player') !== (piece.side ?? 'player')
   )
 )
