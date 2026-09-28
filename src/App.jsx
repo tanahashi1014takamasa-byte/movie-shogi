@@ -24,6 +24,7 @@ function App() {
   const [screen, setScreen] = useState('opening')
   const [playerSide, setPlayerSide] = useState(null)
   const [turn, setTurn] = useState('player')
+  const [mistMoveCount, setMistMoveCount] = useState(0)
   const [result, setResult] = useState(null)
   useEffect(() => {
   if (screen !== 'game') return
@@ -708,6 +709,8 @@ setTurn('opponent')
     {screen !== 'opening' && (
       <div className="game">
 
+        <div>M: 0</div>
+
         <button className="home-button" onClick={() => {
   setResult(null)
   setScreen('opening')
@@ -798,6 +801,10 @@ setTurn('opponent')
 
   if (legalMoves.some((move) => move.row === row && move.col === col)) {
     playSyogiSound()
+
+    if (selectedPiece?.name === 'ミスト' && selectedPiece?.side !== 'opponent') {
+  setMistMoveCount((count) => count + 1)
+}
   const capturedPieces = pieces.filter((p) => {
  
 if (selectedPiece?.name === '白鯨') {
