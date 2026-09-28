@@ -33,7 +33,7 @@ function App() {
  const cpuPieces = pieces.filter(
   (piece) =>
     (piece.side ?? 'player') === 'opponent' &&
-    piece.name !== 'ミスト'
+    piece.name === 'ミスト'
 )
 
   const moves = cpuPieces.flatMap((piece) =>
@@ -943,6 +943,13 @@ setTurn(turn === 'player' ? 'opponent' : 'player')
 }}
 />
 )}
+
+{piece && piece.name === 'ミスト' && piece.side === 'opponent' && (
+  <div className="piece-image opponent-piece">
+    ミスト
+  </div>
+)}
+
             </div>
           )
         })}
