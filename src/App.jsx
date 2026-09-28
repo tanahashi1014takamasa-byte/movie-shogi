@@ -720,6 +720,31 @@ legalMoves.some((move) =>
   onClick={() => {
   if (screen !== 'game') return
   
+  if (selectedPiece?.fromHand) {
+    if (piece) return
+
+    playSyogiSound()
+
+    setPieces((currentPieces) => [
+      ...currentPieces,
+      {
+        ...selectedPiece,
+        row,
+        col,
+        side: playerSide,
+        fromHand: undefined,
+        handIndex: undefined,
+      },
+    ])
+
+    setPlayerHand((hand) =>
+      hand.filter((_, index) => index !== selectedPiece.handIndex)
+    )
+
+    setSelectedPiece(null)
+    setTurn(turn === 'player' ? 'opponent' : 'player')
+    return
+  }
 
   if (legalMoves.some((move) => move.row === row && move.col === col)) {
     playSyogiSound()
@@ -875,7 +900,7 @@ setTurn(turn === 'player' ? 'opponent' : 'player')
   className="hand-piece"
   src={piece.image}
   alt={piece.name}
-  onClick={() => setSelectedPiece(piece)}
+  onClick={() => setSelectedPiece({ ...piece, fromHand: true, handIndex: index })}
 />
   ))}
 </div>
