@@ -753,7 +753,12 @@ setSelectedPiece(null)
 setTurn(turn === 'player' ? 'opponent' : 'player')
   }
 }}
+
 >
+
+  {piece?.name === 'ミスト' && piece.side === 'opponent' && (
+  <span>M</span>
+)}
               {piece && !(piece.name === 'ミスト' && piece.side === 'opponent') && (
   <img
   className={`${piece.name === '白鯨' ? 'piece-image white-whale' : 'piece-image'} ${piece.side === 'opponent' ? 'opponent-piece' : ''} ${selectedPiece?.row === piece.row && selectedPiece?.col === piece.col ? 'selected' : ''}`}
