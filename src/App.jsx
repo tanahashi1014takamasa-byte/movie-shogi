@@ -66,12 +66,21 @@ const timer = setTimeout(() => {
 syogiAudio.play()
 
 setPieces((currentPieces) => {
+
   const capturedPiece = currentPieces.find(
     (piece) =>
       piece.row === cpuMove.move.row &&
       piece.col === cpuMove.move.col &&
       (piece.side ?? 'player') !== (cpuMove.piece.side ?? 'player')
   )
+
+  if (capturedPiece?.name === '国宝') {
+    setOpponentHand((hand) => [
+      ...hand,
+      { ...capturedPiece, name: '吉沢亮', image: yoshizawa },
+      { ...capturedPiece, name: '横浜流星', image: ryusei },
+    ])
+  }
 
   return currentPieces
     .filter((piece) => piece !== capturedPiece)
