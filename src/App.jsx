@@ -696,7 +696,9 @@ setTurn('opponent')
             (piece) => piece.row === row && piece.col === col
           )
 
-          const legalMoves = getLegalMoves(selectedPiece, pieces)
+          const legalMoves = selectedPiece?.fromHand
+  ? []
+  : getLegalMoves(selectedPiece, pieces)
 
           return (
             <div
@@ -742,7 +744,7 @@ legalMoves.some((move) =>
     )
 
     setSelectedPiece(null)
-    setTurn(turn === 'player' ? 'opponent' : 'player')
+    setTurn('player')
     return
   }
 
@@ -857,7 +859,7 @@ if (capturedPieces.some((captured) => captured.name === '国宝')) {
     )
 )
 setSelectedPiece(null)
-setTurn(turn === 'player' ? 'opponent' : 'player')
+setTurn('player')
   }
 }}
 
