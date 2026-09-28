@@ -53,8 +53,17 @@ const timer = setTimeout(() => {
 
 syogiAudio.play()
 
-  setPieces((currentPieces) =>
-    currentPieces.map((piece) =>
+setPieces((currentPieces) =>
+  currentPieces
+    .filter(
+      (piece) =>
+        !(
+          piece.row === cpuMove.move.row &&
+          piece.col === cpuMove.move.col &&
+          (piece.side ?? 'player') !== (cpuMove.piece.side ?? 'player')
+        )
+    )
+    .map((piece) =>
       piece === cpuMove.piece
         ? {
             ...piece,
@@ -63,9 +72,9 @@ syogiAudio.play()
           }
         : piece
     )
-  )
+)
 
-  setTurn(playerSide)
+setTurn(playerSide)
 }, 1000)
 
 return () => clearTimeout(timer)
