@@ -944,10 +944,12 @@ setTurn(turn === 'player' ? 'opponent' : 'player')
 />
 )}
 
-{piece && piece.name === 'ミスト' && piece.side === 'opponent' && (
-  <div className="piece-image opponent-piece">
-    ミスト
-  </div>
+{piece && piece.name === 'ミスト' && piece.side === 'opponent' && mistMoveCount >= 10 && (
+  <img
+    className="piece-image opponent-piece"
+    src={piece.image}
+    alt={piece.name}
+  />
 )}
 
             </div>
