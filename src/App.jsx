@@ -47,7 +47,19 @@ function App() {
 )
 if (moves.length === 0) return
 
-const cpuMove = moves[Math.floor(Math.random() * moves.length)]
+const captureMoves = moves.filter(({ piece, move }) =>
+  pieces.some(
+    (target) =>
+      target.row === move.row &&
+      target.col === move.col &&
+      (target.side ?? 'player') !== (piece.side ?? 'player')
+  )
+)
+
+const cpuMove =
+  captureMoves.length > 0
+    ? captureMoves[Math.floor(Math.random() * captureMoves.length)]
+    : moves[Math.floor(Math.random() * moves.length)]
 
 const timer = setTimeout(() => {
 
