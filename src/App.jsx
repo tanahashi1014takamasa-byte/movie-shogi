@@ -82,6 +82,10 @@ syogiAudio.play()
 
 setPieces((currentPieces) => {
 
+  if (cpuMove.piece.name === 'ミスト') {
+  setMistMoveCount((count) => count + 1)
+}
+
   const capturedPiece = currentPieces.find(
     (piece) =>
       piece.row === cpuMove.move.row &&
