@@ -57,10 +57,22 @@ const captureMoves = moves.filter(({ piece, move }) =>
   )
 )
 
+const titanMoves = moves.filter(({ move }) =>
+  pieces.some(
+    (target) =>
+      target.row === move.row &&
+      target.col === move.col &&
+      target.name === 'タイタニック' &&
+      (target.side ?? 'player') !== 'opponent'
+  )
+)
+
 const cpuMove =
-  captureMoves.length > 0
-    ? captureMoves[Math.floor(Math.random() * captureMoves.length)]
-    : moves[Math.floor(Math.random() * moves.length)]
+  titanMoves.length > 0
+    ? titanMoves[Math.floor(Math.random() * titanMoves.length)]
+    : captureMoves.length > 0
+      ? captureMoves[Math.floor(Math.random() * captureMoves.length)]
+      : moves[Math.floor(Math.random() * moves.length)]
 
 const timer = setTimeout(() => {
 
@@ -659,7 +671,10 @@ setTurn('opponent')
     {screen !== 'opening' && (
       <div className="game">
 
-        <button className="home-button" onClick={() => setScreen('opening')}>戻る</button>
+        <button className="home-button" onClick={() => {
+  setResult(null)
+  setScreen('opening')
+}}>戻る</button>
 
       <div className="hand-box opponent-hand-box">
   {opponentHand.map((piece, index) => (
