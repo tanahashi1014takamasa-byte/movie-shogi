@@ -35,11 +35,16 @@ function App() {
 )
 
   const moves = cpuPieces.flatMap((piece) =>
-    getLegalMoves(piece, pieces).map((move) => ({
-      piece,
-      move,
-    }))
-  )
+  getLegalMoves(
+    piece,
+    pieces.filter(
+      (p) => !(p.name === 'ミスト' && (p.side ?? 'player') === 'player')
+    )
+  ).map((move) => ({
+    piece,
+    move,
+  }))
+)
 if (moves.length === 0) return
 
 const cpuMove = moves[Math.floor(Math.random() * moves.length)]
