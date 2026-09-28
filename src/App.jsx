@@ -49,17 +49,12 @@ if (moves.length === 0) return
 
 const cpuMove = moves[Math.floor(Math.random() * moves.length)]
 
-setPieces((currentPieces) => {
-  const capturedPiece = currentPieces.find(
-    (piece) =>
-      piece.row === cpuMove.move.row &&
-      piece.col === cpuMove.move.col &&
-      (piece.side ?? 'player') !== (cpuMove.piece.side ?? 'player')
-  )
+const timer = setTimeout(() => {
 
-  return currentPieces
-    .filter((piece) => piece !== capturedPiece)
-    .map((piece) =>
+syogiAudio.play()
+
+  setPieces((currentPieces) =>
+    currentPieces.map((piece) =>
       piece === cpuMove.piece
         ? {
             ...piece,
@@ -68,7 +63,10 @@ setPieces((currentPieces) => {
           }
         : piece
     )
-})
+  )
+
+  setTurn(playerSide)
+}, 1000)
 
 return () => clearTimeout(timer)
 }, [turn, screen, playerSide])
