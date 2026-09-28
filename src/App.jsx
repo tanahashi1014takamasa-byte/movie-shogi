@@ -730,10 +730,7 @@ if (selectedPiece?.name === '白鯨') {
     )
   }
 
-  if (capturedPieces.some((captured) => captured.name === 'タイタニック')) {
-  setResult('勝利')
-}
-
+  
   return (
     p !== selectedPiece &&
     (
@@ -760,6 +757,10 @@ if (selectedPiece?.name === '白鯨') {
     (p.side ?? 'player') !== (selectedPiece.side ?? 'player')
   )
 })
+
+if (capturedPieces.some((captured) => captured.name === 'タイタニック')) {
+  setResult('勝利')
+}
   
 if (selectedPiece?.name === 'ゾディアック') {
   const newHand = capturedPieces.flatMap((captured) =>
