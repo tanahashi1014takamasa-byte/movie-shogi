@@ -711,17 +711,19 @@ setTurn('opponent')
           return (
             <div
   className={`square ${
-    !selectedPiece?.fromHand &&
-    legalMoves.some((move) =>
+ legalMoves.some((move) =>
   move.row === row &&
   move.col === col
 ) ||
-legalMoves.some((move) =>
-  selectedPiece?.name === '白鯨' &&
-  move.col === col &&
-  (
-    move.row === row ||
-    move.row + (selectedPiece.side === 'opponent' ? 1 : -1) === row
+(
+  !selectedPiece?.fromHand &&
+  legalMoves.some((move) =>
+    selectedPiece?.name === '白鯨' &&
+    move.col === col &&
+    (
+      move.row === row ||
+      move.row + (selectedPiece.side === 'opponent' ? 1 : -1) === row
+    )
   )
 )
       ? 'legal-move'
