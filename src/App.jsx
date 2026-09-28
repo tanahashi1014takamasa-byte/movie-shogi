@@ -32,8 +32,7 @@ function App() {
 
  const cpuPieces = pieces.filter(
   (piece) =>
-    (piece.side ?? 'player') === 'opponent' &&
-    piece.name === 'ミスト'
+    (piece.side ?? 'player') === 'opponent'
 )
 
   const moves = cpuPieces.flatMap((piece) =>
