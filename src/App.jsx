@@ -709,9 +709,7 @@ legalMoves.some((move) =>
   if (legalMoves.some((move) => move.row === row && move.col === col)) {
     playSyogiSound()
   const capturedPieces = pieces.filter((p) => {
-    if (capturedPieces.some((captured) => captured.name === 'タイタニック')) {
-  setResult('勝利')
-}
+ 
 if (selectedPiece?.name === '白鯨') {
   const secondRow =
     row + (selectedPiece.side === 'opponent' ? 1 : -1)
@@ -731,6 +729,10 @@ if (selectedPiece?.name === '白鯨') {
       )
     )
   }
+
+  if (capturedPieces.some((captured) => captured.name === 'タイタニック')) {
+  setResult('勝利')
+}
 
   return (
     p !== selectedPiece &&
