@@ -65,26 +65,30 @@ const timer = setTimeout(() => {
 
 syogiAudio.play()
 
-setPieces((currentPieces) =>
-  currentPieces
-    .filter(
-      (piece) =>
-        !(
-          piece.row === cpuMove.move.row &&
-          piece.col === cpuMove.move.col &&
-          (piece.side ?? 'player') !== (cpuMove.piece.side ?? 'player')
-        )
-    )
+setPieces((currentPieces) => {
+  const capturedPiece = currentPieces.find(
+    (piece) =>
+      piece.row === cpuMove.move.row &&
+      piece.col === cpuMove.move.col &&
+      (piece.side ?? 'player') !== (cpuMove.piece.side ?? 'player')
+  )
+
+  return currentPieces
+    .filter((piece) => piece !== capturedPiece)
     .map((piece) =>
       piece === cpuMove.piece
         ? {
             ...piece,
             row: cpuMove.move.row,
             col: cpuMove.move.col,
+            absorbedMoves:
+              piece.name === '武器人間' && capturedPiece
+                ? [capturedPiece.name]
+                : piece.absorbedMoves,
           }
         : piece
     )
-)
+})
 
 setTurn(playerSide)
 }, 1000)
