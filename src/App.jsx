@@ -871,11 +871,12 @@ setTurn(turn === 'player' ? 'opponent' : 'player')
             <div className="hand-box">
   {playerHand.map((piece, index) => (
     <img
-      key={index}
-      className="hand-piece"
-      src={piece.image}
-      alt={piece.name}
-    />
+  key={index}
+  className="hand-piece"
+  src={piece.image}
+  alt={piece.name}
+  onClick={() => setSelectedPiece(piece)}
+/>
   ))}
 </div>
           </div>
