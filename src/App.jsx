@@ -75,12 +75,20 @@ setPieces((currentPieces) => {
   )
 
   if (capturedPiece?.name === '国宝') {
-    setOpponentHand((hand) => [
-      ...hand,
-      { ...capturedPiece, name: '吉沢亮', image: yoshizawa },
-      { ...capturedPiece, name: '横浜流星', image: ryusei },
-    ])
-  }
+  setOpponentHand((hand) => [
+    ...hand,
+    { ...capturedPiece, name: '吉沢亮', image: yoshizawa },
+    { ...capturedPiece, name: '横浜流星', image: ryusei },
+  ])
+} else if (
+  cpuMove.piece.name === 'ゾディアック' &&
+  capturedPiece
+) {
+  setOpponentHand((hand) => [
+    ...hand,
+    capturedPiece,
+  ])
+}
 
   return currentPieces
     .filter((piece) => piece !== capturedPiece)
