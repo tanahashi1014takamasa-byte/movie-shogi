@@ -703,6 +703,7 @@ setTurn('opponent')
           return (
             <div
   className={`square ${
+    !selectedPiece?.fromHand &&
     legalMoves.some((move) =>
   move.row === row &&
   move.col === col
