@@ -224,6 +224,42 @@ const playSyogiSound = () => {
     return moves
   }
 
+    if (piece.name === '吉沢亮' || piece.name === '横浜流星') {
+    const directions =
+      piece.name === '吉沢亮'
+        ? [[-1, 0], [1, 0], [0, -1], [0, 1]]
+        : [[-1, -1], [-1, 1], [1, -1], [1, 1]]
+
+    const moves = []
+
+    for (const [dr, dc] of directions) {
+      let row = piece.row + dr
+      let col = piece.col + dc
+
+      while (row >= 0 && row < 9 && col >= 0 && col < 9) {
+        const target = pieces.find(
+          (p) => p.row === row && p.col === col
+        )
+
+        if (target) {
+          if (
+            (target.side ?? 'player') !==
+            (piece.side ?? 'player')
+          ) {
+            moves.push({ row, col })
+          }
+          break
+        }
+
+        moves.push({ row, col })
+        row += dr
+        col += dc
+      }
+    }
+
+    return moves
+  }
+
     if (piece.name === 'サスペリア') {
     const directions = [
       [-2, -2], [-2, -1], [-2, 0], [-2, 1], [-2, 2],
