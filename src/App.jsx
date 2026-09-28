@@ -697,7 +697,15 @@ setTurn('opponent')
           )
 
           const legalMoves = selectedPiece?.fromHand
-  ? []
+  ? Array.from({ length: 81 }, (_, index) => ({
+      row: Math.floor(index / 9),
+      col: index % 9,
+    })).filter(
+      (move) =>
+        !pieces.some(
+          (p) => p.row === move.row && p.col === move.col
+        )
+    )
   : getLegalMoves(selectedPiece, pieces)
 
           return (
