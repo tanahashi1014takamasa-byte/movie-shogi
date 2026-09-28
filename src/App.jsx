@@ -791,7 +791,7 @@ setTurn('opponent')
     )
 
     setSelectedPiece(null)
-    setTurn('player')
+    setTurn(turn === 'player' ? 'opponent' : 'player')
     return
   }
 
@@ -906,7 +906,7 @@ if (capturedPieces.some((captured) => captured.name === '国宝')) {
     )
 )
 setSelectedPiece(null)
-setTurn('player')
+setTurn(turn === 'player' ? 'opponent' : 'player')
   }
 }}
 
