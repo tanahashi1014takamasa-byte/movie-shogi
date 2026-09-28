@@ -24,6 +24,7 @@ function App() {
   const [screen, setScreen] = useState('opening')
   const [playerSide, setPlayerSide] = useState(null)
   const [turn, setTurn] = useState('player')
+  const [result, setResult] = useState(null)
   useEffect(() => {
   if (screen !== 'game') return
   if (turn !== (playerSide === 'player' ? 'opponent' : 'player')) return
@@ -73,6 +74,10 @@ setPieces((currentPieces) => {
       piece.col === cpuMove.move.col &&
       (piece.side ?? 'player') !== (cpuMove.piece.side ?? 'player')
   )
+
+  if (capturedPiece?.name === 'タイタニック') {
+  setResult('敗北')
+}
 
   if (capturedPiece?.name === '国宝') {
   setOpponentHand((hand) => [
@@ -618,6 +623,13 @@ if (piece.name === '武器人間') {
 
   return (
   <>
+
+{result && (
+  <div className="result-message">
+    {result}
+  </div>
+)}
+
     {screen === 'opening' && (
   <div className="opening">
     <img src={logo} alt="映画将棋" />
@@ -697,6 +709,9 @@ legalMoves.some((move) =>
   if (legalMoves.some((move) => move.row === row && move.col === col)) {
     playSyogiSound()
   const capturedPieces = pieces.filter((p) => {
+    if (capturedPieces.some((captured) => captured.name === 'タイタニック')) {
+  setResult('勝利')
+}
 if (selectedPiece?.name === '白鯨') {
   const secondRow =
     row + (selectedPiece.side === 'opponent' ? 1 : -1)

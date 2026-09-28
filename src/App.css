@@ -179,3 +179,17 @@ body {
   font-size: 28px;
   font-weight: bold;
 }
+
+.result-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: 80px;
+  font-weight: bold;
+  color: #111;
+  text-align: center;
+  pointer-events: none;
+}
