@@ -159,6 +159,10 @@ useEffect(() => {
 
         setPieces(gameState.pieces)
         setTurn(gameState.turn)
+
+        if (gameState.playerCount === 2) {
+  setOnlineScreen(false)
+}
       }
     )
     .subscribe()
@@ -716,10 +720,11 @@ const createRoom = async () => {
     .insert({
       room_id: newRoomId,
       game_state: {
-        pieces,
-        turn: 'player',
-        playerSide: 'player',
-      },
+  pieces,
+  turn: 'player',
+  playerSide: 'player',
+  playerCount: 1,
+},
     })
 
   if (error) {
@@ -749,7 +754,15 @@ const joinRoom = async () => {
   return
 }
 
-
+await supabase
+  .from('game')
+  .update({
+    game_state: {
+      ...data[0].game_state,
+      playerCount: 2,
+    },
+  })
+  .eq('room_id', roomId)
 
   setPieces(data[0].game_state.pieces)
   setTurn(data[0].game_state.turn)
