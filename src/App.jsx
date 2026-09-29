@@ -764,6 +764,8 @@ await supabase
   })
   .eq('room_id', roomId)
 
+  setOnlineScreen(false)
+
   setPieces(data[0].game_state.pieces)
   setTurn(data[0].game_state.turn)
   setPlayerSide('opponent')
