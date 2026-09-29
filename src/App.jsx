@@ -680,7 +680,7 @@ if (piece.name === '武器人間') {
 ])
 
 const createRoom = async () => {
-  const newRoomId = crypto.randomUUID()
+  const newRoomId = Math.floor(100000 + Math.random() * 900000).toString()
 
   const { error } = await supabase
     .from('game')
