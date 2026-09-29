@@ -788,7 +788,7 @@ const joinRoom = async () => {
   </div>
 )}
 
-    {screen !== 'opening' && (
+    {screen === 'game' && (
       <div className="game">
         {roomId && <div>ルームID: {roomId}</div>}
 
