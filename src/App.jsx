@@ -178,7 +178,7 @@ useEffect(() => {
   return () => {
     supabase.removeChannel(channel)
   }
-}, [roomId, screen])
+}, [roomId, screen, playerSide])
 
   const [selectedPiece, setSelectedPiece] = useState(null)
   const [playerHand, setPlayerHand] = useState([])
