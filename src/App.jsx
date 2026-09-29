@@ -30,6 +30,7 @@ function App() {
   const [mistMoveCount, setMistMoveCount] = useState(0)
   const [result, setResult] = useState(null)
   const [roomId, setRoomId] = useState(null)
+  const [onlineScreen, setOnlineScreen] = useState(false)
   useEffect(() => {
   if (screen !== 'game') return
   if (turn !== (playerSide === 'player' ? 'opponent' : 'player')) return
@@ -702,7 +703,28 @@ const createRoom = async () => {
   setScreen('game')
 }
 
+const joinRoom = async () => {
+  if (!roomId) {
+    alert('ルームIDを入力してください')
+    return
+  }
 
+  const { data, error } = await supabase
+    .from('game')
+    .select('game_state')
+    .eq('room_id', roomId)
+    .single()
+
+  if (error || !data) {
+    alert('ルームが見つかりません')
+    return
+  }
+
+  setPieces(data.game_state.pieces)
+  setTurn(data.game_state.turn)
+  setPlayerSide('opponent')
+  setScreen('game')
+}
 
   return (
   <>
@@ -719,11 +741,35 @@ const createRoom = async () => {
 
     <div className="menu-buttons">
       <img src={menu1} alt="メニュー1" onClick={() => setScreen('turn-select')} />
-      <img src={menu2} alt="メニュー2" />
+      <img
+        src={menu2}
+        alt="メニュー2"
+        onClick={() => {
+  setOnlineScreen(true)
+  setScreen('online')
+}}
+/>
       <img src={menu3} alt="メニュー3" />
     </div>
   </div>
 )}
+
+{onlineScreen && (
+  <div className="turn-select">
+    <button onClick={createRoom}>ルームを作る</button>
+
+    <input
+      type="text"
+      placeholder="ルームID"
+      value={roomId ?? ''}
+      onChange={(e) => setRoomId(e.target.value)}
+    />
+
+    <button onClick={joinRoom}>ルームに入る</button>
+  </div>
+)}
+
+
 
 {screen === 'turn-select' && (
   <div className="turn-select">
