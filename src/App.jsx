@@ -1014,11 +1014,7 @@ if (selectedPiece?.name === 'ゾディアック') {
       : [captured]
   )
 
-  if (selectedPiece.side === 'opponent') {
-    setOpponentHand((hand) => [...hand, ...newHand])
-  } else {
-    setPlayerHand((hand) => [...hand, ...newHand])
-  }
+  setPlayerHand((hand) => [...hand, ...newHand])
 }
 
 if (capturedPieces.some((captured) => captured.name === '国宝')) {
@@ -1030,11 +1026,7 @@ if (capturedPieces.some((captured) => captured.name === '国宝')) {
     { ...kokuhou, name: '横浜流星', image: ryusei },
   ]
 
-  if (selectedPiece.side === 'opponent') {
-    setOpponentHand(addKokuhoPieces)
-  } else {
-    setPlayerHand(addKokuhoPieces)
-  }
+  setPlayerHand(addKokuhoPieces)
 }
 
 const nextPieces = pieces
