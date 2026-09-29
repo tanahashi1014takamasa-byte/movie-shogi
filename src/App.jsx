@@ -710,10 +710,10 @@ const joinRoom = async () => {
   }
 
   const { data, error } = await supabase
-    .from('game')
-    .select('game_state')
-    .eq('room_id', roomId)
-    .single()
+  .from('game')
+  .select('game_state')
+  .eq('room_id', roomId)
+  .limit(1)
 
   if (error || !data) {
     alert('ルームが見つかりません')
