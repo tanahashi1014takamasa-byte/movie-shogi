@@ -790,8 +790,8 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand) => {
   pieces: nextPieces,
   turn: nextTurn,
   playerSide,
-  playerHand: playerSide === 'player' ? nextPlayerHand : opponentHand,
-  opponentHand: playerSide === 'opponent' ? nextPlayerHand : playerHand,
+  playerHand: playerSide === 'player' ? nextPlayerHand : playerHand,
+opponentHand: playerSide === 'opponent' ? nextPlayerHand : opponentHand,
 },
     })
     .eq('room_id', roomId)
