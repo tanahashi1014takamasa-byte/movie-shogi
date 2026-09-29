@@ -702,28 +702,7 @@ const createRoom = async () => {
   setScreen('game')
 }
 
-const joinRoom = async () => {
-  if (!roomId) {
-    alert('ルームIDを入力してください')
-    return
-  }
 
-  const { data, error } = await supabase
-    .from('game')
-    .select('game_state')
-    .eq('room_id', roomId)
-    .single()
-
-  if (error || !data) {
-    alert('ルームが見つかりません')
-    return
-  }
-
-  setPieces(data.game_state.pieces)
-  setTurn(data.game_state.turn)
-  setPlayerSide('opponent')
-  setScreen('game')
-}
 
   return (
   <>
