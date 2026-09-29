@@ -943,14 +943,15 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand) => {
   },
 ]
 
+const nextPlayerHand = playerHand.filter(
+  (_, index) => index !== selectedPiece.handIndex
+)
+
 setPieces(nextPieces)
+setPlayerHand(nextPlayerHand)
 
 const nextTurn = turn === 'player' ? 'opponent' : 'player'
-updateGameState(nextPieces, nextTurn)
-
-    setPlayerHand((hand) =>
-      hand.filter((_, index) => index !== selectedPiece.handIndex)
-    )
+updateGameState(nextPieces, nextTurn, nextPlayerHand)
 
     setSelectedPiece(null)
     setTurn(turn === 'player' ? 'opponent' : 'player')
