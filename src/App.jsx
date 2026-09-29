@@ -1017,6 +1017,8 @@ if (capturedPieces.some((captured) => captured.name === 'タイタニック')) {
   setResult('勝利')
 }
   
+let nextPlayerHand = playerHand
+
 if (selectedPiece?.name === 'ゾディアック') {
   const newHand = capturedPieces.flatMap((captured) =>
     captured.name === '国宝'
@@ -1024,27 +1026,20 @@ if (selectedPiece?.name === 'ゾディアック') {
       : [captured]
   )
 
-  setPlayerHand((hand) => {
-  const nextHand = [...hand, ...newHand]
-  updateGameState(pieces, turn, nextHand)
-  return nextHand
-})
+  nextPlayerHand = [...playerHand, ...newHand]
+  setPlayerHand(nextPlayerHand)
 }
 
 if (capturedPieces.some((captured) => captured.name === '国宝')) {
   const kokuhou = capturedPieces.find((captured) => captured.name === '国宝')
 
-  const addKokuhoPieces = (hand) => [
-    ...hand,
+  nextPlayerHand = [
+    ...nextPlayerHand,
     { ...kokuhou, name: '吉沢亮', image: yoshizawa },
     { ...kokuhou, name: '横浜流星', image: ryusei },
   ]
 
-  setPlayerHand((hand) => {
-  const nextHand = addKokuhoPieces(hand)
-  updateGameState(pieces, turn, nextHand)
-  return nextHand
-})
+  setPlayerHand(nextPlayerHand)
 }
 
 const nextPieces = pieces
@@ -1073,7 +1068,7 @@ const nextPieces = pieces
 setPieces(nextPieces)
 
 const nextTurn = turn === 'player' ? 'opponent' : 'player'
-updateGameState(nextPieces, nextTurn)
+updateGameState(nextPieces, nextTurn, nextPlayerHand)
 
 setSelectedPiece(null)
 setTurn(turn === 'player' ? 'opponent' : 'player')
