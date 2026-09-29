@@ -777,9 +777,11 @@ await supabase
   setOnlineScreen(false)
 
   setPieces(data[0].game_state.pieces)
-  setTurn(data[0].game_state.turn)
-  setPlayerSide('opponent')
-  setScreen('game')
+setTurn(data[0].game_state.turn)
+setPlayerHand(data[0].game_state.opponentHand ?? [])
+setOpponentHand(data[0].game_state.playerHand ?? [])
+setPlayerSide('opponent')
+setScreen('game')
 }
 
 const updateGameState = async (nextPieces, nextTurn, nextPlayerHand) => {
