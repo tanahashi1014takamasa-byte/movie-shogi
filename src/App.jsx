@@ -40,6 +40,33 @@ function App() {
     (piece.side ?? 'player') === 'opponent'
 )
 
+useEffect(() => {
+  if (!roomId || screen !== 'game') return
+
+  const channel = supabase
+    .channel(`game-${roomId}`)
+    .on(
+      'postgres_changes',
+      {
+        event: 'UPDATE',
+        schema: 'public',
+        table: 'game',
+        filter: `room_id=eq.${roomId}`,
+      },
+      (payload) => {
+        const gameState = payload.new.game_state
+
+        setPieces(gameState.pieces)
+        setTurn(gameState.turn)
+      }
+    )
+    .subscribe()
+
+  return () => {
+    supabase.removeChannel(channel)
+  }
+}, [roomId, screen])
+
   const moves = cpuPieces.flatMap((piece) =>
   getLegalMoves(
     piece,
@@ -720,10 +747,27 @@ const joinRoom = async () => {
   return
 }
 
+
+
   setPieces(data[0].game_state.pieces)
   setTurn(data[0].game_state.turn)
   setPlayerSide('opponent')
   setScreen('game')
+}
+
+const updateGameState = async (nextPieces, nextTurn) => {
+  if (!roomId) return
+
+  await supabase
+    .from('game')
+    .update({
+      game_state: {
+        pieces: nextPieces,
+        turn: nextTurn,
+        playerSide,
+      },
+    })
+    .eq('room_id', roomId)
 }
 
   return (
@@ -861,17 +905,22 @@ const joinRoom = async () => {
 
     playSyogiSound()
 
-    setPieces((currentPieces) => [
-      ...currentPieces,
-      {
-        ...selectedPiece,
-        row,
-        col,
-        side: playerSide,
-        fromHand: undefined,
-        handIndex: undefined,
-      },
-    ])
+    const nextPieces = [
+  ...pieces,
+  {
+    ...selectedPiece,
+    row,
+    col,
+    side: playerSide,
+    fromHand: undefined,
+    handIndex: undefined,
+  },
+]
+
+setPieces(nextPieces)
+
+const nextTurn = turn === 'player' ? 'opponent' : 'player'
+updateGameState(nextPieces, nextTurn)
 
     setPlayerHand((hand) =>
       hand.filter((_, index) => index !== selectedPiece.handIndex)
@@ -972,30 +1021,34 @@ if (capturedPieces.some((captured) => captured.name === '国宝')) {
   }
 }
 
-  setPieces(
-  pieces
-    .filter((p) => !capturedPieces.includes(p))
-    .map((p) =>
-      p.row === selectedPiece.row && p.col === selectedPiece.col
-        ? {
-    ...p,
-    row,
-    col,
-        direction: selectedPiece.direction,
-    absorbedMoves:
-  p.name === '武器人間' && capturedPieces.length > 0
-    ? [capturedPieces[0].name]
-    : p.absorbedMoves,
-    ...(p.name === 'ミミ' && (
-      (p.side === 'player' && row <= 2) ||
-      (p.side === 'opponent' && row >= 6)
-    )
-      ? { name: 'サイコ・ゴアマン', image: psychoGoreman }
-      : {})
-  }
-        : p
-    )
-)
+const nextPieces = pieces
+  .filter((p) => !capturedPieces.includes(p))
+  .map((p) =>
+    p.row === selectedPiece.row && p.col === selectedPiece.col
+      ? {
+          ...p,
+          row,
+          col,
+          direction: selectedPiece.direction,
+          absorbedMoves:
+            p.name === '武器人間' && capturedPieces.length > 0
+              ? [capturedPieces[0].name]
+              : p.absorbedMoves,
+          ...(p.name === 'ミミ' && (
+            (p.side === 'player' && row <= 2) ||
+            (p.side === 'opponent' && row >= 6)
+          )
+            ? { name: 'サイコ・ゴアマン', image: psychoGoreman }
+            : {})
+        }
+      : p
+  )
+
+setPieces(nextPieces)
+
+const nextTurn = turn === 'player' ? 'opponent' : 'player'
+updateGameState(nextPieces, nextTurn)
+
 setSelectedPiece(null)
 setTurn(turn === 'player' ? 'opponent' : 'player')
   }
