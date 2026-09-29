@@ -720,8 +720,8 @@ const joinRoom = async () => {
   return
 }
 
-  setPieces(data.game_state.pieces)
-  setTurn(data.game_state.turn)
+  setPieces(data[0].game_state.pieces)
+  setTurn(data[0].game_state.turn)
   setPlayerSide('opponent')
   setScreen('game')
 }
