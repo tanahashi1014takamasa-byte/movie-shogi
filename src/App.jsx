@@ -803,14 +803,12 @@ const updateGameState = async (nextPieces, nextTurn) => {
 {onlineScreen && (
   <div className="turn-select">
     <button onClick={createRoom}>ルームを作る</button>
-
     <input
-      type="text"
+      type="number"
       placeholder="ルームID"
       value={roomId ?? ''}
       onChange={(e) => setRoomId(e.target.value)}
     />
-
     <button onClick={joinRoom}>ルームに入る</button>
   </div>
 )}
@@ -825,12 +823,7 @@ const updateGameState = async (nextPieces, nextTurn) => {
   setRoomId(null)
   setScreen('game')
 }}>先手</button>
-    <input
-  type="text"
-  placeholder="ルームID"
-  value={roomId ?? ''}
-  onChange={(e) => setRoomId(e.target.value)}
-/>
+  
     <button onClick={() => {
   setPlayerSide('player')
   setTurn('opponent')
