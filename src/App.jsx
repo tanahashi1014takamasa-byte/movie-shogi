@@ -716,9 +716,9 @@ const joinRoom = async () => {
   .limit(1)
 
   if (error || !data) {
-    alert('ルームが見つかりません')
-    return
-  }
+  alert(error?.message || 'ルームが見つかりません')
+  return
+}
 
   setPieces(data.game_state.pieces)
   setTurn(data.game_state.turn)
