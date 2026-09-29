@@ -819,7 +819,12 @@ const updateGameState = async (nextPieces, nextTurn) => {
 
 {screen === 'turn-select' && (
   <div className="turn-select">
-    <button onClick={createRoom}>先手</button>
+    <button onClick={() => {
+  setPlayerSide('player')
+  setTurn('player')
+  setRoomId(null)
+  setScreen('game')
+}}>先手</button>
     <input
   type="text"
   placeholder="ルームID"
