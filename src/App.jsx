@@ -32,7 +32,7 @@ function App() {
   const [roomId, setRoomId] = useState(null)
   const [onlineScreen, setOnlineScreen] = useState(false)
   useEffect(() => {
-  if (screen !== 'game') return
+  if (screen !== 'game' || roomId) return
   if (turn !== (playerSide === 'player' ? 'opponent' : 'player')) return
 
  const cpuPieces = pieces.filter(
