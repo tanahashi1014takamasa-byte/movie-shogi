@@ -159,6 +159,7 @@ useEffect(() => {
 
         setPieces(gameState.pieces)
         setTurn(gameState.turn)
+        setMistMoveCount(gameState.mistMoveCount ?? 0)
         
         if (playerSide === 'player') {
   setPlayerHand(gameState.playerHand ?? [])
@@ -734,6 +735,7 @@ const createRoom = async () => {
   playerCount: 1,
   playerHand: [],
 opponentHand: [],
+mistMoveCount: 0,
 },
     })
 
@@ -784,7 +786,7 @@ setPlayerSide('opponent')
 setScreen('game')
 }
 
-const updateGameState = async (nextPieces, nextTurn, nextPlayerHand) => {
+const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMoveCount) => {
   if (!roomId) return
 
   const { data } = await supabase
@@ -803,6 +805,7 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand) => {
       game_state: {
         pieces: nextPieces,
         turn: nextTurn,
+        mistMoveCount: nextMistMoveCount,
         playerSide,
         playerHand:
           playerSide === 'player'
@@ -971,7 +974,7 @@ setPieces(nextPieces)
 setPlayerHand(nextPlayerHand)
 
 const nextTurn = turn === 'player' ? 'opponent' : 'player'
-updateGameState(nextPieces, nextTurn, nextPlayerHand)
+updateGameState(nextPieces, nextTurn, nextPlayerHand, mistMoveCount + (selectedPiece?.name === 'ミスト' && selectedPiece?.side !== 'opponent' ? 1 : 0))
 
     setSelectedPiece(null)
     setTurn(turn === 'player' ? 'opponent' : 'player')
@@ -1089,7 +1092,7 @@ const nextPieces = pieces
 setPieces(nextPieces)
 
 const nextTurn = turn === 'player' ? 'opponent' : 'player'
-updateGameState(nextPieces, nextTurn, nextPlayerHand ?? playerHand)
+updateGameState(nextPieces, nextTurn, nextPlayerHand ?? playerHand, mistMoveCount + (selectedPiece?.name === 'ミスト' && selectedPiece?.side !== 'opponent' ? 1 : 0))
 
 setSelectedPiece(null)
 setTurn(turn === 'player' ? 'opponent' : 'player')
@@ -1099,7 +1102,7 @@ setTurn(turn === 'player' ? 'opponent' : 'player')
 >
 
   
-              {piece && !(piece.name === 'ミスト' && piece.side === 'opponent') && (
+              {piece && !(piece.name === 'ミスト' && piece.side !== playerSide) && (
   <img
   className={`${piece.name === '白鯨' ? 'piece-image white-whale' : 'piece-image'} ${piece.side === 'opponent' ? 'opponent-piece' : ''} ${!selectedPiece?.fromHand && selectedPiece?.row === piece.row && selectedPiece?.col === piece.col ? 'selected' : ''}`}
   src={piece.image}
@@ -1122,7 +1125,7 @@ setTurn(turn === 'player' ? 'opponent' : 'player')
 />
 )}
 
-{piece && piece.name === 'ミスト' && piece.side === 'opponent' && mistMoveCount >= 10 && (
+{piece && piece.name === 'ミスト' && piece.side !== playerSide && mistMoveCount >= 10 && (
   <img
     className="piece-image opponent-piece"
     src={piece.image}
