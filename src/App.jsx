@@ -734,7 +734,11 @@ const createRoom = async () => {
   value={roomId ?? ''}
   onChange={(e) => setRoomId(e.target.value)}
 />
-    <button onClick={joinRoom}>後手</button>
+    <button onClick={() => {
+  setPlayerSide('player')
+  setTurn('opponent')
+  setScreen('game')
+}}>後手</button>
   </div>
 )}
 
