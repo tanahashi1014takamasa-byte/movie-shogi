@@ -732,6 +732,8 @@ const createRoom = async () => {
   turn: 'player',
   playerSide: 'player',
   playerCount: 1,
+  playerHand: [],
+opponentHand: [],
 },
     })
 
