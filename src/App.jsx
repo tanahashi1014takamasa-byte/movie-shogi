@@ -159,7 +159,14 @@ useEffect(() => {
 
         setPieces(gameState.pieces)
         setTurn(gameState.turn)
-        setPlayerHand(gameState.playerHand ?? [])
+        
+        if (playerSide === 'player') {
+  setPlayerHand(gameState.playerHand ?? [])
+  setOpponentHand(gameState.opponentHand ?? [])
+} else {
+  setPlayerHand(gameState.opponentHand ?? [])
+  setOpponentHand(gameState.playerHand ?? [])
+}
 
         if (gameState.playerCount === 2) {
   setOnlineScreen(false)
@@ -779,11 +786,12 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand) => {
   await supabase
     .from('game')
     .update({
-      game_state: {
+  game_state: {
   pieces: nextPieces,
   turn: nextTurn,
   playerSide,
-  playerHand: nextPlayerHand,
+  playerHand: playerSide === 'player' ? nextPlayerHand : opponentHand,
+  opponentHand: playerSide === 'opponent' ? nextPlayerHand : playerHand,
 },
     })
     .eq('room_id', roomId)
