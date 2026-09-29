@@ -159,6 +159,7 @@ useEffect(() => {
 
         setPieces(gameState.pieces)
         setTurn(gameState.turn)
+        setPlayerHand(gameState.playerHand ?? [])
 
         if (gameState.playerCount === 2) {
   setOnlineScreen(false)
@@ -772,17 +773,18 @@ await supabase
   setScreen('game')
 }
 
-const updateGameState = async (nextPieces, nextTurn) => {
+const updateGameState = async (nextPieces, nextTurn, nextPlayerHand) => {
   if (!roomId) return
 
   await supabase
     .from('game')
     .update({
       game_state: {
-        pieces: nextPieces,
-        turn: nextTurn,
-        playerSide,
-      },
+  pieces: nextPieces,
+  turn: nextTurn,
+  playerSide,
+  playerHand: nextPlayerHand,
+},
     })
     .eq('room_id', roomId)
 }
@@ -1014,7 +1016,11 @@ if (selectedPiece?.name === 'ゾディアック') {
       : [captured]
   )
 
-  setPlayerHand((hand) => [...hand, ...newHand])
+  setPlayerHand((hand) => {
+  const nextHand = [...hand, ...newHand]
+  updateGameState(pieces, turn, nextHand)
+  return nextHand
+})
 }
 
 if (capturedPieces.some((captured) => captured.name === '国宝')) {
@@ -1026,7 +1032,11 @@ if (capturedPieces.some((captured) => captured.name === '国宝')) {
     { ...kokuhou, name: '横浜流星', image: ryusei },
   ]
 
-  setPlayerHand(addKokuhoPieces)
+  setPlayerHand((hand) => {
+  const nextHand = addKokuhoPieces(hand)
+  updateGameState(pieces, turn, nextHand)
+  return nextHand
+})
 }
 
 const nextPieces = pieces
