@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { supabase } from './supabase'
 import './App.css'
 
 import cube from './assets/キューブ.png'
@@ -20,12 +21,15 @@ import menu2 from './assets/menu_2.png'
 import menu3 from './assets/menu_3.png'
 import syogiSound from './assets/syogi_s01.mp3'
 
+
+
 function App() {
   const [screen, setScreen] = useState('opening')
   const [playerSide, setPlayerSide] = useState(null)
   const [turn, setTurn] = useState('player')
   const [mistMoveCount, setMistMoveCount] = useState(0)
   const [result, setResult] = useState(null)
+  const [roomId, setRoomId] = useState(null)
   useEffect(() => {
   if (screen !== 'game') return
   if (turn !== (playerSide === 'player' ? 'opponent' : 'player')) return
@@ -674,6 +678,53 @@ if (piece.name === '武器人間') {
   { name: 'CUBE', image: cube, row: 2, col: 8, side: 'opponent' },
 ])
 
+const createRoom = async () => {
+  const newRoomId = crypto.randomUUID()
+
+  const { error } = await supabase
+    .from('game')
+    .insert({
+      room_id: newRoomId,
+      game_state: {
+        pieces,
+        turn: 'player',
+        playerSide: 'player',
+      },
+    })
+
+  if (error) {
+    alert(error.message)
+    return
+  }
+
+  setRoomId(newRoomId)
+  setPlayerSide('player')
+  setScreen('game')
+}
+
+const joinRoom = async () => {
+  if (!roomId) {
+    alert('ルームIDを入力してください')
+    return
+  }
+
+  const { data, error } = await supabase
+    .from('game')
+    .select('game_state')
+    .eq('room_id', roomId)
+    .single()
+
+  if (error || !data) {
+    alert('ルームが見つかりません')
+    return
+  }
+
+  setPieces(data.game_state.pieces)
+  setTurn(data.game_state.turn)
+  setPlayerSide('opponent')
+  setScreen('game')
+}
+
   return (
   <>
 
@@ -697,20 +748,20 @@ if (piece.name === '武器人間') {
 
 {screen === 'turn-select' && (
   <div className="turn-select">
-    <button onClick={() => {
-  setPlayerSide('player')
-  setScreen('game')
-}}>先手</button>
-    <button onClick={() => {
-  setPlayerSide('player')
-setTurn('opponent')
-  setScreen('game')
-}}>後手</button>
+    <button onClick={createRoom}>先手</button>
+    <input
+  type="text"
+  placeholder="ルームID"
+  value={roomId ?? ''}
+  onChange={(e) => setRoomId(e.target.value)}
+/>
+    <button onClick={joinRoom}>後手</button>
   </div>
 )}
 
     {screen !== 'opening' && (
       <div className="game">
+        {roomId && <div>ルームID: {roomId}</div>}
 
         <div>M: 0</div>
 
