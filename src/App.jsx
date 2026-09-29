@@ -40,32 +40,6 @@ function App() {
     (piece.side ?? 'player') === 'opponent'
 )
 
-useEffect(() => {
-  if (!roomId || screen !== 'game') return
-
-  const channel = supabase
-    .channel(`game-${roomId}`)
-    .on(
-      'postgres_changes',
-      {
-        event: 'UPDATE',
-        schema: 'public',
-        table: 'game',
-        filter: `room_id=eq.${roomId}`,
-      },
-      (payload) => {
-        const gameState = payload.new.game_state
-
-        setPieces(gameState.pieces)
-        setTurn(gameState.turn)
-      }
-    )
-    .subscribe()
-
-  return () => {
-    supabase.removeChannel(channel)
-  }
-}, [roomId, screen])
 
   const moves = cpuPieces.flatMap((piece) =>
   getLegalMoves(
@@ -166,6 +140,34 @@ setTurn(playerSide)
 
 return () => clearTimeout(timer)
 }, [turn, screen, playerSide])
+
+useEffect(() => {
+  if (!roomId || screen !== 'game') return
+
+  const channel = supabase
+    .channel(`game-${roomId}`)
+    .on(
+      'postgres_changes',
+      {
+        event: 'UPDATE',
+        schema: 'public',
+        table: 'game',
+        filter: `room_id=eq.${roomId}`,
+      },
+      (payload) => {
+        const gameState = payload.new.game_state
+
+        setPieces(gameState.pieces)
+        setTurn(gameState.turn)
+      }
+    )
+    .subscribe()
+
+  return () => {
+    supabase.removeChannel(channel)
+  }
+}, [roomId, screen])
+
   const [selectedPiece, setSelectedPiece] = useState(null)
   const [playerHand, setPlayerHand] = useState([])
   const [opponentHand, setOpponentHand] = useState([])
