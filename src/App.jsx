@@ -1068,7 +1068,7 @@ const nextPieces = pieces
 setPieces(nextPieces)
 
 const nextTurn = turn === 'player' ? 'opponent' : 'player'
-updateGameState(nextPieces, nextTurn, nextPlayerHand)
+updateGameState(nextPieces, nextTurn, nextPlayerHand ?? playerHand)
 
 setSelectedPiece(null)
 setTurn(turn === 'player' ? 'opponent' : 'player')
