@@ -1118,7 +1118,10 @@ setTurn(turn === 'player' ? 'opponent' : 'player')
   className="hand-piece"
   src={piece.image}
   alt={piece.name}
-  onClick={() => setSelectedPiece({ ...piece, fromHand: true, handIndex: index })}
+  onClick={() => {
+  if (turn !== playerSide) return
+  setSelectedPiece({ ...piece, fromHand: true, handIndex: index })
+}}
 />
   ))}
 </div>
