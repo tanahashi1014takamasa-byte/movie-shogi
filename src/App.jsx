@@ -787,16 +787,32 @@ setScreen('game')
 const updateGameState = async (nextPieces, nextTurn, nextPlayerHand) => {
   if (!roomId) return
 
+  const { data } = await supabase
+    .from('game')
+    .select('game_state')
+    .eq('room_id', roomId)
+    .single()
+
+  if (!data) return
+
+  const currentState = data.game_state
+
   await supabase
     .from('game')
     .update({
-  game_state: {
-  pieces: nextPieces,
-  turn: nextTurn,
-  playerSide,
-  playerHand: playerSide === 'player' ? nextPlayerHand : playerHand,
-opponentHand: playerSide === 'opponent' ? nextPlayerHand : opponentHand,
-},
+      game_state: {
+        pieces: nextPieces,
+        turn: nextTurn,
+        playerSide,
+        playerHand:
+          playerSide === 'player'
+            ? nextPlayerHand
+            : currentState.playerHand ?? [],
+        opponentHand:
+          playerSide === 'opponent'
+            ? nextPlayerHand
+            : currentState.opponentHand ?? [],
+      },
     })
     .eq('room_id', roomId)
 }
