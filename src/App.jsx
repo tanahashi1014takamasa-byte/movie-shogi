@@ -842,6 +842,7 @@ const updateGameState = async (nextPieces, nextTurn) => {
 
         <button className="home-button" onClick={() => {
   setResult(null)
+  setRoomId(null)
   setScreen('opening')
 }}>戻る</button>
 
