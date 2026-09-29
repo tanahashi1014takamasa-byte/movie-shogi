@@ -856,7 +856,7 @@ const updateGameState = async (nextPieces, nextTurn) => {
   ))}
 </div>
 
-      <div className="board">
+      <div className={`board ${playerSide === 'opponent' ? 'opponent-board' : ''}`}>
         {Array.from({ length: 81 }, (_, index) => {
           const row = Math.floor(index / 9)
           const col = index % 9

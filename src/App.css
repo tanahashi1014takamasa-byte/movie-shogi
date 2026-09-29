@@ -44,6 +44,9 @@ body {
   border: 3px solid #222;
   display: grid;
   grid-template-columns: repeat(9, 1fr);
+  .opponent-board {
+  transform: rotate(180deg);
+}
   grid-template-rows: repeat(9, 1fr);
 }
 
