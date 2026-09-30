@@ -96,10 +96,7 @@ body {
   background: rgba(0, 150, 255, 0.35);
 }
 
-.opponent-piece {
-  transform: rotate(180deg);
-  transform-origin: center;
-}
+
 
 
 .white-whale.opponent-piece {
