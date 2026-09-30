@@ -27,7 +27,10 @@ function App() {
   const [screen, setScreen] = useState('opening')
   const [playerSide, setPlayerSide] = useState(null)
   const [turn, setTurn] = useState('player')
-  const [mistMoveCount, setMistMoveCount] = useState(0)
+  const [mistMoveCount, setMistMoveCount] = useState({
+  player: 0,
+  opponent: 0,
+})
   const [result, setResult] = useState(null)
   const [roomId, setRoomId] = useState(null)
   const [onlineScreen, setOnlineScreen] = useState(false)
@@ -88,7 +91,10 @@ syogiAudio.play()
 setPieces((currentPieces) => {
 
   if (cpuMove.piece.name === 'ミスト') {
-  setMistMoveCount((count) => count + 1)
+  setMistMoveCount((count) => ({
+  ...count,
+  [playerSide]: count[playerSide] + 1,
+}))
 }
 
   const capturedPiece = currentPieces.find(
@@ -159,7 +165,7 @@ useEffect(() => {
 
         setPieces(gameState.pieces)
         setTurn(gameState.turn)
-        setMistMoveCount(gameState.mistMoveCount ?? 0)
+        setMistMoveCount(gameState.mistMoveCount ?? { player: 0, opponent: 0 })
         
         if (playerSide === 'player') {
   setPlayerHand(gameState.playerHand ?? [])
@@ -735,7 +741,10 @@ const createRoom = async () => {
   playerCount: 1,
   playerHand: [],
 opponentHand: [],
-mistMoveCount: 0,
+mistMoveCount: {
+  player: 0,
+  opponent: 0,
+},
 },
     })
 
@@ -974,7 +983,17 @@ setPieces(nextPieces)
 setPlayerHand(nextPlayerHand)
 
 const nextTurn = turn === 'player' ? 'opponent' : 'player'
-updateGameState(nextPieces, nextTurn, nextPlayerHand, mistMoveCount + (selectedPiece?.name === 'ミスト' && selectedPiece?.side !== 'opponent' ? 1 : 0))
+updateGameState(
+  nextPieces,
+  nextTurn,
+  nextPlayerHand,
+  {
+    ...mistMoveCount,
+    [playerSide]: mistMoveCount[playerSide] + (
+      selectedPiece?.name === 'ミスト' ? 1 : 0
+    ),
+  }
+)
 
     setSelectedPiece(null)
     setTurn(turn === 'player' ? 'opponent' : 'player')
@@ -1092,7 +1111,17 @@ const nextPieces = pieces
 setPieces(nextPieces)
 
 const nextTurn = turn === 'player' ? 'opponent' : 'player'
-updateGameState(nextPieces, nextTurn, nextPlayerHand ?? playerHand, mistMoveCount + (selectedPiece?.name === 'ミスト' && selectedPiece?.side !== 'opponent' ? 1 : 0))
+updateGameState(
+  nextPieces,
+  nextTurn,
+  nextPlayerHand ?? playerHand,
+  {
+    ...mistMoveCount,
+    [playerSide]: mistMoveCount[playerSide] + (
+      selectedPiece?.name === 'ミスト' ? 1 : 0
+    ),
+  }
+)
 
 setSelectedPiece(null)
 setTurn(turn === 'player' ? 'opponent' : 'player')
@@ -1102,7 +1131,9 @@ setTurn(turn === 'player' ? 'opponent' : 'player')
 >
 
   
-              {piece && !(piece.name === 'ミスト' && (piece.side ?? 'player') !== playerSide && mistMoveCount < 2) && (
+              {piece && !(piece.name === 'ミスト' &&
+  (piece.side ?? 'player') !== playerSide &&
+  mistMoveCount[piece.side ?? 'player'] < 2) && (
   <img
   className={`${piece.name === '白鯨' ? 'piece-image white-whale' : 'piece-image'} ${piece.side === 'opponent' ? 'opponent-piece' : ''} ${!selectedPiece?.fromHand && selectedPiece?.row === piece.row && selectedPiece?.col === piece.col ? 'selected' : ''}`}
   src={piece.image}
