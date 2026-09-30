@@ -185,7 +185,7 @@ useEffect(() => {
         setPieces(gameState.pieces)
         setTurn(gameState.turn)
         setMistMoveCount(gameState.mistMoveCount ?? { player: 0, opponent: 0 })
-        
+        setTrapCube(gameState.trapCube)
         if (playerSide === 'player') {
   setPlayerHand(gameState.playerHand ?? [])
   setOpponentHand(gameState.opponentHand ?? [])
@@ -813,6 +813,7 @@ await supabase
   setOnlineScreen(false)
 
   setPieces(data[0].game_state.pieces)
+  setTrapCube(data[0].game_state.trapCube)
 setTurn(data[0].game_state.turn)
 setPlayerHand(data[0].game_state.opponentHand ?? [])
 setOpponentHand(data[0].game_state.playerHand ?? [])
@@ -840,6 +841,7 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
         pieces: nextPieces,
         turn: nextTurn,
         mistMoveCount: nextMistMoveCount,
+        trapCube,
         playerSide,
         playerHand:
           playerSide === 'player'
