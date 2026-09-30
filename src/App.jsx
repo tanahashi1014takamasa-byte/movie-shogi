@@ -122,7 +122,8 @@ setPieces((currentPieces) => {
   ])
 } else if (
   cpuMove.piece.name === 'ゾディアック' &&
-  capturedPiece
+  capturedPiece &&
+  !cpuTrapCubeCaptured
 ) {
   setOpponentHand((hand) => [
     ...hand,
