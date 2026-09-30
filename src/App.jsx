@@ -684,7 +684,10 @@ if (piece.name === '武器人間') {
           (p) =>
             p.row === move.row &&
             p.col === move.col &&
-            (p.side ?? 'player') === (piece.side ?? 'player')
+(
+  (p.side ?? 'player') === (piece.side ?? 'player') ||
+  p.name === '白鯨'
+)
         )
     )
 }
@@ -1069,14 +1072,14 @@ if (selectedPiece?.name === '白鯨') {
 }
 
     if (p.name === '白鯨') {
-    const whaleSecondRow =
-      p.row + (p.side === 'opponent' ? 1 : -1)
+  const whaleSecondRow =
+    p.row + (p.side === 'opponent' ? 1 : -1)
 
-    return (
-      (p.row === row && p.col === col) ||
-      (whaleSecondRow === row && p.col === col)
-    )
-  }
+  return (
+  p.row === row &&
+  p.col === col
+)
+}
 
   return (
     p.row === row &&
