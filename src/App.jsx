@@ -1029,8 +1029,8 @@ const trapCubeCaptured =
       p.name === 'CUBE' &&
       p.row === row &&
       p.col === col &&
-      p.row === 6 &&
-      p.col === trapCube &&
+      (p.row === 6 && p.col === trapCube) ||
+(p.row === 2 && p.col === opponentTrapCube)
       (p.side ?? 'player') !== (selectedPiece?.side ?? 'player')
   )
 
@@ -1114,7 +1114,12 @@ if (capturedPieces.some((captured) => captured.name === '国宝')) {
 }
 
 const nextPieces = pieces
-  .filter((p) => !capturedPieces.includes(p) && p !== trapCubeCaptured)
+  .filter(
+    (p) =>
+      !capturedPieces.includes(p) &&
+      p !== trapCubeCaptured &&
+      (!trapCubeCaptured || p !== selectedPiece)
+  )
   .map((p) =>
     p.row === selectedPiece.row && p.col === selectedPiece.col
       ? {
