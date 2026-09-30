@@ -185,8 +185,7 @@ useEffect(() => {
         setPieces(gameState.pieces)
         setTurn(gameState.turn)
         setMistMoveCount(gameState.mistMoveCount ?? { player: 0, opponent: 0 })
-        setTrapCube(gameState.trapCube)
-        setOpponentTrapCube(gameState.opponentTrapCube)
+        
         if (playerSide === 'player') {
   setPlayerHand(gameState.playerHand ?? [])
   setOpponentHand(gameState.opponentHand ?? [])
@@ -754,7 +753,6 @@ const createRoom = async () => {
   const newRoomId = Math.floor(100000 + Math.random() * 900000).toString()
 
 const newTrapCube = Math.floor(Math.random() * 9)
-const newOpponentTrapCube = Math.floor(Math.random() * 9)
 
   const { error } = await supabase
     .from('game')
@@ -766,7 +764,6 @@ const newOpponentTrapCube = Math.floor(Math.random() * 9)
   playerSide: 'player',
   playerCount: 1,
   trapCube: newTrapCube,
-  opponentTrapCube: newOpponentTrapCube,
   playerHand: [],
 opponentHand: [],
 mistMoveCount: {
@@ -781,7 +778,6 @@ mistMoveCount: {
     return
   }
   setTrapCube(newTrapCube)
-  setOpponentTrapCube(newOpponentTrapCube)
   setRoomId(newRoomId)
   setPlayerSide('player')
   setScreen('game')
@@ -817,8 +813,6 @@ await supabase
   setOnlineScreen(false)
 
   setPieces(data[0].game_state.pieces)
-  setTrapCube(data[0].game_state.opponentTrapCube)
-setOpponentTrapCube(data[0].game_state.trapCube)
 setTurn(data[0].game_state.turn)
 setPlayerHand(data[0].game_state.opponentHand ?? [])
 setOpponentHand(data[0].game_state.playerHand ?? [])
@@ -846,17 +840,7 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
         pieces: nextPieces,
         turn: nextTurn,
         mistMoveCount: nextMistMoveCount,
-trapCube:
-  playerSide === 'player'
-    ? trapCube
-    : opponentTrapCube,
-
-opponentTrapCube:
-  playerSide === 'player'
-    ? opponentTrapCube
-    : trapCube,
-
-playerSide,
+        playerSide,
         playerHand:
           playerSide === 'player'
             ? nextPlayerHand
@@ -1075,20 +1059,9 @@ const trapCubeCaptured =
       p.name === 'CUBE' &&
       p.row === row &&
       p.col === col &&
-      (
-        (playerSide === 'player' &&
-          (
-            (p.side === 'player' && p.col === trapCube) ||
-            (p.side === 'opponent' && p.col === opponentTrapCube)
-          )
-        ) ||
-        (playerSide === 'opponent' &&
-          (
-            (p.side === 'opponent' && p.col === trapCube) ||
-            (p.side === 'player' && p.col === opponentTrapCube)
-          )
-        )
-      )
+      ((p.row === 6 && p.col === trapCube) ||
+ (p.row === 2 && p.col === opponentTrapCube)) &&
+(p.side ?? 'player') !== (selectedPiece?.side ?? 'player')
   )
 
   const capturedPieces = pieces.filter((p) => {
@@ -1174,7 +1147,8 @@ const nextPieces = pieces
   .filter(
     (p) =>
       !capturedPieces.includes(p) &&
-      (!trapCubeCaptured || p !== selectedPiece)
+      p !== trapCubeCaptured &&
+      !(trapCubeCaptured && p === selectedPiece)
   )
   .map((p) =>
     p.row === selectedPiece.row && p.col === selectedPiece.col
