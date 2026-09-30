@@ -1003,8 +1003,11 @@ updateGameState(
   if (legalMoves.some((move) => move.row === row && move.col === col)) {
     playSyogiSound()
 
-    if (selectedPiece?.name === 'ミスト' && selectedPiece?.side !== 'opponent') {
-  setMistMoveCount((count) => count + 1)
+ if (selectedPiece?.name === 'ミスト' && selectedPiece?.side !== 'opponent') {
+  setMistMoveCount((count) => ({
+    ...count,
+    [playerSide]: count[playerSide] + 1,
+  }))
 }
   const capturedPieces = pieces.filter((p) => {
  
