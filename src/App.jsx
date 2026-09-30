@@ -185,8 +185,7 @@ useEffect(() => {
         setPieces(gameState.pieces)
         setTurn(gameState.turn)
         setMistMoveCount(gameState.mistMoveCount ?? { player: 0, opponent: 0 })
-        setTrapCube(gameState.trapCube)
-        setOpponentTrapCube(gameState.opponentTrapCube)
+        
         if (playerSide === 'player') {
   setPlayerHand(gameState.playerHand ?? [])
   setOpponentHand(gameState.opponentHand ?? [])
@@ -753,11 +752,7 @@ if (piece.name === '武器人間') {
 const createRoom = async () => {
   const newRoomId = Math.floor(100000 + Math.random() * 900000).toString()
 
-  const newTrapCube = Math.floor(Math.random() * 9)
-const newOpponentTrapCube = Math.floor(Math.random() * 9)
-
   const { error } = await supabase
-
     .from('game')
     .insert({
       room_id: newRoomId,
@@ -772,8 +767,6 @@ mistMoveCount: {
   player: 0,
   opponent: 0,
 },
-trapCube: newTrapCube,
-opponentTrapCube: newOpponentTrapCube,
 },
     })
 
@@ -783,8 +776,6 @@ opponentTrapCube: newOpponentTrapCube,
   }
 
   setRoomId(newRoomId)
-  setTrapCube(newTrapCube)
-  setOpponentTrapCube(newOpponentTrapCube)
   setPlayerSide('player')
   setScreen('game')
 }
@@ -820,10 +811,6 @@ await supabase
 
   setPieces(data[0].game_state.pieces)
 setTurn(data[0].game_state.turn)
-
-setTrapCube(data[0].game_state.trapCube)
-setOpponentTrapCube(data[0].game_state.opponentTrapCube)
-
 setPlayerHand(data[0].game_state.opponentHand ?? [])
 setOpponentHand(data[0].game_state.playerHand ?? [])
 setPlayerSide('opponent')
@@ -850,8 +837,6 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
         pieces: nextPieces,
         turn: nextTurn,
         mistMoveCount: nextMistMoveCount,
-        trapCube,
-        opponentTrapCube,
         playerSide,
         playerHand:
           playerSide === 'player'
@@ -1071,9 +1056,9 @@ const trapCubeCaptured =
       p.name === 'CUBE' &&
       p.row === row &&
       p.col === col &&
-      ((p.side === 'player' && p.col === trapCube) ||
- (p.side === 'opponent' && p.col === opponentTrapCube)) &&
-      (p.side ?? 'player') !== (selectedPiece?.side ?? 'player')
+      ((p.row === 6 && p.col === trapCube) ||
+ (p.row === 2 && p.col === opponentTrapCube)) &&
+(p.side ?? 'player') !== (selectedPiece?.side ?? 'player')
   )
 
   const capturedPieces = pieces.filter((p) => {
@@ -1212,7 +1197,7 @@ setTurn(turn === 'player' ? 'opponent' : 'player')
   <img
   className={`${piece.name === '白鯨' ? 'piece-image white-whale' : 'piece-image'} ${piece.side === 'opponent' ? 'opponent-piece' : ''} ${!selectedPiece?.fromHand && selectedPiece?.row === piece.row && selectedPiece?.col === piece.col ? 'selected' : ''} ${piece.name === 'CUBE' && (
   (piece.side !== 'opponent' && piece.col === trapCube) ||
-(piece.side === 'opponent' && piece.col === opponentTrapCube)
+  (roomId && piece.side === 'opponent' && piece.col === opponentTrapCube)
 ) ? 'trap-cube' : ''}`}
   src={piece.image}
   alt={piece.name}
