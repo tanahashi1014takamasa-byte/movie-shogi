@@ -1125,9 +1125,9 @@ setTurn(turn === 'player' ? 'opponent' : 'player')
 />
 )}
 
-{piece && piece.name === 'ミスト' && piece.side !== playerSide && mistMoveCount >= 10 && (
+{piece && piece.name === 'ミスト' && piece.side !== playerSide && mistMoveCount >= 2 && (
   <img
-    className="piece-image opponent-piece"
+    className="piece-image"
     src={piece.image}
     alt={piece.name}
   />
