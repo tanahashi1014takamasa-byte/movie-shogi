@@ -1068,10 +1068,7 @@ const trapCubeCaptured =
       p.side !== playerSide &&
       p.row === row &&
       p.col === col &&
-      (
-        (playerSide === 'player' && p.row === 2 && p.col === opponentTrapCube) ||
-        (playerSide === 'opponent' && p.row === 6 && p.col === opponentTrapCube)
-      )
+      p.col === opponentTrapCube
   )
 
   const capturedPieces = pieces.filter((p) => {
