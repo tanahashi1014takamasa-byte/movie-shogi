@@ -186,6 +186,7 @@ useEffect(() => {
         setTurn(gameState.turn)
         setMistMoveCount(gameState.mistMoveCount ?? { player: 0, opponent: 0 })
         setTrapCube(gameState.trapCube)
+        setOpponentTrapCube(gameState.opponentTrapCube)
         if (playerSide === 'player') {
   setPlayerHand(gameState.playerHand ?? [])
   setOpponentHand(gameState.opponentHand ?? [])
@@ -753,6 +754,7 @@ const createRoom = async () => {
   const newRoomId = Math.floor(100000 + Math.random() * 900000).toString()
 
 const newTrapCube = Math.floor(Math.random() * 9)
+const newOpponentTrapCube = Math.floor(Math.random() * 9)
 
   const { error } = await supabase
     .from('game')
@@ -764,6 +766,7 @@ const newTrapCube = Math.floor(Math.random() * 9)
   playerSide: 'player',
   playerCount: 1,
   trapCube: newTrapCube,
+  opponentTrapCube: newOpponentTrapCube,
   playerHand: [],
 opponentHand: [],
 mistMoveCount: {
@@ -778,6 +781,7 @@ mistMoveCount: {
     return
   }
   setTrapCube(newTrapCube)
+  setOpponentTrapCube(newOpponentTrapCube)
   setRoomId(newRoomId)
   setPlayerSide('player')
   setScreen('game')
@@ -813,7 +817,8 @@ await supabase
   setOnlineScreen(false)
 
   setPieces(data[0].game_state.pieces)
-  setTrapCube(data[0].game_state.trapCube)
+  setTrapCube(data[0].game_state.opponentTrapCube)
+setOpponentTrapCube(data[0].game_state.trapCube)
 setTurn(data[0].game_state.turn)
 setPlayerHand(data[0].game_state.opponentHand ?? [])
 setOpponentHand(data[0].game_state.playerHand ?? [])
@@ -841,8 +846,9 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
         pieces: nextPieces,
         turn: nextTurn,
         mistMoveCount: nextMistMoveCount,
-        trapCube,
-        playerSide,
+trapCube,
+opponentTrapCube,
+playerSide,
         playerHand:
           playerSide === 'player'
             ? nextPlayerHand
