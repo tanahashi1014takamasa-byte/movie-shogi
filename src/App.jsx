@@ -1017,7 +1017,16 @@ updateGameState(
     return
   }
 
-  if (legalMoves.some((move) => move.row === row && move.col === col)) {
+  const isWhaleTip = pieces.some((p) =>
+  p.name === '白鯨' &&
+  p.col === col &&
+  p.row + (p.side === 'opponent' ? 1 : -1) === row
+)
+
+  if (
+  legalMoves.some((move) => move.row === row && move.col === col) &&
+  (!isWhaleTip || selectedPiece?.name === '白鯨')
+) {
     playSyogiSound()
 
  if (selectedPiece?.name === 'ミスト' && selectedPiece?.side !== 'opponent') {
