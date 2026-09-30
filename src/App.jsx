@@ -1102,7 +1102,7 @@ setTurn(turn === 'player' ? 'opponent' : 'player')
 >
 
   
-              {piece && !(piece.name === 'ミスト' && (piece.side ?? 'player') !== playerSide) && (
+              {piece && !(piece.name === 'ミスト' && (piece.side ?? 'player') !== playerSide && mistMoveCount < 2) && (
   <img
   className={`${piece.name === '白鯨' ? 'piece-image white-whale' : 'piece-image'} ${piece.side === 'opponent' ? 'opponent-piece' : ''} ${!selectedPiece?.fromHand && selectedPiece?.row === piece.row && selectedPiece?.col === piece.col ? 'selected' : ''}`}
   src={piece.image}
