@@ -1114,12 +1114,7 @@ if (capturedPieces.some((captured) => captured.name === '国宝')) {
 }
 
 const nextPieces = pieces
-  .filter(
-    (p) =>
-      !capturedPieces.includes(p) &&
-      p !== trapCubeCaptured &&
-      (!trapCubeCaptured || p !== selectedPiece)
-  )
+  .filter((p) => !capturedPieces.includes(p) && p !== trapCubeCaptured)
   .map((p) =>
     p.row === selectedPiece.row && p.col === selectedPiece.col
       ? {
