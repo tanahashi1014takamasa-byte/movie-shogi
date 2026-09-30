@@ -1012,6 +1012,18 @@ updateGameState(
     [playerSide]: count[playerSide] + 1,
   }))
 }
+
+const trapCubeCaptured =
+  pieces.find(
+    (p) =>
+      p.name === 'CUBE' &&
+      p.row === row &&
+      p.col === col &&
+      p.row === 6 &&
+      p.col === trapCube &&
+      (p.side ?? 'player') !== (selectedPiece?.side ?? 'player')
+  )
+
   const capturedPieces = pieces.filter((p) => {
  
 if (selectedPiece?.name === '白鯨') {
@@ -1070,10 +1082,10 @@ let nextPlayerHand = playerHand
 
 if (selectedPiece?.name === 'ゾディアック') {
   const newHand = capturedPieces.flatMap((captured) =>
-    captured.name === '国宝'
-      ? []
-      : [captured]
-  )
+  captured.name === '国宝' || captured === trapCubeCaptured
+    ? []
+    : [captured]
+)
 
   nextPlayerHand = [...playerHand, ...newHand]
   setPlayerHand(nextPlayerHand)
@@ -1092,7 +1104,7 @@ if (capturedPieces.some((captured) => captured.name === '国宝')) {
 }
 
 const nextPieces = pieces
-  .filter((p) => !capturedPieces.includes(p))
+  .filter((p) => !capturedPieces.includes(p) && p !== trapCubeCaptured)
   .map((p) =>
     p.row === selectedPiece.row && p.col === selectedPiece.col
       ? {
