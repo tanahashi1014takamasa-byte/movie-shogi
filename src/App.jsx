@@ -105,6 +105,10 @@ setPieces((currentPieces) => {
       (piece.side ?? 'player') !== (cpuMove.piece.side ?? 'player')
   )
 
+  const cpuTrapCubeCaptured =
+  capturedPiece?.name === 'CUBE' &&
+  capturedPiece.col === trapCube
+
   if (capturedPiece?.name === 'タイタニック') {
   setResult('敗北')
 }
@@ -125,12 +129,15 @@ setPieces((currentPieces) => {
   ])
 }
 
-  return currentPieces
-    .filter((piece) => piece !== capturedPiece)
-    .map((piece) =>
-      piece === cpuMove.piece
-        ? {
-            ...piece,
+return currentPieces
+  .filter((piece) =>
+    piece !== capturedPiece &&
+    (!cpuTrapCubeCaptured || piece !== cpuMove.piece)
+  )
+  .map((piece) =>
+    piece === cpuMove.piece
+      ? {
+          ...piece,
             row: cpuMove.move.row,
             col: cpuMove.move.col,
             absorbedMoves:
@@ -1153,7 +1160,7 @@ setTurn(turn === 'player' ? 'opponent' : 'player')
   (piece.side ?? 'player') !== playerSide &&
   mistMoveCount[piece.side ?? 'player'] < 2) && (
   <img
-  className={`${piece.name === '白鯨' ? 'piece-image white-whale' : 'piece-image'} ${piece.side === 'opponent' ? 'opponent-piece' : ''} ${!selectedPiece?.fromHand && selectedPiece?.row === piece.row && selectedPiece?.col === piece.col ? 'selected' : ''} ${piece.name === 'CUBE' && piece.row === 6 && piece.col === trapCube ? 'trap-cube' : ''}`}
+  className={`${piece.name === '白鯨' ? 'piece-image white-whale' : 'piece-image'} ${piece.side === 'opponent' ? 'opponent-piece' : ''} ${!selectedPiece?.fromHand && selectedPiece?.row === piece.row && selectedPiece?.col === piece.col ? 'selected' : ''} ${piece.name === 'CUBE' && piece.col === trapCube && piece.side !== 'opponent' ? 'trap-cube' : ''}`}
   src={piece.image}
   alt={piece.name}
   onClick={(e) => {
