@@ -1068,8 +1068,18 @@ const trapCubeCaptured =
       p.row === row &&
       p.col === col &&
       (
-        (p.side === playerSide && p.col === trapCube) ||
-        (p.side !== playerSide && p.col === opponentTrapCube)
+        (playerSide === 'player' &&
+          (
+            (p.side === 'player' && p.col === trapCube) ||
+            (p.side === 'opponent' && p.col === opponentTrapCube)
+          )
+        ) ||
+        (playerSide === 'opponent' &&
+          (
+            (p.side === 'opponent' && p.col === trapCube) ||
+            (p.side === 'player' && p.col === opponentTrapCube)
+          )
+        )
       )
   )
 
