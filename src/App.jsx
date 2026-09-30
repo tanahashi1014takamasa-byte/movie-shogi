@@ -752,6 +752,8 @@ if (piece.name === '武器人間') {
 const createRoom = async () => {
   const newRoomId = Math.floor(100000 + Math.random() * 900000).toString()
 
+const newTrapCube = Math.floor(Math.random() * 9)
+
   const { error } = await supabase
     .from('game')
     .insert({
@@ -761,6 +763,7 @@ const createRoom = async () => {
   turn: 'player',
   playerSide: 'player',
   playerCount: 1,
+  trapCube: newTrapCube,
   playerHand: [],
 opponentHand: [],
 mistMoveCount: {
@@ -774,7 +777,7 @@ mistMoveCount: {
     alert(error.message)
     return
   }
-
+  setTrapCube(newTrapCube)
   setRoomId(newRoomId)
   setPlayerSide('player')
   setScreen('game')
