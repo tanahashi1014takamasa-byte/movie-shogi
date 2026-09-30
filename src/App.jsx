@@ -57,9 +57,18 @@ const [opponentTrapCube, setOpponentTrapCube] = useState(null)
     move,
   }))
 )
-if (moves.length === 0) return
+const safeMoves = moves.filter(({ piece, move }) =>
+  piece.name === '白鯨' ||
+  !pieces.some((p) =>
+    p.name === '白鯨' &&
+    p.col === move.col &&
+    p.row + (p.side === 'opponent' ? 1 : -1) === move.row
+  )
+)
 
-const captureMoves = moves.filter(({ piece, move }) =>
+if (safeMoves.length === 0) return
+
+const captureMoves = safeMoves.filter(({ piece, move }) =>
   pieces.some(
     (target) =>
       target.row === move.row &&
@@ -69,7 +78,7 @@ const captureMoves = moves.filter(({ piece, move }) =>
   )
 )
 
-const titanMoves = moves.filter(({ move }) =>
+const titanMoves = safeMoves.filter(({ move }) =>
   pieces.some(
     (target) =>
       target.row === move.row &&
@@ -84,7 +93,7 @@ const cpuMove =
     ? titanMoves[Math.floor(Math.random() * titanMoves.length)]
     : captureMoves.length > 0
       ? captureMoves[Math.floor(Math.random() * captureMoves.length)]
-      : moves[Math.floor(Math.random() * moves.length)]
+      : safeMoves[Math.floor(Math.random() * safeMoves.length)]
 
 const timer = setTimeout(() => {
 
