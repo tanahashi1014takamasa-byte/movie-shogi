@@ -1065,10 +1065,16 @@ const trapCubeCaptured =
   pieces.find(
     (p) =>
       p.name === 'CUBE' &&
-      p.row === 6 &&
-      p.col === trapCube &&
       p.row === row &&
-      p.col === col
+      p.col === col &&
+      (
+        (p.side !== playerSide &&
+          p.row === (playerSide === 'player' ? 2 : 6) &&
+          p.col === opponentTrapCube) ||
+        (p.side !== playerSide &&
+          p.row === (playerSide === 'player' ? 6 : 2) &&
+          p.col === trapCube)
+      )
   )
 
   const capturedPieces = pieces.filter((p) => {
