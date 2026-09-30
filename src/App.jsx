@@ -1206,7 +1206,7 @@ setTurn(turn === 'player' ? 'opponent' : 'player')
   <img
   className={`${piece.name === '白鯨' ? 'piece-image white-whale' : 'piece-image'} ${piece.side === 'opponent' ? 'opponent-piece' : ''} ${!selectedPiece?.fromHand && selectedPiece?.row === piece.row && selectedPiece?.col === piece.col ? 'selected' : ''} ${piece.name === 'CUBE' && (
   (piece.side !== 'opponent' && piece.col === trapCube) ||
-  (roomId && piece.side === 'opponent' && piece.col === opponentTrapCube)
+(piece.side === 'opponent' && piece.col === opponentTrapCube)
 ) ? 'trap-cube' : ''}`}
   src={piece.image}
   alt={piece.name}
