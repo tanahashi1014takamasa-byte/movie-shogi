@@ -1149,7 +1149,15 @@ const nextPieces = pieces
   .filter(
     (p) =>
       !capturedPieces.includes(p) &&
-      (!trapCubeCaptured || p !== selectedPiece)
+      !(
+        p.name === 'CUBE' &&
+        p.row === 6 &&
+        p.col === trapCube
+      ) &&
+      !(
+        p === selectedPiece &&
+        trapCubeCaptured
+      )
   )
   .map((p) =>
     p.row === selectedPiece.row && p.col === selectedPiece.col
