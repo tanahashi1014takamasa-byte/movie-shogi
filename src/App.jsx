@@ -32,6 +32,7 @@ function App() {
   opponent: 0,
 })
 const [trapCube, setTrapCube] = useState(null)
+const [opponentTrapCube, setOpponentTrapCube] = useState(null)
   const [result, setResult] = useState(null)
   const [roomId, setRoomId] = useState(null)
   const [onlineScreen, setOnlineScreen] = useState(false)
@@ -885,6 +886,7 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
     <button onClick={() => {
   setPlayerSide('player')
   setTrapCube(Math.floor(Math.random() * 9))
+  setOpponentTrapCube(Math.floor(Math.random() * 9))
   setTurn('player')
   setRoomId(null)
   setScreen('game')
@@ -893,6 +895,7 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
     <button onClick={() => {
   setPlayerSide('player')
   setTrapCube(Math.floor(Math.random() * 9))
+  setOpponentTrapCube(Math.floor(Math.random() * 9))
   setTurn('opponent')
   setScreen('game')
 }}>後手</button>
@@ -1160,7 +1163,10 @@ setTurn(turn === 'player' ? 'opponent' : 'player')
   (piece.side ?? 'player') !== playerSide &&
   mistMoveCount[piece.side ?? 'player'] < 10) && (
   <img
-  className={`${piece.name === '白鯨' ? 'piece-image white-whale' : 'piece-image'} ${piece.side === 'opponent' ? 'opponent-piece' : ''} ${!selectedPiece?.fromHand && selectedPiece?.row === piece.row && selectedPiece?.col === piece.col ? 'selected' : ''} ${piece.name === 'CUBE' && piece.col === trapCube && piece.side !== 'opponent' ? 'trap-cube' : ''}`}
+  className={`${piece.name === '白鯨' ? 'piece-image white-whale' : 'piece-image'} ${piece.side === 'opponent' ? 'opponent-piece' : ''} ${!selectedPiece?.fromHand && selectedPiece?.row === piece.row && selectedPiece?.col === piece.col ? 'selected' : ''} ${piece.name === 'CUBE' && (
+  (piece.side !== 'opponent' && piece.col === trapCube) ||
+  (piece.side === 'opponent' && piece.col === opponentTrapCube)
+) ? 'trap-cube' : ''}`}
   src={piece.image}
   alt={piece.name}
   onClick={(e) => {
