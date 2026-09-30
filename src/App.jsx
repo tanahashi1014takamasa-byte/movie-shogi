@@ -152,9 +152,13 @@ return currentPieces
             row: cpuMove.move.row,
             col: cpuMove.move.col,
             absorbedMoves:
+            
               piece.name === '武器人間' && capturedPiece
                 ? [capturedPiece.name]
                 : piece.absorbedMoves,
+                            ...(piece.name === 'ミミ' && cpuMove.move.row >= 6
+              ? { name: 'サイコ・ゴアマン', image: psychoGoreman }
+              : {}),
           }
         : piece
     )
