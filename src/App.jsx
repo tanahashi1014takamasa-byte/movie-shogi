@@ -93,7 +93,7 @@ setPieces((currentPieces) => {
   if (cpuMove.piece.name === 'ミスト') {
   setMistMoveCount((count) => ({
   ...count,
-  [playerSide]: count[playerSide] + 1,
+  opponent: count.opponent + 1,
 }))
 }
 
