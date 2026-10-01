@@ -47,7 +47,7 @@ const getGuideDescription = (pieceName) => {
   const sections = guideText.split(/\n\s*\n/)
 
   const section = sections.find((text) =>
-    text.startsWith(pieceName)
+    text.startsWith(`【${pieceName}】`)
   )
 
   return section || ''
