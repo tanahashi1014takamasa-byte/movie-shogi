@@ -214,3 +214,28 @@ body {
 .guide-move {
   background: blue;
 }
+
+.guide-board {
+  width: 300px;
+  height: 300px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+}
+
+.guide-cell {
+  border: 1px solid #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.guide-cell img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
+
+.guide-move {
+  background: blue;
+}
