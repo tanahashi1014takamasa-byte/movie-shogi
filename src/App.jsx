@@ -151,13 +151,17 @@ const getGuideMoves = (pieceName) => {
 }
 
   if (pieceName === '横浜流星') {
-    moves.push(
-      [-2, -2],
-      [-2, 2],
-      [2, -2],
-      [2, 2]
-    )
-  }
+  moves.push(
+    [-1, -1],
+    [-2, -2],
+    [-1, 1],
+    [-2, 2],
+    [1, -1],
+    [2, -2],
+    [1, 1],
+    [2, 2]
+  )
+}
 
   return moves
 }
