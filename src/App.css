@@ -312,15 +312,15 @@ body {
 
 .trap-cube-select {
   display: flex;
-  gap: 10px;
+  gap: 4px;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .trap-cube-select button {
-  width: 70px;
-  height: 70px;
-  padding: 5px;
+  width: 45px;
+  height: 45px;
+  padding: 2px;
 }
 
 .trap-cube-select img {
