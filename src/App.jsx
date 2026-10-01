@@ -59,15 +59,98 @@ const getGuideMoves = (pieceName) => {
   if (pieceName === 'タイタニック' || pieceName === 'ミスト') {
     moves.push(
       [-1, -1], [-1, 0], [-1, 1],
-      [0, -1],           [0, 1],
-      [1, -1],  [1, 0],  [1, 1]
+      [0, -1], [0, 1],
+      [1, -1], [1, 0], [1, 1]
     )
   }
 
-  return moves.map(([row, col]) => ({
-    row: row + 2,
-    col: col + 2,
-  }))
+  if (pieceName === '国宝' || pieceName === 'サイコ・ゴアマン') {
+    const directions = [
+      [-1, -1], [-1, 0], [-1, 1],
+      [0, -1], [0, 1],
+      [1, -1], [1, 0], [1, 1]
+    ]
+
+    directions.forEach(([dr, dc]) => {
+      for (let i = 1; i <= 2; i++) {
+        moves.push([dr * i, dc * i])
+      }
+    })
+  }
+
+  if (pieceName === 'ミミ') {
+    moves.push(
+      [-1, -1], [-1, 0], [-1, 1],
+      [1, 0]
+    )
+  }
+
+  if (pieceName === '羅生門') {
+    moves.push(
+      [-1, 0],
+      [-2, 0]
+    )
+  }
+
+  if (pieceName === 'サスペリア') {
+    moves.push(
+      [-2, -1], [-2, 0], [-2, 1],
+      [-1, -2], [-1, 2],
+      [0, -2], [0, 2],
+      [1, -2], [1, 2],
+      [2, -1], [2, 0], [2, 1]
+    )
+  }
+
+  if (pieceName === 'ゾディアック') {
+    moves.push(
+      [-1, -1],
+      [-1, 0],
+      [-1, 1]
+    )
+  }
+
+  if (pieceName === '武器人間') {
+    moves.push(
+      [-1, -1], [-1, 1],
+      [1, -1], [1, 1]
+    )
+  }
+
+  if (pieceName === '白鯨') {
+    moves.push(
+      [-2, 0],
+      [2, 0],
+      [0, -1],
+      [0, 1]
+    )
+  }
+
+  if (pieceName === 'CUBE') {
+    moves.push(
+      [-1, 0]
+    )
+  }
+
+  if (pieceName === '吉沢亮') {
+    moves.push(
+      [-2, 0],
+      [2, 0],
+      [0, -2],
+      [0, 2]
+    )
+  }
+
+  if (pieceName === '横浜流星') {
+    moves.push(
+      [-2, -2],
+      [-2, 2],
+      [2, -2],
+      [2, 2]
+    )
+  }
+
+  return moves
 }
 
   const [playerSide, setPlayerSide] = useState(null)
