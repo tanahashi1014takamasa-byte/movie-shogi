@@ -963,6 +963,10 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
   ))}
 </div>
 
+    <p>
+      {getGuideDescription(guidePieces[guidePieceIndex].name)}
+    </p>
+
     <button onClick={() => setScreen('opening')}>
       戻る
     </button>
