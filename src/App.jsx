@@ -25,6 +25,40 @@ import syogiSound from './assets/syogi_s01.mp3'
 
 function App() {
   const [screen, setScreen] = useState('opening')
+  const [guidePieceIndex, setGuidePieceIndex] = useState(0)
+  const guidePieces = [
+  { name: 'タイタニック', image: titanic },
+  { name: '国宝', image: kokuhou },
+  { name: 'ミミ', image: mimi },
+  { name: 'サイコ・ゴアマン', image: psychoGoreman },
+  { name: 'ミスト', image: mist },
+  { name: '羅生門', image: rashomon },
+  { name: 'サスペリア', image: suspiria },
+  { name: 'ゾディアック', image: zodiac },
+  { name: '武器人間', image: weaponHuman },
+  { name: '白鯨', image: whiteWhale },
+  { name: 'CUBE', image: cube },
+  { name: '吉沢亮', image: yoshizawa },
+  { name: '横浜流星', image: ryusei },
+]
+
+const getGuideMoves = (pieceName) => {
+  const moves = []
+
+  if (pieceName === 'タイタニック' || pieceName === 'ミスト') {
+    moves.push(
+      [-1, -1], [-1, 0], [-1, 1],
+      [0, -1],           [0, 1],
+      [1, -1],  [1, 0],  [1, 1]
+    )
+  }
+
+  return moves.map(([row, col]) => ({
+    row: row + 2,
+    col: col + 2,
+  }))
+}
+
   const [playerSide, setPlayerSide] = useState(null)
   const [turn, setTurn] = useState('player')
   const [mistMoveCount, setMistMoveCount] = useState({
@@ -881,8 +915,46 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
   setScreen('online')
 }}
 />
-      <img src={menu3} alt="メニュー3" />
+      <img
+  src={menu3}
+  alt="メニュー3"
+  onClick={() => setScreen('piece-guide')}
+/>
     </div>
+  </div>
+)}
+
+{screen === 'piece-guide' && (
+  <div className="piece-guide">
+    <h2>{guidePieces[guidePieceIndex].name}</h2>
+
+    <div className="guide-board">
+  {Array.from({ length: 25 }).map((_, index) => (
+    <div
+  className={`guide-cell ${
+    getGuideMoves(guidePieces[guidePieceIndex].name).some(
+      (move) =>
+        move.row === Math.floor(index / 5) &&
+        move.col === index % 5
+    )
+      ? 'guide-move'
+      : ''
+  }`}
+  key={index}
+>
+      {index === 12 && (
+        <img
+          src={guidePieces[guidePieceIndex].image}
+          alt={guidePieces[guidePieceIndex].name}
+        />
+      )}
+    </div>
+  ))}
+</div>
+
+    <button onClick={() => setScreen('opening')}>
+      戻る
+    </button>
   </div>
 )}
 
