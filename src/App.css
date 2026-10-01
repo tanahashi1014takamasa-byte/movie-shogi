@@ -312,7 +312,7 @@ body {
 
 .trap-cube-select {
   display: flex;
-  gap: 4px;
+  gap: 0px;
   justify-content: center;
   flex-wrap: nowrap;
 }
