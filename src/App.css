@@ -298,6 +298,7 @@ body {
   margin: 20px auto;
   font-size: 20px;
   line-height: 1.6;
+  white-space: pre-line;
 }
 
 .piece-guide > button {
