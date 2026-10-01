@@ -894,12 +894,10 @@ if (piece.name === '武器人間') {
   { name: 'CUBE', image: cube, row: 2, col: 8, side: 'opponent' },
 ])
 
-const [trapSelect, setTrapSelect] = useState(false)
-
 const createRoom = async () => {
   const newRoomId = Math.floor(100000 + Math.random() * 900000).toString()
 
-
+const newTrapCube = Math.floor(Math.random() * 9)
 
   const { error } = await supabase
     .from('game')
@@ -910,7 +908,7 @@ const createRoom = async () => {
   turn: 'player',
   playerSide: 'player',
   playerCount: 1,
-  trapCube: null,
+  trapCube: newTrapCube,
   playerHand: [],
 opponentHand: [],
 mistMoveCount: {
@@ -924,10 +922,10 @@ mistMoveCount: {
     alert(error.message)
     return
   }
-  
+  setTrapCube(newTrapCube)
   setRoomId(newRoomId)
   setPlayerSide('player')
-  setTrapSelect(true)
+  setScreen('game')
 }
 
 const joinRoom = async () => {
@@ -1083,30 +1081,6 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
       onChange={(e) => setRoomId(e.target.value)}
     />
     <button onClick={joinRoom}>ルームに入る</button>
-  </div>
-)}
-
-{trapSelect && (
-  <div className="turn-select">
-    <h2>罠にするCUBEを選んでください</h2>
-
-    <div className="trap-cube-select">
-      {pieces
-        .filter((piece) => piece.name === 'CUBE' && piece.side !== 'opponent')
-        .map((piece, index) => (
-          <button
-  key={index}
-  className="trap-cube-button"
-  onClick={() => {
-    setTrapCube(index)
-    setTrapSelect(false)
-    setScreen('game')
-  }}
->
-  <img src={cube} alt="CUBE" />
-</button>
-        ))}
-    </div>
   </div>
 )}
 
