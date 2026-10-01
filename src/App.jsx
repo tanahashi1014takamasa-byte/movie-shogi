@@ -138,13 +138,17 @@ const getGuideMoves = (pieceName) => {
   }
 
   if (pieceName === '吉沢亮') {
-    moves.push(
-      [-2, 0],
-      [2, 0],
-      [0, -2],
-      [0, 2]
-    )
-  }
+  moves.push(
+    [-1, 0],
+    [-2, 0],
+    [1, 0],
+    [2, 0],
+    [0, -1],
+    [0, -2],
+    [0, 1],
+    [0, 2]
+  )
+}
 
   if (pieceName === '横浜流星') {
     moves.push(
