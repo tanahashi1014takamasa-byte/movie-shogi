@@ -104,12 +104,12 @@ const getGuideMoves = (pieceName) => {
 }
 
   if (pieceName === 'ゾディアック') {
-    moves.push(
-      [-1, -1],
-      [-1, 0],
-      [-1, 1]
-    )
-  }
+  moves.push(
+    [1, 0],
+    [0, -1],
+    [0, 1]
+  )
+}
 
   if (pieceName === '武器人間') {
     moves.push(
