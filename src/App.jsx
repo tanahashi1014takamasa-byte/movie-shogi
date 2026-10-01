@@ -20,6 +20,7 @@ import menu1 from './assets/menu_1.png'
 import menu2 from './assets/menu_2.png'
 import menu3 from './assets/menu_3.png'
 import syogiSound from './assets/syogi_s01.mp3'
+import guideText from './assets/guide.txt?raw'
 
 
 
@@ -41,6 +42,16 @@ function App() {
   { name: '吉沢亮', image: yoshizawa },
   { name: '横浜流星', image: ryusei },
 ]
+
+const getGuideDescription = (pieceName) => {
+  const sections = guideText.split(/\n\s*\n/)
+
+  const section = sections.find((text) =>
+    text.startsWith(pieceName)
+  )
+
+  return section || ''
+}
 
 const getGuideMoves = (pieceName) => {
   const moves = []
