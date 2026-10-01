@@ -937,35 +937,37 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
 
 {screen === 'piece-guide' && (
   <div className="piece-guide">
-    <h2>{guidePieces[guidePieceIndex].name}</h2>
+    {guidePieces.map((piece) => (
+      <div className="guide-piece" key={piece.name}>
+        <h2>{piece.name}</h2>
 
-    <div className="guide-board">
-  {Array.from({ length: 25 }).map((_, index) => (
-    <div
-  className={`guide-cell ${
-    getGuideMoves(guidePieces[guidePieceIndex].name).some(
-      (move) =>
-        move.row === Math.floor(index / 5) &&
-        move.col === index % 5
-    )
-      ? 'guide-move'
-      : ''
-  }`}
-  key={index}
->
-      {index === 12 && (
-        <img
-          src={guidePieces[guidePieceIndex].image}
-          alt={guidePieces[guidePieceIndex].name}
-        />
-      )}
-    </div>
-  ))}
-</div>
+        <div className="guide-board">
+          {Array.from({ length: 25 }).map((_, index) => (
+            <div
+              className={`guide-cell ${
+                getGuideMoves(piece.name).some(
+                  (move) =>
+                    move.row === Math.floor(index / 5) &&
+                    move.col === index % 5
+                )
+                  ? 'guide-move'
+                  : ''
+              }`}
+              key={index}
+            >
+              {index === 12 && (
+                <img
+                  src={piece.image}
+                  alt={piece.name}
+                />
+              )}
+            </div>
+          ))}
+        </div>
 
-    <p>
-      {getGuideDescription(guidePieces[guidePieceIndex].name)}
-    </p>
+        <p>{getGuideDescription(piece.name)}</p>
+      </div>
+    ))}
 
     <button onClick={() => setScreen('opening')}>
       戻る
