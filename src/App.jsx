@@ -119,13 +119,17 @@ const getGuideMoves = (pieceName) => {
   }
 
   if (pieceName === '白鯨') {
-    moves.push(
-      [-2, 0],
-      [2, 0],
-      [0, -1],
-      [0, 1]
-    )
-  }
+  moves.push(
+    [-2, 0],
+    [-1, 0],
+    [1, 0],
+    [2, 0],
+    [0, -2],
+    [0, -1],
+    [0, 1],
+    [0, 2]
+  )
+}
 
   if (pieceName === 'CUBE') {
     moves.push(
