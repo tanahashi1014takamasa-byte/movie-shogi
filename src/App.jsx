@@ -103,9 +103,9 @@ const getGuideMoves = (pieceName) => {
   )
 }
 
-  if (pieceName === 'ゾディアック') {
+ if (pieceName === 'ゾディアック') {
   moves.push(
-    [1, 0],
+    [-1, 0],
     [0, -1],
     [0, 1]
   )
