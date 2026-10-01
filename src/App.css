@@ -328,3 +328,17 @@ body {
   height: 100%;
   object-fit: contain;
 }
+
+.trap-cube-button {
+  width: 45px;
+  height: 45px;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.trap-cube-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

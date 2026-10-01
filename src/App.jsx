@@ -1095,11 +1095,16 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
         .filter((piece) => piece.name === 'CUBE' && piece.side !== 'opponent')
         .map((piece, index) => (
           <button
-            key={index}
-            onClick={() => console.log(index)}
-          >
-            <img src={cube} alt="CUBE" />
-          </button>
+  key={index}
+  className="trap-cube-button"
+  onClick={() => {
+    setTrapCube(index)
+    setTrapSelect(false)
+    setScreen('game')
+  }}
+>
+  <img src={cube} alt="CUBE" />
+</button>
         ))}
     </div>
   </div>
