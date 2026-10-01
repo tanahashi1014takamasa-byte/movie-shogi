@@ -1029,10 +1029,10 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
             <div
               className={`guide-cell ${
                 getGuideMoves(piece.name).some(
-                  (move) =>
-                    move.row === Math.floor(index / 5) &&
-                    move.col === index % 5
-                )
+  (move) =>
+    move[0] === Math.floor(index / 5) - 2 &&
+    move[1] === index % 5 - 2
+)
                   ? 'guide-move'
                   : ''
               }`}
