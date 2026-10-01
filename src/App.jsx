@@ -121,12 +121,12 @@ const getGuideMoves = (pieceName) => {
  if (pieceName === '白鯨') {
   moves.push(
     [-2, 0],
+    [-1, -1],
     [-1, 0],
+    [-1, 1],
     [0, -1],
     [0, 1],
-    [1, -1],
     [1, 0],
-    [1, 1],
     [2, 0]
   )
 }
