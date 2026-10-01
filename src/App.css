@@ -230,7 +230,9 @@ body {
 }
 
 .guide-cell {
-  border: 1px solid #555;
+  background: #d8b06a;
+  border-right: 1px solid #222;
+  border-bottom: 1px solid #222;
   display: flex;
   align-items: center;
   justify-content: center;
