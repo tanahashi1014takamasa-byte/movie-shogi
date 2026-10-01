@@ -299,3 +299,12 @@ body {
   font-size: 20px;
   line-height: 1.6;
 }
+
+.piece-guide > button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 120px;
+  height: 55px;
+  font-size: 22px;
+}
