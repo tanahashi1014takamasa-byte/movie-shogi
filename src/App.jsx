@@ -78,10 +78,11 @@ const getGuideMoves = (pieceName) => {
     })
   }
 
-  if (pieceName === 'ミミ') {
+ if (pieceName === 'ミミ') {
   moves.push(
     [-1, -1], [-1, 0], [-1, 1],
-    [1, -1], [1, 1]
+    [0, -1],           [0, 1],
+    [1, 0]
   )
 }
 
