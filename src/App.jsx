@@ -1075,7 +1075,18 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
 
 {onlineScreen && (
   <div className="turn-select">
-    {trapSelect && (
+    <button onClick={createRoom}>ルームを作る</button>
+    <input
+      type="number"
+      placeholder="ルームID"
+      value={roomId ?? ''}
+      onChange={(e) => setRoomId(e.target.value)}
+    />
+    <button onClick={joinRoom}>ルームに入る</button>
+  </div>
+)}
+
+{trapSelect && (
   <div className="turn-select">
     <h2>罠にするCUBEを選んでください</h2>
 
@@ -1091,16 +1102,6 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
           </button>
         ))}
     </div>
-  </div>
-)}
-    <button onClick={createRoom}>ルームを作る</button>
-    <input
-      type="number"
-      placeholder="ルームID"
-      value={roomId ?? ''}
-      onChange={(e) => setRoomId(e.target.value)}
-    />
-    <button onClick={joinRoom}>ルームに入る</button>
   </div>
 )}
 
