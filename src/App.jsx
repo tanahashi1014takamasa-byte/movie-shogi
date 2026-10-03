@@ -854,16 +854,16 @@ if (piece.name === '武器人間') {
   return []
 }
   const [pieces, setPieces] = useState([
-  { name: '白鯨', image: whiteWhale, row: 8, col: 0, wide: true },
+  { name: 'ミスト', image: mist, row: 8, col: 0 },
   { name: '羅生門', image: rashomon, row: 8, col: 1, direction: -1 },
 
-  { name: 'ミスト', image: mist, row: 8, col: 2 },
+  { name: '白鯨', image: whiteWhale, row: 8, col: 2, wide: true },
   { name: '武器人間', image: weaponHuman, row: 8, col: 3, absorbedMoves: [] },
   { name: 'タイタニック', image: titanic, row: 8, col: 4, side: 'player' },
   { name: '国宝', image: kokuhou, row: 8, col: 5 },
-  { name: 'ゾディアック', image: zodiac, row: 8, col: 6 },
+  { name: '白鯨', image: whiteWhale, row: 8, col: 6, wide: true },
   { name: 'サスペリア', image: suspiria, row: 8, col: 7 },
-  { name: '白鯨', image: whiteWhale, row: 8, col: 8, wide: true },
+  { name: 'ゾディアック', image: zodiac, row: 8, col: 8 },
 
   { name: 'ミミ', image: mimi, row: 7, col: 4, side: 'player' },
 
@@ -876,15 +876,15 @@ if (piece.name === '武器人間') {
   { name: 'CUBE', image: cube, row: 6, col: 6 },
   { name: 'CUBE', image: cube, row: 6, col: 7 },
   { name: 'CUBE', image: cube, row: 6, col: 8 },
-    { name: '白鯨', image: whiteWhale, row: 0, col: 0, wide: true, side: 'opponent' },
+    { name: 'ミスト', image: mist, row: 0, col: 0, side: 'opponent' },
   { name: '羅生門', image: rashomon, row: 0, col: 1, side: 'opponent', direction: 1 },
-  { name: 'ミスト', image: mist, row: 0, col: 2, side: 'opponent' },
+  { name: '白鯨', image: whiteWhale, row: 0, col: 2, wide: true, side: 'opponent' },
   { name: '武器人間', image: weaponHuman, row: 0, col: 3, side: 'opponent', absorbedMoves: [] },
   { name: 'タイタニック', image: titanic, row: 0, col: 4, side: 'opponent' },
   { name: '国宝', image: kokuhou, row: 0, col: 5, side: 'opponent' },
-  { name: 'ゾディアック', image: zodiac, row: 0, col: 6, side: 'opponent' },
+  { name: '白鯨', image: whiteWhale, row: 0, col: 6, wide: true, side: 'opponent' },
   { name: 'サスペリア', image: suspiria, row: 0, col: 7, side: 'opponent' },
-  { name: '白鯨', image: whiteWhale, row: 0, col: 8, wide: true, side: 'opponent' },
+  { name: 'ゾディアック', image: zodiac, row: 0, col: 8, side: 'opponent' },
 
   { name: 'ミミ', image: mimi, row: 1, col: 4, side: 'opponent' },
 
