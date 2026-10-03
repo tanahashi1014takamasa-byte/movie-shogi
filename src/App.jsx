@@ -990,6 +990,8 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
         pieces: nextPieces,
         turn: nextTurn,
         mistMoveCount: nextMistMoveCount,
+        trapCube: currentState.trapCube,
+        opponentTrapCube: currentState.opponentTrapCube,
         playerSide,
         playerHand:
           playerSide === 'player'
