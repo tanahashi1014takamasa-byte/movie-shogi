@@ -925,6 +925,7 @@ mistMoveCount: {
     return
   }
   setTrapCube(newTrapCube)
+  setOpponentTrapCube(newOpponentTrapCube)
   setRoomId(newRoomId)
   setPlayerSide('player')
   setScreen('game')
@@ -962,6 +963,8 @@ await supabase
   setPieces(data[0].game_state.pieces)
 setTurn(data[0].game_state.turn)
 setPlayerHand(data[0].game_state.opponentHand ?? [])
+setTrapCube(data[0].game_state.opponentTrapCube)
+setOpponentTrapCube(data[0].game_state.trapCube)
 setOpponentHand(data[0].game_state.playerHand ?? [])
 setPlayerSide('opponent')
 setScreen('game')
