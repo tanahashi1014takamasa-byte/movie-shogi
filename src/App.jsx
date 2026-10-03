@@ -1168,12 +1168,7 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
   className={`square ${
 legalMoves.some((move) =>
   move.row === row &&
-  move.col === col &&
-  !pieces.some((p) =>
-    p.name === '白鯨' &&
-    p.col === col &&
-    p.row + (p.side === 'opponent' ? 1 : -1) === row
-  )
+  move.col === col
 ) ||
 (
   !selectedPiece?.fromHand &&
