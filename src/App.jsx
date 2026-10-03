@@ -898,6 +898,7 @@ const createRoom = async () => {
   const newRoomId = Math.floor(100000 + Math.random() * 900000).toString()
 
 const newTrapCube = Math.floor(Math.random() * 9)
+const newOpponentTrapCube = Math.floor(Math.random() * 9)
 
   const { error } = await supabase
     .from('game')
@@ -909,6 +910,7 @@ const newTrapCube = Math.floor(Math.random() * 9)
   playerSide: 'player',
   playerCount: 1,
   trapCube: newTrapCube,
+  opponentTrapCube: newOpponentTrapCube,
   playerHand: [],
 opponentHand: [],
 mistMoveCount: {
