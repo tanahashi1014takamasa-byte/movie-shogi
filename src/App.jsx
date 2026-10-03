@@ -27,6 +27,11 @@ import guideText from './assets/guide.txt?raw'
 function App() {
   const [screen, setScreen] = useState('opening')
   const [guidePieceIndex, setGuidePieceIndex] = useState(0)
+  useEffect(() => {
+  if (screen === 'piece-guide') {
+    window.scrollTo(0, 0)
+  }
+}, [screen])
   const guidePieces = [
   { name: 'タイタニック', image: titanic },
   { name: '国宝', image: kokuhou },
