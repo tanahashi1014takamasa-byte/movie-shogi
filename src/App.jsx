@@ -192,7 +192,7 @@ const [opponentTrapCube, setOpponentTrapCube] = useState(null)
 )
 
 
-  const moves = cpuPieces.flatMap((piece) =>
+ const moves = cpuPieces.flatMap((piece) =>
   getLegalMoves(
     piece,
     pieces.filter(
@@ -203,6 +203,8 @@ const [opponentTrapCube, setOpponentTrapCube] = useState(null)
     move,
   }))
 )
+
+const safeMoves = moves
 
 
 if (safeMoves.length === 0) return
