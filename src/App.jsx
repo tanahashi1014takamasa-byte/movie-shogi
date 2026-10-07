@@ -1383,10 +1383,8 @@ updateGameState(
       selectedPiece?.name === 'ミスト' ? 1 : 0
     ),
   },
-  capturedPieces.some((captured) => captured.name === 'タイタニック'),
-  capturedPieces.some((captured) => captured.name === 'タイタニック')
-    ? playerSide
-    : null
+  false,
+  null
 )
 
     setSelectedPiece(null)
