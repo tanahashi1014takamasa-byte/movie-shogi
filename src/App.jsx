@@ -42,7 +42,7 @@ function App() {
   { name: 'サスペリア', image: suspiria },
   { name: 'ゾディアック', image: zodiac },
   { name: '武器人間', image: weaponHuman },
-  { name: '白鯨', image: whiteWhale },
+  { name: 'ウォーゲーム', image: warGame },
   { name: 'CUBE', image: cube },
   { name: '吉沢亮', image: yoshizawa },
   { name: '横浜流星', image: ryusei },
@@ -123,7 +123,7 @@ const getGuideMoves = (pieceName) => {
     )
   }
 
- if (pieceName === '白鯨') {
+ if (pieceName === 'ウォーゲーム') {
   moves.push(
     [-2, 0],
     [-1, -1],
@@ -203,14 +203,7 @@ const [opponentTrapCube, setOpponentTrapCube] = useState(null)
     move,
   }))
 )
-const safeMoves = moves.filter(({ piece, move }) =>
-  piece.name === '白鯨' ||
-  !pieces.some((p) =>
-    p.name === '白鯨' &&
-    p.col === move.col &&
-    p.row + (p.side === 'opponent' ? 1 : -1) === move.row
-  )
-)
+
 
 if (safeMoves.length === 0) return
 
@@ -708,36 +701,7 @@ if (piece.name === 'ゾディアック') {
     )
 }
 
-if (piece.name === '白鯨') {
-  const direction = piece.side === 'opponent' ? 1 : -1
 
-  const moves = [
-    { row: piece.row + direction * 2, col: piece.col },
-    { row: piece.row - direction * 2, col: piece.col },
-    { row: piece.row, col: piece.col - 1 },
-    { row: piece.row, col: piece.col + 1 },
-  ]
-
-  return moves.filter(
-    (move) =>
-      move.row >= 0 &&
-      move.row < 9 &&
-      move.col >= 0 &&
-      move.col < 9 &&
-      !pieces.some(
-  (p) =>
-    p !== piece &&
-    (
-      (p.row === move.row && p.col === move.col) ||
-      (
-        p.row === move.row + (piece.side === 'opponent' ? 1 : -1) &&
-        p.col === move.col
-      )
-    ) &&
-    (p.side ?? 'player') === (piece.side ?? 'player')
-)
-  )
-}
 
 if (piece.name === '武器人間') {
   const absorbedMove = piece.absorbedMoves?.[0]
@@ -873,8 +837,7 @@ if (piece.name === '武器人間') {
             p.row === move.row &&
             p.col === move.col &&
 (
-  (p.side ?? 'player') === (piece.side ?? 'player') ||
-  p.name === '白鯨'
+  (p.side ?? 'player') === (piece.side ?? 'player')
 )
         )
     )
@@ -891,7 +854,7 @@ if (piece.name === '武器人間') {
   { name: '武器人間', image: weaponHuman, row: 8, col: 3, absorbedMoves: [] },
   { name: 'タイタニック', image: titanic, row: 8, col: 4, side: 'player' },
   { name: '国宝', image: kokuhou, row: 8, col: 5 },
-  { name: '白鯨', image: whiteWhale, row: 8, col: 6, wide: true },
+  { name: 'ウォーゲーム', image: warGame, row: 8, col: 6 },
   { name: 'サスペリア', image: suspiria, row: 8, col: 7 },
   { name: 'ゾディアック', image: zodiac, row: 8, col: 8 },
 
@@ -908,11 +871,11 @@ if (piece.name === '武器人間') {
   { name: 'CUBE', image: cube, row: 6, col: 8 },
     { name: 'ミスト', image: mist, row: 0, col: 0, side: 'opponent' },
   { name: '羅生門', image: rashomon, row: 0, col: 1, side: 'opponent', direction: 1 },
-  { name: '白鯨', image: whiteWhale, row: 0, col: 2, wide: true, side: 'opponent' },
+  { name: 'ウォーゲーム', image: warGame, row: 0, col: 2, side: 'opponent' },
   { name: '武器人間', image: weaponHuman, row: 0, col: 3, side: 'opponent', absorbedMoves: [] },
   { name: 'タイタニック', image: titanic, row: 0, col: 4, side: 'opponent' },
   { name: '国宝', image: kokuhou, row: 0, col: 5, side: 'opponent' },
-  { name: '白鯨', image: whiteWhale, row: 0, col: 6, wide: true, side: 'opponent' },
+  { name: 'ウォーゲーム', image: warGame, row: 0, col: 6, side: 'opponent' },
   { name: 'サスペリア', image: suspiria, row: 0, col: 7, side: 'opponent' },
   { name: 'ゾディアック', image: zodiac, row: 0, col: 8, side: 'opponent' },
 
@@ -1235,18 +1198,8 @@ const updateGameState = async (
 legalMoves.some((move) =>
   move.row === row &&
   move.col === col
-) ||
-(
-  !selectedPiece?.fromHand &&
-  legalMoves.some((move) =>
-    selectedPiece?.name === '白鯨' &&
-    move.col === col &&
-    (
-      move.row === row ||
-      move.row + (selectedPiece.side === 'opponent' ? 1 : -1) === row
-    )
-  )
-)
+) 
+
       ? 'legal-move'
       : ''
   }`}
@@ -1300,15 +1253,10 @@ updateGameState(
     return
   }
 
-  const isWhaleTip = pieces.some((p) =>
-  p.name === '白鯨' &&
-  p.col === col &&
-  p.row + (p.side === 'opponent' ? 1 : -1) === row
-)
+ 
 
   if (
-  legalMoves.some((move) => move.row === row && move.col === col) &&
-  (!isWhaleTip || selectedPiece?.name === '白鯨')
+  legalMoves.some((move) => move.row === row && move.col === col)
 ) {
     playSyogiSound()
 
@@ -1334,46 +1282,9 @@ const trapCubeCaptured =
 
   const capturedPieces = pieces.filter((p) => {
  
-if (selectedPiece?.name === '白鯨') {
-  const secondRow =
-    row + (selectedPiece.side === 'opponent' ? 1 : -1)
 
-  if (p.name === '白鯨') {
-    const whaleSecondRow =
-      p.row + (p.side === 'opponent' ? 1 : -1)
 
-    return (
-      p !== selectedPiece &&
-      (p.side ?? 'player') !== (selectedPiece.side ?? 'player') &&
-      (
-        (p.row === row && p.col === col) ||
-        (p.row === secondRow && p.col === col) ||
-        (whaleSecondRow === row && p.col === col) ||
-        (whaleSecondRow === secondRow && p.col === col)
-      )
-    )
-  }
-
-  
-  return (
-    p !== selectedPiece &&
-    (
-      (p.row === row && p.col === col) ||
-      (p.row === secondRow && p.col === col)
-    ) &&
-    (p.side ?? 'player') !== (selectedPiece.side ?? 'player')
-  )
-}
-
-    if (p.name === '白鯨') {
-  const whaleSecondRow =
-    p.row + (p.side === 'opponent' ? 1 : -1)
-
-  return (
-  p.row === row &&
-  p.col === col
-)
-}
+ 
 
   return (
     p.row === row &&
@@ -1470,7 +1381,7 @@ setTurn(turn === 'player' ? 'opponent' : 'player')
   (piece.side ?? 'player') !== playerSide &&
   mistMoveCount[piece.side ?? 'player'] < 10) && (
   <img
-  className={`${piece.name === '白鯨' ? 'piece-image white-whale' : 'piece-image'} ${piece.side === 'opponent' ? 'opponent-piece' : ''} ${!selectedPiece?.fromHand && selectedPiece?.row === piece.row && selectedPiece?.col === piece.col ? 'selected' : ''} ${piece.name === 'CUBE' &&
+  className={`${'piece-image'} ${piece.side === 'opponent' ? 'opponent-piece' : ''} ${!selectedPiece?.fromHand && selectedPiece?.row === piece.row && selectedPiece?.col === piece.col ? 'selected' : ''} ${piece.name === 'CUBE' &&
 (
   (playerSide === 'player' && piece.side !== 'opponent' && piece.col === trapCube) ||
   (playerSide === 'opponent' && piece.side === 'opponent' && piece.col === trapCube)
@@ -1483,15 +1394,7 @@ setTurn(turn === 'player' ? 'opponent' : 'player')
   if ((piece.side ?? 'player') !== playerSide) return
   if ((piece.side ?? 'player') !== turn) return
 
-  if (
-    selectedPiece &&
-    piece.name === '白鯨' &&
-    selectedPiece.side !== piece.side
-  ) {
-    
-  } else {
-    setSelectedPiece(piece)
-  }
+  setSelectedPiece(piece)
 }}
 />
 )}
