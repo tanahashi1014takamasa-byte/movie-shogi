@@ -123,18 +123,6 @@ const getGuideMoves = (pieceName) => {
     )
   }
 
- if (pieceName === 'ウォーゲーム') {
-  moves.push(
-    [-2, 0],
-    [-1, -1],
-    [-1, 0],
-    [-1, 1],
-    [0, -1],
-    [0, 1],
-    [1, 0],
-    [2, 0]
-  )
-}
 
   if (pieceName === 'CUBE') {
     moves.push(
