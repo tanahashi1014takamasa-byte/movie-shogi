@@ -330,9 +330,16 @@ useEffect(() => {
         filter: `room_id=eq.${roomId}`,
       },
       (payload) => {
-        const gameState = payload.new.game_state
+ const gameState = payload.new.game_state
 
-        if (gameState.gameEnded) {
+if (gameState.gameEnded && gameState.winnerSide) {
+  setResult(gameState.winnerSide === playerSide ? '勝利' : '敗北')
+  setPieces(gameState.pieces)
+  setTurn(gameState.turn)
+  return
+}
+
+if (gameState.gameEnded) {
   setPieces(initialPiecesRef.current)
   setResult(null)
   setRoomId(null)
@@ -1004,7 +1011,14 @@ setPlayerSide('opponent')
 setScreen('game')
 }
 
-const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMoveCount) => {
+const updateGameState = async (
+  nextPieces,
+  nextTurn,
+  nextPlayerHand,
+  nextMistMoveCount,
+  gameEnded = false,
+  winnerSide = null
+) => {
   if (!roomId) return
 
   const { data } = await supabase
@@ -1026,6 +1040,8 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
         mistMoveCount: nextMistMoveCount,
         trapCube: currentState.trapCube,
         opponentTrapCube: currentState.opponentTrapCube,
+        gameEnded,
+        winnerSide,
         playerSide,
         playerHand:
           playerSide === 'player'
@@ -1266,13 +1282,17 @@ const nextTurn = turn === 'player' ? 'opponent' : 'player'
 updateGameState(
   nextPieces,
   nextTurn,
-  nextPlayerHand,
+  nextPlayerHand ?? playerHand,
   {
     ...mistMoveCount,
     [playerSide]: mistMoveCount[playerSide] + (
       selectedPiece?.name === 'ミスト' ? 1 : 0
     ),
-  }
+  },
+  capturedPieces.some((captured) => captured.name === 'タイタニック'),
+  capturedPieces.some((captured) => captured.name === 'タイタニック')
+    ? playerSide
+    : null
 )
 
     setSelectedPiece(null)
@@ -1431,7 +1451,11 @@ updateGameState(
     [playerSide]: mistMoveCount[playerSide] + (
       selectedPiece?.name === 'ミスト' ? 1 : 0
     ),
-  }
+  },
+  capturedPieces.some((captured) => captured.name === 'タイタニック'),
+  capturedPieces.some((captured) => captured.name === 'タイタニック')
+    ? playerSide
+    : null
 )
 
 setSelectedPiece(null)
