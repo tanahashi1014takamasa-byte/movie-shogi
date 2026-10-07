@@ -1478,6 +1478,7 @@ setTurn(turn === 'player' ? 'opponent' : 'player')
   src={piece.image}
   alt={piece.name}
   onClick={(e) => {
+    if (result) return
   if (screen !== 'game') return
   if ((piece.side ?? 'player') !== playerSide) return
   if ((piece.side ?? 'player') !== turn) return
