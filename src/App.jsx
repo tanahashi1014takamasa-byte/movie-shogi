@@ -1147,6 +1147,7 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
         <div>M: 0</div>
 
         <button className="home-button" onClick={() => {
+  setPieces(initialPiecesRef.current)
   setResult(null)
   setRoomId(null)
   setScreen('opening')
