@@ -243,7 +243,7 @@ const cpuMove =
 
 const timer = setTimeout(() => {
 
-syogiAudio.play()
+syogiAudio.current.play()
 
 setPieces((currentPieces) => {
 
@@ -1147,6 +1147,15 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
         <button className="home-button" onClick={() => {
   setResult(null)
   setRoomId(null)
+  setPieces(initialPieces.map(piece => ({ ...piece })))
+  setPlayerHand([])
+  setOpponentHand([])
+  setMistMoveCount({ player: 0, opponent: 0 })
+  setSelectedPiece(null)
+  setPlayerSide(null)
+  setTurn('player')
+  setTrapCube(null)
+  setOpponentTrapCube(null)
   setScreen('opening')
 }}>戻る</button>
 
