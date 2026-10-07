@@ -332,6 +332,14 @@ useEffect(() => {
       (payload) => {
         const gameState = payload.new.game_state
 
+        if (gameState.gameEnded) {
+  setPieces(initialPiecesRef.current)
+  setResult(null)
+  setRoomId(null)
+  setScreen('opening')
+  return
+}
+
  if (
   previousTurnRef.current !== null &&
   previousTurnRef.current !== gameState.turn &&
@@ -1146,7 +1154,27 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
 
         <div>M: 0</div>
 
-        <button className="home-button" onClick={() => {
+<button className="home-button" onClick={async () => {
+  if (roomId) {
+    const { data } = await supabase
+      .from('game')
+      .select('game_state')
+      .eq('room_id', roomId)
+      .single()
+
+    if (data) {
+      await supabase
+        .from('game')
+        .update({
+          game_state: {
+            ...data.game_state,
+            gameEnded: true,
+          },
+        })
+        .eq('room_id', roomId)
+    }
+  }
+
   setPieces(initialPiecesRef.current)
   setResult(null)
   setRoomId(null)
