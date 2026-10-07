@@ -751,7 +751,7 @@ if (piece.name === 'ウォーゲーム') {
         [1, -1],  [1, 0],  [1, 1],
         [-2, -2], [-2, 0], [-2, 2],
         [0, -2],           [0, 2],
-        [2, -2],  [2, 0],  [2, 2],
+        [2, -2],  [2, 0],  [2, 1],
       ]
     }
 
@@ -760,82 +760,40 @@ if (piece.name === 'ウォーゲーム') {
     }
   })
 
-  // 各能力を実際の盤面に当てはめて評価する
-  const evaluateAbility = (moves) => {
-    const legalMoves = moves
-      .map(([dr, dc]) => ({
-        row: piece.row + dr,
-        col: piece.col + dc,
-      }))
-      .filter(
-        (move) =>
-          move.row >= 0 &&
-          move.row < 9 &&
-          move.col >= 0 &&
-          move.col < 9 &&
-          !pieces.some(
-            (p) =>
-              p.row === move.row &&
-              p.col === move.col &&
-              (p.side ?? 'player') === side
-          )
-      )
-
-    let score = 0
-
-    legalMoves.forEach((move) => {
-      const target = pieces.find(
-        (p) =>
-          p.row === move.row &&
-          p.col === move.col &&
-          (p.side ?? 'player') !== side
-      )
-
-      if (target) {
-        score += 20
-
-        if (target.name === 'タイタニック') {
-          score += 1000
-        }
-      }
-
-      // 中央に近いマスを少し評価
-      const centerDistance =
-        Math.abs(move.row - 4) +
-        Math.abs(move.col - 4)
-
-      score += Math.max(0, 8 - centerDistance)
-
-      // 移動候補が多い能力を少し評価
-      score += legalMoves.length
-    })
-
-    return {
-      score,
-      legalMoves,
-    }
-  }
-
-  let bestAbility = '基本'
-  let bestResult = evaluateAbility(abilityMoves['基本'])
-
-  Object.entries(abilityMoves).forEach(
-    ([ability, moves]) => {
-      if (ability === '基本') return
-
-      const result = evaluateAbility(moves)
-
-      if (
-        result.legalMoves.length > 0 &&
-        result.score > bestResult.score
-      ) {
-        bestAbility = ability
-        bestResult = result
-      }
-    }
+  // 周囲にいる駒の能力だけを候補にする
+  const nearbyAbilities = Object.keys(abilityMoves).filter(
+    (ability) => ability !== '基本'
   )
 
-  return bestResult.legalMoves
+  // 周囲に能力を持つ駒がいなければ基本能力
+  const selectedAbility =
+    nearbyAbilities.length > 0
+      ? nearbyAbilities[
+          Math.floor(Math.random() * nearbyAbilities.length)
+        ]
+      : '基本'
+
+  const selectedMoves = abilityMoves[selectedAbility]
+
+  // 選ばれた能力の合法手だけ返す
+  return selectedMoves
+    .map(([dr, dc]) => ({
+      row: piece.row + dr,
+      col: piece.col + dc,
+    }))
+    .filter(
+      (move) =>
+        move.row >= 0 &&
+        move.row < 9 &&
+        move.col >= 0 &&
+        move.col < 9 &&
+        !pieces.some(
+          (p) =>
+            p.row === move.row &&
+            p.col === move.col &&
+            (p.side ?? 'player') === side
+        )
+    )
 }
 
   if (piece.name === 'ミスト') {
