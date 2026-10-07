@@ -241,11 +241,11 @@ const cpuMove =
       ? captureMoves[Math.floor(Math.random() * captureMoves.length)]
       : safeMoves[Math.floor(Math.random() * safeMoves.length)]
 
-const timer = setTimeout(() => {
-
-  playSyogiSound()
-
-  setPieces((currentPieces) => {
+const playSyogiSound = () => {
+  syogiAudio.current.pause()
+  syogiAudio.current.currentTime = 0
+  syogiAudio.current.play()
+}
 
   if (cpuMove.piece.name === 'ミスト') {
   setMistMoveCount((count) => ({
