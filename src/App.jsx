@@ -314,7 +314,7 @@ setTurn(playerSide)
 }, 1000)
 
 return () => clearTimeout(timer)
-}, [turn, screen, playerSide, pieces])
+}, [turn, screen, playerSide])
 
 useEffect(() => {
   if (!roomId || screen !== 'game') return
