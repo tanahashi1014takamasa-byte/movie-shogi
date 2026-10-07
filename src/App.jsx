@@ -867,7 +867,8 @@ if (piece.name === '武器人間') {
 
   return []
 }
-  const [pieces, setPieces] = useState([
+  
+  const initialPieces = [
   { name: 'ミスト', image: mist, row: 8, col: 0 },
   { name: '羅生門', image: rashomon, row: 8, col: 1, direction: -1 },
 
@@ -911,7 +912,9 @@ if (piece.name === '武器人間') {
   { name: 'CUBE', image: cube, row: 2, col: 6, side: 'opponent' },
   { name: 'CUBE', image: cube, row: 2, col: 7, side: 'opponent' },
   { name: 'CUBE', image: cube, row: 2, col: 8, side: 'opponent' },
-])
+]
+
+const [pieces, setPieces] = useState(initialPieces)
 
 const createRoom = async () => {
   const newRoomId = Math.floor(100000 + Math.random() * 900000).toString()
@@ -1115,6 +1118,7 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
 {screen === 'turn-select' && (
   <div className="turn-select">
     <button onClick={() => {
+  setPieces(initialPieces)
   setPlayerSide('player')
   setTrapCube(Math.floor(Math.random() * 9))
   setOpponentTrapCube(Math.floor(Math.random() * 9))
@@ -1124,6 +1128,7 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
 }}>先手</button>
   
     <button onClick={() => {
+         setPieces(initialPieces)
   setPlayerSide('player')
   setTrapCube(Math.floor(Math.random() * 9))
   setOpponentTrapCube(Math.floor(Math.random() * 9))
