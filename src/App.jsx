@@ -369,11 +369,11 @@ previousTurnRef.current = gameState.turn
   const [selectedPiece, setSelectedPiece] = useState(null)
   const [playerHand, setPlayerHand] = useState([])
   const [opponentHand, setOpponentHand] = useState([])
-  const syogiAudio = new Audio(syogiSound)
+  const syogiAudio = useRef(new Audio(syogiSound))
 
 const playSyogiSound = () => {
-  syogiAudio.currentTime = 0
-  syogiAudio.play()
+  syogiAudio.current.currentTime = 0
+  syogiAudio.current.play()
 }
 
 const previousPiecesRef = useRef(null)
