@@ -647,35 +647,122 @@ const previousTurnRef = useRef(null)
       )
   }
 
-    if (piece.name === 'ウォーゲーム') {
-    const directions = [
-      [-1, -1], [-1, 0], [-1, 1],
-      [0, -1],           [0, 1],
-      [1, -1],  [1, 0],  [1, 1],
-    ]
+if (piece.name === 'ウォーゲーム') {
+  const nearbyPieces = pieces.filter(
+    (p) =>
+      Math.abs(p.row - piece.row) <= 1 &&
+      Math.abs(p.col - piece.col) <= 1 &&
+      p !== piece
+  )
 
-      
+  const side = piece.side ?? 'player'
+  const direction = side === 'player' ? -1 : 1
 
-        const nearbyPieces = pieces.filter(
-      (p) =>
-        Math.abs(p.row - piece.row) <= 1 &&
-        Math.abs(p.col - piece.col) <= 1 &&
-        p !== piece
-    )
+  const abilityMoves = {}
 
-nearbyPieces.forEach((nearby) => {
-  const dr = nearby.row - piece.row
-  const dc = nearby.col - piece.col
+  // 基本能力
+  abilityMoves['基本'] = [
+    [-1, -1], [-1, 0], [-1, 1],
+    [0, -1],           [0, 1],
+    [1, -1],  [1, 0],  [1, 1],
+  ]
 
-  if (
-    nearby.name === 'CUBE' &&
-    (dr !== 0 || dc !== 0)
-  ) {
-    directions.push([dr * 2, dc * 2])
-  }
-})
+  nearbyPieces.forEach((nearby) => {
+    let moves = []
 
-    return directions
+    // CUBE
+    if (nearby.name === 'CUBE') {
+      moves = [[direction * 2, 0]]
+    }
+
+    // 国宝
+    if (nearby.name === '国宝') {
+      moves = [
+        [-1, -1], [-1, 0], [-1, 1],
+        [0, -1],           [0, 1],
+        [1, -1],  [1, 0],  [1, 1],
+        [-2, -2], [-2, 0], [-2, 2],
+        [0, -2],           [0, 2],
+        [2, -2],  [2, 0],  [2, 2],
+      ]
+    }
+
+    // 羅生門
+    if (nearby.name === '羅生門') {
+      moves = [
+        [direction, 0],
+        [direction * 2, 0],
+      ]
+    }
+
+    // サスペリア
+    if (nearby.name === 'サスペリア') {
+      moves = [
+        [-2, -2], [-2, 0], [-2, 2],
+        [0, -2],           [0, 2],
+        [2, -2],  [2, 0],  [2, 2],
+      ]
+    }
+
+    // ゾディアック
+    if (nearby.name === 'ゾディアック') {
+      moves = [
+        [direction, 0],
+        [0, -1],
+        [0, 1],
+      ]
+    }
+
+    // ミミ
+    if (nearby.name === 'ミミ') {
+      moves = [
+        [direction, -1],
+        [direction, 0],
+        [direction, 1],
+        [0, -1],
+        [0, 1],
+        [-direction, 0],
+      ]
+    }
+
+    // ミスト
+    if (nearby.name === 'ミスト') {
+      moves = [
+        [-1, -1], [-1, 0], [-1, 1],
+        [0, -1],           [0, 1],
+        [1, -1],  [1, 0],  [1, 1],
+      ]
+    }
+
+    // タイタニック
+    if (nearby.name === 'タイタニック') {
+      moves = [
+        [-1, -1], [-1, 0], [-1, 1],
+        [0, -1],           [0, 1],
+        [1, -1],  [1, 0],  [1, 1],
+      ]
+    }
+
+    // サイコ・ゴアマン
+    if (nearby.name === 'サイコ・ゴアマン') {
+      moves = [
+        [-1, -1], [-1, 0], [-1, 1],
+        [0, -1],           [0, 1],
+        [1, -1],  [1, 0],  [1, 1],
+        [-2, -2], [-2, 0], [-2, 2],
+        [0, -2],           [0, 2],
+        [2, -2],  [2, 0],  [2, 2],
+      ]
+    }
+
+    if (moves.length > 0) {
+      abilityMoves[nearby.name] = moves
+    }
+  })
+
+  // 各能力を実際の盤面に当てはめて評価する
+  const evaluateAbility = (moves) => {
+    const legalMoves = moves
       .map(([dr, dc]) => ({
         row: piece.row + dr,
         col: piece.col + dc,
@@ -690,11 +777,66 @@ nearbyPieces.forEach((nearby) => {
             (p) =>
               p.row === move.row &&
               p.col === move.col &&
-              (p.side ?? 'player') === (piece.side ?? 'player')
+              (p.side ?? 'player') === side
           )
       )
+
+    let score = 0
+
+    legalMoves.forEach((move) => {
+      const target = pieces.find(
+        (p) =>
+          p.row === move.row &&
+          p.col === move.col &&
+          (p.side ?? 'player') !== side
+      )
+
+      if (target) {
+        score += 20
+
+        if (target.name === 'タイタニック') {
+          score += 1000
+        }
+      }
+
+      // 中央に近いマスを少し評価
+      const centerDistance =
+        Math.abs(move.row - 4) +
+        Math.abs(move.col - 4)
+
+      score += Math.max(0, 8 - centerDistance)
+
+      // 移動候補が多い能力を少し評価
+      score += legalMoves.length
+    })
+
+    return {
+      score,
+      legalMoves,
+    }
   }
 
+  let bestAbility = '基本'
+  let bestResult = evaluateAbility(abilityMoves['基本'])
+
+  Object.entries(abilityMoves).forEach(
+    ([ability, moves]) => {
+      if (ability === '基本') return
+
+      const result = evaluateAbility(moves)
+
+      if (
+        result.legalMoves.length > 0 &&
+        result.score > bestResult.score
+      ) {
+        bestAbility = ability
+        bestResult = result
+      }
+    }
+  )
+
+  return bestResult.legalMoves
+}
 
   if (piece.name === 'ミスト') {
   const directions = [
