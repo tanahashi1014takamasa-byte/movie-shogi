@@ -332,10 +332,10 @@ useEffect(() => {
       (payload) => {
         const gameState = payload.new.game_state
 
-        if (
+ if (
   previousTurnRef.current !== null &&
   previousTurnRef.current !== gameState.turn &&
-  gameState.turn === playerSide
+  gameState.playerSide !== playerSide
 ) {
   playSyogiSound()
 }
