@@ -112,7 +112,9 @@ const getGuideMoves = (pieceName) => {
   moves.push(
     [-1, 0],
     [0, -1],
-    [0, 1]
+    [0, 1],
+    [-2, -2],
+    [-2, 2]
   )
 }
 
