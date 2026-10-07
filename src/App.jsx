@@ -663,6 +663,15 @@ const previousTurnRef = useRef(null)
         p !== piece
     )
 
+nearbyPieces.forEach((nearby) => {
+  const dr = nearby.row - piece.row
+  const dc = nearby.col - piece.col
+
+  if (dr !== 0 || dc !== 0) {
+    directions.push([dr, dc])
+  }
+})
+
     return directions
       .map(([dr, dc]) => ({
         row: piece.row + dr,
