@@ -1212,13 +1212,14 @@ const updateGameState = async (
           {Array.from({ length: 25 }).map((_, index) => (
             <div
               className={`guide-cell ${
-                getGuideMoves(piece.name).some(
-  (move) =>
-    move[0] === Math.floor(index / 5) - 2 &&
-    move[1] === index % 5 - 2
-)
-                  ? 'guide-move'
-                  : ''
+                piece.name !== 'ウォーゲーム' &&
+  getGuideMoves(piece.name).some(
+    (move) =>
+      move[0] === Math.floor(index / 5) - 2 &&
+      move[1] === index % 5 - 2
+  )
+    ? 'guide-move'
+    : ''
               }`}
               key={index}
             >
