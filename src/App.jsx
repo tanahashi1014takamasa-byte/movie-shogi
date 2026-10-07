@@ -243,9 +243,9 @@ const cpuMove =
 
 const timer = setTimeout(() => {
 
-syogiAudio.current.play()
+  playSyogiSound()
 
-setPieces((currentPieces) => {
+  setPieces((currentPieces) => {
 
   if (cpuMove.piece.name === 'ミスト') {
   setMistMoveCount((count) => ({
