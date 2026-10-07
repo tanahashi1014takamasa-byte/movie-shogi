@@ -311,7 +311,7 @@ body {
 }
 
 .war-game-piece {
-  width: 110%;
+  width: 120%;
   height: 100%;
-  object-fit: contain;
+  object-fit: fill;
 }
