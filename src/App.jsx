@@ -333,13 +333,14 @@ useEffect(() => {
         const gameState = payload.new.game_state
 
         if (
-  previousPiecesRef.current !== null &&
-  JSON.stringify(previousPiecesRef.current) !== JSON.stringify(gameState.pieces)
+  previousTurnRef.current !== null &&
+  previousTurnRef.current !== gameState.turn &&
+  gameState.turn === playerSide
 ) {
   playSyogiSound()
 }
 
-previousPiecesRef.current = gameState.pieces
+previousTurnRef.current = gameState.turn
 
         setPieces(gameState.pieces)
         setTurn(gameState.turn)
@@ -376,6 +377,7 @@ const playSyogiSound = () => {
 }
 
 const previousPiecesRef = useRef(null)
+const previousTurnRef = useRef(null)
 
   const getLegalMoves = (piece, pieces) => {
   if (!piece) return []
