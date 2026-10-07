@@ -667,8 +667,11 @@ nearbyPieces.forEach((nearby) => {
   const dr = nearby.row - piece.row
   const dc = nearby.col - piece.col
 
-  if (dr !== 0 || dc !== 0) {
-    directions.push([dr, dc])
+  if (
+    nearby.name === 'CUBE' &&
+    (dr !== 0 || dc !== 0)
+  ) {
+    directions.push([dr * 2, dc * 2])
   }
 })
 
