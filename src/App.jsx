@@ -645,6 +645,34 @@ const previousTurnRef = useRef(null)
       )
   }
 
+    if (piece.name === 'ウォーゲーム') {
+    const directions = [
+      [-1, -1], [-1, 0], [-1, 1],
+      [0, -1],           [0, 1],
+      [1, -1],  [1, 0],  [1, 1],
+    ]
+
+    return directions
+      .map(([dr, dc]) => ({
+        row: piece.row + dr,
+        col: piece.col + dc,
+      }))
+      .filter(
+        (move) =>
+          move.row >= 0 &&
+          move.row < 9 &&
+          move.col >= 0 &&
+          move.col < 9 &&
+          !pieces.some(
+            (p) =>
+              p.row === move.row &&
+              p.col === move.col &&
+              (p.side ?? 'player') === (piece.side ?? 'player')
+          )
+      )
+  }
+
+
   if (piece.name === 'ミスト') {
   const directions = [
     [-1, -1], [-1, 0], [-1, 1],
