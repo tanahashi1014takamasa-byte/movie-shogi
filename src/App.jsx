@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { supabase } from './supabase'
 import './App.css'
 
@@ -332,6 +332,15 @@ useEffect(() => {
       (payload) => {
         const gameState = payload.new.game_state
 
+        if (
+  previousPiecesRef.current !== null &&
+  JSON.stringify(previousPiecesRef.current) !== JSON.stringify(gameState.pieces)
+) {
+  playSyogiSound()
+}
+
+previousPiecesRef.current = gameState.pieces
+
         setPieces(gameState.pieces)
         setTurn(gameState.turn)
         setMistMoveCount(gameState.mistMoveCount ?? { player: 0, opponent: 0 })
@@ -365,6 +374,9 @@ const playSyogiSound = () => {
   syogiAudio.currentTime = 0
   syogiAudio.play()
 }
+
+const previousPiecesRef = useRef(null)
+
   const getLegalMoves = (piece, pieces) => {
   if (!piece) return []
 
