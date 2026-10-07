@@ -1118,7 +1118,7 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
 {screen === 'turn-select' && (
   <div className="turn-select">
     <button onClick={() => {
-  setPieces(initialPieces)
+  setPieces(initialPieces.map(piece => ({ ...piece })))
   setPlayerSide('player')
   setTrapCube(Math.floor(Math.random() * 9))
   setOpponentTrapCube(Math.floor(Math.random() * 9))
@@ -1128,7 +1128,7 @@ const updateGameState = async (nextPieces, nextTurn, nextPlayerHand, nextMistMov
 }}>先手</button>
   
     <button onClick={() => {
-         setPieces(initialPieces)
+         setPieces(initialPieces.map(piece => ({ ...piece })))
   setPlayerSide('player')
   setTrapCube(Math.floor(Math.random() * 9))
   setOpponentTrapCube(Math.floor(Math.random() * 9))
