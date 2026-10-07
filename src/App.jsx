@@ -1132,6 +1132,7 @@ const updateGameState = async (
   if (!data) return
 
   const currentState = data.game_state
+  if (currentState.turn !== turn) return
 
   await supabase
     .from('game')
@@ -1351,6 +1352,12 @@ legalMoves.some((move) =>
     if (turn !== playerSide) return
     if (piece) return
 
+    if (!playerHand.some(
+  (handPiece, index) =>
+    index === selectedPiece.handIndex &&
+    handPiece.name === selectedPiece.name
+)) return
+
     playSyogiSound()
 
     const nextPieces = [
@@ -1388,8 +1395,7 @@ updateGameState(
 )
 
     setSelectedPiece(null)
-    setTurn(turn === 'player' ? 'opponent' : 'player')
-    return
+return
   }
 
  
