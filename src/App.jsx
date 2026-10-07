@@ -914,6 +914,12 @@ if (piece.name === '武器人間') {
   { name: 'CUBE', image: cube, row: 2, col: 8, side: 'opponent' },
 ])
 
+const initialPiecesRef = useRef(null)
+
+if (initialPiecesRef.current === null) {
+  initialPiecesRef.current = pieces
+}
+
 const createRoom = async () => {
   const newRoomId = Math.floor(100000 + Math.random() * 900000).toString()
 
