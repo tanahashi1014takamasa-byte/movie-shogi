@@ -815,10 +815,12 @@ if (piece.name === 'ゾディアック') {
   const direction = piece.side === 'opponent' ? 1 : -1
 
   const directions = [
-    [direction, 0],
-    [0, -1],
-    [0, 1],
-  ]
+  [direction, 0],
+  [0, -1],
+  [0, 1],
+  [direction * 2, -2],
+  [direction * 2, 2],
+]
 
   return directions
     .map(([dr, dc]) => ({
