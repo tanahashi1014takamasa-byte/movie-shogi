@@ -13,7 +13,7 @@ import titanic from './assets/タイタニック.png'
 import kokuhou from './assets/国宝.png'
 import yoshizawa from './assets/吉沢亮.png'
 import ryusei from './assets/横浜流星.png'
-import whiteWhale from './assets/白鯨.png'
+import warGame from './assets/ウォーゲーム.png'
 import psychoGoreman from './assets/サイコ・ゴアマン.png'
 import logo from './assets/ロゴ.png'
 import menu1 from './assets/menu_1.png'
@@ -887,7 +887,7 @@ if (piece.name === '武器人間') {
   { name: 'ミスト', image: mist, row: 8, col: 0 },
   { name: '羅生門', image: rashomon, row: 8, col: 1, direction: -1 },
 
-  { name: '白鯨', image: whiteWhale, row: 8, col: 2, wide: true },
+  { name: 'ウォーゲーム', image: warGame, row: 8, col: 2 },
   { name: '武器人間', image: weaponHuman, row: 8, col: 3, absorbedMoves: [] },
   { name: 'タイタニック', image: titanic, row: 8, col: 4, side: 'player' },
   { name: '国宝', image: kokuhou, row: 8, col: 5 },
