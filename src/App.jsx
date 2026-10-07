@@ -1348,6 +1348,7 @@ legalMoves.some((move) =>
   if (screen !== 'game') return
   
   if (selectedPiece?.fromHand) {
+    if (turn !== playerSide) return
     if (piece) return
 
     playSyogiSound()
