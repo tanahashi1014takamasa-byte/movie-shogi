@@ -654,6 +654,26 @@ const previousTurnRef = useRef(null)
       [1, -1],  [1, 0],  [1, 1],
     ]
 
+        nearbyPieces.forEach((nearby) => {
+      const dr = nearby.row - piece.row
+      const dc = nearby.col - piece.col
+
+      if (
+        Math.abs(dr) <= 1 &&
+        Math.abs(dc) <= 1 &&
+        !(dr === 0 && dc === 0)
+      ) {
+        directions.push([dr * 2, dc * 2])
+      }
+    })
+
+        const nearbyPieces = pieces.filter(
+      (p) =>
+        Math.abs(p.row - piece.row) <= 1 &&
+        Math.abs(p.col - piece.col) <= 1 &&
+        p !== piece
+    )
+
     return directions
       .map(([dr, dc]) => ({
         row: piece.row + dr,
