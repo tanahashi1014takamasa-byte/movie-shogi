@@ -1526,7 +1526,10 @@ updateGameState(
 )
 
 setSelectedPiece(null)
-setTurn(turn === 'player' ? 'opponent' : 'player')
+
+if (!roomId) {
+  setTurn(turn === 'player' ? 'opponent' : 'player')
+}
   }
 }}
 
