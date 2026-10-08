@@ -1254,6 +1254,7 @@ const updateGameState = async (
 {screen === 'turn-select' && (
   <div className="turn-select">
     <button onClick={() => {
+      setPieces(initialPiecesRef.current)
   setPlayerSide('player')
   setTrapCube(Math.floor(Math.random() * 9))
   setOpponentTrapCube(Math.floor(Math.random() * 9))
@@ -1263,6 +1264,7 @@ const updateGameState = async (
 }}>先手</button>
   
     <button onClick={() => {
+      setPieces(initialPiecesRef.current)
   setPlayerSide('player')
   setTrapCube(Math.floor(Math.random() * 9))
   setOpponentTrapCube(Math.floor(Math.random() * 9))
