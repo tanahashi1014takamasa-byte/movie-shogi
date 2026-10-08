@@ -1401,6 +1401,11 @@ updateGameState(
 )
 
     setSelectedPiece(null)
+
+if (!roomId) {
+  setTurn(nextTurn)
+}
+
 return
   }
 
