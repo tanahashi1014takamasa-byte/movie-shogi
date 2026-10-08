@@ -326,9 +326,12 @@ if (gameState.gameEnded && gameState.winnerSide) {
 
 if (gameState.gameEnded) {
   setPieces(initialPiecesRef.current)
-  setResult(null)
-  setRoomId(null)
-  setScreen('opening')
+setPlayerHand([])
+setOpponentHand([])
+
+setResult(null)
+setRoomId(null)
+setScreen('opening')
   return
 }
 
