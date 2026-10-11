@@ -873,26 +873,34 @@ if (piece.name === '武器人間') {
   return []
 }
 
+
 if (absorbedMove === 'ミミ') {
   const direction = piece.side === 'opponent' ? 1 : -1
-  const row = piece.row + direction
-  const col = piece.col
 
-  if (
-    row >= 0 &&
-    row < 9 &&
-    !pieces.some(
-      (p) =>
-        p.row === row &&
-        p.col === col &&
-        (p.side ?? 'player') === (piece.side ?? 'player')
-    )
-  ) {
-    return [{ row, col }]
-  }
+  const moves = [
+    { row: piece.row + direction, col: piece.col },
+    { row: piece.row, col: piece.col - 1 },
+    { row: piece.row, col: piece.col + 1 },
+    { row: piece.row - direction, col: piece.col - 1 },
+    { row: piece.row - direction, col: piece.col },
+    { row: piece.row - direction, col: piece.col + 1 },
+  ]
 
-  return []
+  return moves.filter(
+    ({ row, col }) =>
+      row >= 0 &&
+      row < 9 &&
+      col >= 0 &&
+      col < 9 &&
+      !pieces.some(
+        (p) =>
+          p.row === row &&
+          p.col === col &&
+          (p.side ?? 'player') === (piece.side ?? 'player')
+      )
+  )
 }
+
 
 if (absorbedMove === 'サイコ・ゴアマン') {
   const directions = [
