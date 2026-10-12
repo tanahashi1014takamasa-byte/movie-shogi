@@ -1389,6 +1389,12 @@ const updateGameState = async (
   onClick={() => setScreen('piece-guide')}
 />
     </div>
+
+      <img
+        src={menu4}
+        alt="メニュー4"
+      />
+
   </div>
 )}
 
