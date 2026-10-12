@@ -971,6 +971,80 @@ if (absorbedMove === 'サイコ・ゴアマン') {
   }
 
 
+  
+  if (absorbedMove === '吉沢亮') {
+    const directions = [
+      [-1, 0], [1, 0], [0, -1], [0, 1],
+    ]
+
+    const moves = []
+
+    for (const [dr, dc] of directions) {
+      let row = piece.row + dr
+      let col = piece.col + dc
+
+      while (row >= 0 && row < 9 && col >= 0 && col < 9) {
+        const target = pieces.find(
+          (p) => p.row === row && p.col === col
+        )
+
+        if (target) {
+          if (
+            (target.side ?? 'player') !==
+            (piece.side ?? 'player')
+          ) {
+            moves.push({ row, col })
+          }
+          break
+        }
+
+        moves.push({ row, col })
+        row += dr
+        col += dc
+      }
+    }
+
+    return moves
+  }
+
+  
+  if (absorbedMove === '横浜流星') {
+    const directions = [
+      [-1, -1], [-1, 1], [1, -1], [1, 1],
+    ]
+
+    const moves = []
+
+    for (const [dr, dc] of directions) {
+      let row = piece.row + dr
+      let col = piece.col + dc
+
+      while (row >= 0 && row < 9 && col >= 0 && col < 9) {
+        const target = pieces.find(
+          (p) => p.row === row && p.col === col
+        )
+
+        if (target) {
+          if (
+            (target.side ?? 'player') !==
+            (piece.side ?? 'player')
+          ) {
+            moves.push({ row, col })
+          }
+          break
+        }
+
+        moves.push({ row, col })
+        row += dr
+        col += dc
+      }
+    }
+
+    return moves
+  }
+
+
+
   if (absorbedMove === '羅生門') {
     const direction =
       piece.row === 0
