@@ -23,6 +23,9 @@ import menu4 from './assets/menu_4.png'
 import syogiSound from './assets/syogi_s01.mp3'
 import guideText from './assets/guide.txt?raw'
 
+import gameScreen from './assets/game_screen.png'
+import character from './assets/chracter.gif'
+
 
 
 function App() {
@@ -1391,9 +1394,10 @@ const updateGameState = async (
     </div>
 
       <img
-        src={menu4}
-        alt="メニュー4"
-      />
+  src={menu4}
+  alt="メニュー4"
+  onClick={() => setScreen('rental-shop')}
+/>
 
   </div>
 )}
@@ -1437,6 +1441,19 @@ const updateGameState = async (
       戻る
     </button>
   </div>
+)}
+
+{screen === 'rental-shop' && (
+  <div
+    style={{
+      width: '100%',
+      minHeight: '100vh',
+      backgroundImage: `url(${gameScreen})`,
+      backgroundSize: '100% 100%',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+    }}
+  />
 )}
 
 {onlineScreen && (
@@ -1788,6 +1805,9 @@ if (!roomId) {
   ))}
 </div>
           </div>
+
+
+
     )}
   </>
   )
