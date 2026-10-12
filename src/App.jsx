@@ -19,6 +19,7 @@ import logo from './assets/ロゴ.png'
 import menu1 from './assets/menu_1.png'
 import menu2 from './assets/menu_2.png'
 import menu3 from './assets/menu_3.png'
+import menu4 from './assets/menu_4.png'
 import syogiSound from './assets/syogi_s01.mp3'
 import guideText from './assets/guide.txt?raw'
 
