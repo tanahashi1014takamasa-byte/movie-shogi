@@ -938,6 +938,39 @@ if (absorbedMove === 'サイコ・ゴアマン') {
   return moves
 }
 
+
+  if (absorbedMove === 'ゾディアック') {
+    const direction = piece.side === 'opponent' ? 1 : -1
+
+    const directions = [
+      [direction, 0],
+      [0, -1],
+      [0, 1],
+      [direction * 2, -2],
+      [direction * 2, 2],
+    ]
+
+    return directions
+      .map(([dr, dc]) => ({
+        row: piece.row + dr,
+        col: piece.col + dc,
+      }))
+      .filter(
+        (move) =>
+          move.row >= 0 &&
+          move.row < 9 &&
+          move.col >= 0 &&
+          move.col < 9 &&
+          !pieces.some(
+            (p) =>
+              p.row === move.row &&
+              p.col === move.col &&
+              (p.side ?? 'player') === (piece.side ?? 'player')
+          )
+      )
+  }
+
+
   if (absorbedMove === '羅生門') {
     const direction =
       piece.row === 0
