@@ -1561,9 +1561,10 @@ const updateGameState = async (
 
     <button
   className="dpad-left"
-  onClick={() =>
+  onClick={() => {
+    setPlayerDirection('left')
     setPlayerPosition((pos) => ({ ...pos, x: pos.x - 32 }))
-  }
+  }}
 >
   ◀
 </button>
