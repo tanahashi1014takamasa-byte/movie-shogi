@@ -32,6 +32,9 @@ import gameCharacter from './assets/game_character.png'
 function App() {
   const [screen, setScreen] = useState('opening')
   const [guidePieceIndex, setGuidePieceIndex] = useState(0)
+
+  const [playerPosition, setPlayerPosition] = useState({ x: 200, y: 200 })
+
   useEffect(() => {
   if (screen === 'piece-guide') {
     window.scrollTo(0, 0)
@@ -1474,8 +1477,8 @@ const updateGameState = async (
           <div
       style={{
         position: 'absolute',
-        left: '200px',
-        top: '200px',
+        left: `${playerPosition.x}px`,
+        top: `${playerPosition.y}px`,
         width: '96px',
         height: '128px',
         overflow: 'hidden',
