@@ -36,6 +36,7 @@ function App() {
   const [playerPosition, setPlayerPosition] = useState({ x: 200, y: 200 })
 
   const [playerDirection, setPlayerDirection] = useState('down')
+  const [playerFrame, setPlayerFrame] = useState(0)
 
   useEffect(() => {
   if (screen === 'piece-guide') {
@@ -1492,7 +1493,7 @@ const updateGameState = async (
         alt="主人公"
         style={{
           position: 'absolute',
-          left: '-194px',
+          left: `${-playerFrame * 256 - 194}px`,
           top:
   playerDirection === 'down'
     ? '0px'
@@ -1553,6 +1554,7 @@ const updateGameState = async (
   className="dpad-up"
   onClick={() => {
     setPlayerDirection('up')
+    setPlayerFrame((frame) => (frame + 1) % 3)
     setPlayerPosition((pos) => ({ ...pos, y: pos.y - 32 }))
   }}
 >
