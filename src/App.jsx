@@ -1530,6 +1530,16 @@ const updateGameState = async (
         }}
       />
     </div>
+
+    <div className="shop-controls">
+      <div className="shop-dpad">
+        <button className="dpad-up">▲</button>
+        <button className="dpad-left">◀</button>
+        <button className="dpad-right">▶</button>
+        <button className="dpad-down">▼</button>
+      </div>
+    </div>
+
   </div>
 )}
 

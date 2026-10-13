@@ -315,3 +315,46 @@ body {
   height: 100%;
   object-fit: fill;
 }
+
+.shop-controls {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  z-index: 10;
+}
+
+.shop-dpad {
+  display: grid;
+  grid-template-columns: 48px 48px 48px;
+  grid-template-rows: 48px 48px 48px;
+  gap: 3px;
+}
+
+.shop-dpad button {
+  background: #444;
+  color: white;
+  border: 2px solid #888;
+  border-radius: 8px;
+  font-size: 22px;
+  touch-action: manipulation;
+}
+
+.dpad-up {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.dpad-left {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.dpad-right {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.dpad-down {
+  grid-column: 2;
+  grid-row: 3;
+}
