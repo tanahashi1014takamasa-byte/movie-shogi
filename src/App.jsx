@@ -37,6 +37,34 @@ function App() {
 
   const [playerDirection, setPlayerDirection] = useState('down')
   const [playerFrame, setPlayerFrame] = useState(0)
+  const moveIntervalRef = useRef(null)
+  
+const movePlayer = (direction) => {
+  setPlayerDirection(direction)
+  setPlayerFrame((frame) => (frame + 1) % 3)
+
+  setPlayerPosition((pos) => {
+    if (direction === 'up') return { ...pos, y: pos.y - 32 }
+    if (direction === 'down') return { ...pos, y: pos.y + 32 }
+    if (direction === 'left') return { ...pos, x: pos.x - 32 }
+    if (direction === 'right') return { ...pos, x: pos.x + 32 }
+    return pos
+  })
+}
+
+const startMoving = (direction) => {
+  clearInterval(moveIntervalRef.current)
+  movePlayer(direction)
+  moveIntervalRef.current = setInterval(() => {
+    movePlayer(direction)
+  }, 180)
+}
+
+const stopMoving = () => {
+  clearInterval(moveIntervalRef.current)
+  moveIntervalRef.current = null
+}
+
 
   useEffect(() => {
   if (screen === 'piece-guide') {
@@ -1564,53 +1592,67 @@ top: `${Math.min(0, Math.max(window.innerHeight - 941, 200 - playerPosition.y))}
   <div className="shop-dpad">
     
 
+
 <button
   className="dpad-up"
+  style={{ touchAction: 'none', userSelect: 'none', WebkitTouchCallout: 'none' }}
   onPointerDown={(e) => {
+    e.preventDefault()
     e.currentTarget.setPointerCapture(e.pointerId)
-    setPlayerDirection('up')
-    setPlayerFrame((frame) => (frame + 1) % 3)
-    setPlayerPosition((pos) => ({ ...pos, y: pos.y - 32 }))
+    startMoving('up')
   }}
-  onPointerUp={() => {}}
+  onPointerUp={stopMoving}
+  onPointerCancel={stopMoving}
+  onContextMenu={(e) => e.preventDefault()}
 >
   ▲
 </button>
 
-
-    <button
+<button
   className="dpad-left"
-  onClick={() => {
-    setPlayerDirection('left')
-    setPlayerFrame((frame) => (frame + 1) % 3)
-    setPlayerPosition((pos) => ({ ...pos, x: pos.x - 32 }))
+  style={{ touchAction: 'none', userSelect: 'none', WebkitTouchCallout: 'none' }}
+  onPointerDown={(e) => {
+    e.preventDefault()
+    e.currentTarget.setPointerCapture(e.pointerId)
+    startMoving('left')
   }}
+  onPointerUp={stopMoving}
+  onPointerCancel={stopMoving}
+  onContextMenu={(e) => e.preventDefault()}
 >
   ◀
 </button>
-    <button
+
+<button
   className="dpad-right"
-  onClick={() => {
-    setPlayerDirection('right')
-    setPlayerFrame((frame) => (frame + 1) % 3)
-    setPlayerPosition((pos) => ({ ...pos, x: pos.x + 32 }))
+  style={{ touchAction: 'none', userSelect: 'none', WebkitTouchCallout: 'none' }}
+  onPointerDown={(e) => {
+    e.preventDefault()
+    e.currentTarget.setPointerCapture(e.pointerId)
+    startMoving('right')
   }}
+  onPointerUp={stopMoving}
+  onPointerCancel={stopMoving}
+  onContextMenu={(e) => e.preventDefault()}
 >
   ▶
 </button>
-    <button
+
+<button
   className="dpad-down"
-  onClick={() => {
-    setPlayerDirection('down')
-
-
-
-    setPlayerFrame((frame) => (frame + 1) % 3)
-    setPlayerPosition((pos) => ({ ...pos, y: pos.y + 32 }))
+  style={{ touchAction: 'none', userSelect: 'none', WebkitTouchCallout: 'none' }}
+  onPointerDown={(e) => {
+    e.preventDefault()
+    e.currentTarget.setPointerCapture(e.pointerId)
+    startMoving('down')
   }}
+  onPointerUp={stopMoving}
+  onPointerCancel={stopMoving}
+  onContextMenu={(e) => e.preventDefault()}
 >
   ▼
 </button>
+
   </div>
 </div>
 
