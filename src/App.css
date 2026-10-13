@@ -323,6 +323,7 @@ body {
   z-index: 10;
 }
 
+
 .shop-dpad {
   display: grid;
   grid-template-columns: 48px 48px 48px;
@@ -337,6 +338,9 @@ body {
   border-radius: 8px;
   font-size: 22px;
   touch-action: manipulation;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .dpad-up {
