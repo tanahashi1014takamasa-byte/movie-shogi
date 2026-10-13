@@ -1657,8 +1657,8 @@ top: `${Math.min(0, Math.max(window.innerHeight - 941, 200 - playerPosition.y))}
 </div>
 
 <div className="shop-action-buttons">
-  <button className="shop-button button-b">B</button>
   <button className="shop-button button-a">A</button>
+  <button className="shop-button button-b">B</button>
 </div>
 
   </div>
