@@ -1493,15 +1493,15 @@ const updateGameState = async (
         alt="主人公"
         style={{
           position: 'absolute',
-          left: `${-playerFrame * 256 - 160}px`,
+          left: `${-playerFrame * 256 - 194}px`,
           top:
   playerDirection === 'down'
     ? '0px'
     : playerDirection === 'up'
-    ? '-128px'
-    : playerDirection === 'left'
     ? '-256px'
-    : '-384px',
+    : playerDirection === 'left'
+    ? '-512px'
+    : '-768px',
           width: '768px',
           height: '512px',
           maxWidth: 'none',
