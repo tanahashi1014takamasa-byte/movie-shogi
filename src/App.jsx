@@ -1570,17 +1570,19 @@ const updateGameState = async (
 </button>
     <button
   className="dpad-right"
-  onClick={() =>
+  onClick={() => {
+    setPlayerDirection('right')
     setPlayerPosition((pos) => ({ ...pos, x: pos.x + 32 }))
-  }
+  }}
 >
   ▶
 </button>
     <button
   className="dpad-down"
-  onClick={() =>
+  onClick={() => {
+    setPlayerDirection('down')
     setPlayerPosition((pos) => ({ ...pos, y: pos.y + 32 }))
-  }
+  }}
 >
   ▼
 </button>
