@@ -404,3 +404,11 @@ body {
   user-select: none !important;
   touch-action: none;
 }
+
+.shop-controls img,
+.shop-controls button {
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+}
