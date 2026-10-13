@@ -369,7 +369,8 @@ body {
   bottom: 120px;
   z-index: 10;
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  gap: 12px;
   align-items: center;
 }
 
