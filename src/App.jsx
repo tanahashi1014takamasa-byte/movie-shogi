@@ -35,6 +35,8 @@ function App() {
 
   const [playerPosition, setPlayerPosition] = useState({ x: 200, y: 200 })
 
+  const [playerDirection, setPlayerDirection] = useState('down')
+
   useEffect(() => {
   if (screen === 'piece-guide') {
     window.scrollTo(0, 0)
@@ -1491,7 +1493,14 @@ const updateGameState = async (
         style={{
           position: 'absolute',
           left: '-194px',
-          top: '0px',
+          top:
+  playerDirection === 'down'
+    ? '0px'
+    : playerDirection === 'up'
+    ? '-128px'
+    : playerDirection === 'left'
+    ? '-256px'
+    : '-384px',
           width: '768px',
           height: '512px',
           maxWidth: 'none',
@@ -1542,9 +1551,10 @@ const updateGameState = async (
     
 <button
   className="dpad-up"
-  onClick={() =>
+  onClick={() => {
+    setPlayerDirection('up')
     setPlayerPosition((pos) => ({ ...pos, y: pos.y - 32 }))
-  }
+  }}
 >
   ▲
 </button>
