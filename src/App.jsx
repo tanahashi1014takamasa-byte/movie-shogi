@@ -1453,7 +1453,7 @@ const updateGameState = async (
       backgroundImage: `url(${gameScreen})`,
       backgroundSize: 'contain',
       backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center top',
+      backgroundPosition: 'center 80px',
     }}
   >
     <div
