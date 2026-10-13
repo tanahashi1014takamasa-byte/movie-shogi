@@ -1465,9 +1465,20 @@ const updateGameState = async (
       background: '#000',
     }}
   >
+
+
+<div
+  style={{
+    position: 'absolute',
+    left: `${160 - playerPosition.x}px`,
+    top: `${200 - playerPosition.y}px`,
+  }}
+>
+
+
     <img
       src={gameScreen}
-      alt="店内マップ"
+      alt="店内マップ"hayakuy
       style={{
         position: 'absolute',
         top: 0,
@@ -1508,6 +1519,8 @@ const updateGameState = async (
           imageRendering: 'pixelated',
         }}
       />
+    </div>
+
     </div>
 
     <div
