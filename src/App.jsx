@@ -1443,9 +1443,11 @@ const updateGameState = async (
   </div>
 )}
 
+```jsx
 {screen === 'rental-shop' && (
   <div
     style={{
+      position: 'relative',
       width: '100%',
       minHeight: '100vh',
       backgroundImage: `url(${gameScreen})`,
@@ -1453,7 +1455,44 @@ const updateGameState = async (
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
     }}
-  />
+  >
+    <div
+      style={{
+        position: 'absolute',
+        top: '20px',
+        right: '20px',
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: '12px',
+      }}
+    >
+      <div
+        style={{
+          width: '180px',
+          minHeight: '80px',
+          padding: '12px',
+          background: 'white',
+          border: '3px solid black',
+          borderRadius: '8px',
+          color: 'black',
+        }}
+      >
+        いらっしゃい！
+      </div>
+
+      <img
+        src={character}
+        alt="店員"
+        style={{
+          width: '100px',
+          height: '100px',
+          objectFit: 'cover',
+          border: '3px solid black',
+          imageRendering: 'pixelated',
+        }}
+      />
+    </div>
+  </div>
 )}
 
 {onlineScreen && (
