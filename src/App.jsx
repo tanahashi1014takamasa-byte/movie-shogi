@@ -26,6 +26,7 @@ import guideText from './assets/guide.txt?raw'
 import gameScreen from './assets/game_screen.png'
 import character from './assets/chracter.gif'
 
+import gameCharacter from './assets/game_character.png'
 
 
 function App() {
@@ -1443,7 +1444,7 @@ const updateGameState = async (
   </div>
 )}
 
-```jsx
+
 {screen === 'rental-shop' && (
   
   <div
@@ -1464,6 +1465,21 @@ const updateGameState = async (
         left: 0,
         maxWidth: 'none',
         maxHeight: 'none',
+      }}
+    />
+
+        <img
+      src={gameCharacter}
+      alt="主人公"
+      style={{
+        position: 'absolute',
+        left: '0px',
+        top: '0px',
+        width: '96px',
+        height: '128px',
+        objectFit: 'contain',
+        imageRendering: 'pixelated',
+        zIndex: 2,
       }}
     />
 
