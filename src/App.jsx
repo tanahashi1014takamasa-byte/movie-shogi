@@ -1583,6 +1583,7 @@ const updateGameState = async (
   className="dpad-down"
   onClick={() => {
     setPlayerDirection('down')
+    setPlayerFrame((frame) => (frame + 1) % 3)
     setPlayerPosition((pos) => ({ ...pos, y: pos.y + 32 }))
   }}
 >
