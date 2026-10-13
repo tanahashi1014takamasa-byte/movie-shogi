@@ -362,3 +362,36 @@ body {
   grid-column: 2;
   grid-row: 3;
 }
+
+.shop-action-buttons {
+  position: absolute;
+  right: 30px;
+  bottom: 60px;
+  z-index: 10;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.shop-button {
+  width: 64px;
+  height: 64px;
+  border: 2px solid #aaa;
+  border-radius: 50%;
+  background: #444;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+}
+
+.button-a {
+  background: #a33;
+}
+
+.button-b {
+  background: #345a9c;
+}
