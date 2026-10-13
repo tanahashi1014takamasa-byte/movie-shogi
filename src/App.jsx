@@ -1498,10 +1498,10 @@ const updateGameState = async (
   playerDirection === 'down'
     ? '0px'
     : playerDirection === 'up'
-    ? '-256px'
+    ? '-128px'
     : playerDirection === 'left'
-    ? '-512px'
-    : '-768px',
+    ? '-256px'
+    : '-384px',
           width: '768px',
           height: '512px',
           maxWidth: 'none',
