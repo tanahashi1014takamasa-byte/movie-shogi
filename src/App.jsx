@@ -1493,8 +1493,8 @@ const updateGameState = async (
         position: 'absolute',
         left: `${playerPosition.x}px`,
         top: `${playerPosition.y}px`,
-        width: '80px',
-        height: '144px',
+        width: '96px',
+        height: '128px',
         overflow: 'hidden',
         zIndex: 2,
       }}
