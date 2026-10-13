@@ -1445,17 +1445,28 @@ const updateGameState = async (
 
 ```jsx
 {screen === 'rental-shop' && (
+  
   <div
     style={{
       position: 'relative',
       width: '100%',
-      minHeight: '100vh',
-      backgroundImage: `url(${gameScreen})`,
-      backgroundSize: 'contain',
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center 120px',
+      height: '100vh',
+      overflow: 'hidden',
+      background: '#000',
     }}
   >
+    <img
+      src={gameScreen}
+      alt="店内マップ"
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        maxWidth: 'none',
+        maxHeight: 'none',
+      }}
+    />
+
     <div
       style={{
         position: 'absolute',
