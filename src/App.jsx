@@ -1563,16 +1563,20 @@ top: `${Math.min(0, Math.max(window.innerHeight - 941, 200 - playerPosition.y))}
     <div className="shop-controls">
   <div className="shop-dpad">
     
+
 <button
   className="dpad-up"
-  onClick={() => {
+  onPointerDown={(e) => {
+    e.currentTarget.setPointerCapture(e.pointerId)
     setPlayerDirection('up')
     setPlayerFrame((frame) => (frame + 1) % 3)
     setPlayerPosition((pos) => ({ ...pos, y: pos.y - 32 }))
   }}
+  onPointerUp={() => {}}
 >
   ▲
 </button>
+
 
     <button
   className="dpad-left"
