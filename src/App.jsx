@@ -1484,9 +1484,9 @@ const updateGameState = async (
         alt="主人公"
         style={{
           position: 'absolute',
-          left: '0px',
+          left: '-194px',
           top: '0px',
-          width: '288px',
+          width: '768px',
           height: '512px',
           maxWidth: 'none',
           imageRendering: 'pixelated',
