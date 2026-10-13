@@ -1454,7 +1454,7 @@ const updateGameState = async (
     style={{
       position: 'relative',
       width: '100%',
-      height: '100dvh',
+      height: '100vh',
       overflow: 'hidden',
       background: '#000',
     }}
