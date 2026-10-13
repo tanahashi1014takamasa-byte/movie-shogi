@@ -319,7 +319,7 @@ body {
 .shop-controls {
   position: absolute;
   left: 20px;
-  bottom: 20px;
+  bottom: 60px;
   z-index: 10;
 }
 
