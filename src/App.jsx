@@ -1468,20 +1468,31 @@ const updateGameState = async (
       }}
     />
 
-        <img
-      src={gameCharacter}
-      alt="主人公"
+          <div
       style={{
         position: 'absolute',
         left: '0px',
         top: '0px',
         width: '96px',
         height: '128px',
-        objectFit: 'contain',
-        imageRendering: 'pixelated',
+        overflow: 'hidden',
         zIndex: 2,
       }}
-    />
+    >
+      <img
+        src={gameCharacter}
+        alt="主人公"
+        style={{
+          position: 'absolute',
+          left: '0px',
+          top: '0px',
+          width: '288px',
+          height: '512px',
+          maxWidth: 'none',
+          imageRendering: 'pixelated',
+        }}
+      />
+    </div>
 
     <div
       style={{
