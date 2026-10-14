@@ -1778,7 +1778,7 @@ borderRadius: '8px',
       whiteSpace: 'pre-wrap',
     }}
   >
-    <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: '8px', marginBottom: '16px' }}>
   {[2022, 2023, 2024, 2025, 2026].map((year) => (
     <button
       key={year}
@@ -1798,7 +1798,7 @@ borderRadius: '6px',
 
 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
   {movieNotesByYear[selectedMovieYear].split('\n').filter(line => line.trim()).map((line, index) => {
-    const match = line.trim().match(/^(.*?)\s+(\d+点)$/)
+    const match = line.trim().match(/^(.*?)\s+(\d+点)(?:\s+\[(.*?)\]\s+(\d{4})年)?$/)
 
     if (!match) return <div key={index}>{line}</div>
 
@@ -1814,8 +1814,15 @@ borderRadius: '6px',
           padding: '6px 0',
         }}
       >
-        <span style={{ overflowWrap: 'anywhere' }}>{match[1]}</span>
-        <span style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>{match[2]}</span>
+<div style={{ flex: 1, minWidth: 0 }}>
+  <div style={{ overflowWrap: 'anywhere' }}>{match[1]}</div>
+  {selectedMovieYear === 2026 && match[3] && (
+    <div style={{ fontSize: '12px', color: '#aaa', marginTop: '3px' }}>
+      {match[3]} ・ {match[4]}年
+    </div>
+  )}
+</div>
+<span style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>{match[2]}</span>
       </div>
     )
   })}
