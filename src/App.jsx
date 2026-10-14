@@ -1336,12 +1336,15 @@ if (absorbedMove === 'サイコ・ゴアマン') {
 
 const [showMovieNotes, setShowMovieNotes] = useState(false)
 
-const allMovieNotes = [
-  movies2022,
-  movies2023,
-  movies2024,
-  movies2025,
-].join('\n')
+const [selectedMovieYear, setSelectedMovieYear] = useState(2022)
+
+
+const movieNotesByYear = {
+  2022: movies2022,
+  2023: movies2023,
+  2024: movies2024,
+  2025: movies2025,
+}
 
 const initialPiecesRef = useRef(null)
 
@@ -1771,7 +1774,24 @@ top: `${Math.min(0, Math.max(window.innerHeight - 941, 200 - playerPosition.y))}
       whiteSpace: 'pre-wrap',
     }}
   >
-    {allMovieNotes}
+    <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
+  {[2022, 2023, 2024, 2025].map((year) => (
+    <button
+      key={year}
+      onClick={() => setSelectedMovieYear(year)}
+      style={{
+        padding: '8px',
+        background: selectedMovieYear === year ? '#333' : '#ddd',
+        color: selectedMovieYear === year ? 'white' : 'black',
+      }}
+    >
+      {year}年
+    </button>
+  ))}
+</div>
+
+{movieNotesByYear[selectedMovieYear]}
+  
     <button onClick={() => setShowMovieNotes(false)}>
       閉じる
     </button>
