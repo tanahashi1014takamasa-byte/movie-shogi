@@ -1338,6 +1338,54 @@ if (absorbedMove === 'サイコ・ゴアマン') {
 
 const [showMovieNotes, setShowMovieNotes] = useState(false)
 const [showBestMovies, setShowBestMovies] = useState(false)
+const [bestMovieDetails, setBestMovieDetails] = useState([])
+
+useEffect(() => {
+  if (!showBestMovies || bestMovieDetails.length > 0) return
+
+  let cancelled = false
+
+  const loadBestMovies = async () => {
+    const details = await Promise.all(
+      bestMovies.map(async (title) => {
+        try {
+          const response = await fetch(
+            `/api/tmdb?query=${encodeURIComponent(title.trim())}`
+          )
+          const data = await response.json()
+          const movie = data.results?.[0]
+
+          return {
+            name: title.trim(),
+            posterPath: movie?.poster_path || null,
+            releaseDate: movie?.release_date || '',
+            tmdbTitle: movie?.title || '',
+            id: movie?.id || null,
+          }
+        } catch {
+          return {
+            name: title.trim(),
+            posterPath: null,
+            releaseDate: '',
+            tmdbTitle: '',
+            id: null,
+          }
+        }
+      })
+    )
+
+    if (!cancelled) {
+      setBestMovieDetails(details)
+    }
+  }
+
+  loadBestMovies()
+
+  return () => {
+    cancelled = true
+  }
+}, [showBestMovies, bestMovieDetails.length])
+
 
 const [selectedMovieYear, setSelectedMovieYear] = useState(2022)
 
@@ -1872,18 +1920,51 @@ borderRadius: '8px',
 
 {showBestMovies && (
   <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-    {bestMovies.map((movie, index) => (
-      <div
-        key={index}
+    
+{bestMovieDetails.map((movie, index) => (
+  <div
+    key={index}
+    style={{
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '12px',
+      borderBottom: '1px solid #555',
+      padding: '8px 0',
+      color: 'white',
+    }}
+  >
+    {movie.posterPath ? (
+      <img
+        src={`https://image.tmdb.org/t/p/w185${movie.posterPath}`}
+        alt={`${movie.name}のポスター`}
         style={{
-          borderBottom: '1px solid #555',
-          padding: '8px 0',
-          color: 'white',
+          width: '90px',
+          flexShrink: 0,
+          objectFit: 'contain',
         }}
-      >
-        {movie.trim()}
-      </div>
-    ))}
+      />
+    ) : (
+      <div
+        style={{
+          width: '90px',
+          height: '135px',
+          flexShrink: 0,
+          background: '#333',
+        }}
+      />
+    )}
+
+    <div style={{ minWidth: 0, overflowWrap: 'anywhere' }}>
+      <div>{movie.name}</div>
+      {movie.releaseDate && (
+        <div style={{ fontSize: '12px', color: '#aaa', marginTop: '6px' }}>
+          {movie.releaseDate.slice(0, 4)}年
+        </div>
+      )}
+    </div>
+  </div>
+))}
+
   </div>
 )}
   
