@@ -34,6 +34,12 @@ function App() {
   const [guidePieceIndex, setGuidePieceIndex] = useState(0)
 
   const [playerPosition, setPlayerPosition] = useState({ x: 200, y: 200 })
+  const isWalkable = (x, y) => {
+  return (
+    x >= 160 && x <= 1500 &&
+    y >= 160 && y <= 800
+  )
+}
 
   const [playerDirection, setPlayerDirection] = useState('down')
   const [playerFrame, setPlayerFrame] = useState(0)
@@ -42,20 +48,21 @@ function App() {
 
 const movePlayer = (direction) => {
   setPlayerPosition((pos) => {
-    let next = { ...pos }
+  let next = { ...pos }
 
-    if (direction === 'up') next.y -= 32
-    if (direction === 'down') next.y += 32
-    if (direction === 'left') next.x -= 32
-    if (direction === 'right') next.x += 32
+  if (direction === 'up') next.y -= 32
+  if (direction === 'down') next.y += 32
+  if (direction === 'left') next.x -= 32
+  if (direction === 'right') next.x += 32
 
-    // 画像の外には出ない
-    if (next.x < 0 || next.y < 0 || next.x > 1574 || next.y > 813) {
-      return pos
-    }
+  if (!isWalkable(next.x, next.y)) return pos
 
-    return next
-  })
+  if (next.x < 0 || next.y < 0 || next.x > 1574 || next.y > 813) {
+    return pos
+  }
+
+  return next
+})
 
   setPlayerDirection(direction)
   setPlayerFrame((frame) => (frame + 1) % 3)
