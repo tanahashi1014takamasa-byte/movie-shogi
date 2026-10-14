@@ -33,6 +33,7 @@ import movies2023 from './assets/movies2023.txt?raw'
 import movies2024 from './assets/movies2024.txt?raw'
 import movies2025 from './assets/movies2025.txt?raw'
 import movies2026 from './assets/movies2026.txt?raw'
+import moviesBest from './assets/BEST.txt?raw'
 
 function App() {
   const [screen, setScreen] = useState('opening')
@@ -1336,6 +1337,7 @@ if (absorbedMove === 'サイコ・ゴアマン') {
 ])
 
 const [showMovieNotes, setShowMovieNotes] = useState(false)
+const [showBestMovies, setShowBestMovies] = useState(false)
 
 const [selectedMovieYear, setSelectedMovieYear] = useState(2022)
 
@@ -1347,6 +1349,8 @@ const movieNotesByYear = {
   2025: movies2025,
   2026: movies2026,
 }
+
+const bestMovies = moviesBest.split('\n').filter(line => line.trim())
 
 const initialPiecesRef = useRef(null)
 
@@ -1778,24 +1782,59 @@ borderRadius: '8px',
       whiteSpace: 'pre-wrap',
     }}
   >
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: '8px', marginBottom: '16px' }}>
-  {[2022, 2023, 2024, 2025, 2026].map((year) => (
-    <button
-      key={year}
-      onClick={() => setSelectedMovieYear(year)}
-      style={{
-        padding: '8px',
-        whiteSpace: 'nowrap',
-        background: 'black',
-color: 'white',
-border: selectedMovieYear === year ? '2px solid white' : '1px solid #777',
-borderRadius: '6px',
-      }}
-    >
-      {year}年
-    </button>
-  ))}
+    <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
+  <button
+    onClick={() => {
+      setShowBestMovies(false)
+      setShowMovieNotes(true)
+    }}
+    style={{
+      flex: 1,
+      padding: '8px',
+      background: showBestMovies ? 'black' : '#333',
+      color: 'white',
+      border: '1px solid white',
+      borderRadius: '6px',
+    }}
+  >
+    映画ノート
+  </button>
+
+  <button
+    onClick={() => setShowBestMovies(true)}
+    style={{
+      flex: 1,
+      padding: '8px',
+      background: showBestMovies ? '#333' : 'black',
+      color: 'white',
+      border: '1px solid white',
+      borderRadius: '6px',
+    }}
+  >
+    BEST
+  </button>
 </div>
+
+{!showBestMovies && (
+  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: '8px', marginBottom: '16px' }}>
+    {[2022, 2023, 2024, 2025, 2026].map((year) => (
+      <button
+        key={year}
+        onClick={() => setSelectedMovieYear(year)}
+        style={{
+          padding: '8px',
+          whiteSpace: 'nowrap',
+          background: 'black',
+          color: 'white',
+          border: selectedMovieYear === year ? '2px solid white' : '1px solid #777',
+          borderRadius: '6px',
+        }}
+      >
+        {year}年
+      </button>
+    ))}
+  </div>
+)}
 
 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
   {movieNotesByYear[selectedMovieYear].split('\n').filter(line => line.trim()).map((line, index) => {
