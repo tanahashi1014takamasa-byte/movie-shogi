@@ -28,6 +28,10 @@ import character from './assets/chracter.gif'
 
 import gameCharacter from './assets/game_character.png'
 
+import movies2022 from './assets/movies2022.txt?raw'
+import movies2023 from './assets/movies2023.txt?raw'
+import movies2024 from './assets/movies2024.txt?raw'
+import movies2025 from './assets/movies2025.txt?raw'
 
 function App() {
   const [screen, setScreen] = useState('opening')
@@ -1330,6 +1334,15 @@ if (absorbedMove === 'サイコ・ゴアマン') {
   { name: 'CUBE', image: cube, row: 2, col: 8, side: 'opponent' },
 ])
 
+const [showMovieNotes, setShowMovieNotes] = useState(false)
+
+const allMovieNotes = [
+  movies2022,
+  movies2023,
+  movies2024,
+  movies2025,
+].join('\n')
+
 const initialPiecesRef = useRef(null)
 
 if (initialPiecesRef.current === null) {
@@ -1647,6 +1660,19 @@ top: `${Math.min(0, Math.max(window.innerHeight - 941, 200 - playerPosition.y))}
         }}
       />
     </div>
+    <div
+  style={{
+    position: 'absolute',
+    top: '110px',
+    left: '10px',
+    zIndex: 20,
+    color: 'white',
+    background: 'black',
+    padding: '8px',
+  }}
+>
+  x: {playerPosition.x}, y: {playerPosition.y}
+</div>
 
     <div className="shop-controls">
   <div className="shop-dpad">
@@ -1717,10 +1743,33 @@ top: `${Math.min(0, Math.max(window.innerHeight - 941, 200 - playerPosition.y))}
 </div>
 
 <div className="shop-action-buttons">
-  <button className="shop-button button-a">A</button>
+  <button
+  className="shop-button button-a"
+  onClick={() => setShowMovieNotes(true)}
+>
+  A
+</button>
   <button className="shop-button button-b">B</button>
 </div>
-
+{showMovieNotes && (
+  <div
+    style={{
+      position: 'absolute',
+      inset: '10%',
+      zIndex: 10,
+      background: 'white',
+      color: 'black',
+      padding: '16px',
+      overflowY: 'auto',
+      whiteSpace: 'pre-wrap',
+    }}
+  >
+    {allMovieNotes}
+    <button onClick={() => setShowMovieNotes(false)}>
+      閉じる
+    </button>
+  </div>
+)}
   </div>
 )}
 
