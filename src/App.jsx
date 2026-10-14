@@ -1785,6 +1785,7 @@ borderRadius: '8px',
       onClick={() => setSelectedMovieYear(year)}
       style={{
         padding: '8px',
+        whiteSpace: 'nowrap',
         background: 'black',
 color: 'white',
 border: selectedMovieYear === year ? '2px solid white' : '1px solid #777',
