@@ -1767,8 +1767,10 @@ top: `${Math.min(0, Math.max(window.innerHeight - 941, 200 - playerPosition.y))}
       position: 'absolute',
       inset: '10%',
       zIndex: 10,
-      background: 'white',
-      color: 'black',
+      background: 'black',
+color: 'white',
+border: '2px solid white',
+borderRadius: '8px',
       padding: '16px',
       overflowY: 'auto',
       whiteSpace: 'pre-wrap',
@@ -1781,8 +1783,10 @@ top: `${Math.min(0, Math.max(window.innerHeight - 941, 200 - playerPosition.y))}
       onClick={() => setSelectedMovieYear(year)}
       style={{
         padding: '8px',
-        background: selectedMovieYear === year ? '#333' : '#ddd',
-        color: selectedMovieYear === year ? 'white' : 'black',
+        background: 'black',
+color: 'white',
+border: selectedMovieYear === year ? '2px solid white' : '1px solid #777',
+borderRadius: '6px',
       }}
     >
       {year}年
@@ -1790,7 +1794,30 @@ top: `${Math.min(0, Math.max(window.innerHeight - 941, 200 - playerPosition.y))}
   ))}
 </div>
 
-{movieNotesByYear[selectedMovieYear]}
+<div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+  {movieNotesByYear[selectedMovieYear].split('\n').filter(line => line.trim()).map((line, index) => {
+    const match = line.trim().match(/^(.*?)\s+(\d+点)$/)
+
+    if (!match) return <div key={index}>{line}</div>
+
+    return (
+      <div
+        key={index}
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: '8px',
+          borderBottom: '1px solid #555',
+          padding: '6px 0',
+        }}
+      >
+        <span style={{ overflowWrap: 'anywhere' }}>{match[1]}</span>
+        <span style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>{match[2]}</span>
+      </div>
+    )
+  })}
+</div>
   
     <button onClick={() => setShowMovieNotes(false)}>
       閉じる
