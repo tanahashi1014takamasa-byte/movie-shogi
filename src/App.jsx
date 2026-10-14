@@ -1757,7 +1757,14 @@ top: `${Math.min(0, Math.max(window.innerHeight - 941, 200 - playerPosition.y))}
 <div className="shop-action-buttons">
   <button
   className="shop-button button-a"
-  onClick={() => setShowMovieNotes(true)}
+  onClick={() => {
+  const x = playerPosition.x
+  const y = playerPosition.y
+
+  if (x >= 1480 && x <= 1576 && y >= 616 && y <= 744) {
+    setShowMovieNotes(true)
+  }
+}}
 >
   A
 </button>
