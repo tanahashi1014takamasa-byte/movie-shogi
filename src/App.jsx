@@ -1800,7 +1800,35 @@ borderRadius: '6px',
   {movieNotesByYear[selectedMovieYear].split('\n').filter(line => line.trim()).map((line, index) => {
     const match = line.trim().match(/^(.*?)\s+(\d+点|👼+)(?:\s+\[(.*?)\]\s+(\d{4})年)?$/)
 
-    if (!match) return <div key={index}>{line}</div>
+    if (!match) {
+  const specialMatch = line.trim().match(/^(.*?)\s+(👼+)\s+\[(.*?)\]\s+(\d{4})年$/)
+
+  if (specialMatch) {
+    return (
+      <div
+        key={index}
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: '8px',
+          borderBottom: '1px solid #555',
+          padding: '6px 0',
+        }}
+      >
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div>{specialMatch[1]}</div>
+          <div style={{ fontSize: '12px', color: '#aaa', marginTop: '3px' }}>
+            {specialMatch[3]} ・ {specialMatch[4]}年
+          </div>
+        </div>
+        <span style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>{specialMatch[2]}</span>
+      </div>
+    )
+  }
+
+  return <div key={index}>{line}</div>
+}
 
     return (
       <div
