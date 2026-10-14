@@ -1799,7 +1799,7 @@ borderRadius: '6px',
 
 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
   {movieNotesByYear[selectedMovieYear].split('\n').filter(line => line.trim()).map((line, index) => {
-    const match = line.trim().match(/^(.*?)\s+(?:(\d+点)|((?:👼)+))(?:\s+\[(.*?)\]\s+(\d{4})年)?$/)
+    const match = line.trim().match(/^(.*?)\s+(\d+点|👼(?:×\d+)?)(?:\s+\[(.*?)\]\s+(\d{4})年)?$/)
 
     if (!match) return <div key={index}>{line}</div>
 
