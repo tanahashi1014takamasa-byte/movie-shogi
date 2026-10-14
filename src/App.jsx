@@ -35,46 +35,53 @@ function App() {
 
   const [playerPosition, setPlayerPosition] = useState({ x: 200, y: 200 })
  
+const [floorPixels, setFloorPixels] = useState(null)
+
+useEffect(() => {
+  const image = new Image()
+  image.src = gameScreen
+
+  image.onload = () => {
+    const canvas = document.createElement('canvas')
+    canvas.width = 1670
+    canvas.height = 941
+
+    const ctx = canvas.getContext('2d')
+    ctx.drawImage(image, 0, 0)
+
+    setFloorPixels(ctx.getImageData(0, 0, 1670, 941).data)
+  }
+}, [])
+
 const isWalkable = (x, y) => {
-  // 主人公の足元の座標で通行可能か判定
-  const blockedAreas = [
-    // 上側の棚
-    [335, 105, 620, 310],
-    [1010, 105, 1270, 310],
+  if (!floorPixels) return false
 
-    // 中段の棚
-    [130, 382, 505, 575],
-    [645, 382, 1005, 575],
-    [1140, 382, 1515, 575],
+  const imageWidth = 1670
+  const imageHeight = 941
 
-    // 下段の棚
-    [120, 638, 475, 830],
-    [635, 638, 1010, 830],
-    [1165, 638, 1525, 830],
+  // 主人公の足元を調べる
+  const px = Math.round(x + 48)
+  const py = Math.round(y + 120)
 
-    // 画面左右の棚
-    [0, 85, 125, 390],
-    [1510, 85, 1670, 390],
-    [0, 515, 90, 800],
-    [1550, 515, 1670, 800],
-
-    // いちばん下の棚
-    [465, 865, 1085, 941],
-
-    // カウンター
-    [665, 185, 910, 270],
-  ]
-
-  if (x < 0 || x > 1574 || y < 0 || y > 813) {
+  if (px < 0 || px >= imageWidth || py < 0 || py >= imageHeight) {
     return false
   }
 
-  return !blockedAreas.some(
-    ([left, top, right, bottom]) =>
-      x >= left && x <= right &&
-      y >= top && y <= bottom
+  const index = (py * imageWidth + px) * 4
+  const r = floorPixels[index]
+  const g = floorPixels[index + 1]
+  const b = floorPixels[index + 2]
+
+  // 木の床に近い色か判定
+  return (
+    r >= 140 && r <= 195 &&
+    g >= 95 && g <= 150 &&
+    b >= 60 && b <= 115 &&
+    r > g && g > b
   )
 }
+
+
 
 
   const [playerDirection, setPlayerDirection] = useState('down')
