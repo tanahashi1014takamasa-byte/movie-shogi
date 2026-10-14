@@ -32,6 +32,7 @@ import movies2022 from './assets/movies2022.txt?raw'
 import movies2023 from './assets/movies2023.txt?raw'
 import movies2024 from './assets/movies2024.txt?raw'
 import movies2025 from './assets/movies2025.txt?raw'
+import movies2026 from './assets/movies2026.txt?raw'
 
 function App() {
   const [screen, setScreen] = useState('opening')
@@ -1344,6 +1345,7 @@ const movieNotesByYear = {
   2023: movies2023,
   2024: movies2024,
   2025: movies2025,
+  2026: movies2026,
 }
 
 const initialPiecesRef = useRef(null)
@@ -1777,7 +1779,7 @@ borderRadius: '8px',
     }}
   >
     <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-  {[2022, 2023, 2024, 2025].map((year) => (
+  {[2022, 2023, 2024, 2025, 2026].map((year) => (
     <button
       key={year}
       onClick={() => setSelectedMovieYear(year)}
