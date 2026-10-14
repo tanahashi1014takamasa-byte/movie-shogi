@@ -39,18 +39,28 @@ function App() {
   const [playerFrame, setPlayerFrame] = useState(0)
   const moveIntervalRef = useRef(null)
   
+
 const movePlayer = (direction) => {
+  setPlayerPosition((pos) => {
+    let next = { ...pos }
+
+    if (direction === 'up') next.y -= 32
+    if (direction === 'down') next.y += 32
+    if (direction === 'left') next.x -= 32
+    if (direction === 'right') next.x += 32
+
+    // 画像の外には出ない
+    if (next.x < 0 || next.y < 0 || next.x > 1574 || next.y > 813) {
+      return pos
+    }
+
+    return next
+  })
+
   setPlayerDirection(direction)
   setPlayerFrame((frame) => (frame + 1) % 3)
-
-  setPlayerPosition((pos) => {
-    if (direction === 'up') return { ...pos, y: pos.y - 32 }
-    if (direction === 'down') return { ...pos, y: pos.y + 32 }
-    if (direction === 'left') return { ...pos, x: pos.x - 32 }
-    if (direction === 'right') return { ...pos, x: pos.x + 32 }
-    return pos
-  })
 }
+
 
 const startMoving = (direction) => {
   clearInterval(moveIntervalRef.current)
