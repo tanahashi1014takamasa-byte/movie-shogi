@@ -22,10 +22,12 @@ export default async function handler(req, res) {
     const data = await response.json()
 
     if (!response.ok) {
-      return res.status(response.status).json({
-        error: 'TMDBの検索に失敗しました',
-      })
-    }
+  return res.status(response.status).json({
+    error: 'TMDBの検索に失敗しました',
+    details: data.status_message || '詳細不明',
+    status_code: data.status_code || response.status,
+  })
+}
 
     return res.status(200).json({
       results: (data.results || []).slice(0, 5).map(movie => ({
