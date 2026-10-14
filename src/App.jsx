@@ -1672,19 +1672,7 @@ top: `${Math.min(0, Math.max(window.innerHeight - 941, 200 - playerPosition.y))}
         }}
       />
     </div>
-    <div
-  style={{
-    position: 'absolute',
-    top: '110px',
-    left: '10px',
-    zIndex: 20,
-    color: 'white',
-    background: 'black',
-    padding: '8px',
-  }}
->
-  x: {playerPosition.x}, y: {playerPosition.y}
-</div>
+    
 
     <div className="shop-controls">
   <div className="shop-dpad">
