@@ -34,12 +34,48 @@ function App() {
   const [guidePieceIndex, setGuidePieceIndex] = useState(0)
 
   const [playerPosition, setPlayerPosition] = useState({ x: 200, y: 200 })
-  const isWalkable = (x, y) => {
-  return (
-    x >= 160 && x <= 1500 &&
-    y >= 160 && y <= 800
+ 
+const isWalkable = (x, y) => {
+  // 主人公の足元の座標で通行可能か判定
+  const blockedAreas = [
+    // 上側の棚
+    [335, 105, 620, 310],
+    [1010, 105, 1270, 310],
+
+    // 中段の棚
+    [130, 382, 505, 575],
+    [645, 382, 1005, 575],
+    [1140, 382, 1515, 575],
+
+    // 下段の棚
+    [120, 638, 475, 830],
+    [635, 638, 1010, 830],
+    [1165, 638, 1525, 830],
+
+    // 画面左右の棚
+    [0, 85, 125, 390],
+    [1510, 85, 1670, 390],
+    [0, 515, 90, 800],
+    [1550, 515, 1670, 800],
+
+    // いちばん下の棚
+    [465, 865, 1085, 941],
+
+    // カウンター
+    [665, 185, 910, 270],
+  ]
+
+  if (x < 0 || x > 1574 || y < 0 || y > 813) {
+    return false
+  }
+
+  return !blockedAreas.some(
+    ([left, top, right, bottom]) =>
+      x >= left && x <= right &&
+      y >= top && y <= bottom
   )
 }
+
 
   const [playerDirection, setPlayerDirection] = useState('down')
   const [playerFrame, setPlayerFrame] = useState(0)
