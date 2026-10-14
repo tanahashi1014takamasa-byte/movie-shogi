@@ -1349,11 +1349,20 @@ useEffect(() => {
     const details = await Promise.all(
       bestMovies.map(async (title) => {
         try {
-          const response = await fetch(
-            `/api/tmdb?query=${encodeURIComponent(title.trim())}`
-          )
+const searchTitle =
+  bestMovieSearchTitles[title.trim()] || title.trim()
+
+const response = await fetch(
+  `/api/tmdb?query=${encodeURIComponent(searchTitle)}`
+)
           const data = await response.json()
-          const movie = data.results?.[0]
+          const normalizedTitle = searchTitle.trim().toLowerCase()
+
+const movie =
+  data.results?.find(item =>
+    item.title?.trim().toLowerCase() === normalizedTitle ||
+    item.original_title?.trim().toLowerCase() === normalizedTitle
+  ) || data.results?.[0]
 
           return {
             name: title.trim(),
@@ -1399,6 +1408,12 @@ const movieNotesByYear = {
 }
 
 const bestMovies = moviesBest.split('\n').filter(line => line.trim())
+const bestMovieSearchTitles = {
+  'オールド': 'Old',
+  'リリィシュシュのすべて': 'All About Lily Chou-Chou',
+  'バニラスカイ': 'Vanilla Sky',
+}
+
 
 const initialPiecesRef = useRef(null)
 

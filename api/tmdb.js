@@ -31,12 +31,13 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       results: (data.results || []).slice(0, 5).map(movie => ({
-        id: movie.id,
-        title: movie.title,
-        original_title: movie.original_title,
-        poster_path: movie.poster_path,
-        release_date: movie.release_date,
-      })),
+  id: movie.id,
+  title: movie.title,
+  original_title: movie.original_title,
+  poster_path: movie.poster_path,
+  release_date: movie.release_date,
+  original_language: movie.original_language,
+})),
     })
   } catch {
     return res.status(500).json({ error: '検索中にエラーが発生しました' })
