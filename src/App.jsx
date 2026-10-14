@@ -1412,6 +1412,21 @@ const bestMovieSearchTitles = {
   'オールド': 'Old',
   'リリィシュシュのすべて': 'リリイ・シュシュのすべて',
   'バニラスカイ': 'Vanilla Sky',
+
+  'エクスマキナ': 'Ex Machina',
+  '去年の冬、君と別れ': 'Last Winter, We Parted',
+  'パーティーで女の子に話しかけるには': 'How to Talk to Girls at Parties',
+  'きっとうまく行く': '3 Idiots',
+  'グッドウィルハンティング': 'Good Will Hunting',
+  '最強の二人': 'The Intouchables',
+  'パンズラビリンス': "Pan's Labyrinth",
+  'ガールズインザベースメント': 'Girl in the Basement',
+  'キューブ': 'Cube',
+  'ゴーンガール': 'Gone Girl',
+  'ミッドナイトエクスプレス': 'Midnight Express',
+  'エスターファーストキル': 'Orphan: First Kill',
+  'まったく同じ3人の他人': 'Three Identical Strangers',
+  'ソルトバーン': 'Saltburn',
 }
 
 
