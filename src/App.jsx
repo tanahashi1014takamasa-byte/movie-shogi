@@ -1869,6 +1869,23 @@ borderRadius: '8px',
     )
   })}
 </div>)}
+
+{showBestMovies && (
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+    {bestMovies.map((movie, index) => (
+      <div
+        key={index}
+        style={{
+          borderBottom: '1px solid #555',
+          padding: '8px 0',
+          color: 'white',
+        }}
+      >
+        {movie.trim()}
+      </div>
+    ))}
+  </div>
+)}
   
     <button onClick={() => setShowMovieNotes(false)}>
       閉じる
