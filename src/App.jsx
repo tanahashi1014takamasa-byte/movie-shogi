@@ -1838,7 +1838,7 @@ const updateGameState = async (
   const x = playerPosition.x
   const y = playerPosition.y
 
-  if (x >= 1480 && x <= 1576 && y >= 616 && y <= 744) {
+  if (x >= 0 && x <= 80 && y >= 190 && y <= 280) {
     setShowMovieNotes(true)
   }
 }}
