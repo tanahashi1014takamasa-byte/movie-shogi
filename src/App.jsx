@@ -1670,8 +1670,8 @@ const updateGameState = async (
 <div
   style={{
     position: 'absolute',
-    left: `${Math.min(0, Math.max(window.innerWidth - 1670, 160 - playerPosition.x))}px`,
-    top: `${Math.min(0, Math.max(window.innerHeight - 941, 200 - playerPosition.y))}px`,
+    left: `${Math.min(0, Math.max(window.innerWidth - 1670 * 0.8, 160 - playerPosition.x * 0.8))}px`,
+    top: `${Math.min(0, Math.max(window.innerHeight - 941 * 0.8, 200 - playerPosition.y * 0.8))}px`,
     transform: 'scale(0.8)',
     transformOrigin: 'top left',
   }}
