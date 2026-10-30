@@ -1863,7 +1863,7 @@ const updateGameState = async (
         background: 'black',
         color: 'white',
         border: '1px solid white',
-        borderRadius: '50%',
+        borderRadius: '4px',
         width: '32px',
         height: '32px',
         fontSize: '20px',
@@ -2026,9 +2026,7 @@ borderRadius: '8px',
   </div>
 )}
   
-    <button onClick={() => setShowMovieNotes(false)}>
-      閉じる
-    </button>
+   
   </div>
   </>
 )}
