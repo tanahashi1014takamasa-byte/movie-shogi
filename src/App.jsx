@@ -1410,7 +1410,6 @@ const movieNotesByYear = {
 const bestMovies = moviesBest.split('\n').filter(line => line.trim())
 const bestMovieSearchTitles = {
   'オールド': 'Old',
-  'リリィシュシュのすべて': 'リリイ・シュシュのすべて',
   'バニラスカイ': 'Vanilla Sky',
   'パール': 'Pearl',
   'エクスマキナ': 'Ex Machina',
