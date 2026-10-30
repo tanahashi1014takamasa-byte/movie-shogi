@@ -1868,9 +1868,10 @@ const updateGameState = async (
         alignItems: 'center',
         justifyContent: 'center',
         width: '40px',
-        height: '40px',
-        minWidth: '40px',
-        minHeight: '40px',
+        width: '32px',
+height: '32px',
+minWidth: '32px',
+minHeight: '32px',
         fontSize: '20px',
         cursor: 'pointer',
         
