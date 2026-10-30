@@ -35,6 +35,8 @@ import movies2025 from './assets/movies2025.txt?raw'
 import movies2026 from './assets/movies2026.txt?raw'
 import moviesBest from './assets/BEST.txt?raw'
 
+import welcomeMusic from './assets/Welcome.mp3'
+
 function App() {
   const [screen, setScreen] = useState('opening')
   const [guidePieceIndex, setGuidePieceIndex] = useState(0)
@@ -1652,6 +1654,8 @@ const updateGameState = async (
       background: '#000',
     }}
   >
+
+        <audio src={welcomeMusic} autoPlay loop />
 
 <div
   style={{
