@@ -1848,6 +1848,32 @@ const updateGameState = async (
   <button className="shop-button button-b">B</button>
 </div>
 {showMovieNotes && (
+  <>
+  <div style={{ position: 'absolute', inset: 0, zIndex: 11, pointerEvents: 'none' }}>
+    <button
+      onClick={() => {
+        setShowMovieNotes(false)
+        setShowBestMovies(false)
+      }}
+      style={{
+        position: 'absolute',
+        top: '5%',
+        right: '5%',
+        pointerEvents: 'auto',
+        background: 'black',
+        color: 'white',
+        border: '1px solid white',
+        borderRadius: '50%',
+        width: '32px',
+        height: '32px',
+        fontSize: '20px',
+        cursor: 'pointer',
+        
+      }}
+    >
+      ×
+    </button>
+  </div>
   <div
     style={{
       position: 'absolute',
@@ -2004,6 +2030,7 @@ borderRadius: '8px',
       閉じる
     </button>
   </div>
+  </>
 )}
   </div>
 )}
