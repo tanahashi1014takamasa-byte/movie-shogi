@@ -1562,6 +1562,8 @@ const updateGameState = async (
   return (
   <>
 
+   <audio src={welcomeMusic} preload="auto" />
+
 {result && (
   <div className="result-message">
     {result}
