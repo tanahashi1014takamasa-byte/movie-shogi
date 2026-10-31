@@ -1655,7 +1655,7 @@ const updateGameState = async (
     }}
   >
 
-        <audio src={welcomeMusic} autoPlay loop />
+        <audio src={welcomeMusic} autoPlay loop preload="auto" />
 
 <div
   style={{
