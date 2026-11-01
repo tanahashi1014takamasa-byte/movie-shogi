@@ -2085,9 +2085,23 @@ borderRadius: '8px',
 
     <p>前方と左右斜め前に進める。潜水して駒と重なることができる。</p>
 
-    <button onClick={() => setShowWhiteWhale(false)}>
-      戻る
-    </button>
+    <button
+  onClick={() => setShowWhiteWhale(false)}
+  style={{
+    marginTop: 'auto',
+    padding: '8px 28px',
+    background: '#222',
+    color: '#fff',
+    border: '1px solid #aaa',
+    borderRadius: '0',
+    fontSize: '14px',
+    letterSpacing: '3px',
+    cursor: 'pointer',
+    boxShadow: '2px 2px 0 #666',
+  }}
+>
+  ◀ もどる
+</button>
   </div>
 )}
 
