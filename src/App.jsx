@@ -2065,54 +2065,82 @@ borderRadius: '8px',
       padding: '16px',
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center',
-      gap: '12px',
+      boxSizing: 'border-box',
     }}
   >
-  <div
-  style={{
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '24px',
-    width: '100%',
-    flex: 1,
-  }}
->
-  <img
-    src={whiteWhaleVHS}
-    alt="白鯨 VHS"
-    style={{
-      width: '180px',
-      maxHeight: '220px',
-      objectFit: 'contain',
-    }}
-  />
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '24px',
+        flex: 1,
+        minHeight: 0,
+      }}
+    >
+      <img
+        src={whiteWhaleVHS}
+        alt="白鯨 VHS"
+        style={{
+          width: '180px',
+          maxHeight: '220px',
+          objectFit: 'contain',
+          flexShrink: 0,
+        }}
+      />
 
-  <div style={{ textAlign: 'left', maxWidth: '300px' }}>
-    <h2>白鯨</h2>
-    <p>特殊能力：鯨隠（げいいん）</p>
-    <p>前方と左右斜め前に進める。潜水して駒と重なることができる。</p>
-  </div>
-</div>
+      <div
+        style={{
+          flex: 1,
+          minWidth: 0,
+          textAlign: 'left',
+          overflowY: 'auto',
+        }}
+      >
+        <h2>白鯨</h2>
+        <p>特殊能力：鯨隠（げいいん）</p>
+        <p>
+          前方と左右斜め前に進める。
+          潜水して駒と重なることができる。
+        </p>
+      </div>
+    </div>
 
-    <button
-  onClick={() => setShowWhiteWhale(false)}
-  style={{
-    marginTop: 'auto',
-    padding: '8px 28px',
-    background: '#222',
-    color: '#fff',
-    border: '1px solid #aaa',
-    borderRadius: '0',
-    fontSize: '14px',
-    letterSpacing: '3px',
-    cursor: 'pointer',
-    boxShadow: '2px 2px 0 #666',
-  }}
->
-  ◀ もどる
-</button>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '16px',
+        paddingTop: '12px',
+      }}
+    >
+      <button
+        onClick={() => {}}
+        style={{
+          padding: '10px 24px',
+          background: '#173d24',
+          color: 'white',
+          border: '1px solid #7cff9b',
+          fontSize: '15px',
+          cursor: 'pointer',
+        }}
+      >
+        レンタルする
+      </button>
+
+      <button
+        onClick={() => setShowWhiteWhale(false)}
+        style={{
+          padding: '10px 24px',
+          background: '#222',
+          color: 'white',
+          border: '1px solid #aaa',
+          fontSize: '15px',
+          cursor: 'pointer',
+        }}
+      >
+        レンタルしない
+      </button>
+    </div>
   </div>
 )}
 
