@@ -2082,21 +2082,38 @@ borderRadius: '8px',
         alt="白鯨 VHS"
         style={{
           width: '110px',
-maxHeight: '180px',
+          maxHeight: '180px',
           objectFit: 'contain',
           flexShrink: 0,
         }}
       />
 
-      <div
-        style={{
-          flex: 1,
-          minWidth: 0,
-          textAlign: 'left',
-          overflowY: 'auto',
-        }}
-      >
-        <h2>白鯨</h2>
+<h2
+  style={{
+    textAlign: 'center',
+    fontFamily: '"Yu Mincho", "Hiragino Mincho ProN", serif',
+    fontSize: '30px',
+    fontWeight: 'bold',
+    letterSpacing: '8px',
+    textShadow: '0 0 8px rgba(255,255,255,0.4)',
+    margin: '0 0 16px',
+    paddingBottom: '10px',
+    borderBottom: '1px solid #555',
+  }}
+>
+  白鯨
+</h2>
+
+<div
+  style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: '24px',
+    flex: 1,
+    minHeight: 0,
+  }}
+>
+        
         <p>特殊能力：鯨隠（げいいん）</p>
         <p>
           前方と左右斜め前に進める。
