@@ -36,6 +36,7 @@ import movies2026 from './assets/movies2026.txt?raw'
 import moviesBest from './assets/BEST.txt?raw'
 
 import welcomeMusic from './assets/Welcome.mp3'
+import gameScreen from './assets/game_screen.png'
 
 function App() {
   const [screen, setScreen] = useState('opening')
@@ -1339,6 +1340,7 @@ if (absorbedMove === 'サイコ・ゴアマン') {
 ])
 
 const [showMovieNotes, setShowMovieNotes] = useState(false)
+const [showWhiteWhale, setShowWhiteWhale] = useState(false)
 const [showBestMovies, setShowBestMovies] = useState(false)
 const [bestMovieDetails, setBestMovieDetails] = useState([])
 
@@ -1844,8 +1846,12 @@ const updateGameState = async (
   const y = playerPosition.y
 
   if (x >= 0 && x <= 80 && y >= 190 && y <= 280) {
-    setShowMovieNotes(true)
-  }
+  setShowMovieNotes(true)
+}
+
+if (x >= 420 && x <= 490 && y >= 170 && y <= 230) {
+  setShowWhiteWhale(true)
+}
 }}
 >
   A
@@ -2043,6 +2049,45 @@ borderRadius: '8px',
   </div>
   </>
 )}
+  </div>
+)}
+
+{showWhiteWhale && (
+  <div
+    style={{
+      position: 'absolute',
+      inset: '10%',
+      zIndex: 20,
+      background: 'black',
+      color: 'white',
+      border: '2px solid white',
+      borderRadius: '8px',
+      padding: '16px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '12px',
+    }}
+  >
+    <img
+      src={whiteWhaleVHS}
+      alt="白鯨 VHS"
+      style={{
+        maxWidth: '180px',
+        maxHeight: '220px',
+        objectFit: 'contain',
+      }}
+    />
+
+    <h2>白鯨</h2>
+
+    <p>特殊能力：鯨隠（げいいん）</p>
+
+    <p>前方と左右斜め前に進める。潜水して駒と重なることができる。</p>
+
+    <button onClick={() => setShowWhiteWhale(false)}>
+      戻る
+    </button>
   </div>
 )}
 
