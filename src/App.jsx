@@ -2081,8 +2081,8 @@ borderRadius: '8px',
         src={whiteWhaleVHS}
         alt="白鯨 VHS"
         style={{
-          width: '180px',
-          maxHeight: '220px',
+          width: '110px',
+maxHeight: '180px',
           objectFit: 'contain',
           flexShrink: 0,
         }}
