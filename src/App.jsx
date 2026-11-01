@@ -2069,21 +2069,32 @@ borderRadius: '8px',
       gap: '12px',
     }}
   >
-    <img
-      src={whiteWhaleVHS}
-      alt="白鯨 VHS"
-      style={{
-        maxWidth: '180px',
-        maxHeight: '220px',
-        objectFit: 'contain',
-      }}
-    />
+  <div
+  style={{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '24px',
+    width: '100%',
+    flex: 1,
+  }}
+>
+  <img
+    src={whiteWhaleVHS}
+    alt="白鯨 VHS"
+    style={{
+      width: '180px',
+      maxHeight: '220px',
+      objectFit: 'contain',
+    }}
+  />
 
+  <div style={{ textAlign: 'left', maxWidth: '300px' }}>
     <h2>白鯨</h2>
-
     <p>特殊能力：鯨隠（げいいん）</p>
-
     <p>前方と左右斜め前に進める。潜水して駒と重なることができる。</p>
+  </div>
+</div>
 
     <button
   onClick={() => setShowWhiteWhale(false)}
