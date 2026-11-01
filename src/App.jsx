@@ -36,7 +36,6 @@ import movies2026 from './assets/movies2026.txt?raw'
 import moviesBest from './assets/BEST.txt?raw'
 
 import welcomeMusic from './assets/Welcome.mp3'
-import gameScreen from './assets/game_screen.png'
 
 function App() {
   const [screen, setScreen] = useState('opening')
