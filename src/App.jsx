@@ -2068,6 +2068,8 @@ borderRadius: '8px',
       boxSizing: 'border-box',
     }}
   >
+
+      <h2>白鯨</h2>
     <div
       style={{
         display: 'flex',
@@ -2105,6 +2107,8 @@ borderRadius: '8px',
           潜水して駒と重なることができる。
         </p>
       </div>
+
+
     </div>
 
     <div
