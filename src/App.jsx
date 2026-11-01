@@ -2069,7 +2069,20 @@ borderRadius: '8px',
     }}
   >
 
-      <h2>白鯨</h2>
+     <h2
+  style={{
+    textAlign: 'center',
+    fontFamily: '"Yu Mincho", "Hiragino Mincho ProN", serif',
+    fontSize: '30px',
+    fontWeight: 'bold',
+    letterSpacing: '8px',
+    margin: '0 0 16px',
+    paddingBottom: '10px',
+    borderBottom: '1px solid #555',
+  }}
+>
+  白鯨
+</h2>
     <div
       style={{
         display: 'flex',
