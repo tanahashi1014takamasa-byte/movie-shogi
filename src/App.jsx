@@ -2073,6 +2073,7 @@ borderRadius: '8px',
   style={{
     textAlign: 'center',
     fontFamily: '"Yu Mincho", "Hiragino Mincho ProN", serif',
+    color: 'white',
     fontSize: '30px',
     fontWeight: 'bold',
     letterSpacing: '8px',
