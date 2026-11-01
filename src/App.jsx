@@ -24,6 +24,7 @@ import syogiSound from './assets/syogi_s01.mp3'
 import guideText from './assets/guide.txt?raw'
 
 import gameScreen from './assets/game_screen.png'
+import whiteWhaleVHS from './assets/白鯨_VHS.png'
 import character from './assets/chracter.gif'
 
 import gameCharacter from './assets/game_character.png'
