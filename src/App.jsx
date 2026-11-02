@@ -2222,6 +2222,22 @@ borderRadius: '8px',
       flexShrink: 0,
     }}
   />
+
+<div
+  style={{
+    flex: 1,
+    minWidth: 0,
+    textAlign: 'left',
+    overflowY: 'auto',
+  }}
+>
+  <p>特殊能力：祝祭</p>
+  <p>
+    他の駒を生贄に捧げ、その駒の現在の移動範囲を取得する。
+    ただし、能力の継承はできない。
+  </p>
+</div>
+
 </div>
 
   </div>
