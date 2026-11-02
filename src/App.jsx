@@ -1762,24 +1762,55 @@ const updateGameState = async (
   <>
     <div>{`${rentalCart.join('、')}をレンタルしますか？`}</div>
 
-    <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
-      <button
-        onClick={() => {
-          setRentalCart([])
-          setShowRentalConfirm(false)
-        }}
-      >
-        はい
-      </button>
+    <div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '12px',
+    marginTop: '16px',
+  }}
+>
+  <button
+    onClick={() => {
+      setRentalCart([])
+      setShowRentalConfirm(false)
+    }}
+    style={{
+      width: '68px',
+      padding: '9px 0',
+      background: '#245b35',
+      color: 'white',
+      border: '2px solid #142f1d',
+      borderRadius: '4px',
+      fontSize: '16px',
+      fontWeight: 'bold',
+      cursor: 'pointer',
+      boxShadow: '2px 2px 0 #142f1d',
+    }}
+  >
+    はい
+  </button>
 
-      <button
-        onClick={() => {
-          setShowRentalConfirm(false)
-        }}
-      >
-        いいえ
-      </button>
-    </div>
+  <button
+    onClick={() => {
+      setShowRentalConfirm(false)
+    }}
+    style={{
+      width: '68px',
+      padding: '9px 0',
+      background: '#555',
+      color: 'white',
+      border: '2px solid #222',
+      borderRadius: '4px',
+      fontSize: '16px',
+      fontWeight: 'bold',
+      cursor: 'pointer',
+      boxShadow: '2px 2px 0 #222',
+    }}
+  >
+    いいえ
+  </button>
+</div>
   </>
 ) : (
   'シャイ！シャイ！シャイ！シャイ！シャイ！いらっしゃい！！！'
