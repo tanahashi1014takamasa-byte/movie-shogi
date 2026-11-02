@@ -1751,7 +1751,7 @@ const updateGameState = async (
     >
       <div
         style={{
-          width: '180px',
+          width: '260px',
           minHeight: '80px',
           padding: '12px',
           background: 'white',
