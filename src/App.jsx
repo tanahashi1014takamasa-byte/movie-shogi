@@ -39,6 +39,7 @@ import moviesBest from './assets/BEST.txt?raw'
 
 import welcomeMusic from './assets/Welcome.mp3'
 import rentalSound from './assets/rental.mp3'
+import rentalCompleteSound from './assets/rental_2.mp3'
 
 function App() {
   const [screen, setScreen] = useState('opening')
@@ -1346,6 +1347,7 @@ const [showWhiteWhale, setShowWhiteWhale] = useState(false)
 const [showMidsummer, setShowMidsummer] = useState(false)
 const [rentalCart, setRentalCart] = useState([])
 const [showRentalConfirm, setShowRentalConfirm] = useState(false)
+const [rentalCompleted, setRentalCompleted] = useState(false)
 const [showBestMovies, setShowBestMovies] = useState(false)
 const [bestMovieDetails, setBestMovieDetails] = useState([])
 
@@ -1771,10 +1773,12 @@ const updateGameState = async (
   }}
 >
   <button
-    onClick={() => {
-      setRentalCart([])
-      setShowRentalConfirm(false)
-    }}
+  onClick={() => {
+    new Audio(rentalCompleteSound).play()
+    setRentalCart([])
+    setShowRentalConfirm(false)
+    setRentalCompleted(true)
+  }}
     style={{
       width: '68px',
       padding: '9px 0',
@@ -1813,7 +1817,9 @@ const updateGameState = async (
 </div>
   </>
 ) : (
-  'シャイ！シャイ！シャイ！シャイ！シャイ！いらっしゃい！！！'
+  rentalCompleted
+    ? '鬼あざぁーっす！！'
+    : 'シャイ！シャイ！シャイ！シャイ！シャイ！いらっしゃい！！！'
 )}
       </div>
 
