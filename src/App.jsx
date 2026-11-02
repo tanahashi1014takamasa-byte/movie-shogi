@@ -1345,6 +1345,7 @@ const [showMovieNotes, setShowMovieNotes] = useState(false)
 const [showWhiteWhale, setShowWhiteWhale] = useState(false)
 const [showMidsummer, setShowMidsummer] = useState(false)
 const [rentalCart, setRentalCart] = useState([])
+const [showRentalConfirm, setShowRentalConfirm] = useState(false)
 const [showBestMovies, setShowBestMovies] = useState(false)
 const [bestMovieDetails, setBestMovieDetails] = useState([])
 
@@ -1757,7 +1758,9 @@ const updateGameState = async (
           color: 'black',
         }}
       >
-        いらっしゃい！
+        {showRentalConfirm
+  ? `${rentalCart.join('、')}をレンタルしますか？`
+  : 'シャイ！シャイ！シャイ！シャイ！シャイ！いらっしゃい！！！'}
       </div>
 
       <img
@@ -1863,8 +1866,7 @@ if (x >= 104 && x <= 424 && y >= 488 && y <= 510) {
 
 if (x >= 680 && x <= 750 && y >= 140 && y <= 200) {
   if (rentalCart.length > 0) {
-    setRentalCart([])
-    alert(`${rentalCart.join('、')}をレンタルしました！`)
+    setShowRentalConfirm(true)
   }
 }
 
