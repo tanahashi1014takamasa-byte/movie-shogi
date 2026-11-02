@@ -2091,6 +2091,22 @@ borderRadius: '8px',
 >
   白鯨
 </h2>
+
+<div
+  style={{
+    textAlign: 'center',
+    color: 'white',
+    fontSize: '26px',
+    fontWeight: 'bold',
+    marginTop: '20px',
+    marginBottom: '20px',
+    width: '100%',
+    alignSelf: 'center',
+  }}
+>
+  特殊能力：鯨隠（げいいん）
+</div>
+
     <div
       style={{
         display: 'flex',
@@ -2122,7 +2138,7 @@ borderRadius: '8px',
         }}
       >
         
-        <p>特殊能力：鯨隠（げいいん）</p>
+       
         <p>
           前方と左右斜め前に進める。
           潜水して駒と重なることができる。
