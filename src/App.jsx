@@ -2202,6 +2202,28 @@ borderRadius: '8px',
     >
       ミッドサマー
     </h2>
+
+<div
+  style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: '24px',
+    flex: 1,
+    minHeight: 0,
+  }}
+>
+  <img
+    src={midsummerVHS}
+    alt="ミッドサマー VHS"
+    style={{
+      width: '110px',
+      maxHeight: '180px',
+      objectFit: 'contain',
+      flexShrink: 0,
+    }}
+  />
+</div>
+
   </div>
 )}
 
