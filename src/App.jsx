@@ -1754,10 +1754,10 @@ const updateGameState = async (
           width: '260px',
           minHeight: '80px',
           padding: '12px',
-          background: 'white',
-          border: '3px solid black',
+          background: 'black',
+          border: '2px solid white',
           borderRadius: '8px',
-          color: 'black',
+          color: 'white',
         }}
       >
         {showRentalConfirm ? (
