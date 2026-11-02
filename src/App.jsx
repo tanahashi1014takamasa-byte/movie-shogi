@@ -1758,9 +1758,32 @@ const updateGameState = async (
           color: 'black',
         }}
       >
-        {showRentalConfirm
-  ? `${rentalCart.join('、')}をレンタルしますか？`
-  : 'シャイ！シャイ！シャイ！シャイ！シャイ！いらっしゃい！！！'}
+        {showRentalConfirm ? (
+  <>
+    <div>{`${rentalCart.join('、')}をレンタルしますか？`}</div>
+
+    <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
+      <button
+        onClick={() => {
+          setRentalCart([])
+          setShowRentalConfirm(false)
+        }}
+      >
+        はい
+      </button>
+
+      <button
+        onClick={() => {
+          setShowRentalConfirm(false)
+        }}
+      >
+        いいえ
+      </button>
+    </div>
+  </>
+) : (
+  'シャイ！シャイ！シャイ！シャイ！シャイ！いらっしゃい！！！'
+)}
       </div>
 
       <img
