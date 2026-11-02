@@ -25,6 +25,7 @@ import guideText from './assets/guide.txt?raw'
 
 import gameScreen from './assets/game_screen.png'
 import whiteWhaleVHS from './assets/白鯨_VHS.png'
+import midsummerVHS from './assets/ミッドサマー_VHS.png'
 import character from './assets/chracter.gif'
 
 import gameCharacter from './assets/game_character.png'
@@ -1341,6 +1342,7 @@ if (absorbedMove === 'サイコ・ゴアマン') {
 
 const [showMovieNotes, setShowMovieNotes] = useState(false)
 const [showWhiteWhale, setShowWhiteWhale] = useState(false)
+const [showMidsummer, setShowMidsummer] = useState(false)
 const [showBestMovies, setShowBestMovies] = useState(false)
 const [bestMovieDetails, setBestMovieDetails] = useState([])
 
@@ -1852,6 +1854,11 @@ const updateGameState = async (
 if (x >= 420 && x <= 490 && y >= 170 && y <= 230) {
   setShowWhiteWhale(true)
 }
+
+if (x >= 104 && x <= 424 && y >= 488 && y <= 510) {
+  setShowMidsummer(true)
+}
+
 }}
 >
   A
@@ -2161,6 +2168,40 @@ borderRadius: '8px',
         レンタルしない
       </button>
     </div>
+  </div>
+)}
+
+{showMidsummer && (
+  <div
+    style={{
+      position: 'absolute',
+      inset: '10%',
+      zIndex: 20,
+      background: 'black',
+      color: 'white',
+      border: '2px solid white',
+      borderRadius: '8px',
+      padding: '16px',
+      display: 'flex',
+      flexDirection: 'column',
+      boxSizing: 'border-box',
+    }}
+  >
+    <h2
+      style={{
+        textAlign: 'center',
+        fontFamily: '"Yu Mincho", "Hiragino Mincho ProN", serif',
+        color: 'white',
+        fontSize: '30px',
+        fontWeight: 'bold',
+        letterSpacing: '8px',
+        margin: '0 0 16px',
+        paddingBottom: '10px',
+        borderBottom: '1px solid #555',
+      }}
+    >
+      ミッドサマー
+    </h2>
   </div>
 )}
 
