@@ -2104,7 +2104,7 @@ borderRadius: '8px',
     alignSelf: 'center',
   }}
 >
-  特殊能力：鯨隠（げいいん）
+  特殊能力：鯨隠
 </div>
 
     <div
