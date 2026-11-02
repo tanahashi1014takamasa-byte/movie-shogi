@@ -2238,6 +2238,43 @@ borderRadius: '8px',
   </p>
 </div>
 
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '16px',
+    paddingTop: '12px',
+  }}
+>
+  <button
+    onClick={() => {}}
+    style={{
+      padding: '10px 24px',
+      background: '#173d24',
+      color: 'white',
+      border: '1px solid #7cff9b',
+      fontSize: '15px',
+      cursor: 'pointer',
+    }}
+  >
+    レンタルする
+  </button>
+
+  <button
+    onClick={() => setShowMidsummer(false)}
+    style={{
+      padding: '10px 24px',
+      background: '#222',
+      color: 'white',
+      border: '1px solid #aaa',
+      fontSize: '15px',
+      cursor: 'pointer',
+    }}
+  >
+    レンタルしない
+  </button>
+</div>
+
 </div>
 
   </div>
