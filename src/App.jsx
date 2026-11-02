@@ -1343,6 +1343,7 @@ if (absorbedMove === 'サイコ・ゴアマン') {
 const [showMovieNotes, setShowMovieNotes] = useState(false)
 const [showWhiteWhale, setShowWhiteWhale] = useState(false)
 const [showMidsummer, setShowMidsummer] = useState(false)
+const [rentalCart, setRentalCart] = useState([])
 const [showBestMovies, setShowBestMovies] = useState(false)
 const [bestMovieDetails, setBestMovieDetails] = useState([])
 
@@ -1859,6 +1860,13 @@ if (x >= 104 && x <= 424 && y >= 488 && y <= 510) {
   setShowMidsummer(true)
 }
 
+if (x >= 680 && x <= 750 && y >= 140 && y <= 200) {
+  if (rentalCart.length > 0) {
+    setRentalCart([])
+    alert(`${rentalCart.join('、')}をレンタルしました！`)
+  }
+}
+
 }}
 >
   A
@@ -2157,7 +2165,12 @@ borderRadius: '8px',
       }}
     >
       <button
-        onClick={() => {}}
+        onClick={() => {
+  setRentalCart(prev =>
+    prev.includes('白鯨') ? prev : [...prev, '白鯨']
+  )
+  setShowWhiteWhale(false)
+}}
         style={{
           padding: '10px 24px',
           background: '#173d24',
@@ -2283,7 +2296,12 @@ alignSelf: 'center',
       }}
     >
       <button
-        onClick={() => {}}
+        onClick={() => {
+  setRentalCart(prev =>
+    prev.includes('ミッドサマー') ? prev : [...prev, 'ミッドサマー']
+  )
+  setShowMidsummer(false)
+}}
         style={{
           padding: '10px 24px',
           background: '#173d24',
