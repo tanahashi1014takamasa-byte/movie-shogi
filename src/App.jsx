@@ -2299,6 +2299,7 @@ alignSelf: 'center',
     >
       <button
         onClick={() => {
+          new Audio(rentalSound).play()
   setRentalCart(prev =>
     prev.includes('ミッドサマー') ? prev : [...prev, 'ミッドサマー']
   )
