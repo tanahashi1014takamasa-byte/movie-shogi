@@ -2203,6 +2203,20 @@ borderRadius: '8px',
       ミッドサマー
     </h2>
 
+
+  <div
+  style={{
+    textAlign: 'center',
+    color: 'white',
+    fontSize: '17px',
+    fontWeight: 'bold',
+    marginBottom: '12px',
+  }}
+>
+  特殊能力：祝祭
+</div>
+
+
 <div
   style={{
     display: 'flex',
@@ -2223,17 +2237,7 @@ borderRadius: '8px',
     }}
   />
 
-  <div
-  style={{
-    textAlign: 'center',
-    color: 'white',
-    fontSize: '17px',
-    fontWeight: 'bold',
-    marginBottom: '12px',
-  }}
->
-  特殊能力：祝祭
-</div>
+
 
 <div
   style={{
@@ -2248,6 +2252,8 @@ borderRadius: '8px',
   </p>
 </div>
 </div>
+
+
 
     <div
       style={{
