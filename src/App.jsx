@@ -2223,6 +2223,18 @@ borderRadius: '8px',
     }}
   />
 
+  <div
+  style={{
+    textAlign: 'center',
+    color: 'white',
+    fontSize: '17px',
+    fontWeight: 'bold',
+    marginBottom: '12px',
+  }}
+>
+  特殊能力：祝祭
+</div>
+
 <div
   style={{
     flex: 1,
