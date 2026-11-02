@@ -2236,7 +2236,7 @@ borderRadius: '8px',
     他の駒を生贄に捧げ、その駒の移動範囲を取得する。能力の継承はできない。
   </p>
 </div>
-
+</div>
 
     <div
       style={{
@@ -2274,8 +2274,6 @@ borderRadius: '8px',
         レンタルしない
       </button>
     </div>
-
-</div>
 
   </div>
 )}
