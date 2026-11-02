@@ -2208,9 +2208,11 @@ borderRadius: '8px',
   style={{
     textAlign: 'center',
     color: 'white',
-    fontSize: '17px',
+    fontSize: '22px',
     fontWeight: 'bold',
-    marginBottom: '12px',
+    marginBottom: '20px',
+    width: '100%',
+alignSelf: 'center',
   }}
 >
   特殊能力：祝祭
@@ -2278,7 +2280,7 @@ borderRadius: '8px',
       </button>
 
       <button
-        onClick={() => setShowWhiteWhale(false)}
+        onClick={() => setShowMidsummer(false)}
         style={{
           padding: '10px 24px',
           background: '#222',
