@@ -26,6 +26,7 @@ import guideText from './assets/guide.txt?raw'
 import gameScreen from './assets/game_screen.png'
 import whiteWhaleVHS from './assets/白鯨_VHS.png'
 import midsummerVHS from './assets/ミッドサマー_VHS.png'
+import midsummerVHS from './assets/ファニーゲーム.png'
 import character from './assets/chracter.gif'
 
 import gameCharacter from './assets/game_character.png'
@@ -1345,6 +1346,7 @@ if (absorbedMove === 'サイコ・ゴアマン') {
 const [showMovieNotes, setShowMovieNotes] = useState(false)
 const [showWhiteWhale, setShowWhiteWhale] = useState(false)
 const [showMidsummer, setShowMidsummer] = useState(false)
+const [showFunnyGame, setShowFunnyGame] = useState(false)
 const [rentalCart, setRentalCart] = useState([])
 const [showRentalConfirm, setShowRentalConfirm] = useState(false)
 const [rentalCompleted, setRentalCompleted] = useState(false)
@@ -1922,6 +1924,10 @@ if (x >= 420 && x <= 490 && y >= 170 && y <= 230) {
 
 if (x >= 104 && x <= 424 && y >= 488 && y <= 510) {
   setShowMidsummer(true)
+}
+
+if (x >= 648 && x <= 904 && y >= 488 && y <= 488) {
+  setShowFunnygame(true)
 }
 
 if (x >= 680 && x <= 750 && y >= 140 && y <= 200) {
