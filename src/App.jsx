@@ -2509,7 +2509,7 @@ alignSelf: 'center',
   setRentalCart(prev =>
     prev.includes('ファニーゲーム') ? prev : [...prev, 'ファニーゲーム']
   )
-  setFunnyGame(false)
+  setShowFunnyGame(false)
 }}
         style={{
           padding: '10px 24px',
@@ -2525,7 +2525,7 @@ alignSelf: 'center',
 
       <button
         onClick={() => {
-  setFunnyGame(false)
+  setShowFunnyGame(false)
   setShowFunnyGame(false)
 }}
         style={{
