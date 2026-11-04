@@ -2405,7 +2405,7 @@ alignSelf: 'center',
 
 
 
-{showFunnygame && (
+{showFunnyGame && (
   <div
     style={{
       position: 'absolute',
