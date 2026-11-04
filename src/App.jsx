@@ -2524,7 +2524,10 @@ alignSelf: 'center',
       </button>
 
       <button
-        onClick={() => setFunnyGame(false)}
+        onClick={() => {
+  setFunnyGame(false)
+  setShowFunnyGame(false)
+}}
         style={{
           padding: '10px 24px',
           background: '#222',
