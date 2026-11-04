@@ -1926,8 +1926,8 @@ if (x >= 104 && x <= 424 && y >= 488 && y <= 510) {
   setShowMidsummer(true)
 }
 
-if (x >= 648 && x <= 904 && y >= 488 && y <= 488) {
-  setShowFunnygame(true)
+if (x >= 616 && x <= 904 && y >= 488 && y <= 488) {
+  setShowFunnyGame(true)
 }
 
 if (x >= 680 && x <= 750 && y >= 140 && y <= 200) {
