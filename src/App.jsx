@@ -2403,6 +2403,145 @@ alignSelf: 'center',
   </div>
 )}
 
+
+
+{showFunnygame && (
+  <div
+    style={{
+      position: 'absolute',
+      inset: '10%',
+      zIndex: 20,
+      background: 'black',
+      color: 'white',
+      border: '2px solid white',
+      borderRadius: '8px',
+      padding: '16px',
+      display: 'flex',
+      flexDirection: 'column',
+      boxSizing: 'border-box',
+    }}
+  >
+
+     <h2
+  style={{
+    textAlign: 'center',
+    fontFamily: '"Yu Mincho", "Hiragino Mincho ProN", serif',
+    color: 'white',
+    fontSize: '30px',
+    fontWeight: 'bold',
+    letterSpacing: '8px',
+    margin: '0 0 16px',
+    paddingBottom: '10px',
+    borderBottom: '1px solid #555',
+  }}
+>
+  ファニーゲーム
+</h2>
+
+<div
+  style={{
+    textAlign: 'center',
+    color: 'white',
+    fontSize: '26px',
+    fontWeight: 'bold',
+    marginTop: '20px',
+    marginBottom: '20px',
+    width: '100%',
+    alignSelf: 'center',
+  }}
+>
+  特殊能力：トリックスター
+</div>
+
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '24px',
+        flex: 1,
+        minHeight: 0,
+      }}
+    >
+      <img
+        src={funnygameVHS}
+        alt="ファニーゲーム VHS"
+        style={{
+          width: '110px',
+          maxHeight: '180px',
+          objectFit: 'contain',
+          flexShrink: 0,
+        }}
+      />
+
+      
+
+      <div
+        style={{
+          flex: 1,
+          minWidth: 0,
+          textAlign: 'left',
+          overflowY: 'auto',
+        }}
+      >
+        
+       
+        <p>
+          盤上に配置されると自動的に行動を開始する。
+          敵味方の区別なく、移動範囲内にいる駒を捕獲
+          しながら盤上を動き回る。
+        </p>
+      </div>
+
+
+    </div>
+
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '16px',
+        paddingTop: '12px',
+      }}
+    >
+      <button
+        onClick={() => {
+          new Audio(rentalSound).play()
+  setRentalCart(prev =>
+    prev.includes('ファニーゲーム') ? prev : [...prev, 'ファニーゲーム']
+  )
+  setFunnyGame(false)
+}}
+        style={{
+          padding: '10px 24px',
+          background: '#173d24',
+          color: 'white',
+          border: '1px solid #7cff9b',
+          fontSize: '15px',
+          cursor: 'pointer',
+        }}
+      >
+        レンタルする
+      </button>
+
+      <button
+        onClick={() => setFunnyGame(false)}
+        style={{
+          padding: '10px 24px',
+          background: '#222',
+          color: 'white',
+          border: '1px solid #aaa',
+          fontSize: '15px',
+          cursor: 'pointer',
+        }}
+      >
+        レンタルしない
+      </button>
+    </div>
+  </div>
+)}
+
+
+
 {onlineScreen && (
   <div className="turn-select">
     <button onClick={createRoom}>ルームを作る</button>
