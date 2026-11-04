@@ -2442,7 +2442,7 @@ alignSelf: 'center',
   style={{
     textAlign: 'center',
     color: 'white',
-    fontSize: '26px',
+    fontSize: '20px',
     fontWeight: 'bold',
     marginTop: '20px',
     marginBottom: '20px',
