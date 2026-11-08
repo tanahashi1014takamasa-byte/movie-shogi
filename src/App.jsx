@@ -1920,6 +1920,17 @@ const updateGameState = async (
   const x = playerPosition.x
   const y = playerPosition.y
 
+  if (
+  y >= 140 && y <= 190 &&
+  (
+    (x >= 168 && x <= 232) ||
+    (x >= 1256 && x <= 1352)
+  )
+) {
+  setScreen('opening')
+  return
+}
+
   if (x >= 0 && x <= 80 && y >= 190 && y <= 280) {
   setShowMovieNotes(true)
 }
