@@ -932,6 +932,35 @@ if (piece.name === 'ウォーゲーム') {
     )
 }
 
+if (piece.name === '白鯨') {
+  const direction = piece.side === 'opponent' ? 1 : -1
+
+  const moves = [
+    [direction, 0],
+    [direction, -1],
+    [direction, 1],
+  ]
+
+  return moves
+    .map(([dr, dc]) => ({
+      row: piece.row + dr,
+      col: piece.col + dc,
+    }))
+    .filter(
+      (move) =>
+        move.row >= 0 &&
+        move.row < 9 &&
+        move.col >= 0 &&
+        move.col < 9 &&
+        !pieces.some(
+          (p) =>
+            p.row === move.row &&
+            p.col === move.col &&
+            (p.side ?? 'player') === (piece.side ?? 'player')
+        )
+    )
+}
+
 if (piece.name === 'ゾディアック') {
   const direction = piece.side === 'opponent' ? 1 : -1
 
