@@ -321,6 +321,7 @@ const captureMoves = safeMoves.filter(({ piece, move }) =>
       target.row === move.row &&
       target.col === move.col &&
       target.name !== 'ミスト' &&
+      !(target.name === '白鯨' && target.whaleHidden) &&
       (target.side ?? 'player') !== (piece.side ?? 'player')
   )
 )
@@ -952,19 +953,22 @@ if (piece.name === '白鯨') {
       row: piece.row + dr,
       col: piece.col + dc,
     }))
-    .filter(
-      (move) =>
-        move.row >= 0 &&
-        move.row < 9 &&
-        move.col >= 0 &&
-        move.col < 9 &&
-        !pieces.some(
-          (p) =>
-            p.row === move.row &&
-            p.col === move.col &&
-            (p.side ?? 'player') === (piece.side ?? 'player')
+  .filter(
+  (move) =>
+    move.row >= 0 &&
+    move.row < 9 &&
+    move.col >= 0 &&
+    move.col < 9 &&
+    !pieces.some(
+      (p) =>
+        p.row === move.row &&
+        p.col === move.col &&
+        (
+          (p.side ?? 'player') === (piece.side ?? 'player') ||
+          (p.name === '白鯨' && p.whaleHidden)
         )
     )
+)
 }
 
 if (piece.name === 'ゾディアック') {
@@ -2921,7 +2925,11 @@ if (!roomId) {
   (playerSide === 'player' && piece.side !== 'opponent' && piece.col === trapCube) ||
   (playerSide === 'opponent' && piece.side === 'opponent' && piece.col === trapCube)
 ) ? 'trap-cube' : ''}`}
-  src={piece.image}
+  src={
+  piece.name === '白鯨' && piece.whaleHidden
+    ? whiteWhale2
+    : piece.image
+}
   alt={piece.name}
   onClick={(e) => {
     if (result) return
@@ -2959,22 +2967,70 @@ if (!roomId) {
 
 {selectedPiece?.name === '白鯨' && !selectedPiece.fromHand && (
   <div>
-    {!whaleHidden && !whaleSurfaced && (
-      <button onClick={() => setWhaleHidden(true)}>
+    {!selectedPiece.whaleHidden && !selectedPiece.whaleSurfaced && (
+      <button onClick={() => {
+        const nextPieces = pieces.map((piece) =>
+          piece.name === '白鯨' &&
+          piece.row === selectedPiece.row &&
+          piece.col === selectedPiece.col &&
+          (piece.side ?? 'player') === (selectedPiece.side ?? 'player')
+            ? { ...piece, whaleHidden: true }
+            : piece
+        )
+
+        setPieces(nextPieces)
+        setSelectedPiece((piece) => ({
+          ...piece,
+          whaleHidden: true,
+        }))
+        updateGameState(
+          nextPieces,
+          turn,
+          playerHand,
+          mistMoveCount,
+          false,
+          null
+        )
+      }}>
         鯨隠
       </button>
     )}
 
-    {whaleHidden && (
+    {selectedPiece.whaleHidden && (
       <button onClick={() => {
-        setWhaleHidden(false)
-        setWhaleSurfaced(true)
+        const nextPieces = pieces.map((piece) =>
+          piece.name === '白鯨' &&
+          piece.row === selectedPiece.row &&
+          piece.col === selectedPiece.col &&
+          (piece.side ?? 'player') === (selectedPiece.side ?? 'player')
+            ? {
+                ...piece,
+                whaleHidden: false,
+                whaleSurfaced: true,
+              }
+            : piece
+        )
+
+        setPieces(nextPieces)
+        setSelectedPiece((piece) => ({
+          ...piece,
+          whaleHidden: false,
+          whaleSurfaced: true,
+        }))
+        updateGameState(
+          nextPieces,
+          turn,
+          playerHand,
+          mistMoveCount,
+          false,
+          null
+        )
       }}>
         浮上
       </button>
     )}
 
-    {whaleSurfaced && (
+    {selectedPiece.whaleSurfaced && (
       <button disabled>
         浮上済み
       </button>
