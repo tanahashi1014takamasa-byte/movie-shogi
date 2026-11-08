@@ -357,11 +357,12 @@ const timer = setTimeout(() => {
 }
 
   const capturedPiece = currentPieces.find(
-    (piece) =>
-      piece.row === cpuMove.move.row &&
-      piece.col === cpuMove.move.col &&
-      (piece.side ?? 'player') !== (cpuMove.piece.side ?? 'player')
-  )
+  (piece) =>
+    piece.row === cpuMove.move.row &&
+    piece.col === cpuMove.move.col &&
+    !(piece.name === '白鯨' && piece.whaleHidden) &&
+    (piece.side ?? 'player') !== (cpuMove.piece.side ?? 'player')
+)
 
   const cpuTrapCubeCaptured =
   capturedPiece?.name === 'CUBE' &&
@@ -514,7 +515,8 @@ const previousTurnRef = useRef(null)
         (p) =>
           p.row === move.row &&
           p.col === move.col &&
-        (p.side ?? 'player') === (piece.side ?? 'player')
+        (p.side ?? 'player') === (piece.side ?? 'player') &&
+!(p.name === '白鯨' && p.whaleHidden)
       )
     ) {
       return [move]
@@ -545,7 +547,8 @@ const previousTurnRef = useRef(null)
   (p) =>
     p.row === move.row &&
     p.col === move.col &&
-   (p.side ?? 'player') === (piece.side ?? 'player')
+   (p.side ?? 'player') === (piece.side ?? 'player') &&
+!(p.name === '白鯨' && p.whaleHidden)
 )
 )
   }
@@ -565,8 +568,11 @@ const previousTurnRef = useRef(null)
 
       while (row >= 0 && row < 9 && col >= 0 && col < 9) {
         const target = pieces.find(
-          (p) => p.row === row && p.col === col
-        )
+  (p) =>
+    p.row === row &&
+    p.col === col &&
+    !(p.name === '白鯨' && p.whaleHidden)
+)
 
         if (target) {
   if ((target.side ?? 'player') !== (piece.side ?? 'player')) {
@@ -599,8 +605,11 @@ const previousTurnRef = useRef(null)
 
       while (row >= 0 && row < 9 && col >= 0 && col < 9) {
         const target = pieces.find(
-          (p) => p.row === row && p.col === col
-        )
+  (p) =>
+    p.row === row &&
+    p.col === col &&
+    !(p.name === '白鯨' && p.whaleHidden)
+)
 
         if (target) {
           if (
@@ -645,7 +654,7 @@ const previousTurnRef = useRef(null)
             (p) =>
               p.row === move.row &&
               p.col === move.col &&
-              (p.side ?? 'player') === (piece.side ?? 'player')
+              (p.side ?? 'player') === (piece.side ?? 'player')&& !(p.name === '白鯨' && p.whaleHidden)
           )
       )
   }
@@ -666,8 +675,11 @@ const previousTurnRef = useRef(null)
 
     while (row >= 0 && row < 9) {
       const target = pieces.find(
-        (p) => p.row === row && p.col === piece.col
-      )
+  (p) =>
+    p.row === row &&
+    p.col === piece.col &&
+    !(p.name === '白鯨' && p.whaleHidden)
+)
 
       if (target) {
         if (
@@ -706,8 +718,11 @@ const previousTurnRef = useRef(null)
 
     while (row >= 0 && row < 9 && col >= 0 && col < 9) {
       const target = pieces.find(
-        (p) => p.row === row && p.col === col
-      )
+  (p) =>
+    p.row === row &&
+    p.col === col &&
+    !(p.name === '白鯨' && p.whaleHidden)
+)
 
       if (target) {
         if (
@@ -752,7 +767,7 @@ const previousTurnRef = useRef(null)
             (p) =>
               p.row === move.row &&
               p.col === move.col &&
-              (p.side ?? 'player') === (piece.side ?? 'player')
+              (p.side ?? 'player') === (piece.side ?? 'player')&& !(p.name === '白鯨' && p.whaleHidden)
           )
       )
   }
@@ -901,7 +916,7 @@ if (piece.name === 'ウォーゲーム') {
           (p) =>
             p.row === move.row &&
             p.col === move.col &&
-            (p.side ?? 'player') === side
+            (p.side ?? 'player') === side&& !(p.name === '白鯨' && p.whaleHidden)
         )
     )
 }
@@ -928,7 +943,8 @@ if (piece.name === 'ウォーゲーム') {
           (p) =>
             p.row === move.row &&
             p.col === move.col &&
-            (p.side ?? 'player') === (piece.side ?? 'player')
+            (p.side ?? 'player') === (piece.side ?? 'player') &&
+!(p.name === '白鯨' && p.whaleHidden)
         )
     )
 }
@@ -995,7 +1011,8 @@ if (piece.name === 'ゾディアック') {
           (p) =>
             p.row === move.row &&
             p.col === move.col &&
-            (p.side ?? 'player') === (piece.side ?? 'player')
+            (p.side ?? 'player') === (piece.side ?? 'player') &&
+!(p.name === '白鯨' && p.whaleHidden)
         )
     )
 }
@@ -1017,7 +1034,7 @@ if (piece.name === '武器人間') {
       (p) =>
         p.row === row &&
         p.col === col &&
-        (p.side ?? 'player') === (piece.side ?? 'player')
+        (p.side ?? 'player') === (piece.side ?? 'player')&& !(p.name === '白鯨' && p.whaleHidden)
     )
   ) {
     return [{ row, col }]
@@ -1049,7 +1066,7 @@ if (absorbedMove === 'ミミ') {
         (p) =>
           p.row === row &&
           p.col === col &&
-          (p.side ?? 'player') === (piece.side ?? 'player')
+          (p.side ?? 'player') === (piece.side ?? 'player')&& !(p.name === '白鯨' && p.whaleHidden)
       )
   )
 }
@@ -1069,8 +1086,11 @@ if (absorbedMove === 'サイコ・ゴアマン') {
 
     while (row >= 0 && row < 9 && col >= 0 && col < 9) {
       const target = pieces.find(
-        (p) => p.row === row && p.col === col
-      )
+  (p) =>
+    p.row === row &&
+    p.col === col &&
+    !(p.name === '白鯨' && p.whaleHidden)
+)
 
       if (target) {
         if (
@@ -1118,7 +1138,7 @@ if (absorbedMove === 'サイコ・ゴアマン') {
             (p) =>
               p.row === move.row &&
               p.col === move.col &&
-              (p.side ?? 'player') === (piece.side ?? 'player')
+              (p.side ?? 'player') === (piece.side ?? 'player')&& !(p.name === '白鯨' && p.whaleHidden)
           )
       )
   }
@@ -1138,8 +1158,11 @@ if (absorbedMove === 'サイコ・ゴアマン') {
 
       while (row >= 0 && row < 9 && col >= 0 && col < 9) {
         const target = pieces.find(
-          (p) => p.row === row && p.col === col
-        )
+  (p) =>
+    p.row === row &&
+    p.col === col &&
+    !(p.name === '白鯨' && p.whaleHidden)
+)
 
         if (target) {
           if (
@@ -1174,8 +1197,11 @@ if (absorbedMove === 'サイコ・ゴアマン') {
 
       while (row >= 0 && row < 9 && col >= 0 && col < 9) {
         const target = pieces.find(
-          (p) => p.row === row && p.col === col
-        )
+  (p) =>
+    p.row === row &&
+    p.col === col &&
+    !(p.name === '白鯨' && p.whaleHidden)
+)
 
         if (target) {
           if (
@@ -1211,8 +1237,11 @@ if (absorbedMove === 'サイコ・ゴアマン') {
 
     while (row >= 0 && row < 9) {
       const target = pieces.find(
-        (p) => p.row === row && p.col === piece.col
-      )
+  (p) =>
+    p.row === row &&
+    p.col === col &&
+    !(p.name === '白鯨' && p.whaleHidden)
+)
 
       if (target) {
         if (
@@ -1246,8 +1275,11 @@ if (absorbedMove === 'サイコ・ゴアマン') {
 
       while (row >= 0 && row < 9 && col >= 0 && col < 9) {
         const target = pieces.find(
-          (p) => p.row === row && p.col === col
-        )
+  (p) =>
+    p.row === row &&
+    p.col === col &&
+    !(p.name === '白鯨' && p.whaleHidden)
+)
 
         if (target) {
           if (
@@ -1289,8 +1321,8 @@ if (absorbedMove === 'サイコ・ゴアマン') {
               (p) =>
                 p.row === row &&
                 p.col === col &&
-                (p.side ?? 'player') ===
-                  (piece.side ?? 'player')
+                (p.side ?? 'player') === (piece.side ?? 'player') &&
+!(p.name === '白鯨' && p.whaleHidden)
             )
           ) {
             moves.push({ row, col })
@@ -1329,7 +1361,7 @@ if (absorbedMove === 'サイコ・ゴアマン') {
             p.row === move.row &&
             p.col === move.col &&
 (
-  (p.side ?? 'player') === (piece.side ?? 'player')
+  (p.side ?? 'player') === (piece.side ?? 'player')&& !(p.name === '白鯨' && p.whaleHidden)
 )
         )
     )
@@ -2819,14 +2851,10 @@ const trapCubeCaptured =
   )
 
   const capturedPieces = pieces.filter((p) => {
- 
-
-
- 
-
   return (
     p.row === row &&
     p.col === col &&
+    !(p.name === '白鯨' && p.whaleHidden) &&
     (p.side ?? 'player') !== (selectedPiece.side ?? 'player')
   )
 })
