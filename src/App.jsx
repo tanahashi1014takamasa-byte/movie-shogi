@@ -2587,6 +2587,7 @@ setPlayerHand(
     : []
 )
 setOpponentHand([])
+setRoomId(null)
 setPlayerSide('player')
   setTrapCube(Math.floor(Math.random() * 9))
   setOpponentTrapCube(Math.floor(Math.random() * 9))
@@ -2597,7 +2598,11 @@ setPlayerSide('player')
   
     <button onClick={() => {
       setPieces(initialPiecesRef.current)
-setPlayerHand([])
+setPlayerHand(
+  rentedMovies.includes('白鯨')
+    ? [{ name: '白鯨', image: whiteWhale }]
+    : []
+)
 setOpponentHand([])
 setPlayerSide('player')
   setTrapCube(Math.floor(Math.random() * 9))
