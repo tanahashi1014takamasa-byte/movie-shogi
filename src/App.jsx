@@ -42,6 +42,10 @@ import welcomeMusic from './assets/Welcome.mp3'
 import rentalSound from './assets/rental.mp3'
 import rentalCompleteSound from './assets/rental_2.mp3'
 
+import whiteWhale from './assets/白鯨.png'
+import whiteWhale2 from './assets/白鯨_2.png'
+import whiteWhale3 from './assets/白鯨_3.png'
+
 function App() {
   const [screen, setScreen] = useState('opening')
   const [guidePieceIndex, setGuidePieceIndex] = useState(0)
@@ -1348,6 +1352,7 @@ const [showWhiteWhale, setShowWhiteWhale] = useState(false)
 const [showMidsummer, setShowMidsummer] = useState(false)
 const [showFunnyGame, setShowFunnyGame] = useState(false)
 const [rentalCart, setRentalCart] = useState([])
+const [rentedMovies, setRentedMovies] = useState([])
 const [showRentalConfirm, setShowRentalConfirm] = useState(false)
 const [rentalCompleted, setRentalCompleted] = useState(false)
 const [showBestMovies, setShowBestMovies] = useState(false)
@@ -1777,6 +1782,7 @@ const updateGameState = async (
   <button
   onClick={() => {
     new Audio(rentalCompleteSound).play()
+    setRentedMovies(rentalCart)
     setRentalCart([])
     setShowRentalConfirm(false)
     setRentalCompleted(true)
@@ -2564,7 +2570,11 @@ alignSelf: 'center',
   <div className="turn-select">
     <button onClick={() => {
       setPieces(initialPiecesRef.current)
-setPlayerHand([])
+setPlayerHand(
+  rentedMovies.includes('白鯨')
+    ? [{ name: '白鯨', image: whiteWhale }]
+    : []
+)
 setOpponentHand([])
 setPlayerSide('player')
   setTrapCube(Math.floor(Math.random() * 9))
