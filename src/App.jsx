@@ -3009,7 +3009,19 @@ if (!roomId) {
     )}
 
     {selectedPiece.whaleHidden && (
-      <button onClick={() => {
+      <button
+  style={{
+    padding: '14px 28px',
+    fontSize: '20px',
+    fontWeight: 'bold',
+    color: '#8eeaff',
+    background: 'linear-gradient(145deg, #102c3b, #050d15)',
+    border: '3px solid #43bde0',
+    borderRadius: '8px',
+    boxShadow: '0 4px 0 #17617a, 0 5px 10px #000',
+    cursor: 'pointer',
+  }}
+  onClick={() => {
         const nextPieces = pieces.map((piece) =>
           piece.name === '白鯨' &&
           piece.row === selectedPiece.row &&
@@ -3043,7 +3055,20 @@ if (!roomId) {
     )}
 
     {selectedPiece.whaleSurfaced && (
-      <button disabled>
+      <button
+  disabled
+  style={{
+    padding: '14px 28px',
+    fontSize: '20px',
+    fontWeight: 'bold',
+    color: '#888',
+    background: 'linear-gradient(145deg, #292929, #111)',
+    border: '3px solid #555',
+    borderRadius: '8px',
+    boxShadow: '0 4px 0 #333',
+    cursor: 'not-allowed',
+  }}
+>
         浮上済み
       </button>
     )}
