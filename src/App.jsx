@@ -45,6 +45,7 @@ import rentalCompleteSound from './assets/rental_2.mp3'
 import whiteWhale from './assets/白鯨.png'
 import whiteWhale2 from './assets/白鯨_2.png'
 import whiteWhale3 from './assets/白鯨_3.png'
+import whiteWhale3 from './assets/白鯨_3.png'
 
 function App() {
   const [screen, setScreen] = useState('opening')
@@ -2703,9 +2704,13 @@ setPlayerSide('player')
           const row = Math.floor(index / 9)
           const col = index % 9
 
-          const piece = pieces.find(
-            (piece) => piece.row === row && piece.col === col
-          )
+          const squarePieces = pieces.filter(
+  (piece) => piece.row === row && piece.col === col
+)
+
+const piece = squarePieces.find(
+  (piece) => !(piece.name === '白鯨' && piece.whaleHidden)
+) || squarePieces[0]
 
           const legalMoves = selectedPiece?.fromHand
   ? Array.from({ length: 81 }, (_, index) => ({
@@ -2916,31 +2921,57 @@ if (!roomId) {
 >
 
   
-              {piece && !(piece.name === 'ミスト' &&
-  (piece.side ?? 'player') !== playerSide &&
-  mistMoveCount[piece.side ?? 'player'] < 10) && (
-  <img
-  className={`${'piece-image'} ${piece.name === 'ウォーゲーム' ? 'war-game-piece' : ''} ${piece.side === 'opponent' ? 'opponent-piece' : ''} ${!selectedPiece?.fromHand && selectedPiece?.row === piece.row && selectedPiece?.col === piece.col ? 'selected' : ''} ${piece.name === 'CUBE' &&
-(
-  (playerSide === 'player' && piece.side !== 'opponent' && piece.col === trapCube) ||
-  (playerSide === 'opponent' && piece.side === 'opponent' && piece.col === trapCube)
-) ? 'trap-cube' : ''}`}
-  src={
-  piece.name === '白鯨' && piece.whaleHidden
-    ? whiteWhale2
-    : piece.image
-}
-  alt={piece.name}
-  onClick={(e) => {
-    if (result) return
-  if (screen !== 'game') return
-  if ((piece.side ?? 'player') !== playerSide) return
-  if ((piece.side ?? 'player') !== turn) return
+{squarePieces
+  .slice()
+  .sort((a, b) =>
+    (a.name === '白鯨' && a.whaleHidden ? -1 : 0) -
+    (b.name === '白鯨' && b.whaleHidden ? -1 : 0)
+  )
+  .map((displayPiece, index) => {
+    const isHiddenWhale =
+      displayPiece.name === '白鯨' && displayPiece.whaleHidden
 
-  setSelectedPiece(piece)
-}}
-/>
-)}
+    const isUnderlay =
+      isHiddenWhale && squarePieces.length > 1
+
+    if (
+      displayPiece.name === 'ミスト' &&
+      (displayPiece.side ?? 'player') !== playerSide &&
+      mistMoveCount[displayPiece.side ?? 'player'] < 10
+    ) {
+      return null
+    }
+
+    return (
+      <img
+        key={`${displayPiece.name}-${displayPiece.side}-${index}`}
+        className={`${'piece-image'} ${displayPiece.name === 'ウォーゲーム' ? 'war-game-piece' : ''} ${displayPiece.side === 'opponent' ? 'opponent-piece' : ''} ${!selectedPiece?.fromHand && selectedPiece?.row === displayPiece.row && selectedPiece?.col === displayPiece.col ? 'selected' : ''} ${displayPiece.name === 'CUBE' &&
+          (
+            (playerSide === 'player' && displayPiece.side !== 'opponent' && displayPiece.col === trapCube) ||
+            (playerSide === 'opponent' && displayPiece.side === 'opponent' && displayPiece.col === trapCube)
+          ) ? 'trap-cube' : ''}`}
+        style={{
+          zIndex: isUnderlay ? 1 : index + 2,
+        }}
+        src={
+          isUnderlay
+            ? whiteWhale3
+            : isHiddenWhale
+              ? whiteWhale2
+              : displayPiece.image
+        }
+        alt={displayPiece.name}
+        onClick={() => {
+          if (result) return
+          if (screen !== 'game') return
+          if ((displayPiece.side ?? 'player') !== playerSide) return
+          if ((displayPiece.side ?? 'player') !== turn) return
+
+          setSelectedPiece(displayPiece)
+        }}
+      />
+    )
+  })}
 
 
             </div>
