@@ -953,7 +953,7 @@ if (piece.name === '白鯨') {
       row: piece.row + dr,
       col: piece.col + dc,
     }))
-  .filter(
+ .filter(
   (move) =>
     move.row >= 0 &&
     move.row < 9 &&
@@ -963,10 +963,8 @@ if (piece.name === '白鯨') {
       (p) =>
         p.row === move.row &&
         p.col === move.col &&
-        (
-          (p.side ?? 'player') === (piece.side ?? 'player') ||
-          (p.name === '白鯨' && p.whaleHidden)
-        )
+        (p.side ?? 'player') === (piece.side ?? 'player') &&
+        !(p.name === '白鯨' && p.whaleHidden)
     )
 )
 }
