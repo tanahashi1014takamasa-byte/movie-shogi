@@ -45,7 +45,6 @@ import rentalCompleteSound from './assets/rental_2.mp3'
 import whiteWhale from './assets/白鯨.png'
 import whiteWhale2 from './assets/白鯨_2.png'
 import whiteWhale3 from './assets/白鯨_3.png'
-import whiteWhale3 from './assets/白鯨_3.png'
 
 function App() {
   const [screen, setScreen] = useState('opening')
