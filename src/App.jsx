@@ -935,11 +935,17 @@ if (piece.name === 'ウォーゲーム') {
 if (piece.name === '白鯨') {
   const direction = piece.side === 'opponent' ? 1 : -1
 
-  const moves = [
-    [direction, 0],
-    [direction, -1],
-    [direction, 1],
-  ]
+  const moves = piece.whaleHidden
+    ? [
+        [-1, -1], [-1, 0], [-1, 1],
+        [0, -1],           [0, 1],
+        [1, -1],  [1, 0],  [1, 1],
+      ]
+    : [
+        [direction, 0],
+        [direction, -1],
+        [direction, 1],
+      ]
 
   return moves
     .map(([dr, dc]) => ({
@@ -1386,6 +1392,8 @@ const [showRentalConfirm, setShowRentalConfirm] = useState(false)
 const [rentalCompleted, setRentalCompleted] = useState(false)
 const [showBestMovies, setShowBestMovies] = useState(false)
 const [bestMovieDetails, setBestMovieDetails] = useState([])
+const [whaleHidden, setWhaleHidden] = useState(false)
+const [whaleSurfaced, setWhaleSurfaced] = useState(false)
 
 useEffect(() => {
   if (!showBestMovies || bestMovieDetails.length > 0) return
@@ -2948,6 +2956,32 @@ if (!roomId) {
 />
   ))}
 </div>
+
+{selectedPiece?.name === '白鯨' && !selectedPiece.fromHand && (
+  <div>
+    {!whaleHidden && !whaleSurfaced && (
+      <button onClick={() => setWhaleHidden(true)}>
+        鯨隠
+      </button>
+    )}
+
+    {whaleHidden && (
+      <button onClick={() => {
+        setWhaleHidden(false)
+        setWhaleSurfaced(true)
+      }}>
+        浮上
+      </button>
+    )}
+
+    {whaleSurfaced && (
+      <button disabled>
+        浮上済み
+      </button>
+    )}
+  </div>
+)}
+
           </div>
 
 
