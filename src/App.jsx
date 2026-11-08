@@ -2968,7 +2968,19 @@ if (!roomId) {
 {selectedPiece?.name === '白鯨' && !selectedPiece.fromHand && (
   <div>
     {!selectedPiece.whaleHidden && !selectedPiece.whaleSurfaced && (
-      <button onClick={() => {
+      <button
+  style={{
+    padding: '14px 28px',
+    fontSize: '20px',
+    fontWeight: 'bold',
+    color: '#f5d77a',
+    background: 'linear-gradient(145deg, #29251b, #080808)',
+    border: '3px solid #c5a34a',
+    borderRadius: '8px',
+    boxShadow: '0 4px 0 #6d5422, 0 5px 10px #000',
+    cursor: 'pointer',
+  }}
+  onClick={() => {
         const nextPieces = pieces.map((piece) =>
           piece.name === '白鯨' &&
           piece.row === selectedPiece.row &&
