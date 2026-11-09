@@ -336,12 +336,24 @@ const titanMoves = safeMoves.filter(({ move }) =>
   )
 )
 
+const whaleMoves = safeMoves.filter(({ move }) =>
+  pieces.some(
+    (target) =>
+      target.row === move.row &&
+      target.col === move.col &&
+      target.name === '白鯨' &&
+      target.whaleHidden
+  )
+)
+
 const cpuMove =
   titanMoves.length > 0
     ? titanMoves[Math.floor(Math.random() * titanMoves.length)]
-    : captureMoves.length > 0
-      ? captureMoves[Math.floor(Math.random() * captureMoves.length)]
-      : safeMoves[Math.floor(Math.random() * safeMoves.length)]
+    : whaleMoves.length > 0
+      ? whaleMoves[Math.floor(Math.random() * whaleMoves.length)]
+      : captureMoves.length > 0
+        ? captureMoves[Math.floor(Math.random() * captureMoves.length)]
+        : safeMoves[Math.floor(Math.random() * safeMoves.length)]
 
 const timer = setTimeout(() => {
 
