@@ -2896,7 +2896,7 @@ const nextPieces = pieces
       !(trapCubeCaptured && p === selectedPiece)
   )
   .map((p) =>
-    p.row === selectedPiece.row && p.col === selectedPiece.col
+    p === selectedPiece
       ? {
           ...p,
           row,
