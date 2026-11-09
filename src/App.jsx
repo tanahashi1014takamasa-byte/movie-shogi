@@ -3091,7 +3091,12 @@ top: isStacked ? '15%' : undefined,
       </button>
     )}
 
-    {selectedPiece.whaleHidden && (
+    {selectedPiece.whaleHidden &&
+  pieces.filter(
+    (piece) =>
+      piece.row === selectedPiece.row &&
+      piece.col === selectedPiece.col
+  ).length === 1 && (
       <button
   style={{
     padding: '14px 28px',
