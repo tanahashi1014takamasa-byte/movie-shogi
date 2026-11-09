@@ -987,6 +987,14 @@ if (piece.name === '白鯨') {
     move.row < 9 &&
     move.col >= 0 &&
     move.col < 9 &&
+        (!piece.whaleHidden ||
+      !pieces.some(
+        (p) =>
+          p.row === move.row &&
+          p.col === move.col &&
+          (p.side ?? 'player') !== (piece.side ?? 'player')
+      )
+    ) &&
     !pieces.some(
       (p) =>
         p.row === move.row &&
