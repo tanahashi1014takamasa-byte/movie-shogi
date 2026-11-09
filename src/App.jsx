@@ -2780,6 +2780,7 @@ legalMoves.some((move) =>
       ? 'legal-move'
       : ''
   }`}
+  style={{ position: 'relative' }}
   key={index}
   onClick={() => {
   if (screen !== 'game') return
@@ -2976,6 +2977,9 @@ if (!roomId) {
     const isUnderlay =
       isHiddenWhale && squarePieces.length > 1
 
+     const isStacked = squarePieces.length > 1
+const stackCount = squarePieces.length
+      
     if (
       displayPiece.name === 'ミスト' &&
       (displayPiece.side ?? 'player') !== playerSide &&
@@ -2993,8 +2997,14 @@ if (!roomId) {
             (playerSide === 'opponent' && displayPiece.side === 'opponent' && displayPiece.col === trapCube)
           ) ? 'trap-cube' : ''}`}
         style={{
-          zIndex: isUnderlay ? 1 : index + 2,
-        }}
+  zIndex: isUnderlay ? 1 : index + 2,
+  width: isStacked ? '48%' : undefined,
+  height: isStacked ? '48%' : undefined,
+  objectFit: 'contain',
+  position: isStacked ? 'absolute' : undefined,
+left: isStacked ? `${index * 25}%` : undefined,
+top: isStacked ? '25%' : undefined,
+}}
         src={
           isUnderlay
             ? whiteWhale3
