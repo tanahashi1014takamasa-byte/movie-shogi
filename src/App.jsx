@@ -373,6 +373,7 @@ const timer = setTimeout(() => {
     piece.row === cpuMove.move.row &&
     piece.col === cpuMove.move.col &&
     !(piece.name === '白鯨' && piece.whaleHidden) &&
+        !(cpuMove.piece.name === '白鯨' && cpuMove.piece.whaleHidden) &&
     (piece.side ?? 'player') !== (cpuMove.piece.side ?? 'player')
 )
 
@@ -987,20 +988,15 @@ if (piece.name === '白鯨') {
     move.row < 9 &&
     move.col >= 0 &&
     move.col < 9 &&
-        (!piece.whaleHidden ||
+    (
+      piece.whaleHidden ||
       !pieces.some(
         (p) =>
           p.row === move.row &&
           p.col === move.col &&
-          (p.side ?? 'player') !== (piece.side ?? 'player')
+          (p.side ?? 'player') === (piece.side ?? 'player') &&
+          !(p.name === '白鯨' && p.whaleHidden)
       )
-    ) &&
-    !pieces.some(
-      (p) =>
-        p.row === move.row &&
-        p.col === move.col &&
-        (p.side ?? 'player') === (piece.side ?? 'player') &&
-        !(p.name === '白鯨' && p.whaleHidden)
     )
 )
 }
@@ -2875,6 +2871,7 @@ const trapCubeCaptured =
     p.row === row &&
     p.col === col &&
     !(p.name === '白鯨' && p.whaleHidden) &&
+        !(selectedPiece.name === '白鯨' && selectedPiece.whaleHidden) &&
     (p.side ?? 'player') !== (selectedPiece.side ?? 'player')
   )
 })
