@@ -1913,7 +1913,7 @@ const updateGameState = async (
   </>
 ) : (
   rentalCompleted
-    ? '鬼あざぁーっす！！'
+    ? 'あざまる～っ！'
     : 'シャイ！シャイ！シャイ！シャイ！シャイ！いらっしゃい！！！'
 )}
       </div>
@@ -2998,12 +2998,12 @@ const stackCount = squarePieces.length
           ) ? 'trap-cube' : ''}`}
         style={{
   zIndex: isUnderlay ? 1 : index + 2,
-  width: isStacked ? '48%' : undefined,
-  height: isStacked ? '48%' : undefined,
+  width: isStacked ? '70%' : undefined,
+height: isStacked ? '70%' : undefined,
   objectFit: 'contain',
   position: isStacked ? 'absolute' : undefined,
-left: isStacked ? `${index * 25}%` : undefined,
-top: isStacked ? '25%' : undefined,
+left: isStacked ? (index === 0 ? '0%' : '30%') : undefined,
+top: isStacked ? '15%' : undefined,
 }}
         src={
           isUnderlay
