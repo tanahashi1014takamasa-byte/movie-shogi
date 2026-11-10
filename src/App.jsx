@@ -317,6 +317,23 @@ const [opponentTrapCube, setOpponentTrapCube] = useState(null)
 
 const safeMoves = moves
 
+const dangerousMoves = moves.filter(({ piece, move }) =>
+  pieces.some((enemy) => {
+    if (
+      enemy.name === 'ファニーゲーム' ||
+      (enemy.side ?? 'player') === (piece.side ?? 'player') ||
+      (enemy.name === '白鯨' && enemy.whaleHidden)
+    ) {
+      return false
+    }
+
+    return getLegalMoves(enemy, pieces).some(
+      (enemyMove) =>
+        enemyMove.row === move.row &&
+        enemyMove.col === move.col
+    )
+  })
+)
 
 if (safeMoves.length === 0) return
 
@@ -357,14 +374,58 @@ const whaleMoves = safeMoves.filter(({ move }) =>
   )
 )
 
+const recklessMode = turn === 'funnyGame' && Math.random() < 0.2
+
+const preferredMoves =
+  turn === 'funnyGame' && !recklessMode
+    ? moves.filter(({ piece, move }) =>
+        !dangerousMoves.some(
+          (danger) =>
+            danger.piece === piece &&
+            danger.move.row === move.row &&
+            danger.move.col === move.col
+        )
+      )
+    : moves
+
+const evaluatedMoves =
+  preferredMoves.length > 0 ? preferredMoves : moves
+
+const evaluatedTitanMoves = titanMoves.filter(({ piece, move }) =>
+  evaluatedMoves.some(
+    (candidate) =>
+      candidate.piece === piece &&
+      candidate.move.row === move.row &&
+      candidate.move.col === move.col
+  )
+)
+
+const evaluatedWhaleMoves = whaleMoves.filter(({ piece, move }) =>
+  evaluatedMoves.some(
+    (candidate) =>
+      candidate.piece === piece &&
+      candidate.move.row === move.row &&
+      candidate.move.col === move.col
+  )
+)
+
+const evaluatedCaptureMoves = captureMoves.filter(({ piece, move }) =>
+  evaluatedMoves.some(
+    (candidate) =>
+      candidate.piece === piece &&
+      candidate.move.row === move.row &&
+      candidate.move.col === move.col
+  )
+)
+
 const cpuMove =
-  titanMoves.length > 0
-    ? titanMoves[Math.floor(Math.random() * titanMoves.length)]
-    : whaleMoves.length > 0
-      ? whaleMoves[Math.floor(Math.random() * whaleMoves.length)]
-      : captureMoves.length > 0
-        ? captureMoves[Math.floor(Math.random() * captureMoves.length)]
-        : safeMoves[Math.floor(Math.random() * safeMoves.length)]
+  evaluatedTitanMoves.length > 0
+    ? evaluatedTitanMoves[Math.floor(Math.random() * evaluatedTitanMoves.length)]
+    : evaluatedWhaleMoves.length > 0
+      ? evaluatedWhaleMoves[Math.floor(Math.random() * evaluatedWhaleMoves.length)]
+      : evaluatedCaptureMoves.length > 0
+        ? evaluatedCaptureMoves[Math.floor(Math.random() * evaluatedCaptureMoves.length)]
+        : evaluatedMoves[Math.floor(Math.random() * evaluatedMoves.length)]
 
 const timer = setTimeout(() => {
 
