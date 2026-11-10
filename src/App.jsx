@@ -3327,6 +3327,10 @@ updateGameState(
     : null
 )
 
+if (selectedPiece?.name === 'デスノート') {
+  setDeathNoteLocked(false)
+}
+
 setSelectedPiece(null)
 
 if (!roomId) {
@@ -3601,12 +3605,13 @@ padding: '8px',
   setUsedDeathNoteLetters((prev) => [...prev, letter.id])
 
   if (targets.length > 0) {
-    setPieces((current) =>
-      current.filter((piece) => !targets.includes(piece))
-    )
-    setDeathNoteSelected([])
-    setShowDeathNoteBoard(false)
-  } else if (!hasMatchingName || next.length >= 7) {
+  setPieces((current) =>
+    current.filter((piece) => !targets.includes(piece))
+  )
+  setDeathNoteSelected([])
+  setShowDeathNoteBoard(false)
+  setDeathNoteLocked(true)
+} else if (!hasMatchingName || next.length >= 7) {
     setDeathNoteSelected([])
     setDeathNoteLocked(true)
     setShowDeathNoteBoard(false)
