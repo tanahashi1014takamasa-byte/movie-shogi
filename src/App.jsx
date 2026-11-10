@@ -45,6 +45,7 @@ import rentalCompleteSound from './assets/rental_2.mp3'
 import whiteWhale from './assets/白鯨.png'
 import whiteWhale2 from './assets/白鯨_2.png'
 import whiteWhale3 from './assets/白鯨_3.png'
+import funnyGame from './assets/ファニーゲーム_2.png'
 
 function App() {
   const [screen, setScreen] = useState('opening')
@@ -2668,11 +2669,14 @@ alignSelf: 'center',
   <div className="turn-select">
     <button onClick={() => {
       setPieces(initialPiecesRef.current)
-setPlayerHand(
-  rentedMovies.includes('白鯨')
+setPlayerHand([
+  ...(rentedMovies.includes('白鯨')
     ? [{ name: '白鯨', image: whiteWhale }]
-    : []
-)
+    : []),
+  ...(rentedMovies.includes('ファニーゲーム')
+    ? [{ name: 'ファニーゲーム', image: funnyGame }]
+    : [])
+])
 setOpponentHand([])
 setRoomId(null)
 setPlayerSide('player')
@@ -2685,11 +2689,14 @@ setPlayerSide('player')
   
     <button onClick={() => {
       setPieces(initialPiecesRef.current)
-setPlayerHand(
-  rentedMovies.includes('白鯨')
+setPlayerHand([
+  ...(rentedMovies.includes('白鯨')
     ? [{ name: '白鯨', image: whiteWhale }]
-    : []
-)
+    : []),
+  ...(rentedMovies.includes('ファニーゲーム')
+    ? [{ name: 'ファニーゲーム', image: funnyGame }]
+    : [])
+])
 setOpponentHand([])
 setPlayerSide('player')
   setTrapCube(Math.floor(Math.random() * 9))
