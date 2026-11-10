@@ -3616,9 +3616,20 @@ padding: '8px',
     setDeathNoteLocked(true)
     setShowDeathNoteBoard(false)
   } else {
-    setDeathNoteSelected(next)
-    return
-  }
+  setDeathNoteSelected(next)
+
+  setTurn((currentTurn) => {
+    if (currentTurn === 'player') return 'opponent'
+
+    return pieces.some((piece) => piece.name === 'ファニーゲーム')
+      ? 'funnyGame'
+      : 'player'
+  })
+
+  setDeathNoteTime(10)
+  setShowDeathNoteBoard(false)
+  return
+}
 
   setTurn((currentTurn) => {
     if (currentTurn === 'player') return 'opponent'
