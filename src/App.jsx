@@ -1590,6 +1590,11 @@ const createDeathNoteLetters = () => {
         : [char]
     )
   )
+    .sort(() => Math.random() - 0.5)
+  .slice(0, Math.ceil(pieces.reduce(
+    (total, piece) => total + piece.name.replace(/・/g, '').length,
+    0
+  ) / 2))
   .map((char, index) => ({
     id: index,
     char,
