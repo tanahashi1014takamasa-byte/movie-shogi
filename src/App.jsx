@@ -1603,6 +1603,7 @@ const [deathNoteLetters, setDeathNoteLetters] = useState([])
 const [usedDeathNoteLetters, setUsedDeathNoteLetters] = useState([])
 const [deathNoteSelected, setDeathNoteSelected] = useState([])
 const [deathNoteTime, setDeathNoteTime] = useState(10)
+const [deathNoteLocked, setDeathNoteLocked] = useState(false)
 const createDeathNoteLetters = () => {
   const letters = pieces
   .flatMap((piece) =>
@@ -3202,6 +3203,10 @@ updateGameState(
 
     setSelectedPiece(null)
 
+    if (selectedPiece?.name === 'デスノート') {
+  setDeathNoteLocked(false)
+}
+
 if (!roomId) {
   setTurn(nextTurn)
 }
@@ -3532,7 +3537,7 @@ top: isStacked ? '15%' : undefined,
   </div>
 )}
 
-{selectedPiece?.name === 'デスノート' && !selectedPiece.fromHand && (
+{selectedPiece?.name === 'デスノート' && !selectedPiece.fromHand && !deathNoteLocked && (
   <button
     style={{
       padding: '14px 28px',
@@ -3572,51 +3577,54 @@ padding: '8px',
     {deathNoteLetters.map((letter) => (
       <button
   key={letter.id}
-  onClick={() => {
-    if (usedDeathNoteLetters.includes(letter.id)) return
-    if (deathNoteSelected.length >= 7) return
-    setUsedDeathNoteLetters((prev) => [...prev, letter.id])
-    setDeathNoteSelected((prev) => {
-  const next = [...prev, letter.char]
+ onClick={() => {
+  if (usedDeathNoteLetters.includes(letter.id)) return
+  if (deathNoteSelected.length >= 7) return
+
+  const next = [...deathNoteSelected, letter.char]
   const selectedName = next.join('')
 
-const enemyPieces = pieces.filter(
-  (piece) =>
-    (piece.side ?? 'player') !== (selectedPiece.side ?? 'player') &&
-    piece.name !== 'タイタニック'
-)
-
-const targets = enemyPieces.filter(
-  (piece) => piece.name.replace(/・/g, '') === selectedName
-)
-
-const hasMatchingName = enemyPieces.some(
-  (piece) => piece.name.replace(/・/g, '').startsWith(selectedName)
-)
-
-if (targets.length > 0) {
-  setPieces((current) =>
-    current.filter((piece) => !targets.includes(piece))
+  const enemyPieces = pieces.filter(
+    (piece) =>
+      (piece.side ?? 'player') !== (selectedPiece.side ?? 'player') &&
+      piece.name !== 'タイタニック'
   )
-  return []
-}
 
-if (!hasMatchingName) {
-  return []
-}
+  const targets = enemyPieces.filter(
+    (piece) => piece.name.replace(/・/g, '') === selectedName
+  )
 
-  return next.length >= 7 ? [] : next
-})
+  const hasMatchingName = enemyPieces.some(
+    (piece) => piece.name.replace(/・/g, '').startsWith(selectedName)
+  )
+
+  setUsedDeathNoteLetters((prev) => [...prev, letter.id])
+
+  if (targets.length > 0) {
+    setPieces((current) =>
+      current.filter((piece) => !targets.includes(piece))
+    )
+    setDeathNoteSelected([])
     setShowDeathNoteBoard(false)
-    setTurn((currentTurn) => {
-  if (currentTurn === 'player') return 'opponent'
+  } else if (!hasMatchingName || next.length >= 7) {
+    setDeathNoteSelected([])
+    setDeathNoteLocked(true)
+    setShowDeathNoteBoard(false)
+  } else {
+    setDeathNoteSelected(next)
+    return
+  }
 
-  return pieces.some((piece) => piece.name === 'ファニーゲーム')
-    ? 'funnyGame'
-    : 'player'
-})
-setDeathNoteTime(10)
-  }}
+  setTurn((currentTurn) => {
+    if (currentTurn === 'player') return 'opponent'
+
+    return pieces.some((piece) => piece.name === 'ファニーゲーム')
+      ? 'funnyGame'
+      : 'player'
+  })
+
+  setDeathNoteTime(10)
+}}
   disabled={usedDeathNoteLetters.includes(letter.id)}
   style={{
     width: '36px',
