@@ -3315,6 +3315,7 @@ top: isStacked ? '15%' : undefined,
     <img
   key={index}
   className="hand-piece"
+  style={piece.name === 'デスノート' ? { width: '90px', height: '90px', objectFit: 'contain' } : {}}
   src={piece.image}
   alt={piece.name}
   onClick={() => {
