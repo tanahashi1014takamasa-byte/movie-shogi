@@ -3558,17 +3558,28 @@ padding: '8px',
   const next = [...prev, letter.char]
   const selectedName = next.join('')
 
-const targets = pieces.filter(
+const enemyPieces = pieces.filter(
   (piece) =>
     (piece.side ?? 'player') !== (selectedPiece.side ?? 'player') &&
-    piece.name.replace(/・/g, '') === selectedName &&
     piece.name !== 'タイタニック'
+)
+
+const targets = enemyPieces.filter(
+  (piece) => piece.name.replace(/・/g, '') === selectedName
+)
+
+const hasMatchingName = enemyPieces.some(
+  (piece) => piece.name.replace(/・/g, '').startsWith(selectedName)
 )
 
 if (targets.length > 0) {
   setPieces((current) =>
     current.filter((piece) => !targets.includes(piece))
   )
+  return []
+}
+
+if (!hasMatchingName) {
   return []
 }
 
