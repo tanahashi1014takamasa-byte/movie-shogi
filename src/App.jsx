@@ -296,32 +296,8 @@ const [opponentTrapCube, setOpponentTrapCube] = useState(null)
   const [roomId, setRoomId] = useState(null)
   const [onlineScreen, setOnlineScreen] = useState(false)
   
-  useEffect(() => {
-  if (!showDeathNoteBoard) return
 
-if (deathNoteTime <= 0) {
-  setShowDeathNoteBoard(false)
-  
 
-  const nextTurn =
-    turn === 'player' ? 'opponent' : 'player'
-
-  setTurn(
-    pieces.some((piece) => piece.name === 'ファニーゲーム')
-      ? 'funnyGame'
-      : nextTurn
-  )
-
-  return
-}
-
-  const timer = setTimeout(() => {
-    setDeathNoteTime((time) => time - 1)
-  }, 1000)
-
-  return () => clearTimeout(timer)
-}, [showDeathNoteBoard, deathNoteTime, turn, pieces])
-  
   
   useEffect(() => {
   if (screen !== 'game' || roomId) return
@@ -1627,6 +1603,36 @@ const createDeathNoteLetters = () => {
 }
   setDeathNoteTime(10)
 }
+
+
+  useEffect(() => {
+  if (!showDeathNoteBoard) return
+
+if (deathNoteTime <= 0) {
+  setShowDeathNoteBoard(false)
+  
+
+  const nextTurn =
+    turn === 'player' ? 'opponent' : 'player'
+
+  setTurn(
+    pieces.some((piece) => piece.name === 'ファニーゲーム')
+      ? 'funnyGame'
+      : nextTurn
+  )
+
+  return
+}
+
+  const timer = setTimeout(() => {
+    setDeathNoteTime((time) => time - 1)
+  }, 1000)
+
+  return () => clearTimeout(timer)
+}, [showDeathNoteBoard, deathNoteTime, turn, pieces])
+  
+
+
 const [rentalCart, setRentalCart] = useState([])
 const [rentedMovies, setRentedMovies] = useState([])
 const [showRentalConfirm, setShowRentalConfirm] = useState(false)
