@@ -677,6 +677,28 @@ const previousTurnRef = useRef(null)
     return []
   }
 
+  if (piece.name === 'デスノート') {
+  const move = {
+    row: piece.row + (piece.side === 'opponent' ? 1 : -1),
+    col: piece.col,
+  }
+
+  if (
+    move.row >= 0 &&
+    !pieces.some(
+      (p) =>
+        p.row === move.row &&
+        p.col === move.col &&
+        (p.side ?? 'player') === (piece.side ?? 'player') &&
+        !(p.name === '白鯨' && p.whaleHidden)
+    )
+  ) {
+    return [move]
+  }
+
+  return []
+}
+
   if (piece.name === 'タイタニック') {
     const directions = [
       [-1, -1], [-1, 0], [-1, 1],
