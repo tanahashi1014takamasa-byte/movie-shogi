@@ -151,6 +151,34 @@ const stopMoving = () => {
     window.scrollTo(0, 0)
   }
 }, [screen])
+
+
+useEffect(() => {
+  if (!showDeathNoteBoard) return
+
+if (deathNoteTime <= 0) {
+  setShowDeathNoteBoard(false)
+  
+
+  const nextTurn =
+    turn === 'player' ? 'opponent' : 'player'
+
+  setTurn(
+    pieces.some((piece) => piece.name === 'ファニーゲーム')
+      ? 'funnyGame'
+      : nextTurn
+  )
+
+  return
+}
+
+  const timer = setTimeout(() => {
+    setDeathNoteTime((time) => time - 1)
+  }, 1000)
+
+  return () => clearTimeout(timer)
+}, [showDeathNoteBoard, deathNoteTime, turn, pieces])
+
   const guidePieces = [
   { name: 'タイタニック', image: titanic },
   { name: '国宝', image: kokuhou },
@@ -1568,6 +1596,31 @@ const [showWhiteWhale, setShowWhiteWhale] = useState(false)
 const [showMidsummer, setShowMidsummer] = useState(false)
 const [showFunnyGame, setShowFunnyGame] = useState(false)
 const [showDNote, setShowDNote] = useState(false)
+const [showDeathNoteBoard, setShowDeathNoteBoard] = useState(false)
+const [deathNoteLetters, setDeathNoteLetters] = useState([])
+const [usedDeathNoteLetters, setUsedDeathNoteLetters] = useState([])
+const [deathNoteSelected, setDeathNoteSelected] = useState([])
+const [deathNoteTime, setDeathNoteTime] = useState(10)
+const createDeathNoteLetters = () => {
+  const letters = pieces
+  .flatMap((piece) =>
+    Array.from(piece.name.replace(/・/g, '')).flatMap((char) =>
+      piece.name === '国宝'
+        ? Math.random() < 0.25 ? [char] : []
+        : [char]
+    )
+  )
+  .map((char, index) => ({
+    id: index,
+    char,
+  }))
+
+  setDeathNoteLetters(
+  [...letters].sort(() => Math.random() - 0.5)
+)
+  setUsedDeathNoteLetters([])
+  setDeathNoteTime(10)
+}
 const [rentalCart, setRentalCart] = useState([])
 const [rentedMovies, setRentedMovies] = useState([])
 const [showRentalConfirm, setShowRentalConfirm] = useState(false)
@@ -3437,6 +3490,122 @@ top: isStacked ? '15%' : undefined,
         浮上済み
       </button>
     )}
+  </div>
+)}
+
+{selectedPiece?.name === 'デスノート' && !selectedPiece.fromHand && (
+  <button
+    style={{
+      padding: '14px 28px',
+      fontSize: '20px',
+      fontWeight: 'bold',
+      color: '#d9a6ff',
+      background: 'linear-gradient(145deg, #210b2b, #050505)',
+      border: '3px solid #8b45b5',
+      borderRadius: '8px',
+      boxShadow: '0 4px 0 #4b1d65, 0 5px 10px #000',
+      cursor: 'pointer',
+    }}
+  onClick={() => {
+  createDeathNoteLetters()
+  setShowDeathNoteBoard(true)
+}}
+  >
+    DEATH NOTE
+  </button>
+)}
+
+{showDeathNoteBoard && (
+  <div
+    style={{
+      position: 'fixed',
+      inset: 0,
+      zIndex: 10000,
+      background: 'rgba(0,0,0,0.9)',
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      alignContent: 'center',
+      gap: '10px',
+      padding: '20px',
+    }}
+  >
+    {deathNoteLetters.map((letter) => (
+      <button
+  key={letter.id}
+  onClick={() => {
+    if (usedDeathNoteLetters.includes(letter.id)) return
+
+    setUsedDeathNoteLetters((prev) => [...prev, letter.id])
+    setDeathNoteSelected((prev) => {
+  const next = [...prev, letter.char]
+  const selectedName = next.join('')
+
+const targets = pieces.filter(
+  (piece) =>
+    (piece.side ?? 'player') !== (selectedPiece.side ?? 'player') &&
+    piece.name === selectedName &&
+    piece.name !== 'タイタニック'
+)
+
+if (targets.length > 0) {
+  setPieces((current) =>
+    current.filter((piece) => !targets.includes(piece))
+  )
+  return []
+}
+
+  return next.length >= 7 ? [] : next
+})
+    setShowDeathNoteBoard(false)
+    setTurn((currentTurn) =>
+  currentTurn === 'player' ? 'opponent' : 'player'
+)
+setDeathNoteTime(10)
+  }}
+  disabled={usedDeathNoteLetters.includes(letter.id)}
+  style={{
+    width: '48px',
+    height: '48px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    background: usedDeathNoteLetters.includes(letter.id) ? '#555' : '#f5f0df',
+    color: usedDeathNoteLetters.includes(letter.id) ? '#999' : '#111',
+    border: '2px solid #8b45b5',
+    borderRadius: '5px',
+    fontSize: '24px',
+    fontWeight: 'bold',
+  }}
+>
+        {letter.char}
+      </button>
+    ))}
+
+<div
+  style={{
+    width: '100%',
+    color: '#fff',
+    fontSize: '24px',
+    textAlign: 'center',
+    marginTop: '20px',
+  }}
+>
+
+  <div
+  style={{
+    width: '100%',
+    color: '#ff5555',
+    fontSize: '28px',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  }}
+>
+  残り時間：{deathNoteTime}秒
+</div>
+  {deathNoteSelected.join('・')}
+</div>
+
   </div>
 )}
 
