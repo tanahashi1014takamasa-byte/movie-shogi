@@ -47,6 +47,7 @@ import whiteWhale from './assets/白鯨.png'
 import whiteWhale2 from './assets/白鯨_2.png'
 import whiteWhale3 from './assets/白鯨_3.png'
 import funnyGame from './assets/ファニーゲーム_2.png'
+import deathNotePiece from './assets/デスノート.png'
 
 function App() {
   const [screen, setScreen] = useState('opening')
@@ -2938,6 +2939,9 @@ setPlayerHand([
     : []),
   ...(rentedMovies.includes('ファニーゲーム')
     ? [{ name: 'ファニーゲーム', image: funnyGame }]
+    : []),
+  ...(rentedMovies.includes('デスノート')
+    ? [{ name: 'デスノート', image: deathNotePiece }]
     : [])
 ])
 setOpponentHand([])
@@ -2958,6 +2962,9 @@ setPlayerHand([
     : []),
   ...(rentedMovies.includes('ファニーゲーム')
     ? [{ name: 'ファニーゲーム', image: funnyGame }]
+    : []),
+  ...(rentedMovies.includes('デスノート')
+    ? [{ name: 'デスノート', image: deathNotePiece }]
     : [])
 ])
 setOpponentHand([])
