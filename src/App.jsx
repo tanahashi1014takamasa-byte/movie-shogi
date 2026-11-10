@@ -291,11 +291,15 @@ const [opponentTrapCube, setOpponentTrapCube] = useState(null)
   const [onlineScreen, setOnlineScreen] = useState(false)
   useEffect(() => {
   if (screen !== 'game' || roomId) return
-  if (turn !== (playerSide === 'player' ? 'opponent' : 'player')) return
+  if (
+  turn !== 'funnyGame' &&
+  turn !== (playerSide === 'player' ? 'opponent' : 'player')
+) return
 
- const cpuPieces = pieces.filter(
-  (piece) =>
-    (piece.side ?? 'player') === 'opponent'
+ const cpuPieces = pieces.filter((piece) =>
+  turn === 'funnyGame'
+    ? piece.name === 'ファニーゲーム'
+    : (piece.side ?? 'player') === 'opponent'
 )
 
 
@@ -323,7 +327,10 @@ const captureMoves = safeMoves.filter(({ piece, move }) =>
       target.col === move.col &&
       target.name !== 'ミスト' &&
       !(target.name === '白鯨' && target.whaleHidden) &&
-      (target.side ?? 'player') !== (piece.side ?? 'player')
+      (
+        turn === 'funnyGame' ||
+        (target.side ?? 'player') !== (piece.side ?? 'player')
+      )
   )
 )
 
@@ -333,7 +340,10 @@ const titanMoves = safeMoves.filter(({ move }) =>
       target.row === move.row &&
       target.col === move.col &&
       target.name === 'タイタニック' &&
-      (target.side ?? 'player') !== 'opponent'
+      (
+        turn === 'funnyGame' ||
+        (target.side ?? 'player') !== 'opponent'
+      )
   )
 )
 
@@ -369,13 +379,16 @@ const timer = setTimeout(() => {
 }))
 }
 
-  const capturedPiece = currentPieces.find(
+ const capturedPiece = currentPieces.find(
   (piece) =>
     piece.row === cpuMove.move.row &&
     piece.col === cpuMove.move.col &&
     !(piece.name === '白鯨' && piece.whaleHidden) &&
-        !(cpuMove.piece.name === '白鯨' && cpuMove.piece.whaleHidden) &&
-    (piece.side ?? 'player') !== (cpuMove.piece.side ?? 'player')
+    !(cpuMove.piece.name === '白鯨' && cpuMove.piece.whaleHidden) &&
+    (
+      turn === 'funnyGame' ||
+      (piece.side ?? 'player') !== (cpuMove.piece.side ?? 'player')
+    )
 )
 
   const cpuTrapCubeCaptured =
@@ -427,7 +440,13 @@ return currentPieces
     )
 })
 
-setTurn(playerSide)
+setTurn(
+  turn === 'funnyGame'
+    ? playerSide
+    : pieces.some((piece) => piece.name === 'ファニーゲーム')
+      ? 'funnyGame'
+      : playerSide
+)
 }, 1000)
 
 return () => clearTimeout(timer)
@@ -516,6 +535,54 @@ const previousTurnRef = useRef(null)
 
   const getLegalMoves = (piece, pieces) => {
   if (!piece) return []
+
+  if (piece.name === 'ファニーゲーム') {
+  const direction = piece.side === 'opponent' ? -1 : 1
+
+  const moves = [
+    [-1, 0, 1],
+    [0, 1, 2],
+    [0, -1, 1],
+    [1, 0, 2],
+    [1, 1, 3],
+    [1, -1, 1],
+    [-1, 1, 1],
+    [-1, -1, 2],
+  ]
+
+  const results = []
+
+  for (const [dr, dc, distance] of moves) {
+    const row = piece.row + dr * direction * distance
+    const col = piece.col + dc * distance
+
+    if (
+      row >= 0 && row < 9 &&
+      col >= 0 && col < 9
+    ) {
+      results.push({ row, col })
+    }
+
+    for (let step = 1; step < distance; step++) {
+      const checkRow = piece.row + dr * direction * step
+      const checkCol = piece.col + dc * step
+
+      const target = pieces.find(
+        (p) =>
+          p.row === checkRow &&
+          p.col === checkCol &&
+          !(p.name === '白鯨' && p.whaleHidden)
+      )
+
+      if (target) {
+        results.push({ row: checkRow, col: checkCol })
+        break
+      }
+    }
+  }
+
+  return results
+}
 
     if (piece.name === 'CUBE') {
     const move = {
