@@ -27,6 +27,7 @@ import gameScreen from './assets/game_screen.png'
 import whiteWhaleVHS from './assets/白鯨_VHS.png'
 import midsummerVHS from './assets/ミッドサマー_VHS.png'
 import funnygameVHS from './assets/ファニーゲーム.png'
+import dNote from './assets/D_note.png'
 import character from './assets/chracter.gif'
 
 import gameCharacter from './assets/game_character.png'
@@ -1565,6 +1566,7 @@ const [showMovieNotes, setShowMovieNotes] = useState(false)
 const [showWhiteWhale, setShowWhiteWhale] = useState(false)
 const [showMidsummer, setShowMidsummer] = useState(false)
 const [showFunnyGame, setShowFunnyGame] = useState(false)
+const [showDNote, setShowDNote] = useState(false)
 const [rentalCart, setRentalCart] = useState([])
 const [rentedMovies, setRentedMovies] = useState([])
 const [showRentalConfirm, setShowRentalConfirm] = useState(false)
@@ -2167,6 +2169,10 @@ if (x >= 680 && x <= 750 && y >= 140 && y <= 200) {
   if (rentalCart.length > 0) {
     setShowRentalConfirm(true)
   }
+}
+
+if (x >= 296 && x <= 328 && y >= 200 && y <= 200) {
+  setShowDNote(true)
 }
 
 }}
@@ -2776,7 +2782,136 @@ alignSelf: 'center',
   </div>
 )}
 
+{showDNote && (
+  <div
+    style={{
+      position: 'absolute',
+      inset: '10%',
+      zIndex: 20,
+      background: 'black',
+      color: 'white',
+      border: '2px solid white',
+      borderRadius: '8px',
+      padding: '16px',
+      display: 'flex',
+      flexDirection: 'column',
+      boxSizing: 'border-box',
+    }}
+  >
+    <h2
+      style={{
+        textAlign: 'center',
+        fontFamily: '"Yu Mincho", "Hiragino Mincho ProN", serif',
+        color: 'white',
+        fontSize: '30px',
+        fontWeight: 'bold',
+        letterSpacing: '8px',
+        margin: '0 0 16px',
+        paddingBottom: '10px',
+        borderBottom: '1px solid #555',
+      }}
+    >
+      デスノート
+    </h2>
 
+    <div
+      style={{
+        textAlign: 'center',
+        color: 'white',
+        fontSize: '20px',
+        fontWeight: 'bold',
+        marginTop: '20px',
+        marginBottom: '20px',
+        width: '100%',
+        alignSelf: 'center',
+      }}
+    >
+      特殊能力：デスノート
+    </div>
+
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '24px',
+        flex: 1,
+        minHeight: 0,
+      }}
+    >
+      <img
+        src={dNote}
+        alt="デスノート"
+        style={{
+          width: '110px',
+          maxHeight: '180px',
+          objectFit: 'contain',
+          flexShrink: 0,
+        }}
+      />
+
+      <div
+        style={{
+          flex: 1,
+          minWidth: 0,
+          textAlign: 'left',
+          overflowY: 'auto',
+        }}
+      >
+        <p>
+          デスノートに駒の名前を一文字ずつ記入する。
+          名前をすべて書き終えると、その駒は盤上から消滅する。
+        </p>
+      </div>
+    </div>
+
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '16px',
+        paddingTop: '12px',
+      }}
+    >
+      <button
+        onClick={() => {
+          new Audio(rentalSound).play()
+          setRentalCart(prev =>
+            prev.includes('デスノート')
+              ? prev
+              : [...prev, 'デスノート']
+          )
+          setShowDNote(false)
+        }}
+        style={{
+          padding: '10px 24px',
+          background: '#173d24',
+          color: 'white',
+          border: '1px solid #7cff9b',
+          fontSize: '15px',
+          cursor: 'pointer',
+        }}
+      >
+        レンタルする
+      </button>
+
+      <button
+        onClick={() => {
+          setShowDNote(false)
+        }}
+        style={{
+          padding: '10px 24px',
+          background: '#222',
+          color: 'white',
+          border: '1px solid #aaa',
+          fontSize: '15px',
+          cursor: 'pointer',
+        }}
+      >
+        レンタルしない
+      </button>
+    </div>
+  </div>
+)}
 
 {onlineScreen && (
   <div className="turn-select">
