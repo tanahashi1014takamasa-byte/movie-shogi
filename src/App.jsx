@@ -2514,7 +2514,7 @@ borderRadius: '8px',
     alignSelf: 'center',
   }}
 >
-  特殊能力：鯨隠
+  能力：鯨隠
 </div>
 
     <div
@@ -2648,7 +2648,7 @@ marginTop: '20px',
 alignSelf: 'center',
   }}
 >
-  特殊能力：祝祭
+  能力：祝祭
 </div>
 
 
@@ -2783,7 +2783,7 @@ alignSelf: 'center',
     alignSelf: 'center',
   }}
 >
-  特殊能力：トリックスター
+  能力：トリックスター
 </div>
 
     <div
@@ -2920,7 +2920,7 @@ alignSelf: 'center',
         alignSelf: 'center',
       }}
     >
-      特殊能力：デスノート
+      能力：デスノート
     </div>
 
     <div
