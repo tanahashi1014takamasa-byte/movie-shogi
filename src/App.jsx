@@ -3538,8 +3538,8 @@ top: isStacked ? '15%' : undefined,
       flexWrap: 'wrap',
       justifyContent: 'center',
       alignContent: 'center',
-      gap: '10px',
-      padding: '20px',
+      gap: '4px',
+padding: '8px',
     }}
   >
     {deathNoteLetters.map((letter) => (
@@ -3547,7 +3547,7 @@ top: isStacked ? '15%' : undefined,
   key={letter.id}
   onClick={() => {
     if (usedDeathNoteLetters.includes(letter.id)) return
-
+    if (deathNoteSelected.length >= 7) return
     setUsedDeathNoteLetters((prev) => [...prev, letter.id])
     setDeathNoteSelected((prev) => {
   const next = [...prev, letter.char]
@@ -3581,8 +3581,8 @@ setDeathNoteTime(10)
   }}
   disabled={usedDeathNoteLetters.includes(letter.id)}
   style={{
-    width: '48px',
-    height: '48px',
+    width: '36px',
+height: '36px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
