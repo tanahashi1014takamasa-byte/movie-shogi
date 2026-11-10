@@ -153,31 +153,7 @@ const stopMoving = () => {
 }, [screen])
 
 
-useEffect(() => {
-  if (!showDeathNoteBoard) return
 
-if (deathNoteTime <= 0) {
-  setShowDeathNoteBoard(false)
-  
-
-  const nextTurn =
-    turn === 'player' ? 'opponent' : 'player'
-
-  setTurn(
-    pieces.some((piece) => piece.name === 'ファニーゲーム')
-      ? 'funnyGame'
-      : nextTurn
-  )
-
-  return
-}
-
-  const timer = setTimeout(() => {
-    setDeathNoteTime((time) => time - 1)
-  }, 1000)
-
-  return () => clearTimeout(timer)
-}, [showDeathNoteBoard, deathNoteTime, turn, pieces])
 
   const guidePieces = [
   { name: 'タイタニック', image: titanic },
@@ -319,6 +295,34 @@ const [opponentTrapCube, setOpponentTrapCube] = useState(null)
   const [result, setResult] = useState(null)
   const [roomId, setRoomId] = useState(null)
   const [onlineScreen, setOnlineScreen] = useState(false)
+  
+  useEffect(() => {
+  if (!showDeathNoteBoard) return
+
+if (deathNoteTime <= 0) {
+  setShowDeathNoteBoard(false)
+  
+
+  const nextTurn =
+    turn === 'player' ? 'opponent' : 'player'
+
+  setTurn(
+    pieces.some((piece) => piece.name === 'ファニーゲーム')
+      ? 'funnyGame'
+      : nextTurn
+  )
+
+  return
+}
+
+  const timer = setTimeout(() => {
+    setDeathNoteTime((time) => time - 1)
+  }, 1000)
+
+  return () => clearTimeout(timer)
+}, [showDeathNoteBoard, deathNoteTime, turn, pieces])
+  
+  
   useEffect(() => {
   if (screen !== 'game' || roomId) return
   if (
@@ -1615,10 +1619,12 @@ const createDeathNoteLetters = () => {
     char,
   }))
 
+  if (deathNoteLetters.length === 0) {
   setDeathNoteLetters(
-  [...letters].sort(() => Math.random() - 0.5)
-)
+    [...letters].sort(() => Math.random() - 0.5)
+  )
   setUsedDeathNoteLetters([])
+}
   setDeathNoteTime(10)
 }
 const [rentalCart, setRentalCart] = useState([])
@@ -3544,7 +3550,7 @@ top: isStacked ? '15%' : undefined,
 const targets = pieces.filter(
   (piece) =>
     (piece.side ?? 'player') !== (selectedPiece.side ?? 'player') &&
-    piece.name === selectedName &&
+    piece.name.replace(/・/g, '') === selectedName &&
     piece.name !== 'タイタニック'
 )
 
@@ -3558,9 +3564,13 @@ if (targets.length > 0) {
   return next.length >= 7 ? [] : next
 })
     setShowDeathNoteBoard(false)
-    setTurn((currentTurn) =>
-  currentTurn === 'player' ? 'opponent' : 'player'
-)
+    setTurn((currentTurn) => {
+  if (currentTurn === 'player') return 'opponent'
+
+  return pieces.some((piece) => piece.name === 'ファニーゲーム')
+    ? 'funnyGame'
+    : 'player'
+})
 setDeathNoteTime(10)
   }}
   disabled={usedDeathNoteLetters.includes(letter.id)}
