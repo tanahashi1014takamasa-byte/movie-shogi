@@ -477,7 +477,7 @@ const timer = setTimeout(() => {
 
  const capturedPiece = currentPieces.find(
   (piece) =>
-    piece.name !== 'ファニーゲーム' &&
+    
     piece.row === cpuMove.move.row &&
     piece.col === cpuMove.move.col &&
     !(piece.name === '白鯨' && piece.whaleHidden) &&
