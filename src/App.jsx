@@ -650,7 +650,21 @@ const previousTurnRef = useRef(null)
 
   const getLegalMoves = (piece, pieces) => {
   if (!piece) return []
+if (piece.name === 'ミッドサマー') {
+  if (!piece.inheritedMoves) return []
 
+  const inheritedPiece = {
+    ...piece.inheritedMoves,
+    row: piece.row,
+    col: piece.col,
+    side: piece.side,
+  }
+
+  return getLegalMoves(
+    inheritedPiece,
+    pieces.filter((p) => p !== piece)
+  )
+}
   if (piece.name === 'ファニーゲーム') {
   const direction = piece.side === 'opponent' ? -1 : 1
 
@@ -3207,6 +3221,40 @@ const piece = squarePieces.find(
   key={index}
   onClick={() => {
   if (screen !== 'game') return
+
+    if (midsummerSacrificeMode) {
+    if (
+      !piece ||
+      piece.name === 'ミッドサマー' ||
+      (piece.side ?? 'player') !== playerSide
+    ) return
+
+    playSyogiSound()
+
+    if (piece.inheritedMoves) return
+
+const inheritedProfile = { ...piece }
+
+    const nextPieces = pieces
+      .filter((p) => !(
+        p.row === row &&
+        p.col === col &&
+        p.name === piece.name &&
+        (p.side ?? 'player') === (piece.side ?? 'player')
+      ))
+      .map((p) =>
+        p.name === 'ミッドサマー' &&
+        p.row === selectedPiece.row &&
+        p.col === selectedPiece.col
+          ? { ...p, inheritedMoves: inheritedProfile }
+          : p
+      )
+
+    setPieces(nextPieces)
+    setSelectedPiece(null)
+    setMidsummerSacrificeMode(false)
+    return
+  }
   
   if (selectedPiece?.fromHand) {
     if (turn !== playerSide) return
