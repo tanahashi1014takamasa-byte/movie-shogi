@@ -3192,14 +3192,17 @@ const piece = squarePieces.find(
           return (
             <div
   className={`square ${
-legalMoves.some((move) =>
-  move.row === row &&
-  move.col === col
-) 
-
+  midsummerSacrificeMode &&
+  piece &&
+  piece.name !== 'ミッドサマー' &&
+  (piece.side ?? 'player') === playerSide
+    ? 'sacrifice-target'
+    : legalMoves.some((move) =>
+        move.row === row && move.col === col
+      )
       ? 'legal-move'
       : ''
-  }`}
+}`}
   style={{ position: 'relative' }}
   key={index}
   onClick={() => {
