@@ -3224,10 +3224,14 @@ setPlayerHand([
     ...(rentedMovies.includes('ミッドサマー')
   ? [{ name: 'ミッドサマー', image: midsummerPiece }]
   : []),
-  ...(rentedMovies.includes('デスノート')
+    ...(rentedMovies.includes('デスノート')
     ? [{ name: 'デスノート', image: deathNotePiece }]
+    : []),
+  ...(rentedMovies.includes('イカゲーム')
+    ? [{ name: 'イカゲーム', image: squidGamePiece }]
     : [])
 ])
+
 setOpponentHand([])
 setRoomId(null)
 setPlayerSide('player')
@@ -3252,6 +3256,9 @@ setPlayerHand([
   : []),
   ...(rentedMovies.includes('デスノート')
     ? [{ name: 'デスノート', image: deathNotePiece }]
+    : []),
+    ...(rentedMovies.includes('イカゲーム')
+    ? [{ name: 'イカゲーム', image: squidGamePiece }]
     : [])
 ])
 setOpponentHand([])
