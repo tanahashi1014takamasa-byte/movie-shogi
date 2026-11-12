@@ -413,7 +413,7 @@ const recklessMode = turn === 'funnyGame' && Math.random() < 0.2
 
 const preferredMoves =
   turn === 'funnyGame' && !recklessMode
-    ? moves.filter(({ piece, move }) =>
+    ? safeMoves.filter(({ piece, move }) =>
         !dangerousMoves.some(
           (danger) =>
             danger.piece === piece &&
@@ -421,10 +421,10 @@ const preferredMoves =
             danger.move.col === move.col
         )
       )
-    : moves
+    : safeMoves
 
 const evaluatedMoves =
-  preferredMoves.length > 0 ? preferredMoves : moves
+  preferredMoves.length > 0 ? preferredMoves : safeMoves
 
 const evaluatedTitanMoves = titanMoves.filter(({ piece, move }) =>
   evaluatedMoves.some(
@@ -483,8 +483,13 @@ const timer = setTimeout(() => {
     !(piece.name === '白鯨' && piece.whaleHidden) &&
     !(cpuMove.piece.name === '白鯨' && cpuMove.piece.whaleHidden) &&
     (
-      turn === 'funnyGame' ||
-      (piece.side ?? 'player') !== (cpuMove.piece.side ?? 'player')
+      turn === 'funnyGame'
+  ? (
+      funnyGameTarget === 'own'
+        ? (piece.side ?? 'player') === (cpuMove.piece.side ?? 'player')
+        : (piece.side ?? 'player') !== (cpuMove.piece.side ?? 'player')
+    )
+  : (piece.side ?? 'player') !== (cpuMove.piece.side ?? 'player')
     )
 )
 
@@ -3449,6 +3454,8 @@ top: isStacked ? '15%' : undefined,
         onClick={() => {
           if (result) return
           if (screen !== 'game') return
+          if (turn === 'funnyGame') return
+          if (piece?.name === 'ファニーゲーム') return
           if ((displayPiece.side ?? 'player') !== playerSide) return
           if ((displayPiece.side ?? 'player') !== turn) return
 
