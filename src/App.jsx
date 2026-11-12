@@ -3732,27 +3732,6 @@ top: isStacked ? '15%' : undefined,
       </button>
     )}
 
-    {selectedPiece?.name === 'イカゲーム' && !selectedPiece.fromHand && (
-  <div style={{
-    display: 'flex',
-    flexDirection: 'row',
-    gap: '8px',
-    justifyContent: 'center',
-    margin: '10px 0',
-  }}>
-    <button disabled style={{ padding: '12px 10px' }}>
-      だるまさんがころんだ
-    </button>
-
-    <button disabled style={{ padding: '12px 10px' }}>
-      綱引き
-    </button>
-
-    <button disabled style={{ padding: '12px 10px' }}>
-      ガラス橋
-    </button>
-  </div>
-)}
 
     {selectedPiece.whaleHidden &&
   pieces.filter(
@@ -3823,6 +3802,29 @@ top: isStacked ? '15%' : undefined,
         浮上済み
       </button>
     )}
+  </div>
+)}
+
+
+    {selectedPiece?.name === 'イカゲーム' && !selectedPiece.fromHand && (
+  <div style={{
+    display: 'flex',
+    flexDirection: 'row',
+    gap: '8px',
+    justifyContent: 'center',
+    margin: '10px 0',
+  }}>
+    <button disabled style={{ padding: '12px 10px' }}>
+      だるまさんがころんだ
+    </button>
+
+    <button disabled style={{ padding: '12px 10px' }}>
+      綱引き
+    </button>
+
+    <button disabled style={{ padding: '12px 10px' }}>
+      ガラス橋
+    </button>
   </div>
 )}
 
