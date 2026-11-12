@@ -306,6 +306,14 @@ const [opponentTrapCube, setOpponentTrapCube] = useState(null)
   turn !== (playerSide === 'player' ? 'opponent' : 'player')
 ) return
 
+const funnyGameTarget =
+  funnyGameNextTarget ??
+  (Math.random() < 0.5 ? 'own' : 'enemy')
+
+if (turn === 'funnyGame' && funnyGameNextTarget === null) {
+  setFunnyGameNextTarget(funnyGameTarget)
+}
+
  const cpuPieces = pieces.filter((piece) =>
   turn === 'funnyGame'
     ? piece.name === 'ファニーゲーム'
@@ -325,7 +333,24 @@ const [opponentTrapCube, setOpponentTrapCube] = useState(null)
   }))
 )
 
-const safeMoves = moves
+const safeMoves = moves.filter(({ piece, move }) => {
+  if (turn !== 'funnyGame') return true
+
+  const target = pieces.find(
+    (p) =>
+      p.row === move.row &&
+      p.col === move.col &&
+      !(p.name === '白鯨' && p.whaleHidden)
+  )
+
+  if (!target) return true
+  if (target.name === 'ファニーゲーム') return false
+
+  const sameSide =
+    (target.side ?? 'player') === (piece.side ?? 'player')
+
+  return funnyGameTarget === 'own' ? sameSide : !sameSide
+})
 
 const dangerousMoves = moves.filter(({ piece, move }) =>
   pieces.some((enemy) => {
@@ -452,6 +477,7 @@ const timer = setTimeout(() => {
 
  const capturedPiece = currentPieces.find(
   (piece) =>
+    piece.name !== 'ファニーゲーム' &&
     piece.row === cpuMove.move.row &&
     piece.col === cpuMove.move.col &&
     !(piece.name === '白鯨' && piece.whaleHidden) &&
@@ -468,6 +494,16 @@ const timer = setTimeout(() => {
 
   if (capturedPiece?.name === 'タイタニック') {
   setResult('敗北')
+}
+
+if (
+  turn === 'funnyGame' &&
+  capturedPiece &&
+  capturedPiece.name !== 'ファニーゲーム'
+) {
+  setFunnyGameNextTarget((current) =>
+    current === 'own' ? 'enemy' : 'own'
+  )
 }
 
   if (capturedPiece?.name === '国宝') {
@@ -594,6 +630,7 @@ previousTurnRef.current = gameState.turn
   const [selectedPiece, setSelectedPiece] = useState(null)
   const [playerHand, setPlayerHand] = useState([])
   const [opponentHand, setOpponentHand] = useState([])
+  const [funnyGameNextTarget, setFunnyGameNextTarget] = useState(null)
   const syogiAudio = useRef(new Audio(syogiSound))
 
 const playSyogiSound = () => {
@@ -3247,9 +3284,27 @@ const trapCubeCaptured =
     p.col === col &&
     !(p.name === '白鯨' && p.whaleHidden) &&
         !(selectedPiece.name === '白鯨' && selectedPiece.whaleHidden) &&
-    (p.side ?? 'player') !== (selectedPiece.side ?? 'player')
+    (
+  selectedPiece.name === 'ファニーゲーム'
+    ? (
+        funnyGameNextTarget === 'own'
+          ? (p.side ?? 'player') === (selectedPiece.side ?? 'player')
+          : (p.side ?? 'player') !== (selectedPiece.side ?? 'player')
+      )
+    : (p.side ?? 'player') !== (selectedPiece.side ?? 'player')
+) &&
+p.name !== 'ファニーゲーム'
   )
 })
+
+if (
+  selectedPiece.name === 'ファニーゲーム' &&
+  capturedPieces.length > 0
+) {
+  setFunnyGameNextTarget((current) =>
+    current === 'own' ? 'enemy' : 'own'
+  )
+}
 
 if (capturedPieces.some((captured) => captured.name === 'タイタニック')) {
   setResult('勝利')
