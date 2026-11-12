@@ -27,6 +27,7 @@ import gameScreen from './assets/game_screen.png'
 import whiteWhaleVHS from './assets/白鯨_VHS.png'
 import midsummerVHS from './assets/ミッドサマー_VHS.png'
 import funnygameVHS from './assets/ファニーゲーム.png'
+import squidGameVhs from './assets/イカゲーム_VHS.png'
 import dNote from './assets/D_note.png'
 import character from './assets/chracter.gif'
 
@@ -49,6 +50,7 @@ import whiteWhale3 from './assets/白鯨_3.png'
 import funnyGame from './assets/ファニーゲーム_2.png'
 import deathNotePiece from './assets/デスノート.png'
 import midsummerPiece from './assets/ミッドサマー.png'
+import squidGamePiece from './assets/イカゲーム.png'
 
 function App() {
   const [screen, setScreen] = useState('opening')
@@ -1654,6 +1656,7 @@ if (absorbedMove === 'サイコ・ゴアマン') {
 const [showMovieNotes, setShowMovieNotes] = useState(false)
 const [showWhiteWhale, setShowWhiteWhale] = useState(false)
 const [showMidsummer, setShowMidsummer] = useState(false)
+const [showSquidGame, setShowSquidGame] = useState(false)
 const [showFunnyGame, setShowFunnyGame] = useState(false)
 const [showDNote, setShowDNote] = useState(false)
 const [showDeathNoteBoard, setShowDeathNoteBoard] = useState(false)
@@ -2313,6 +2316,10 @@ if (x >= 104 && x <= 424 && y >= 488 && y <= 510) {
   setShowMidsummer(true)
 }
 
+if (x >= 8 && x <= 40 && y >= 616 && y <= 680) {
+  setShowSquidGame(true)
+}
+
 if (x >= 616 && x <= 904 && y >= 488 && y <= 488) {
   setShowFunnyGame(true)
 }
@@ -2794,7 +2801,133 @@ alignSelf: 'center',
   </div>
 )}
 
+```jsx
+{showSquidGame && (
+  <div
+    style={{
+      position: 'absolute',
+      inset: '10%',
+      zIndex: 20,
+      background: 'black',
+      color: 'white',
+      border: '2px solid white',
+      borderRadius: '8px',
+      padding: '16px',
+      display: 'flex',
+      flexDirection: 'column',
+      boxSizing: 'border-box',
+    }}
+  >
+    <h2
+      style={{
+        textAlign: 'center',
+        fontFamily: '"Yu Mincho", "Hiragino Mincho ProN", serif',
+        color: 'white',
+        fontSize: '30px',
+        fontWeight: 'bold',
+        letterSpacing: '8px',
+        margin: '0 0 16px',
+        paddingBottom: '10px',
+        borderBottom: '1px solid #555',
+      }}
+    >
+      イカゲーム
+    </h2>
 
+    <div
+      style={{
+        textAlign: 'center',
+        color: 'white',
+        fontSize: '22px',
+        marginTop: '10px',
+        fontWeight: 'bold',
+        marginBottom: '16px',
+        width: '100%',
+      }}
+    >
+      能力：三つの競技
+    </div>
+
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '24px',
+        flex: 1,
+        minHeight: 0,
+      }}
+    >
+      <img
+        src={squidGameVhs}
+        alt="イカゲーム VHS"
+        style={{
+          width: '110px',
+          maxHeight: '180px',
+          objectFit: 'contain',
+          flexShrink: 0,
+        }}
+      />
+
+      <div
+        style={{
+          flex: 1,
+          minWidth: 0,
+          textAlign: 'left',
+          overflowY: 'auto',
+        }}
+      >
+        <p>だるまさんがころんだ：相手の駒の動きを制限する。</p>
+        <p>綱引き：向かい合った相手の駒を目の前まで引き寄せる。</p>
+        <p>ガラス橋：縦一列に見えない安全・破損ガラスを配置する。</p>
+        <p>各能力は一度だけ使用できる。</p>
+      </div>
+    </div>
+
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '16px',
+        paddingTop: '12px',
+      }}
+    >
+      <button
+        onClick={() => {
+          new Audio(rentalSound).play()
+          setRentalCart(prev =>
+            prev.includes('イカゲーム') ? prev : [...prev, 'イカゲーム']
+          )
+          setShowSquidGame(false)
+        }}
+        style={{
+          padding: '10px 24px',
+          background: '#173d24',
+          color: 'white',
+          border: '1px solid #7cff9b',
+          fontSize: '15px',
+          cursor: 'pointer',
+        }}
+      >
+        レンタルする
+      </button>
+
+      <button
+        onClick={() => setShowSquidGame(false)}
+        style={{
+          padding: '10px 24px',
+          background: '#222',
+          color: 'white',
+          border: '1px solid #aaa',
+          fontSize: '15px',
+          cursor: 'pointer',
+        }}
+      >
+        レンタルしない
+      </button>
+    </div>
+  </div>
+)}
+```
 
 {showFunnyGame && (
   <div
