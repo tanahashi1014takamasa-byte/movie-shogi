@@ -48,6 +48,7 @@ import whiteWhale2 from './assets/白鯨_2.png'
 import whiteWhale3 from './assets/白鯨_3.png'
 import funnyGame from './assets/ファニーゲーム_2.png'
 import deathNotePiece from './assets/デスノート.png'
+import midsummerPiece from './assets/ミッドサマー.png'
 
 function App() {
   const [screen, setScreen] = useState('opening')
@@ -3075,6 +3076,9 @@ setPlayerHand([
   ...(rentedMovies.includes('ファニーゲーム')
     ? [{ name: 'ファニーゲーム', image: funnyGame }]
     : []),
+    ...(rentedMovies.includes('ミッドサマー')
+  ? [{ name: 'ミッドサマー', image: midsummerPiece }]
+  : []),
   ...(rentedMovies.includes('デスノート')
     ? [{ name: 'デスノート', image: deathNotePiece }]
     : [])
@@ -3098,6 +3102,9 @@ setPlayerHand([
   ...(rentedMovies.includes('ファニーゲーム')
     ? [{ name: 'ファニーゲーム', image: funnyGame }]
     : []),
+    ...(rentedMovies.includes('ミッドサマー')
+  ? [{ name: 'ミッドサマー', image: midsummerPiece }]
+  : []),
   ...(rentedMovies.includes('デスノート')
     ? [{ name: 'デスノート', image: deathNotePiece }]
     : [])
