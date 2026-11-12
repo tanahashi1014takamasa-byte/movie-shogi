@@ -3209,6 +3209,7 @@ const piece = squarePieces.find(
   midsummerSacrificeMode &&
   piece &&
   piece.name !== 'ミッドサマー' &&
+  piece.name !== 'タイタニック' &&
   (piece.side ?? 'player') === playerSide
     ? 'sacrifice-target'
     : legalMoves.some((move) =>
@@ -3226,6 +3227,7 @@ const piece = squarePieces.find(
     if (
       !piece ||
       piece.name === 'ミッドサマー' ||
+      piece.name === 'タイタニック' ||
       (piece.side ?? 'player') !== playerSide
     ) return
 
