@@ -3846,10 +3846,19 @@ top: isStacked ? '15%' : undefined,
   fontSize: '20px',
   lineHeight: '30px',
   marginBottom: '3px',
+  
 }}>
   {['○', '△', '□'][index]}
 </div>
-        {name}
+        <div style={{
+  height: '54px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  textAlign: 'center',
+}}>
+  {name}
+</div>
       </button>
     ))}
   </div>
