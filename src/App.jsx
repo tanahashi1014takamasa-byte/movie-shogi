@@ -3806,25 +3806,44 @@ top: isStacked ? '15%' : undefined,
 )}
 
 
-    {selectedPiece?.name === 'イカゲーム' && !selectedPiece.fromHand && (
+  {selectedPiece?.name === 'イカゲーム' && !selectedPiece.fromHand && (
   <div style={{
     display: 'flex',
     flexDirection: 'row',
-    gap: '8px',
+    gap: '12px',
     justifyContent: 'center',
-    margin: '10px 0',
+    margin: '14px 0',
+    padding: '12px',
+    background: '#151515',
+    border: '2px solid #9e1830',
+    borderRadius: '8px',
   }}>
-    <button disabled style={{ padding: '12px 10px' }}>
-      だるまさんがころんだ
-    </button>
-
-    <button disabled style={{ padding: '12px 10px' }}>
-      綱引き
-    </button>
-
-    <button disabled style={{ padding: '12px 10px' }}>
-      ガラス橋
-    </button>
+    {['だるまさんがころんだ', '綱引き', 'ガラス橋'].map((name, index) => (
+      <button
+        key={name}
+        disabled
+        style={{
+          flex: 1,
+          minWidth: 0,
+          minHeight: '76px',
+          padding: '10px 5px',
+          background: 'linear-gradient(145deg, #a91d38, #5b0b1d)',
+          color: '#fff',
+          border: '2px solid #ed526c',
+          borderRadius: '6px',
+          boxShadow: '0 4px 0 #390814',
+          fontSize: '15px',
+          fontWeight: 'bold',
+          lineHeight: 1.5,
+          cursor: 'not-allowed',
+        }}
+      >
+        <div style={{ fontSize: '20px', marginBottom: '3px' }}>
+          {['○', '△', '□'][index]}
+        </div>
+        {name}
+      </button>
+    ))}
   </div>
 )}
 
