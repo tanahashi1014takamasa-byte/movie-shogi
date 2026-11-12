@@ -637,6 +637,7 @@ previousTurnRef.current = gameState.turn
   const [playerHand, setPlayerHand] = useState([])
   const [opponentHand, setOpponentHand] = useState([])
   const [funnyGameNextTarget, setFunnyGameNextTarget] = useState(null)
+  const [midsummerSacrificeMode, setMidsummerSacrificeMode] = useState(false)
   const syogiAudio = useRef(new Audio(syogiSound))
 
 const playSyogiSound = () => {
@@ -3608,6 +3609,27 @@ top: isStacked ? '15%' : undefined,
       </button>
     )}
   </div>
+)}
+
+{selectedPiece?.name === 'ミッドサマー' && !selectedPiece.fromHand && (
+  <button
+    style={{
+      padding: '14px 28px',
+      fontSize: '20px',
+      fontWeight: 'bold',
+      color: '#f5d77a',
+      background: 'linear-gradient(145deg, #542b18, #160b08)',
+      border: '3px solid #d9a441',
+      borderRadius: '8px',
+      boxShadow: '0 4px 0 #75451e, 0 5px 10px #000',
+      cursor: 'pointer',
+    }}
+    onClick={() => {
+      setMidsummerSacrificeMode(true)
+    }}
+  >
+    祝祭
+  </button>
 )}
 
 {selectedPiece?.name === 'デスノート' && !selectedPiece.fromHand && !deathNoteLocked && (
