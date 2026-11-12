@@ -640,6 +640,9 @@ previousTurnRef.current = gameState.turn
   const [opponentHand, setOpponentHand] = useState([])
   const [funnyGameNextTarget, setFunnyGameNextTarget] = useState(null)
   const [midsummerSacrificeMode, setMidsummerSacrificeMode] = useState(false)
+  const [squidDarumaUsed, setSquidDarumaUsed] = useState(false)
+  const [squidTugUsed, setSquidTugUsed] = useState(false)
+  const [squidBridgeUsed, setSquidBridgeUsed] = useState(false)
   const syogiAudio = useRef(new Audio(syogiSound))
 
 const playSyogiSound = () => {
@@ -3728,6 +3731,28 @@ top: isStacked ? '15%' : undefined,
         鯨隠
       </button>
     )}
+
+    {selectedPiece?.name === 'イカゲーム' && !selectedPiece.fromHand && (
+  <div style={{
+    display: 'flex',
+    flexDirection: 'row',
+    gap: '8px',
+    justifyContent: 'center',
+    margin: '10px 0',
+  }}>
+    <button disabled style={{ padding: '12px 10px' }}>
+      だるまさんがころんだ
+    </button>
+
+    <button disabled style={{ padding: '12px 10px' }}>
+      綱引き
+    </button>
+
+    <button disabled style={{ padding: '12px 10px' }}>
+      ガラス橋
+    </button>
+  </div>
+)}
 
     {selectedPiece.whaleHidden &&
   pieces.filter(
