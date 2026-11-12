@@ -3815,7 +3815,7 @@ top: isStacked ? '15%' : undefined,
     margin: '14px 0',
     padding: '12px',
     background: '#151515',
-    border: '2px solid #9e1830',
+    border: '2px solid #00ff66',
     borderRadius: '8px',
   }}>
     {['だるまさんがころんだ', '綱引き', 'ガラス橋'].map((name, index) => (
@@ -3838,9 +3838,16 @@ top: isStacked ? '15%' : undefined,
           cursor: 'not-allowed',
         }}
       >
-        <div style={{ fontSize: '20px', marginBottom: '3px' }}>
-          {['○', '△', '□'][index]}
-        </div>
+        <div style={{
+  fontSize: '20px',
+  height: '30px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginBottom: '3px',
+}}>
+  {['○', '△', '□'][index]}
+</div>
         {name}
       </button>
     ))}
