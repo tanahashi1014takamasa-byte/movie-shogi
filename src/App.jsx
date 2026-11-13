@@ -24,6 +24,7 @@ import m1 from './assets/m_1.gif'
 import m2 from './assets/m_2.gif'
 import m3 from './assets/m_3.gif'
 import m4 from './assets/m_4.gif'
+import m5 from './assets/m_5.gif'
 import syogiSound from './assets/syogi_s01.mp3'
 import guideText from './assets/guide.txt?raw'
 
