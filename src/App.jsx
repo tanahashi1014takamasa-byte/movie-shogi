@@ -2359,7 +2359,8 @@ if (x >= 296 && x <= 328 && y >= 200 && y <= 200) {
       if (
         next.join(',') === 'up,down,B,B,B'
       ) {
-        setShowRentalList(true)
+        alert('Bボタンの入力判定まで到達しました')
+setShowRentalList(true)
         return []
       }
 
