@@ -2426,6 +2426,24 @@ if (x >= 296 && x <= 328 && y >= 200 && y <= 200) {
 >
   × CLOSE
 </div>
+
+<div
+  onClick={() => {
+    if (rentalCart.length === 0) return
+    setShowRentalList(false)
+    setShowRentalConfirm(true)
+  }}
+  style={{
+    color: rentalCart.length > 0 ? '#f5d58a' : '#666',
+    fontSize: '17px',
+    textAlign: 'center',
+    marginTop: '22px',
+    cursor: 'pointer',
+  }}
+>
+  RENT
+</div>
+
   </div>
 )}
 
