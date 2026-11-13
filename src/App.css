@@ -171,6 +171,7 @@ body {
 .menu-gif-background img:nth-child(1) {
   top: 33%;
   right: 0;
+  width: 130px;
 }
 
 .menu-gif-background img:nth-child(2) {
