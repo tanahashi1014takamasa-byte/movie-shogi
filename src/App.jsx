@@ -3368,9 +3368,9 @@ const isBrokenGlass = isGlassBridge &&
   piece.name !== 'タイタニック' &&
   (piece.side ?? 'player') === playerSide
     ? 'sacrifice-target'
-    : legalMoves.some((move) =>
-        move.row === row && move.col === col
-      )
+    : squidBridgeSelectMode || legalMoves.some((move) =>
+  move.row === row && move.col === col
+)
       ? 'legal-move'
       : ''
 }`}
@@ -3521,8 +3521,11 @@ if (
   squidGlassBridge.safeSides[row] !== glassSide
 ) {
   const nextPieces = pieces.filter(
-    (p) => p !== selectedPiece
+  (p) => !(
+    p.row === row &&
+    p.col === col
   )
+)
 
   const nextBridge = {
     ...squidGlassBridge,
