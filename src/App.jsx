@@ -20,6 +20,10 @@ import menu1 from './assets/menu_1.png'
 import menu2 from './assets/menu_2.png'
 import menu3 from './assets/menu_3.png'
 import menu4 from './assets/menu_4.png'
+import m1 from './assets/m_1.gif'
+import m2 from './assets/m_2.gif'
+import m3 from './assets/m_3.gif'
+import m4 from './assets/m_4.gif'
 import syogiSound from './assets/syogi_s01.mp3'
 import guideText from './assets/guide.txt?raw'
 
@@ -1974,6 +1978,13 @@ const updateGameState = async (
     {screen === 'opening' && (
   <div className="opening">
     <img src={logo} alt="映画将棋" />
+
+    <div className="menu-gif-background">
+  <img src={m1} alt="" />
+  <img src={m2} alt="" />
+  <img src={m3} alt="" />
+  <img src={m4} alt="" />
+</div>
 
     <div className="menu-buttons">
       <img src={menu1} alt="メニュー1" onClick={() => setScreen('turn-select')} />

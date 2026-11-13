@@ -144,12 +144,49 @@ body {
 .opening img {
   width: 330px;
   height: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .opening {
   background: #000;
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
+.menu-gif-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.menu-gif-background img {
+  position: absolute;
+  width: 180px;
+  height: auto;
+}
+
+.menu-gif-background img:nth-child(1) {
+  top: 25%;
+  right: 0;
+}
+
+.menu-gif-background img:nth-child(2) {
+  top: 43%;
+  left: 0;
+}
+
+.menu-gif-background img:nth-child(3) {
+  top: 61%;
+  right: 0;
+}
+
+.menu-gif-background img:nth-child(4) {
+  top: 79%;
+  left: 0;
+}
 .home-button {
   position: relative;
   bottom: auto;
