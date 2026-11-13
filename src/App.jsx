@@ -3520,11 +3520,10 @@ if (
   isGlassBridge &&
   squidGlassBridge.safeSides[row] !== glassSide
 ) {
-  const nextPieces = pieces.filter(
-  (p) => !(
-    p.row === row &&
-    p.col === col
-  )
+ const nextPieces = pieces.filter(
+  (p) =>
+    p !== selectedPiece &&
+    !(p.row === row && p.col === col)
 )
 
   const nextBridge = {
