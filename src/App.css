@@ -141,7 +141,7 @@ body {
   transform: rotate(180deg);
 }
 
-.opening img {
+.opening > img {
   width: 330px;
   height: auto;
 }
@@ -172,7 +172,7 @@ body {
 }
 
 .menu-gif-background img:nth-child(2) {
-  top: 53%;
+  top: 50%;
   left: 0;
 }
 
