@@ -134,9 +134,15 @@ const movePlayer = (direction) => {
   setPlayerFrame((frame) => (frame + 1) % 3)
 }
 
-
+const [shopCommand, setShopCommand] = useState([])
+const [showRentalList, setShowRentalList] = useState(false)
 const startMoving = (direction) => {
   clearInterval(moveIntervalRef.current)
+  
+  if (direction === 'up' || direction === 'down') {
+  setShopCommand(prev => [...prev, direction].slice(-5))
+}
+  
   movePlayer(direction)
   moveIntervalRef.current = setInterval(() => {
     movePlayer(direction)
@@ -2344,8 +2350,50 @@ if (x >= 296 && x <= 328 && y >= 200 && y <= 200) {
 >
   A
 </button>
-  <button className="shop-button button-b">B</button>
+  <button
+  className="shop-button button-b"
+  onClick={() => {
+    setShopCommand(prev => {
+      const next = [...prev, 'B'].slice(-5)
+
+      if (
+        next.join(',') === 'up,down,B,B,B'
+      ) {
+        setShowRentalList(true)
+        return []
+      }
+
+      return next
+    })
+  }}
+>
+  B
+</button>
 </div>
+
+{showRentalList && (
+  <div className="rental-list">
+    <h2>レンタル作品一覧</h2>
+    {['白鯨', 'ミッドサマー', 'ファニーゲーム', 'イカゲーム', 'デスノート'].map(movie => (
+      <button
+        key={movie}
+        onClick={() => {
+          setRentalCart(prev =>
+            prev.includes(movie) ? prev : [...prev, movie]
+          )
+          setShowRentalList(false)
+          setShowRentalConfirm(true)
+        }}
+      >
+        {movie}
+      </button>
+    ))}
+    <button onClick={() => setShowRentalList(false)}>
+      閉じる
+    </button>
+  </div>
+)}
+
 {showMovieNotes && (
   <>
   <div style={{ position: 'absolute', inset: 0, zIndex: 11, pointerEvents: 'none' }}>
