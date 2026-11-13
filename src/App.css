@@ -144,6 +144,8 @@ body {
 .opening > img {
   width: 330px;
   height: auto;
+  position: relative;
+  z-index: 2;
 }
 
 .opening {
