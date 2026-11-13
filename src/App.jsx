@@ -3526,6 +3526,29 @@ if (
     !(p.row === row && p.col === col)
 )
 
+const fallenTitanic = pieces.some(
+  (p) =>
+    p.row === selectedPiece.row &&
+    p.col === selectedPiece.col &&
+    p.name === 'タイタニック'
+)
+
+const capturedTitanic = pieces.some(
+  (p) =>
+    p.row === row &&
+    p.col === col &&
+    p.name === 'タイタニック' &&
+    (p.side ?? 'player') !== (selectedPiece.side ?? 'player')
+)
+
+if (fallenTitanic) {
+  setResult('敗北')
+}
+
+if (capturedTitanic) {
+  setResult('勝利')
+}
+
   const nextBridge = {
     ...squidGlassBridge,
     broken: [
