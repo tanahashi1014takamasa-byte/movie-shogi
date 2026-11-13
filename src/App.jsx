@@ -3701,7 +3701,13 @@ const nextPieces = pieces
 
 setPieces(nextPieces)
 
-const nextTurn = turn === 'player' ? 'opponent' : 'player'
+const nextDoubleMoves = Math.max(0, squidDoubleMoves - 1)
+setSquidDoubleMoves(nextDoubleMoves)
+
+const nextTurn = nextDoubleMoves > 0
+  ? turn
+  : turn === 'player' ? 'opponent' : 'player'
+
 updateGameState(
   nextPieces,
   nextTurn,
