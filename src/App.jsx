@@ -643,6 +643,8 @@ previousTurnRef.current = gameState.turn
   const [squidDarumaUsed, setSquidDarumaUsed] = useState(false)
   const [squidTugUsed, setSquidTugUsed] = useState(false)
   const [squidBridgeUsed, setSquidBridgeUsed] = useState(false)
+  const [squidBridgeSelectMode, setSquidBridgeSelectMode] = useState(false)
+  const [squidGlassBridge, setSquidGlassBridge] = useState(null)
   const syogiAudio = useRef(new Audio(syogiSound))
 
 const playSyogiSound = () => {
@@ -3343,7 +3345,21 @@ const piece = squarePieces.find(
     )
   : getLegalMoves(selectedPiece, pieces)
 
+const bridge = squidGlassBridge
+const isGlassBridge = bridge !== null &&
+  col >= bridge.leftCol &&
+  col <= bridge.leftCol + 1
+
+const glassSide = col - (bridge?.leftCol ?? 0)
+const isBrokenGlass = isGlassBridge &&
+  bridge.broken.some(
+    cell => cell.row === row && cell.side === glassSide
+  )
+
           return (
+
+            
+
             <div
   className={`square ${
   midsummerSacrificeMode &&
@@ -3358,10 +3374,45 @@ const piece = squarePieces.find(
       ? 'legal-move'
       : ''
 }`}
-  style={{ position: 'relative' }}
+  style={{
+  position: 'relative',
+  background: isGlassBridge
+    ? isBrokenGlass
+      ? '#050505'
+      : 'linear-gradient(135deg, rgba(210,250,255,0.65), rgba(75,190,220,0.3), rgba(220,255,255,0.7))'
+    : undefined,
+  border: isGlassBridge
+    ? isBrokenGlass
+      ? '2px solid #111'
+      : '2px solid rgba(190,245,255,0.9)'
+    : undefined,
+  boxShadow: isGlassBridge && !isBrokenGlass
+    ? 'inset 0 0 8px rgba(255,255,255,0.9), 0 0 8px rgba(100,220,255,0.6)'
+    : undefined,
+}}
   key={index}
   onClick={() => {
   if (screen !== 'game') return
+
+  if (squidBridgeSelectMode) {
+  const leftCol = Math.min(col, 7)
+
+  const safeSides = Array.from(
+    { length: 9 },
+    () => Math.random() < 0.5 ? 0 : 1
+  )
+
+  setSquidGlassBridge({
+    leftCol,
+    safeSides,
+    broken: [],
+  })
+
+  setSquidBridgeSelectMode(false)
+  setSquidBridgeUsed(true)
+  setSelectedPiece(null)
+  return
+}
 
     if (midsummerSacrificeMode) {
     if (
@@ -3462,6 +3513,48 @@ return
   if (
   legalMoves.some((move) => move.row === row && move.col === col)
 ) {
+
+  if (isBrokenGlass) return
+
+if (
+  isGlassBridge &&
+  squidGlassBridge.safeSides[row] !== glassSide
+) {
+  const nextPieces = pieces.filter(
+    (p) => p !== selectedPiece
+  )
+
+  const nextBridge = {
+    ...squidGlassBridge,
+    broken: [
+      ...squidGlassBridge.broken,
+      { row, side: glassSide },
+    ],
+  }
+
+  setPieces(nextPieces)
+  setSquidGlassBridge(nextBridge)
+
+  const nextTurn = turn === 'player' ? 'opponent' : 'player'
+
+  updateGameState(
+    nextPieces,
+    nextTurn,
+    playerHand,
+    mistMoveCount,
+    false,
+    null
+  )
+
+  setSelectedPiece(null)
+
+  if (!roomId) {
+    setTurn(nextTurn)
+  }
+
+  return
+}
+
     playSyogiSound()
 
  if (selectedPiece?.name === 'ミスト' && selectedPiece?.side !== 'opponent') {
@@ -3821,7 +3914,12 @@ top: isStacked ? '15%' : undefined,
     {['だるまさんがころんだ', '綱引き', 'ガラス橋'].map((name, index) => (
       <button
         key={name}
-        disabled
+        disabled={index !== 2 || squidBridgeUsed}
+onClick={() => {
+  if (index === 2) {
+    setSquidBridgeSelectMode(true)
+  }
+}}
         style={{
           flex: 1,
           minWidth: 0,
