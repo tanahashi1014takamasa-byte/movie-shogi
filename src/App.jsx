@@ -2394,29 +2394,38 @@ if (x >= 296 && x <= 328 && y >= 200 && y <= 200) {
   VIDEO RENTAL
 </h2>
    {['白鯨', 'ミッドサマー', 'ファニーゲーム', 'イカゲーム', 'デスノート'].map(movie => (
-  <div
-    key={movie}
-    onClick={() => {
-      setRentalCart(prev =>
-        prev.includes(movie) ? prev : [...prev, movie]
-      )
-      setShowRentalList(false)
-      setShowRentalConfirm(true)
-    }}
-    style={{
-      color: 'white',
-      fontSize: '19px',
-      padding: '9px 12px',
-      cursor: 'pointer',
-      textAlign: 'center',
-    }}
-  >
-    {movie}
-  </div>
+<div
+  key={movie}
+  onClick={() => {
+    setRentalCart(prev =>
+      prev.includes(movie)
+        ? prev.filter(item => item !== movie)
+        : [...prev, movie]
+    )
+  }}
+  style={{
+    color: rentalCart.includes(movie) ? '#f5d58a' : 'white',
+    fontSize: '19px',
+    padding: '9px 12px',
+    cursor: 'pointer',
+    textAlign: 'center',
+  }}
+>
+  {movie}
+</div>
 ))}
-    <button onClick={() => setShowRentalList(false)}>
-      閉じる
-    </button>
+    <div
+  onClick={() => setShowRentalList(false)}
+  style={{
+    color: '#aaa',
+    fontSize: '14px',
+    textAlign: 'center',
+    marginTop: '24px',
+    cursor: 'pointer',
+  }}
+>
+  × CLOSE
+</div>
   </div>
 )}
 
