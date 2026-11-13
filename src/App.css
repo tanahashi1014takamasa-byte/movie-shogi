@@ -141,11 +141,11 @@ body {
   transform: rotate(180deg);
 }
 
-.opening > img {
+.opening img {
   width: 330px;
   height: auto;
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
 .opening {
