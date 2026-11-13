@@ -2359,8 +2359,7 @@ if (x >= 296 && x <= 328 && y >= 200 && y <= 200) {
       if (
         next.join(',') === 'up,down,B,B,B'
       ) {
-        alert('Bボタンの入力判定まで到達しました')
-setShowRentalList(true)
+        setShowRentalList(true)
         return []
       }
 
@@ -2383,7 +2382,17 @@ setShowRentalList(true)
   padding: '20px',
   overflowY: 'auto',
 }}>
-    <h2>レンタル作品一覧</h2>
+    <h2 style={{
+  textAlign: 'center',
+  color: '#f5d58a',
+  fontSize: '26px',
+  letterSpacing: '3px',
+  borderBottom: '2px solid #a77b3b',
+  paddingBottom: '12px',
+  marginBottom: '20px',
+}}>
+  VIDEO RENTAL
+</h2>
     {['白鯨', 'ミッドサマー', 'ファニーゲーム', 'イカゲーム', 'デスノート'].map(movie => (
       <button
         key={movie}
