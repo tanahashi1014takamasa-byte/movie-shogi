@@ -1985,7 +1985,7 @@ const updateGameState = async (
   <img src={m2} alt="" />
   <img src={m3} alt="" />
   <img src={m4} alt="" />
-  <img src={m5} alt="" style={{ width: '110px', position: 'absolute', top: '33%', left: '0', zIndex: 5 }} />
+  <img src={m5} alt="" />
 </div>
 
     <div className="menu-buttons">
