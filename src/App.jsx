@@ -2373,7 +2373,16 @@ setShowRentalList(true)
 </div>
 
 {showRentalList && (
-  <div className="rental-list">
+  <div style={{
+  position: 'absolute',
+  inset: '10%',
+  zIndex: 100,
+  background: 'black',
+  color: 'white',
+  border: '3px solid white',
+  padding: '20px',
+  overflowY: 'auto',
+}}>
     <h2>レンタル作品一覧</h2>
     {['白鯨', 'ミッドサマー', 'ファニーゲーム', 'イカゲーム', 'デスノート'].map(movie => (
       <button
