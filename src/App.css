@@ -180,8 +180,9 @@ body {
 }
 
 .menu-gif-background img:nth-child(3) {
-  top: 57%;
+  top: 54%;
   right: 0;
+  width: 110px;
 }
 
 .menu-gif-background img:nth-child(4) {
