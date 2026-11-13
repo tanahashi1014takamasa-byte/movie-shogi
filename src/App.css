@@ -195,6 +195,11 @@ body {
   width: 150px;
 }
 
+.menu-gif-background img:nth-child(6) {
+  top: 81%;
+  left: 0;
+}
+
 .home-button {
   position: relative;
   bottom: auto;
