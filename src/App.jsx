@@ -140,7 +140,7 @@ const startMoving = (direction) => {
   clearInterval(moveIntervalRef.current)
   
   if (direction === 'up' || direction === 'down') {
-  setShopCommand(prev => [...prev, direction].slice(-5))
+  setShopCommand(prev => [...prev, direction].slice(-2))
 }
   
   movePlayer(direction)
