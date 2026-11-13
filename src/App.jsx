@@ -643,6 +643,7 @@ previousTurnRef.current = gameState.turn
   const [squidDarumaUsed, setSquidDarumaUsed] = useState(false)
   const [squidTugUsed, setSquidTugUsed] = useState(false)
   const [squidBridgeUsed, setSquidBridgeUsed] = useState(false)
+  const [squidDoubleMoves, setSquidDoubleMoves] = useState(0)
   const [squidBridgeSelectMode, setSquidBridgeSelectMode] = useState(false)
   const [squidGlassBridge, setSquidGlassBridge] = useState(null)
   const syogiAudio = useRef(new Audio(syogiSound))
@@ -3480,7 +3481,13 @@ const nextPlayerHand = playerHand.filter(
 setPieces(nextPieces)
 setPlayerHand(nextPlayerHand)
 
-const nextTurn = turn === 'player' ? 'opponent' : 'player'
+const nextDoubleMoves = Math.max(0, squidDoubleMoves - 1)
+setSquidDoubleMoves(nextDoubleMoves)
+
+const nextTurn = nextDoubleMoves > 0
+  ? turn
+  : turn === 'player' ? 'opponent' : 'player'
+
 updateGameState(
   nextPieces,
   nextTurn,
@@ -3560,7 +3567,12 @@ if (capturedTitanic) {
   setPieces(nextPieces)
   setSquidGlassBridge(nextBridge)
 
-  const nextTurn = turn === 'player' ? 'opponent' : 'player'
+  const nextDoubleMoves = Math.max(0, squidDoubleMoves - 1)
+setSquidDoubleMoves(nextDoubleMoves)
+
+const nextTurn = nextDoubleMoves > 0
+  ? turn
+  : turn === 'player' ? 'opponent' : 'player'
 
   updateGameState(
     nextPieces,
@@ -3713,7 +3725,7 @@ if (selectedPiece?.name === 'デスノート') {
 setSelectedPiece(null)
 
 if (!roomId) {
-  setTurn(turn === 'player' ? 'opponent' : 'player')
+  setTurn(nextTurn)
 }
   }
 }}
@@ -3939,8 +3951,17 @@ top: isStacked ? '15%' : undefined,
     {['だるまさんがころんだ', '綱引き', 'ガラス橋'].map((name, index) => (
       <button
         key={name}
-        disabled={index !== 2 || squidBridgeUsed}
+        disabled={
+  index === 1 ||
+  (index === 0 ? squidDarumaUsed : squidBridgeUsed)
+}
 onClick={() => {
+  if (index === 0) {
+    setSquidDoubleMoves(2)
+    setSquidDarumaUsed(true)
+    setSelectedPiece(null)
+  }
+
   if (index === 2) {
     setSquidBridgeSelectMode(true)
   }
