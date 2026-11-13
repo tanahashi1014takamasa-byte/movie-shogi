@@ -2355,7 +2355,7 @@ if (x >= 296 && x <= 328 && y >= 200 && y <= 200) {
   onClick={() => {
     setShopCommand(prev => {
       const next = [...prev, 'B'].slice(-5)
-
+      console.log(next)
       if (
         next.join(',') === 'up,down,B,B,B'
       ) {
