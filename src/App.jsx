@@ -3322,11 +3322,11 @@ alignSelf: 'center',
 )}
 
 {onlineScreen && (
-  <div className="turn-select">
+  <div className="online-screen turn-select">
     <button onClick={createRoom}>CREATE CINEMA ROOM</button>
     <input
       type="number"
-      placeholder="ルームID"
+      placeholder="ROOM ID"
       value={roomId ?? ''}
       onChange={(e) => setRoomId(e.target.value)}
     />
