@@ -510,3 +510,7 @@ background-position: center;
 .turn-choice:last-child {
   margin-top: 50px;
 }
+
+.turn-choice:first-child {
+  margin-top: 20px;
+}
