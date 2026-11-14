@@ -141,13 +141,19 @@ body {
   transform: rotate(180deg);
 }
 
-.opening img {
+.opening > img {
   width: 220px;
   height: auto;
   position: relative;
   z-index: 1;
 }
 
+.menu-buttons img {
+  width: 220px;
+  height: auto;
+  position: relative;
+  z-index: 1;
+}
 .menu-gif-background {
   z-index: 0;
 }
