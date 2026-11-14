@@ -650,7 +650,7 @@ previousTurnRef.current = gameState.turn
     .subscribe()
 
   return () => {
-    supabase.removeChannel(channel)a
+    supabase.removeChannel(channel)
   }
 }, [roomId, screen, playerSide])
 
