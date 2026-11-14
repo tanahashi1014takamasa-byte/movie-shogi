@@ -1984,14 +1984,14 @@ const updateGameState = async (
     <img src={logo} alt="映画将棋" />
 
     <div className="menu-gif-background">
-  <img className="front-gif" src={m1} alt="" />
+  
   <img src={m2} alt="" />
   <img src={m3} alt="" />
   <img src={m4} alt="" />
   <img src={m5} alt="" />
   <img src={m6} alt="" />
 </div>
-
+<img className="front-gif" src={m1} alt="" />
  <div className="menu-buttons">
   <img src={menu1} alt="メニュー1" style={{ width: '180px', height: 'auto' }} onClick={() => setScreen('turn-select')} />
   <img src={menu2} alt="メニュー2" style={{ width: '180px', height: 'auto' }} onClick={() => {
