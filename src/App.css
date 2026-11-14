@@ -142,8 +142,17 @@ body {
 }
 
 .opening img {
-  width: 280px;
+  width: 220px;
   height: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.menu-gif-background {
+  z-index: 0;
+}
+
+.menu-buttons {
   position: relative;
   z-index: 1;
 }
