@@ -154,6 +154,15 @@ body {
   position: relative;
   z-index: 1;
 }
+
+.menu-buttons img:last-child {
+  width: 110px !important;
+  position: absolute;
+  top: 33%;
+  right: -10px;
+  z-index: 2;
+}
+
 .menu-gif-background {
   z-index: 0;
 }
