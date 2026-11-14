@@ -3323,14 +3323,14 @@ alignSelf: 'center',
 
 {onlineScreen && (
   <div className="turn-select">
-    <button onClick={createRoom}>ルームを作る</button>
+    <button onClick={createRoom}>CREATE CINEMA ROOM</button>
     <input
       type="number"
       placeholder="ルームID"
       value={roomId ?? ''}
       onChange={(e) => setRoomId(e.target.value)}
     />
-    <button onClick={joinRoom}>ルームに入る</button>
+    <button onClick={joinRoom}>JOIN CINEMA ROOM</button>
   </div>
 )}
 
