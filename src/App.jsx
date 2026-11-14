@@ -387,7 +387,12 @@ const dangerousMoves = moves.filter(({ piece, move }) =>
   })
 )
 
-if (safeMoves.length === 0) return
+if (safeMoves.length === 0) {
+  if (turn === 'funnyGame') {
+    setTurn(playerSide)
+  }
+  return
+}
 
 const captureMoves = safeMoves.filter(({ piece, move }) =>
   pieces.some(
@@ -572,13 +577,9 @@ return currentPieces
 setTurn(
   turn === 'funnyGame'
     ? playerSide
-: pieces.some(
-    (piece) =>
-      piece.name === 'ファニーゲーム' &&
-      piece !== capturedPiece
-  )
-  ? 'funnyGame'
-  : playerSide
+    : pieces.some((piece) => piece.name === 'ファニーゲーム')
+      ? 'funnyGame'
+      : playerSide
 )
 }, 1000)
 
@@ -649,7 +650,7 @@ previousTurnRef.current = gameState.turn
     .subscribe()
 
   return () => {
-    supabase.removeChannel(channel)
+    supabase.removeChannel(channel)a
   }
 }, [roomId, screen, playerSide])
 
