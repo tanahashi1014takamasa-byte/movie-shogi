@@ -183,7 +183,7 @@ body {
   height: auto;
 }
 
-.front-gif {
+.opening > img.front-gif {
   position: absolute;
   top: 33%;
   right: -10px;
