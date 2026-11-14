@@ -1992,31 +1992,23 @@ const updateGameState = async (
   <img src={m6} alt="" />
 </div>
 
-    <div className="menu-buttons">
-      <img src={menu1} alt="メニュー1" onClick={() => setScreen('turn-select')} />
-      <img
-        src={menu2}
-        alt="メニュー2"
-        onClick={() => {
-  setOnlineScreen(true)
-  setScreen('online')
-}}
-/>
-      <img
-  src={menu3}
-  alt="メニュー3"
-  onClick={() => setScreen('piece-guide')}
-/>
-    </div>
+ <div className="menu-buttons">
+  <img src={menu1} alt="メニュー1" style={{ width: '180px', height: 'auto' }} onClick={() => setScreen('turn-select')} />
+  <img src={menu2} alt="メニュー2" style={{ width: '180px', height: 'auto' }} onClick={() => {
+    setOnlineScreen(true)
+    setScreen('online')
+  }} />
+  <img src={menu3} alt="メニュー3" style={{ width: '180px', height: 'auto' }} onClick={() => setScreen('piece-guide')} />
+</div>
 
-      <img
+<img
   src={menu4}
   alt="メニュー4"
-  style={{ width: '280px' }}
+  style={{ width: '180px', height: 'auto' }}
   onClick={() => {
-  setScreen('rental-shop')
-  window.scrollTo(0, 0)
-}}
+    setScreen('rental-shop')
+    window.scrollTo(0, 0)
+  }}
 />
 
   </div>
