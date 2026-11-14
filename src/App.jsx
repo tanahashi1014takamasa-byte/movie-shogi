@@ -2004,7 +2004,7 @@ const updateGameState = async (
 <img
   src={menu4}
   alt="メニュー4"
-  style={{ width: '140px', height: 'auto', maxWidth: '2550px' }}
+  style={{ width: '140px', height: 'auto', maxWidth: '255px' }}
   onClick={() => {
     setScreen('rental-shop')
     window.scrollTo(0, 0)
