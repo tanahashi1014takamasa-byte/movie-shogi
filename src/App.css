@@ -529,3 +529,7 @@ background-position: center;
 .turn-choice:first-child {
   margin-top: 20px;
 }
+
+.cpu-turn-select {
+  gap: 300px;
+}

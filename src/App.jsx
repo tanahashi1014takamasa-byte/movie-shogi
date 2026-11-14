@@ -3328,7 +3328,7 @@ alignSelf: 'center',
 
 
 {screen === 'turn-select' && (
-  <div className="turn-select">
+  <div className="turn-select cpu-turn-select">
     <div className="turn-choice" onClick={() => {
       setPieces(initialPiecesRef.current)
 setPlayerHand([
