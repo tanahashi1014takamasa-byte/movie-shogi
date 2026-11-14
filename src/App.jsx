@@ -572,9 +572,13 @@ return currentPieces
 setTurn(
   turn === 'funnyGame'
     ? playerSide
-    : pieces.some((piece) => piece.name === 'ファニーゲーム')
-      ? 'funnyGame'
-      : playerSide
+: pieces.some(
+    (piece) =>
+      piece.name === 'ファニーゲーム' &&
+      piece !== capturedPiece
+  )
+  ? 'funnyGame'
+  : playerSide
 )
 }, 1000)
 
