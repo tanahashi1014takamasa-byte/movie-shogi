@@ -193,35 +193,29 @@ body {
 }
 
 .menu-gif-background img:nth-child(1) {
-  top: 33%;
-  right: -10;
-  width: 110px;
-}
-
-.menu-gif-background img:nth-child(2) {
   top: 50%;
   left: 0;
 }
 
-.menu-gif-background img:nth-child(3) {
+.menu-gif-background img:nth-child(2) {
   top: 60%;
-  right: -20;
+  right: -20px;
   width: 115px;
 }
 
-.menu-gif-background img:nth-child(4) {
+.menu-gif-background img:nth-child(3) {
   top: 81%;
   left: -30px;
   width: 150px;
 }
 
-.menu-gif-background img:nth-child(5) {
+.menu-gif-background img:nth-child(4) {
   top: 39%;
   left: 0;
   width: 150px;
 }
 
-.menu-gif-background img:nth-child(6) {
+.menu-gif-background img:nth-child(5) {
   top: 77%;
   right: 0;
   width: 100px;
