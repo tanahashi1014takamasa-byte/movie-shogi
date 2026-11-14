@@ -3534,8 +3534,29 @@ const isBrokenGlass = isGlassBridge &&
   })
 
   setSquidBridgeSelectMode(false)
-  setSquidBridgeUsed(true)
+   setSquidBridgeUsed(true)
   setSelectedPiece(null)
+
+  const nextDoubleMoves = Math.max(0, squidDoubleMoves - 1)
+  setSquidDoubleMoves(nextDoubleMoves)
+
+  const nextTurn = nextDoubleMoves > 0
+    ? turn
+    : turn === 'player' ? 'opponent' : 'player'
+
+  updateGameState(
+    pieces,
+    nextTurn,
+    playerHand,
+    mistMoveCount,
+    false,
+    null
+  )
+
+  if (!roomId) {
+    setTurn(nextTurn)
+  }
+
   return
 }
 
