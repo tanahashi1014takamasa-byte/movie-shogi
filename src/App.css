@@ -149,8 +149,8 @@ body {
 }
 
 .menu-buttons img {
-  width: 220px;
-  height: auto;
+  width: 120px !important;
+  height: auto !important;
   position: relative;
   z-index: 1;
 }
