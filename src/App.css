@@ -195,8 +195,8 @@ body {
 }
 
 .menu-gif-background img:nth-child(3) {
-  top: 63%;
-  right: 20;
+  top: 60%;
+  right: -20;
   width: 115px;
 }
 
