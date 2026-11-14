@@ -218,6 +218,21 @@ body {
   width: 100px;
 }
 
+.front-gif-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.front-gif-layer img {
+  position: absolute;
+  top: 33%;
+  right: -10px;
+  width: 110px;
+  height: auto;
+}
+
 .home-button {
   position: relative;
   bottom: auto;
