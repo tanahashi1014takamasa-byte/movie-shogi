@@ -243,12 +243,21 @@ background-position: center;
 }
 
 .turn-select button {
-  width: 140px;
-  height: 70px;
-  font-size: 28px;
-  font-weight: bold;
+  width: 180px;
+  height: auto;
+  padding: 0;
+  border: none;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.turn-select button img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 .result-message {
   position: fixed;
   top: 50%;
