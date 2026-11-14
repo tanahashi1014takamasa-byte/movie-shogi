@@ -498,6 +498,9 @@ background-position: center;
 }
 
 .turn-choice {
+  .turn-choice:last-child {
+  transform: translateY(20px);
+}
   color: #f5d58a;
   border: 2px solid #f5d58a;
   background: transparent;

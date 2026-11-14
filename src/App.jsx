@@ -59,8 +59,6 @@ import midsummerPiece from './assets/ミッドサマー.png'
 import squidGamePiece from './assets/イカゲーム.png'
 
 import cpuBattle from './assets/CPU対戦.png'
-import firstMove from './assets/先手.png'
-import secondMove from './assets/後手.png'
 
 function App() {
   const [screen, setScreen] = useState('opening')
