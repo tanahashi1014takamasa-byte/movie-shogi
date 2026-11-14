@@ -488,3 +488,11 @@ background-position: center;
   -webkit-user-drag: none !important;
 }
 
+.turn-select button {
+  color: #f5d58a;
+  border: 2px solid #f5d58a;
+  background: transparent;
+  font-size: 18px;
+  letter-spacing: 2px;
+  padding: 12px 20px;
+}
