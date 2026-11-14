@@ -58,6 +58,10 @@ import deathNotePiece from './assets/デスノート.png'
 import midsummerPiece from './assets/ミッドサマー.png'
 import squidGamePiece from './assets/イカゲーム.png'
 
+import cpuBattle from './assets/CPU対戦.png'
+import firstMove from './assets/先手.png'
+import secondMove from './assets/後手.png'
+
 function App() {
   const [screen, setScreen] = useState('opening')
   const [guidePieceIndex, setGuidePieceIndex] = useState(0)
@@ -3362,7 +3366,9 @@ setPlayerSide('player')
   setTurn('player')
   setRoomId(null)
   setScreen('game')
-}}>先手</button>
+}}>
+  <img src={firstMove} alt="先手" />
+</button>
   
     <button onClick={() => {
       setPieces(initialPiecesRef.current)
@@ -3389,7 +3395,9 @@ setPlayerSide('player')
   setOpponentTrapCube(Math.floor(Math.random() * 9))
   setTurn('opponent')
   setScreen('game')
-}}>後手</button>
+}}>
+  <img src={secondMove} alt="後手" />
+</button>
   </div>
 )}
 
