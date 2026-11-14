@@ -496,3 +496,13 @@ background-position: center;
   letter-spacing: 2px;
   padding: 12px 20px;
 }
+
+.turn-choice {
+  color: #f5d58a;
+  border: 2px solid #f5d58a;
+  background: transparent;
+  font-size: 18px;
+  letter-spacing: 2px;
+  padding: 12px 20px;
+  cursor: pointer;
+}

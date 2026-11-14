@@ -3338,7 +3338,7 @@ alignSelf: 'center',
 
 {screen === 'turn-select' && (
   <div className="turn-select">
-    <button onClick={() => {
+    <div className="turn-choice" onClick={() => {
       setPieces(initialPiecesRef.current)
 setPlayerHand([
   ...(rentedMovies.includes('白鯨')
@@ -3367,10 +3367,10 @@ setPlayerSide('player')
   setRoomId(null)
   setScreen('game')
 }}>
-  <img src={firstMove} alt="先手" />
-</button>
+   FIRST PLAYER
+</div>
   
-    <button onClick={() => {
+    <div className="turn-choice" onClick={() => {
       setPieces(initialPiecesRef.current)
 setPlayerHand([
   ...(rentedMovies.includes('白鯨')
@@ -3396,8 +3396,8 @@ setPlayerSide('player')
   setTurn('opponent')
   setScreen('game')
 }}>
-  <img src={secondMove} alt="後手" />
-</button>
+    SECOND PLAYER
+</div>
   </div>
 )}
 
