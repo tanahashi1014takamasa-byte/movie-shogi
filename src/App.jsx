@@ -1984,7 +1984,7 @@ const updateGameState = async (
     <img src={logo} alt="映画将棋" />
 
     <div className="menu-gif-background">
-  <img src={m1} alt="" />
+  <img className="front-gif" src={m1} alt="" />
   <img src={m2} alt="" />
   <img src={m3} alt="" />
   <img src={m4} alt="" />

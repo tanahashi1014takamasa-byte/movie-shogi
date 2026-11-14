@@ -183,10 +183,12 @@ body {
   height: auto;
 }
 
-.menu-gif-background img:nth-child(1) {
+.front-gif {
+  position: absolute;
   top: 33%;
-  right: -10;
+  right: -10px;
   width: 110px;
+  height: auto;
   z-index: 10;
 }
 
