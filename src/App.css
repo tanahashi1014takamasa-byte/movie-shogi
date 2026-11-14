@@ -141,8 +141,8 @@ body {
   transform: rotate(180deg);
 }
 
-.opening > img {
-  width: 220px;
+.opening img {
+  width: 280px;
   height: auto;
   position: relative;
   z-index: 1;
