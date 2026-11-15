@@ -3683,6 +3683,11 @@ const isBrokenGlass = isGlassBridge &&
 
             <div
   className={`square ${
+      squidTugSelectMode &&
+  piece &&
+  (piece.side ?? 'player') !== (selectedPiece?.side ?? 'player')
+    ? 'tug-target'
+    :
   midsummerSacrificeMode &&
   piece &&
   piece.name !== 'ミッドサマー' &&
