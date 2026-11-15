@@ -1970,7 +1970,10 @@ const updateGameState = async (
   if (!data) return
 
   const currentState = data.game_state
-  if (currentState.turn !== turn) return
+  if (
+  currentState.turn !== turn &&
+  !(turn === 'funnyGame' && currentState.turn === playerSide)
+) return
 
   await supabase
     .from('game')
