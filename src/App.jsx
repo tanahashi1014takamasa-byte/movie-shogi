@@ -1851,6 +1851,24 @@ if (initialPiecesRef.current === null) {
   initialPiecesRef.current = pieces
 }
 
+const createRentalHand = () => [
+  ...(rentedMovies.includes('白鯨')
+    ? [{ name: '白鯨', image: whiteWhale }]
+    : []),
+  ...(rentedMovies.includes('ファニーゲーム')
+    ? [{ name: 'ファニーゲーム', image: funnyGame }]
+    : []),
+  ...(rentedMovies.includes('ミッドサマー')
+    ? [{ name: 'ミッドサマー', image: midsummerPiece }]
+    : []),
+  ...(rentedMovies.includes('デスノート')
+    ? [{ name: 'デスノート', image: deathNotePiece }]
+    : []),
+  ...(rentedMovies.includes('イカゲーム')
+    ? [{ name: 'イカゲーム', image: squidGamePiece }]
+    : [])
+]
+
 const createRoom = async () => {
   const newRoomId = Math.floor(100000 + Math.random() * 900000).toString()
 
@@ -1868,7 +1886,7 @@ const newOpponentTrapCube = Math.floor(Math.random() * 9)
   playerCount: 1,
   trapCube: newTrapCube,
   opponentTrapCube: newOpponentTrapCube,
-  playerHand: [],
+  playerHand: createRentalHand(),
 opponentHand: [],
 mistMoveCount: {
   player: 0,
@@ -1884,6 +1902,7 @@ mistMoveCount: {
   setTrapCube(newTrapCube)
   setOpponentTrapCube(newOpponentTrapCube)
   setRoomId(newRoomId)
+  setPlayerHand(createRentalHand())
   setPlayerSide('player')
   setScreen('game')
 }
@@ -1909,9 +1928,10 @@ await supabase
   .from('game')
   .update({
     game_state: {
-      ...data[0].game_state,
-      playerCount: 2,
-    },
+  ...data[0].game_state,
+  playerCount: 2,
+  opponentHand: createRentalHand(),
+},
   })
   .eq('room_id', roomId)
 
@@ -1919,7 +1939,7 @@ await supabase
 
   setPieces(data[0].game_state.pieces)
 setTurn(data[0].game_state.turn)
-setPlayerHand(data[0].game_state.opponentHand ?? [])
+setPlayerHand(createRentalHand())
 setTrapCube(data[0].game_state.opponentTrapCube)
 setOpponentTrapCube(data[0].game_state.trapCube)
 setOpponentHand(data[0].game_state.playerHand ?? [])
