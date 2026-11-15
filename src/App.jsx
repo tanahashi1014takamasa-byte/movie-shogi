@@ -1907,6 +1907,7 @@ mistMoveCount: {
   setRoomId(newRoomId)
   setPlayerHand(createRentalHand())
   setPlayerSide('player')
+  setOnlineScreen(true)
   setScreen('game')
 }
 
