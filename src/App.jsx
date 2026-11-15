@@ -4045,7 +4045,11 @@ setSquidDoubleMoves(nextDoubleMoves)
 
 const nextTurn = nextDoubleMoves > 0
   ? turn
-  : roomId && nextPieces.some((p) => p.name === 'ファニーゲーム')
+  : roomId && nextPieces.some(
+  (p) =>
+    p.name === 'ファニーゲーム' &&
+    (p.side ?? 'player') === playerSide
+)
     ? 'funnyGame'
     : turn === 'player' ? 'opponent' : 'player'
 
