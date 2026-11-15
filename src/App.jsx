@@ -667,6 +667,7 @@ previousTurnRef.current = gameState.turn
   const [squidBridgeUsed, setSquidBridgeUsed] = useState(false)
   const [squidDoubleMoves, setSquidDoubleMoves] = useState(0)
   const [squidBridgeSelectMode, setSquidBridgeSelectMode] = useState(false)
+  const [squidTugSelectMode, setSquidTugSelectMode] = useState(false)
   const [squidGlassBridge, setSquidGlassBridge] = useState(null)
   const syogiAudio = useRef(new Audio(syogiSound))
 
@@ -3755,6 +3756,51 @@ const isBrokenGlass = isGlassBridge &&
   return
 }
 
+if (squidTugSelectMode) {
+  if (
+    !piece ||
+    (piece.side ?? 'player') === (selectedPiece.side ?? 'player')
+  ) return
+
+  playSyogiSound()
+
+  const direction = (selectedPiece.side ?? 'player') === 'player' ? 1 : -1
+  let destinationRow = row
+
+  while (
+    destinationRow + direction >= 0 &&
+    destinationRow + direction <= 8
+  ) {
+    const nextRow = destinationRow + direction
+
+    if (pieces.some(
+      (p) => p.row === nextRow && p.col === col
+    )) break
+
+    destinationRow = nextRow
+  }
+
+  const nextPieces = pieces.map((p) =>
+    p.row === row &&
+    p.col === col &&
+    p.name === piece.name &&
+    (p.side ?? 'player') === (piece.side ?? 'player')
+      ? { ...p, row: destinationRow }
+      : p
+  )
+
+  setPieces(nextPieces)
+  setSquidTugUsed(true)
+  setSquidTugSelectMode(false)
+  setSelectedPiece(null)
+  setTurn(
+    (selectedPiece.side ?? 'player') === 'player'
+      ? 'opponent'
+      : 'player'
+  )
+  return
+}
+
     if (midsummerSacrificeMode) {
     if (
       !piece ||
@@ -4316,9 +4362,12 @@ top: isStacked ? '15%' : undefined,
     {['だるまさんがころんだ', '綱引き', 'ガラス橋'].map((name, index) => (
       <button
         key={name}
-        disabled={
-  index === 1 ||
-  (index === 0 ? squidDarumaUsed : squidBridgeUsed)
+ disabled={
+  index === 0
+    ? squidDarumaUsed
+    : index === 1
+      ? squidTugUsed
+      : squidBridgeUsed
 }
 onClick={() => {
   if (index === 0) {
@@ -4326,6 +4375,10 @@ onClick={() => {
     setSquidDarumaUsed(true)
     setSelectedPiece(null)
   }
+
+if (index === 1) {
+  setSquidTugSelectMode(true)
+}
 
   if (index === 2) {
     setSquidBridgeSelectMode(true)
