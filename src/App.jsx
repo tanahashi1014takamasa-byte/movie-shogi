@@ -2142,7 +2142,7 @@ const nextPlayerHand =
     : playerHand
 updateGameState(
   nextPieces,
-  playerSide,
+  playerSide === 'player' ? 'opponent' : 'player',
   nextPlayerHand,
   mistMoveCount,
   capturedPiece?.name === 'タイタニック',
@@ -2150,7 +2150,7 @@ updateGameState(
   nextFunnyGameNextTarget
 )
 
-setTurn(playerSide)
+setTurn(playerSide === 'player' ? 'opponent' : 'player')
 
 }, 1000)
 
