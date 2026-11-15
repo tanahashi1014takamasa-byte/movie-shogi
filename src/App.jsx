@@ -3596,7 +3596,7 @@ setPlayerSide('player')
   </div>
 )}
 
-    {screen === 'game' && (
+    {screen === 'game' && !onlineScreen && (
       <div className="game">
         {roomId && <div>ルームID: {roomId}</div>}
 
