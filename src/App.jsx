@@ -58,6 +58,8 @@ import deathNotePiece from './assets/デスノート.png'
 import midsummerPiece from './assets/ミッドサマー.png'
 import squidGamePiece from './assets/イカゲーム.png'
 
+import squidDarumaVideo from './assets/だるまさんがころんだ.mp4'
+
 import cpuBattle from './assets/CPU対戦.png'
 
 function App() {
@@ -668,6 +670,7 @@ previousTurnRef.current = gameState.turn
   const [squidDoubleMoves, setSquidDoubleMoves] = useState(0)
   const [squidBridgeSelectMode, setSquidBridgeSelectMode] = useState(false)
   const [squidTugSelectMode, setSquidTugSelectMode] = useState(false)
+  const [showSquidDarumaVideo, setShowSquidDarumaVideo] = useState(false)
   const [squidGlassBridge, setSquidGlassBridge] = useState(null)
   const syogiAudio = useRef(new Audio(syogiSound))
 
@@ -3599,6 +3602,34 @@ setPlayerSide('player')
 
     {screen === 'game' && !onlineScreen && (
       <div className="game">
+
+{showSquidDarumaVideo && (
+  <div style={{
+    position: 'fixed',
+    inset: 0,
+    zIndex: 10000,
+    background: 'black',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }}>
+    <video
+      src={squidDarumaVideo}
+      autoPlay
+      playsInline
+      onEnded={() => {
+        setShowSquidDarumaVideo(false)
+        setSquidDoubleMoves(2)
+      }}
+      style={{
+        width: '100%',
+        maxHeight: '100%',
+        objectFit: 'contain',
+      }}
+    />
+  </div>
+)}
+
         {roomId && <div>ルームID: {roomId}</div>}
 
         <div>M: 0</div>
@@ -4376,10 +4407,10 @@ top: isStacked ? '15%' : undefined,
 }
 onClick={() => {
   if (index === 0) {
-    setSquidDoubleMoves(2)
-    setSquidDarumaUsed(true)
-    setSelectedPiece(null)
-  }
+  setShowSquidDarumaVideo(true)
+  setSquidDarumaUsed(true)
+  setSelectedPiece(null)
+}
 
 if (index === 1) {
   setSquidTugSelectMode(true)
