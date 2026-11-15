@@ -3784,7 +3784,19 @@ const inheritedProfile = { ...piece }
           : p
       )
 
-    setPieces(nextPieces)
+        if (roomId) {
+      updateGameState(
+        nextPieces,
+        turn,
+        playerHand,
+        mistMoveCount,
+        false,
+        null
+      )
+    } else {
+      setPieces(nextPieces)
+    }
+
     setSelectedPiece(null)
     setMidsummerSacrificeMode(false)
     return
