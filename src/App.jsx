@@ -3787,8 +3787,8 @@ const inheritedProfile = { ...piece }
         if (roomId) {
       updateGameState(
         nextPieces,
-        turn,
-        playerHand,
+playerSide === 'player' ? 'opponent' : 'player',
+playerHand,
         mistMoveCount,
         false,
         null
