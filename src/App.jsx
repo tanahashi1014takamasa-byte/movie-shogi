@@ -313,171 +313,7 @@ const [opponentTrapCube, setOpponentTrapCube] = useState(null)
   const [roomId, setRoomId] = useState(null)
   const [onlineScreen, setOnlineScreen] = useState(false)
   
-  useEffect(() => {
-  if (!roomId || screen !== 'game') return
-  if (turn !== 'funnyGame') return
-  const funnyGamePiece = pieces.find(
-  (piece) => piece.name === 'ファニーゲーム'
-)
-
-if (!funnyGamePiece) return
-
-if ((funnyGamePiece.side ?? 'player') !== playerSide) return
-
-const funnyGameTarget =
-  funnyGameNextTarget ??
-  (Math.random() < 0.5 ? 'own' : 'enemy')
-
-const moves = getLegalMoves(
-  funnyGamePiece,
-  pieces.filter(
-    (p) => !(p.name === 'ミスト' && (p.side ?? 'player') === 'player')
-  )
-).map((move) => ({
-  piece: funnyGamePiece,
-  move,
-}))
-
-const safeMoves = moves.filter(({ piece, move }) => {
-  const target = pieces.find(
-    (p) =>
-      p.row === move.row &&
-      p.col === move.col &&
-      !(p.name === '白鯨' && p.whaleHidden)
-  )
-
-  if (!target) return true
-  if (target.name === 'ファニーゲーム') return false
-
-  const sameSide =
-    (target.side ?? 'player') === (piece.side ?? 'player')
-
-  return funnyGameTarget === 'own' ? sameSide : !sameSide
-})
-
-const dangerousMoves = moves.filter(({ piece, move }) =>
-  pieces.some((enemy) => {
-    if (
-      enemy.name === 'ファニーゲーム' ||
-      (enemy.side ?? 'player') === (piece.side ?? 'player') ||
-      (enemy.name === '白鯨' && enemy.whaleHidden)
-    ) {
-      return false
-    }
-
-    return getLegalMoves(enemy, pieces).some(
-      (enemyMove) =>
-        enemyMove.row === move.row &&
-        enemyMove.col === move.col
-    )
-  })
-)
-
-if (safeMoves.length === 0) {
-  setTurn(playerSide)
-  return
-}
-
-const preferredMoves =
-  Math.random() < 0.2
-    ? safeMoves
-    : safeMoves.filter(({ piece, move }) =>
-        !dangerousMoves.some(
-          (danger) =>
-            danger.piece === piece &&
-            danger.move.row === move.row &&
-            danger.move.col === move.col
-        )
-      )
-
-const evaluatedMoves =
-  preferredMoves.length > 0 ? preferredMoves : safeMoves
-
-
-  const captureMoves = evaluatedMoves.filter(({ move }) =>
-  pieces.some(
-    (target) =>
-      target.row === move.row &&
-      target.col === move.col &&
-      target.name !== 'ミスト' &&
-      !(target.name === '白鯨' && target.whaleHidden)
-  )
-)
-
-const funnyGameMove =
-  captureMoves.length > 0
-    ? captureMoves[Math.floor(Math.random() * captureMoves.length)]
-    : evaluatedMoves[Math.floor(Math.random() * evaluatedMoves.length)]
-
-    const timer = setTimeout(() => {
-  playSyogiSound()
-
-  const capturedPiece = pieces.find(
-    (piece) =>
-      piece.row === funnyGameMove.move.row &&
-      piece.col === funnyGameMove.move.col &&
-      !(piece.name === '白鯨' && piece.whaleHidden) &&
-      (
-        funnyGameTarget === 'own'
-          ? (piece.side ?? 'player') === (funnyGamePiece.side ?? 'player')
-          : (piece.side ?? 'player') !== (funnyGamePiece.side ?? 'player')
-      )
-  )
-
-  const nextFunnyGameNextTarget =
-  capturedPiece && capturedPiece.name !== 'ファニーゲーム'
-    ? (funnyGameTarget === 'own' ? 'enemy' : 'own')
-    : funnyGameTarget
-
-const nextPieces = pieces
-  .filter((piece) => piece !== capturedPiece)
-  .map((piece) =>
-    piece === funnyGamePiece
-      ? {
-          ...piece,
-          row: funnyGameMove.move.row,
-          col: funnyGameMove.move.col,
-        }
-      : piece
-  )
-
-setPieces(nextPieces)
-setFunnyGameNextTarget(nextFunnyGameNextTarget)
-
-const nextPlayerHand =
-  capturedPiece?.name === '国宝'
-    ? [
-        ...playerHand,
-        { ...capturedPiece, name: '吉沢亮', image: yoshizawa },
-        { ...capturedPiece, name: '横浜流星', image: ryusei },
-      ]
-    : playerHand
-updateGameState(
-  nextPieces,
-  playerSide,
-  nextPlayerHand,
-  mistMoveCount,
-  capturedPiece?.name === 'タイタニック',
-  capturedPiece?.name === 'タイタニック' ? playerSide : null,
-  nextFunnyGameNextTarget
-)
-
-setTurn(playerSide)
-
-}, 1000)
-
-return () => clearTimeout(timer)
-
-}, [
-  roomId,
-  screen,
-  playerSide,
-  turn,
-  pieces,
-  funnyGameNextTarget,
-  playerHand,
-  mistMoveCount,
-])
+ 
 
 
 
@@ -2161,6 +1997,172 @@ mistMoveCount: nextMistMoveCount,
     })
     .eq('room_id', roomId)
 }
+
+ useEffect(() => {
+  if (!roomId || screen !== 'game') return
+  if (turn !== 'funnyGame') return
+  const funnyGamePiece = pieces.find(
+  (piece) => piece.name === 'ファニーゲーム'
+)
+
+if (!funnyGamePiece) return
+
+if ((funnyGamePiece.side ?? 'player') !== playerSide) return
+
+const funnyGameTarget =
+  funnyGameNextTarget ??
+  (Math.random() < 0.5 ? 'own' : 'enemy')
+
+const moves = getLegalMoves(
+  funnyGamePiece,
+  pieces.filter(
+    (p) => !(p.name === 'ミスト' && (p.side ?? 'player') === 'player')
+  )
+).map((move) => ({
+  piece: funnyGamePiece,
+  move,
+}))
+
+const safeMoves = moves.filter(({ piece, move }) => {
+  const target = pieces.find(
+    (p) =>
+      p.row === move.row &&
+      p.col === move.col &&
+      !(p.name === '白鯨' && p.whaleHidden)
+  )
+
+  if (!target) return true
+  if (target.name === 'ファニーゲーム') return false
+
+  const sameSide =
+    (target.side ?? 'player') === (piece.side ?? 'player')
+
+  return funnyGameTarget === 'own' ? sameSide : !sameSide
+})
+
+const dangerousMoves = moves.filter(({ piece, move }) =>
+  pieces.some((enemy) => {
+    if (
+      enemy.name === 'ファニーゲーム' ||
+      (enemy.side ?? 'player') === (piece.side ?? 'player') ||
+      (enemy.name === '白鯨' && enemy.whaleHidden)
+    ) {
+      return false
+    }
+
+    return getLegalMoves(enemy, pieces).some(
+      (enemyMove) =>
+        enemyMove.row === move.row &&
+        enemyMove.col === move.col
+    )
+  })
+)
+
+if (safeMoves.length === 0) {
+  setTurn(playerSide)
+  return
+}
+
+const preferredMoves =
+  Math.random() < 0.2
+    ? safeMoves
+    : safeMoves.filter(({ piece, move }) =>
+        !dangerousMoves.some(
+          (danger) =>
+            danger.piece === piece &&
+            danger.move.row === move.row &&
+            danger.move.col === move.col
+        )
+      )
+
+const evaluatedMoves =
+  preferredMoves.length > 0 ? preferredMoves : safeMoves
+
+
+  const captureMoves = evaluatedMoves.filter(({ move }) =>
+  pieces.some(
+    (target) =>
+      target.row === move.row &&
+      target.col === move.col &&
+      target.name !== 'ミスト' &&
+      !(target.name === '白鯨' && target.whaleHidden)
+  )
+)
+
+const funnyGameMove =
+  captureMoves.length > 0
+    ? captureMoves[Math.floor(Math.random() * captureMoves.length)]
+    : evaluatedMoves[Math.floor(Math.random() * evaluatedMoves.length)]
+
+    const timer = setTimeout(() => {
+  playSyogiSound()
+
+  const capturedPiece = pieces.find(
+    (piece) =>
+      piece.row === funnyGameMove.move.row &&
+      piece.col === funnyGameMove.move.col &&
+      !(piece.name === '白鯨' && piece.whaleHidden) &&
+      (
+        funnyGameTarget === 'own'
+          ? (piece.side ?? 'player') === (funnyGamePiece.side ?? 'player')
+          : (piece.side ?? 'player') !== (funnyGamePiece.side ?? 'player')
+      )
+  )
+
+  const nextFunnyGameNextTarget =
+  capturedPiece && capturedPiece.name !== 'ファニーゲーム'
+    ? (funnyGameTarget === 'own' ? 'enemy' : 'own')
+    : funnyGameTarget
+
+const nextPieces = pieces
+  .filter((piece) => piece !== capturedPiece)
+  .map((piece) =>
+    piece === funnyGamePiece
+      ? {
+          ...piece,
+          row: funnyGameMove.move.row,
+          col: funnyGameMove.move.col,
+        }
+      : piece
+  )
+
+setPieces(nextPieces)
+setFunnyGameNextTarget(nextFunnyGameNextTarget)
+
+const nextPlayerHand =
+  capturedPiece?.name === '国宝'
+    ? [
+        ...playerHand,
+        { ...capturedPiece, name: '吉沢亮', image: yoshizawa },
+        { ...capturedPiece, name: '横浜流星', image: ryusei },
+      ]
+    : playerHand
+updateGameState(
+  nextPieces,
+  playerSide,
+  nextPlayerHand,
+  mistMoveCount,
+  capturedPiece?.name === 'タイタニック',
+  capturedPiece?.name === 'タイタニック' ? playerSide : null,
+  nextFunnyGameNextTarget
+)
+
+setTurn(playerSide)
+
+}, 1000)
+
+return () => clearTimeout(timer)
+
+}, [
+  roomId,
+  screen,
+  playerSide,
+  turn,
+  pieces,
+  funnyGameNextTarget,
+  playerHand,
+  mistMoveCount,
+])
 
   return (
   <>
