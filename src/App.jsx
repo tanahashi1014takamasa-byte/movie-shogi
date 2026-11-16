@@ -639,6 +639,7 @@ previousTurnRef.current = gameState.turn
         setMistMoveCount(gameState.mistMoveCount ?? { player: 0, opponent: 0 })
         setFunnyGameNextTarget(gameState.funnyGameNextTarget ?? 'own')
         setSquidDoubleMoves(gameState.squidDoubleMoves ?? 0)
+        setSquidGlassBridge(gameState.squidGlassBridge ?? null)
        if (
   gameState.squidDarumaSignal !== undefined &&
   gameState.squidDarumaSignal !== squidDarumaSignal &&
@@ -1978,7 +1979,8 @@ const updateGameState = async (
     gameEnded = false,
   winnerSide = null,
   nextFunnyGameNextTarget = funnyGameNextTarget,
-nextSquidDarumaSignal = squidDarumaSignal
+nextSquidDarumaSignal = squidDarumaSignal,
+nextSquidGlassBridge = squidGlassBridge
 ) => {
   if (!roomId) return
 
@@ -2005,6 +2007,7 @@ turn: nextTurn,
 funnyGameNextTarget: nextFunnyGameNextTarget,
 squidDoubleMoves,
 squidDarumaSignal: nextSquidDarumaSignal,
+squidGlassBridge: nextSquidGlassBridge,
 mistMoveCount: nextMistMoveCount,
         trapCube: currentState.trapCube,
         opponentTrapCube: currentState.opponentTrapCube,
@@ -3836,13 +3839,20 @@ const isBrokenGlass = isGlassBridge &&
     : turn === 'player' ? 'opponent' : 'player'
 
   updateGameState(
-    pieces,
-    nextTurn,
-    playerHand,
-    mistMoveCount,
-    false,
-    null
-  )
+  pieces,
+  nextTurn,
+  playerHand,
+  mistMoveCount,
+  false,
+  null,
+  funnyGameNextTarget,
+  squidDarumaSignal,
+  {
+    leftCol,
+    safeSides,
+    broken: [],
+  }
+)
 
   if (!roomId) {
     setTurn(nextTurn)
@@ -4059,6 +4069,20 @@ if (capturedTitanic) {
 
   setPieces(nextPieces)
   setSquidGlassBridge(nextBridge)
+
+  if (roomId) {
+  updateGameState(
+    nextPieces,
+    turn,
+    playerHand,
+    mistMoveCount,
+    false,
+    null,
+    funnyGameNextTarget,
+    squidDarumaSignal,
+    nextBridge
+  )
+}
 
   const nextDoubleMoves = Math.max(0, squidDoubleMoves - 1)
 setSquidDoubleMoves(nextDoubleMoves)
