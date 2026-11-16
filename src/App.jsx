@@ -3547,7 +3547,14 @@ alignSelf: 'center',
   playsInline
   style={{ display: 'none' }}
 />
-    <button onClick={createRoom}>CREATE CINEMA ROOM</button>
+    <button onClick={() => {
+  const audio = squidDarumaAudioRef.current
+  audio.play().then(() => {
+    audio.pause()
+    audio.currentTime = 0
+  }).catch(() => {})
+  createRoom()
+}}>CREATE CINEMA ROOM</button>
     <input
       type="number"
       placeholder="ROOM ID"
