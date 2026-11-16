@@ -3632,6 +3632,10 @@ setPlayerSide('player')
   key={squidDarumaSignal}
   src={squidDarumaVideo}
             autoPlay
+            onLoadedData={(e) => {
+  e.currentTarget.muted = false
+  e.currentTarget.play().catch(() => {})
+}}
       muted
       playsInline
       
