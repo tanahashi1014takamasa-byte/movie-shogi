@@ -680,6 +680,7 @@ previousTurnRef.current = gameState.turn
   const [squidBridgeSelectMode, setSquidBridgeSelectMode] = useState(false)
   const [squidTugSelectMode, setSquidTugSelectMode] = useState(false)
   const [showSquidDarumaVideo, setShowSquidDarumaVideo] = useState(false)
+  const squidDarumaVideoRef = useRef(null)
   const [squidDarumaSignal, setSquidDarumaSignal] = useState(0)
   const [squidGlassBridge, setSquidGlassBridge] = useState(null)
   const syogiAudio = useRef(new Audio(syogiSound))
@@ -3537,6 +3538,13 @@ alignSelf: 'center',
 
 {onlineScreen && (
   <div className="online-screen turn-select">
+    <video
+  ref={squidDarumaVideoRef}
+  src={squidDarumaVideo}
+  preload="auto"
+  playsInline
+  style={{ display: 'none' }}
+/>
     <button onClick={createRoom}>CREATE CINEMA ROOM</button>
     <input
       type="number"
@@ -3544,7 +3552,17 @@ alignSelf: 'center',
       value={roomId ?? ''}
       onChange={(e) => setRoomId(e.target.value)}
     />
-    <button onClick={joinRoom}>JOIN CINEMA ROOM</button>
+   <button onClick={() => {
+  const video = squidDarumaVideoRef.current
+  if (video) {
+    video.muted = false
+    video.play().then(() => {
+      video.pause()
+      video.currentTime = 0
+    }).catch(() => {})
+  }
+  joinRoom()
+}}>JOIN CINEMA ROOM</button>
   </div>
 )}
 
@@ -3630,13 +3648,14 @@ setPlayerSide('player')
   }}>
     <video
   key={squidDarumaSignal}
+  ref={squidDarumaVideoRef}
   src={squidDarumaVideo}
             autoPlay
             onLoadedData={(e) => {
   e.currentTarget.muted = false
   e.currentTarget.play().catch(() => {})
 }}
-      muted
+      
       playsInline
       
    onEnded={() => {
