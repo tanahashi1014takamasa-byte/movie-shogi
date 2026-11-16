@@ -3629,12 +3629,11 @@ setPlayerSide('player')
     justifyContent: 'center',
   }}>
     <video
-      src={squidDarumaVideo}
+  key={squidDarumaSignal}
+  src={squidDarumaVideo}
       autoPlay
       playsInline
-      onCanPlay={(e) => {
-  e.currentTarget.play().catch(() => {})
-}}
+      
    onEnded={() => {
   setShowSquidDarumaVideo(false)
   setSquidDoubleMoves(2)
