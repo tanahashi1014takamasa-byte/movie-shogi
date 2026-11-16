@@ -666,7 +666,7 @@ previousTurnRef.current = gameState.turn
   return () => {
     supabase.removeChannel(channel)
   }
-}, [roomId, screen, playerSide])
+}, [roomId, screen, playerSide, squidDarumaSignal])
 
   const [selectedPiece, setSelectedPiece] = useState(null)
   const [playerHand, setPlayerHand] = useState([])
