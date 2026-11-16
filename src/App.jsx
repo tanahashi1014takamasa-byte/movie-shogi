@@ -638,6 +638,14 @@ previousTurnRef.current = gameState.turn
         setTurn(gameState.turn)
         setMistMoveCount(gameState.mistMoveCount ?? { player: 0, opponent: 0 })
         setFunnyGameNextTarget(gameState.funnyGameNextTarget ?? 'own')
+        setSquidDoubleMoves(gameState.squidDoubleMoves ?? 0)
+        if (
+  gameState.squidDarumaSignal !== undefined &&
+  gameState.squidDarumaSignal !== squidDarumaSignal
+) {
+  setSquidDarumaSignal(gameState.squidDarumaSignal)
+  setShowSquidDarumaVideo(true)
+}
         
         if (playerSide === 'player') {
   setPlayerHand(gameState.playerHand ?? [])
@@ -671,6 +679,7 @@ previousTurnRef.current = gameState.turn
   const [squidBridgeSelectMode, setSquidBridgeSelectMode] = useState(false)
   const [squidTugSelectMode, setSquidTugSelectMode] = useState(false)
   const [showSquidDarumaVideo, setShowSquidDarumaVideo] = useState(false)
+  const [squidDarumaSignal, setSquidDarumaSignal] = useState(0)
   const [squidGlassBridge, setSquidGlassBridge] = useState(null)
   const syogiAudio = useRef(new Audio(syogiSound))
 
@@ -1964,7 +1973,8 @@ const updateGameState = async (
   nextMistMoveCount,
     gameEnded = false,
   winnerSide = null,
-  nextFunnyGameNextTarget = funnyGameNextTarget
+  nextFunnyGameNextTarget = funnyGameNextTarget,
+nextSquidDarumaSignal = squidDarumaSignal
 ) => {
   if (!roomId) return
 
@@ -1989,6 +1999,8 @@ const updateGameState = async (
         pieces: nextPieces,
 turn: nextTurn,
 funnyGameNextTarget: nextFunnyGameNextTarget,
+squidDoubleMoves,
+squidDarumaSignal: nextSquidDarumaSignal,
 mistMoveCount: nextMistMoveCount,
         trapCube: currentState.trapCube,
         opponentTrapCube: currentState.opponentTrapCube,
@@ -3620,9 +3632,18 @@ setPlayerSide('player')
       autoPlay
       playsInline
       onEnded={() => {
-        setShowSquidDarumaVideo(false)
-        setSquidDoubleMoves(2)
-      }}
+  setShowSquidDarumaVideo(false)
+  setSquidDoubleMoves(2)
+
+  if (roomId) {
+    updateGameState(
+      pieces,
+      turn,
+      playerHand,
+      mistMoveCount
+    )
+  }
+}}
       style={{
         width: '100%',
         maxHeight: '100%',
@@ -4412,10 +4433,24 @@ onClick={() => {
   setSquidBridgeSelectMode(false)
 
   if (index === 0) {
-    setShowSquidDarumaVideo(true)
-    setSquidDarumaUsed(true)
-    setSelectedPiece(null)
-  }
+  setShowSquidDarumaVideo(true)
+  setSquidDarumaUsed(true)
+  setSquidDarumaSignal((prev) => prev + 1)
+  setSelectedPiece(null)
+
+  if (roomId) {
+  updateGameState(
+    pieces,
+    turn,
+    playerHand,
+    mistMoveCount,
+    false,
+    null,
+    funnyGameNextTarget,
+    squidDarumaSignal + 1
+  )
+}
+}
 
   if (index === 1) {
     setSquidTugSelectMode(true)
