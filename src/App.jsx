@@ -3632,17 +3632,11 @@ setPlayerSide('player')
       src={squidDarumaVideo}
       autoPlay
       playsInline
-      onEnded={() => {
+   onEnded={() => {
   setShowSquidDarumaVideo(false)
-  setSquidDoubleMoves(2)
 
   if (roomId) {
-    updateGameState(
-      pieces,
-      turn,
-      playerHand,
-      mistMoveCount
-    )
+    setSquidDoubleMoves(2)
   }
 }}
       style={{
