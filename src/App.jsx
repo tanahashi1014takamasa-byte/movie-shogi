@@ -4540,8 +4540,9 @@ padding: '8px',
   )
 
   const targets = enemyPieces.filter(
-    (piece) => piece.name.replace(/・/g, '') === selectedName
-  )
+  (piece) =>
+    (piece.name === 'CUBE' ? 'キューブ' : piece.name.replace(/・/g, '')) === selectedName
+)
 
   const hasMatchingName = enemyPieces.some(
     (piece) => piece.name.replace(/・/g, '').startsWith(selectedName)
