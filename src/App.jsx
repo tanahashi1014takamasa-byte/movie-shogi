@@ -3631,7 +3631,8 @@ setPlayerSide('player')
     <video
   key={squidDarumaSignal}
   src={squidDarumaVideo}
-      autoPlay
+            autoPlay
+      muted
       playsInline
       
    onEnded={() => {
