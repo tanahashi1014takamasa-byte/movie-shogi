@@ -642,10 +642,11 @@ previousTurnRef.current = gameState.turn
         setSquidGlassBridge(gameState.squidGlassBridge ?? null)
        if (
   gameState.squidDarumaSignal !== undefined &&
-  gameState.squidDarumaSignal !== squidDarumaSignal &&
+  gameState.squidDarumaSignal !== squidDarumaSignalRef.current &&
   gameState.playerSide !== playerSide
 ) {
   setSquidDarumaSignal(gameState.squidDarumaSignal)
+  squidDarumaSignalRef.current = gameState.squidDarumaSignal
   setShowSquidDarumaVideo(true)
 }
         
@@ -683,6 +684,7 @@ previousTurnRef.current = gameState.turn
   const [showSquidDarumaVideo, setShowSquidDarumaVideo] = useState(false)
   const squidDarumaVideoRef = useRef(null)
   const [squidDarumaSignal, setSquidDarumaSignal] = useState(0)
+  const squidDarumaSignalRef = useRef(0)
   const [squidGlassBridge, setSquidGlassBridge] = useState(null)
   const syogiAudio = useRef(new Audio(syogiSound))
 
