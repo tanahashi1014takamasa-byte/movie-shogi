@@ -693,6 +693,8 @@ const playSyogiSound = () => {
 const previousPiecesRef = useRef(null)
 const previousTurnRef = useRef(null)
 
+const squidDarumaAudioRef = useRef(new Audio(squidDarumaVideo))
+
   const getLegalMoves = (piece, pieces) => {
   if (!piece) return []
 if (piece.name === 'ミッドサマー') {
@@ -3561,6 +3563,11 @@ alignSelf: 'center',
       video.currentTime = 0
     }).catch(() => {})
   }
+  const audio = squidDarumaAudioRef.current
+audio.play().then(() => {
+  audio.pause()
+  audio.currentTime = 0
+}).catch(() => {})
   joinRoom()
 }}>JOIN CINEMA ROOM</button>
   </div>
@@ -3651,9 +3658,13 @@ setPlayerSide('player')
   ref={squidDarumaVideoRef}
   src={squidDarumaVideo}
             autoPlay
-            onLoadedData={(e) => {
+  onLoadedData={(e) => {
   e.currentTarget.muted = true
   e.currentTarget.play().catch(() => {})
+
+  const audio = squidDarumaAudioRef.current
+  audio.currentTime = 0
+  audio.play().catch(() => {})
 }}
       
       playsInline
