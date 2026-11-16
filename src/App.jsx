@@ -4546,9 +4546,9 @@ padding: '8px',
     (piece.name === 'CUBE' ? 'キューブ' : piece.name.replace(/・/g, '')) === selectedName
 )
 
-  const hasMatchingName = enemyPieces.some(
+ const hasMatchingName = enemyPieces.some(
   (piece) =>
-    getDeathNoteName(piece.name)
+    (piece.name === 'CUBE' ? 'キューブ' : piece.name)
       .replace(/・/g, '')
       .startsWith(selectedName)
 )
