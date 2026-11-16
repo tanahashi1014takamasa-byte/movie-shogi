@@ -3634,10 +3634,7 @@ setPlayerSide('player')
       playsInline
    onEnded={() => {
   setShowSquidDarumaVideo(false)
-
-  if (roomId) {
-    setSquidDoubleMoves(2)
-  }
+  setSquidDoubleMoves(2)
 }}
       style={{
         width: '100%',
