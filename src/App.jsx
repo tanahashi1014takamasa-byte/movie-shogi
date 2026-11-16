@@ -639,9 +639,10 @@ previousTurnRef.current = gameState.turn
         setMistMoveCount(gameState.mistMoveCount ?? { player: 0, opponent: 0 })
         setFunnyGameNextTarget(gameState.funnyGameNextTarget ?? 'own')
         setSquidDoubleMoves(gameState.squidDoubleMoves ?? 0)
-        if (
+       if (
   gameState.squidDarumaSignal !== undefined &&
-  gameState.squidDarumaSignal !== squidDarumaSignal
+  gameState.squidDarumaSignal !== squidDarumaSignal &&
+  gameState.playerSide !== playerSide
 ) {
   setSquidDarumaSignal(gameState.squidDarumaSignal)
   setShowSquidDarumaVideo(true)
