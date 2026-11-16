@@ -1698,9 +1698,11 @@ const [deathNoteSelected, setDeathNoteSelected] = useState([])
 const [deathNoteTime, setDeathNoteTime] = useState(10)
 const [deathNoteLocked, setDeathNoteLocked] = useState(false)
 const createDeathNoteLetters = () => {
+  const getDeathNoteName = (name) =>
+  name === 'CUBE' ? 'キューブ' : name
   const letters = pieces
   .flatMap((piece) =>
-    Array.from(piece.name.replace(/・/g, '')).flatMap((char) =>
+    Array.from(getDeathNoteName(piece.name).replace(/・/g, '')).flatMap((char) =>
       piece.name === '国宝'
         ? Math.random() < 0.25 ? [char] : []
         : [char]
@@ -4545,8 +4547,11 @@ padding: '8px',
 )
 
   const hasMatchingName = enemyPieces.some(
-    (piece) => piece.name.replace(/・/g, '').startsWith(selectedName)
-  )
+  (piece) =>
+    getDeathNoteName(piece.name)
+      .replace(/・/g, '')
+      .startsWith(selectedName)
+)
 
   setUsedDeathNoteLetters((prev) => [...prev, letter.id])
 
