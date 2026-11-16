@@ -3652,7 +3652,7 @@ setPlayerSide('player')
   src={squidDarumaVideo}
             autoPlay
             onLoadedData={(e) => {
-  e.currentTarget.muted = false
+  e.currentTarget.muted = true
   e.currentTarget.play().catch(() => {})
 }}
       
