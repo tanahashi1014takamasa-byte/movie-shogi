@@ -4070,19 +4070,7 @@ if (capturedTitanic) {
   setPieces(nextPieces)
   setSquidGlassBridge(nextBridge)
 
-  if (roomId) {
-  updateGameState(
-    nextPieces,
-    turn,
-    playerHand,
-    mistMoveCount,
-    false,
-    null,
-    funnyGameNextTarget,
-    squidDarumaSignal,
-    nextBridge
-  )
-}
+
 
   const nextDoubleMoves = Math.max(0, squidDoubleMoves - 1)
 setSquidDoubleMoves(nextDoubleMoves)
@@ -4092,13 +4080,16 @@ const nextTurn = nextDoubleMoves > 0
   : turn === 'player' ? 'opponent' : 'player'
 
   updateGameState(
-    nextPieces,
-    nextTurn,
-    playerHand,
-    mistMoveCount,
-    false,
-    null
-  )
+  nextPieces,
+  nextTurn,
+  playerHand,
+  mistMoveCount,
+  false,
+  null,
+  funnyGameNextTarget,
+  squidDarumaSignal,
+  nextBridge
+)
 
   setSelectedPiece(null)
 
