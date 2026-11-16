@@ -4406,15 +4406,18 @@ top: isStacked ? '15%' : undefined,
       : squidBridgeUsed
 }
 onClick={() => {
-  if (index === 0) {
-  setShowSquidDarumaVideo(true)
-  setSquidDarumaUsed(true)
-  setSelectedPiece(null)
-}
+  setSquidTugSelectMode(false)
+  setSquidBridgeSelectMode(false)
 
-if (index === 1) {
-  setSquidTugSelectMode(true)
-}
+  if (index === 0) {
+    setShowSquidDarumaVideo(true)
+    setSquidDarumaUsed(true)
+    setSelectedPiece(null)
+  }
+
+  if (index === 1) {
+    setSquidTugSelectMode(true)
+  }
 
   if (index === 2) {
     setSquidBridgeSelectMode(true)
