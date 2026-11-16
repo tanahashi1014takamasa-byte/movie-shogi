@@ -3898,11 +3898,26 @@ if (squidTugSelectMode) {
   setSquidTugUsed(true)
   setSquidTugSelectMode(false)
   setSelectedPiece(null)
-  setTurn(
-    (selectedPiece.side ?? 'player') === 'player'
-      ? 'opponent'
-      : 'player'
+  const nextTurn =
+  (selectedPiece.side ?? 'player') === 'player'
+    ? 'opponent'
+    : 'player'
+
+if (roomId) {
+  updateGameState(
+    nextPieces,
+    nextTurn,
+    playerHand,
+    mistMoveCount,
+    false,
+    null,
+    funnyGameNextTarget,
+    squidDarumaSignal,
+    squidGlassBridge
   )
+} else {
+  setTurn(nextTurn)
+}
   return
 }
 
