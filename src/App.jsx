@@ -4148,9 +4148,7 @@ const nextPlayerHand = playerHand.filter(
 setPieces(nextPieces)
 setPlayerHand(nextPlayerHand)
 
-if (selectedPiece?.name === '嘘喰い') {
-  setReverseWinCondition(true)
-}
+
 
 const nextDoubleMoves = Math.max(0, squidDoubleMoves - 1)
 setSquidDoubleMoves(nextDoubleMoves)
@@ -4625,6 +4623,30 @@ filter: reverseWinCondition && displayPiece.name === 'タイタニック'
       </button>
     )}
   </div>
+)}
+
+{selectedPiece?.name === '嘘喰い' &&
+  !selectedPiece.fromHand &&
+  !reverseWinCondition && (
+  <button
+    onClick={() => {
+      setReverseWinCondition(true)
+      setSelectedPiece(null)
+    }}
+    style={{
+      padding: '14px 28px',
+      fontSize: '20px',
+      fontWeight: 'bold',
+      color: '#e7b5ff',
+      background: 'linear-gradient(145deg, #321044, #08000d)',
+      border: '3px solid #b45be8',
+      borderRadius: '8px',
+      boxShadow: '0 4px 0 #64218a, 0 5px 10px #000',
+      cursor: 'pointer',
+    }}
+  >
+    あちらべこちらべ
+  </button>
 )}
 
 
