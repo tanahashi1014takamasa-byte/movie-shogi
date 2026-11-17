@@ -4325,6 +4325,12 @@ if (
   selectedPiece.name === 'タイタニック' &&
   capturedPieces.length > 0
 ) {
+  nextPieces.splice(
+    nextPieces.findIndex(
+      (p) => p === selectedPiece
+    ),
+    1
+  )
   setResult('勝利')
 }
   
