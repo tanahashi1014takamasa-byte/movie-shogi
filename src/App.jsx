@@ -4319,6 +4319,14 @@ if (nextFunnyGameNextTarget !== funnyGameNextTarget) {
 if (capturedPieces.some((captured) => captured.name === 'タイタニック')) {
   setResult(reverseWinCondition ? '敗北' : '勝利')
 }
+
+if (
+  reverseWinCondition &&
+  selectedPiece.name === 'タイタニック' &&
+  capturedPieces.length > 0
+) {
+  setResult('勝利')
+}
   
 let nextPlayerHand = playerHand
 
@@ -4374,6 +4382,14 @@ const nextPieces = pieces
   )
 
 setPieces(nextPieces)
+
+if (
+  reverseWinCondition &&
+  trapCubeCaptured &&
+  selectedPiece.name === 'タイタニック'
+) {
+  setResult('勝利')
+}
 
 const nextDoubleMoves = Math.max(0, squidDoubleMoves - 1)
 setSquidDoubleMoves(nextDoubleMoves)
