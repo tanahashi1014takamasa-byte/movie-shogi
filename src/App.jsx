@@ -4364,6 +4364,12 @@ const nextPieces = pieces
     (p) =>
       !capturedPieces.includes(p) &&
       p !== trapCubeCaptured &&
+            !(
+        reverseWinCondition &&
+        selectedPiece.name === 'タイタニック' &&
+        capturedPieces.length > 0 &&
+        p === selectedPiece
+      ) &&
       !(trapCubeCaptured && p === selectedPiece)
   )
   .map((p) =>
