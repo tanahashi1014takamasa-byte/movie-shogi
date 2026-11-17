@@ -4316,8 +4316,23 @@ if (nextFunnyGameNextTarget !== funnyGameNextTarget) {
   setFunnyGameNextTarget(nextFunnyGameNextTarget)
 }
 
-if (capturedPieces.some((captured) => captured.name === 'タイタニック')) {
-  setResult(reverseWinCondition ? '敗北' : '勝利')
+if (
+  capturedPieces.some((captured) => captured.name === 'タイタニック') ||
+  (
+    reverseWinCondition &&
+    selectedPiece.name === 'タイタニック' &&
+    capturedPieces.length > 0
+  )
+) {
+  setResult('勝利')
+}
+
+if (
+  reverseWinCondition &&
+  selectedPiece.name === 'タイタニック' &&
+  capturedPieces.length > 0
+) {
+  setResult('勝利')
 }
 
 
