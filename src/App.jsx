@@ -34,6 +34,7 @@ import whiteWhaleVHS from './assets/白鯨_VHS.png'
 import midsummerVHS from './assets/ミッドサマー_VHS.png'
 import funnygameVHS from './assets/ファニーゲーム.png'
 import squidGameVhs from './assets/イカゲーム_VHS.png'
+import usoguiVHS from './assets/嘘喰い_VHS.png'
 import dNote from './assets/D_note.png'
 import character from './assets/chracter.gif'
 
@@ -57,6 +58,7 @@ import funnyGame from './assets/ファニーゲーム_2.png'
 import deathNotePiece from './assets/デスノート.png'
 import midsummerPiece from './assets/ミッドサマー.png'
 import squidGamePiece from './assets/イカゲーム.png'
+import usoguiPiece from './assets/嘘喰い.png'
 
 import squidDarumaVideo from './assets/だるまさんがころんだ.mp4'
 
@@ -523,8 +525,8 @@ const timer = setTimeout(() => {
   capturedPiece?.name === 'CUBE' &&
   capturedPiece.col === trapCube
 
-  if (capturedPiece?.name === 'タイタニック') {
-  setResult('敗北')
+ if (capturedPiece?.name === 'タイタニック') {
+  setResult(reverseWinCondition ? '勝利' : '敗北')
 }
 
 if (
@@ -640,6 +642,7 @@ previousTurnRef.current = gameState.turn
         setFunnyGameNextTarget(gameState.funnyGameNextTarget ?? 'own')
         setSquidDoubleMoves(gameState.squidDoubleMoves ?? 0)
         setSquidGlassBridge(gameState.squidGlassBridge ?? null)
+        setReverseWinCondition(gameState.reverseWinCondition ?? false)
        if (
   gameState.squidDarumaSignal !== undefined &&
   gameState.squidDarumaSignal !== squidDarumaSignalRef.current &&
@@ -684,6 +687,7 @@ previousTurnRef.current = gameState.turn
   const [showSquidDarumaVideo, setShowSquidDarumaVideo] = useState(false)
   const squidDarumaVideoRef = useRef(null)
   const [squidDarumaSignal, setSquidDarumaSignal] = useState(0)
+  const [reverseWinCondition, setReverseWinCondition] = useState(false)
   const squidDarumaSignalRef = useRef(0)
   const [squidGlassBridge, setSquidGlassBridge] = useState(null)
   const syogiAudio = useRef(new Audio(syogiSound))
@@ -1706,6 +1710,7 @@ const [showWhiteWhale, setShowWhiteWhale] = useState(false)
 const [showMidsummer, setShowMidsummer] = useState(false)
 const [showSquidGame, setShowSquidGame] = useState(false)
 const [showFunnyGame, setShowFunnyGame] = useState(false)
+const [showUsogui, setShowUsogui] = useState(false)
 const [showDNote, setShowDNote] = useState(false)
 const [showDeathNoteBoard, setShowDeathNoteBoard] = useState(false)
 const [deathNoteLetters, setDeathNoteLetters] = useState([])
@@ -2010,6 +2015,7 @@ funnyGameNextTarget: nextFunnyGameNextTarget,
 squidDoubleMoves,
 squidDarumaSignal: nextSquidDarumaSignal,
 squidGlassBridge: nextSquidGlassBridge,
+reverseWinCondition,
 mistMoveCount: nextMistMoveCount,
         trapCube: currentState.trapCube,
         opponentTrapCube: currentState.opponentTrapCube,
@@ -2585,6 +2591,10 @@ if (x >= 680 && x <= 750 && y >= 140 && y <= 200) {
 
 if (x >= 296 && x <= 328 && y >= 200 && y <= 200) {
   setShowDNote(true)
+}
+
+if (x >= 1096 && x <= 1128 && y >= 200 && y <= 200) {
+  setShowUsogui(true)
 }
 
 }}
@@ -3412,6 +3422,137 @@ alignSelf: 'center',
   </div>
 )}
 
+
+
+{showUsogui && (
+  <div
+    style={{
+      position: 'absolute',
+      inset: '10%',
+      zIndex: 20,
+      background: 'black',
+      color: 'white',
+      border: '2px solid white',
+      borderRadius: '8px',
+      padding: '16px',
+      display: 'flex',
+      flexDirection: 'column',
+      boxSizing: 'border-box',
+    }}
+  >
+    <h2
+      style={{
+        textAlign: 'center',
+        fontFamily: '"Yu Mincho", "Hiragino Mincho ProN", serif',
+        color: 'white',
+        fontSize: '30px',
+        fontWeight: 'bold',
+        letterSpacing: '8px',
+        margin: '0 0 16px',
+        paddingBottom: '10px',
+        borderBottom: '1px solid #555',
+      }}
+    >
+      嘘喰い
+    </h2>
+
+    <div
+      style={{
+        textAlign: 'center',
+        color: 'white',
+        fontSize: '20px',
+        fontWeight: 'bold',
+        marginTop: '20px',
+        marginBottom: '20px',
+        width: '100%',
+        alignSelf: 'center',
+      }}
+    >
+      能力：あちらべこちらべ
+    </div>
+
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '24px',
+        flex: 1,
+        minHeight: 0,
+      }}
+    >
+      <img
+        src={usoguiVHS}
+        alt="嘘喰い VHS"
+        style={{
+          width: '110px',
+          maxHeight: '180px',
+          objectFit: 'contain',
+          flexShrink: 0,
+        }}
+      />
+
+      <div
+        style={{
+          flex: 1,
+          minWidth: 0,
+          textAlign: 'left',
+          overflowY: 'auto',
+        }}
+      >
+        <p>
+          発動すると勝利条件が逆転し、両陣営のタイタニックに消失能力が付与される
+        </p>
+      </div>
+    </div>
+
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '16px',
+        paddingTop: '12px',
+      }}
+    >
+      <button
+        onClick={() => {
+          new Audio(rentalSound).play()
+          setRentalCart(prev =>
+            prev.includes('嘘喰い') ? prev : [...prev, '嘘喰い']
+          )
+          setShowUsogui(false)
+        }}
+        style={{
+          padding: '10px 24px',
+          background: '#173d24',
+          color: 'white',
+          border: '1px solid #7cff9b',
+          fontSize: '15px',
+          cursor: 'pointer',
+        }}
+      >
+        レンタルする
+      </button>
+
+      <button
+        onClick={() => {
+          setShowUsogui(false)
+        }}
+        style={{
+          padding: '10px 24px',
+          background: '#222',
+          color: 'white',
+          border: '1px solid #aaa',
+          fontSize: '15px',
+          cursor: 'pointer',
+        }}
+      >
+        レンタルしない
+      </button>
+    </div>
+  </div>
+)}
+
+
 {showDNote && (
   <div
     style={{
@@ -3604,6 +3745,9 @@ setPlayerHand([
     ...(rentedMovies.includes('デスノート')
     ? [{ name: 'デスノート', image: deathNotePiece }]
     : []),
+    ...(rentedMovies.includes('嘘喰い')
+  ? [{ name: '嘘喰い', image: usoguiPiece }]
+  : []),
   ...(rentedMovies.includes('イカゲーム')
     ? [{ name: 'イカゲーム', image: squidGamePiece }]
     : [])
@@ -3636,6 +3780,9 @@ setPlayerHand([
   ...(rentedMovies.includes('デスノート')
     ? [{ name: 'デスノート', image: deathNotePiece }]
     : []),
+    ...(rentedMovies.includes('嘘喰い')
+  ? [{ name: '嘘喰い', image: usoguiPiece }]
+  : []),
     ...(rentedMovies.includes('イカゲーム')
     ? [{ name: 'イカゲーム', image: squidGamePiece }]
     : [])
@@ -4001,6 +4148,10 @@ const nextPlayerHand = playerHand.filter(
 setPieces(nextPieces)
 setPlayerHand(nextPlayerHand)
 
+if (selectedPiece?.name === '嘘喰い') {
+  setReverseWinCondition(true)
+}
+
 const nextDoubleMoves = Math.max(0, squidDoubleMoves - 1)
 setSquidDoubleMoves(nextDoubleMoves)
 
@@ -4069,11 +4220,11 @@ const capturedTitanic = pieces.some(
 )
 
 if (fallenTitanic) {
-  setResult('敗北')
+  setResult(reverseWinCondition ? '勝利' : '敗北')
 }
 
 if (capturedTitanic) {
-  setResult('勝利')
+  setResult(reverseWinCondition ? '敗北' : '勝利')
 }
 
   const nextBridge = {
@@ -4168,7 +4319,7 @@ if (nextFunnyGameNextTarget !== funnyGameNextTarget) {
 }
 
 if (capturedPieces.some((captured) => captured.name === 'タイタニック')) {
-  setResult('勝利')
+  setResult(reverseWinCondition ? '敗北' : '勝利')
 }
   
 let nextPlayerHand = playerHand
@@ -4311,6 +4462,9 @@ height: isStacked ? '70%' : undefined,
   position: isStacked ? 'absolute' : undefined,
 left: isStacked ? (index === 0 ? '0%' : '30%') : undefined,
 top: isStacked ? '15%' : undefined,
+filter: reverseWinCondition && displayPiece.name === 'タイタニック'
+  ? 'drop-shadow(0 0 8px #c000ff) drop-shadow(0 0 14px #c000ff)'
+  : undefined,
 }}
         src={
           isUnderlay
