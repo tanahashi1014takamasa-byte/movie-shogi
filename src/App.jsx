@@ -2470,8 +2470,8 @@ return () => clearTimeout(timer)
 ) : (
   rentalCompleted
     ? 'あざまる～っ！'
-    : (
-  <span key={clerkLineIndex}>
+ : (
+  <span key={`clerk-${clerkLineIndex}`}>
     {[
       'シャイ！シャイ！シャイ！シャイ！シャイ！いらっしゃい！！！',
       '新作入荷しましたー！！',
