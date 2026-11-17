@@ -1781,10 +1781,21 @@ const [rentalCart, setRentalCart] = useState([])
 const [rentedMovies, setRentedMovies] = useState([])
 const [showRentalConfirm, setShowRentalConfirm] = useState(false)
 const [rentalCompleted, setRentalCompleted] = useState(false)
+const [clerkLineIndex, setClerkLineIndex] = useState(0)
 const [showBestMovies, setShowBestMovies] = useState(false)
 const [bestMovieDetails, setBestMovieDetails] = useState([])
 const [whaleHidden, setWhaleHidden] = useState(false)
 const [whaleSurfaced, setWhaleSurfaced] = useState(false)
+
+useEffect(() => {
+  if (showRentalConfirm || rentalCompleted) return
+
+  const timer = setInterval(() => {
+    setClerkLineIndex((prev) => (prev + 1) % 5)
+  }, 5000)
+
+  return () => clearInterval(timer)
+}, [showRentalConfirm, rentalCompleted])
 
 useEffect(() => {
   if (!showBestMovies || bestMovieDetails.length > 0) return
@@ -2459,7 +2470,13 @@ return () => clearTimeout(timer)
 ) : (
   rentalCompleted
     ? 'あざまる～っ！'
-    : 'シャイ！シャイ！シャイ！シャイ！シャイ！いらっしゃい！！！'
+    : [
+    'シャイ！シャイ！シャイ！シャイ！シャイ！いらっしゃい！！！',
+    '新作入荷しましたー！！',
+    '掘り出し物ありますよー！！',
+    'ごゆっくりどうぞー！！',
+    '今日は何をお探しですかー！！'
+  ][clerkLineIndex]
 )}
       </div>
 
