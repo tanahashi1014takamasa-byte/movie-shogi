@@ -1791,7 +1791,7 @@ useEffect(() => {
   if (showRentalConfirm || rentalCompleted) return
 
   const timer = setInterval(() => {
-    setClerkLineIndex((prev) => (prev + 1) % 5)
+    setClerkLineIndex((prev) => (prev + 1) % 7)
   }, 5000)
 
   return () => clearInterval(timer)
@@ -2477,7 +2477,9 @@ return () => clearTimeout(timer)
       'ゲット・アウト！！',
       '決してひとりでは見ないでください。',
       '「もう”明日”なの？」「昨日から見ればね」',
-      '勝つための唯一の方法は、プレイしないことだ'
+      '勝つための唯一の方法は、プレイしないことだ',
+      'エイドリアーン！！！！',
+      '「ただいま」「おかえり」「ただいま」「おかえりなさいませ」「ただいま」「おかえんなさい」「ただいま」「おかえり」',
     ][clerkLineIndex]}
   </span>
 )
