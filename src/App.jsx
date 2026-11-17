@@ -4660,9 +4660,10 @@ filter: reverseWinCondition && displayPiece.name === 'タイタニック'
   !reverseWinCondition && (
   <button
     onClick={() => {
-      setReverseWinCondition(true)
-      setSelectedPiece(null)
-    }}
+  setReverseWinCondition(true)
+  setSelectedPiece(null)
+  setTurn('opponent')
+}}
     style={{
       padding: '14px 28px',
       fontSize: '20px',
