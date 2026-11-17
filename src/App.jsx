@@ -4320,20 +4320,7 @@ if (capturedPieces.some((captured) => captured.name === 'タイタニック')) {
   setResult(reverseWinCondition ? '敗北' : '勝利')
 }
 
-if (
-  reverseWinCondition &&
-  selectedPiece.name === 'タイタニック' &&
-  capturedPieces.length > 0
-) {
-  nextPieces.splice(
-    nextPieces.findIndex(
-      (p) => p === selectedPiece
-    ),
-    1
-  )
-  setResult('勝利')
-}
-  
+
 let nextPlayerHand = playerHand
 
 if (selectedPiece?.name === 'ゾディアック') {
