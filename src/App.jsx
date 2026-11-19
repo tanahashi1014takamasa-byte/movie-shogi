@@ -644,14 +644,16 @@ previousTurnRef.current = gameState.turn
         setSquidGlassBridge(gameState.squidGlassBridge ?? null)
         setSquidDarumaPending(gameState.squidDarumaPending ?? false)
         setReverseWinCondition(gameState.reverseWinCondition ?? false)
-       if (
+ if (
   gameState.squidDarumaSignal !== undefined &&
-  gameState.squidDarumaSignal !== squidDarumaSignalRef.current &&
-  gameState.playerSide !== playerSide
+  gameState.squidDarumaSignal !== squidDarumaSignalRef.current
 ) {
   setSquidDarumaSignal(gameState.squidDarumaSignal)
   squidDarumaSignalRef.current = gameState.squidDarumaSignal
-  setShowSquidDarumaVideo(true)
+
+  if (gameState.playerSide !== playerSide) {
+    setShowSquidDarumaVideo(true)
+  }
 }
         
         if (playerSide === 'player') {
@@ -4436,15 +4438,17 @@ if (
 const nextDoubleMoves = Math.max(0, squidDoubleMoves - 1)
 setSquidDoubleMoves(nextDoubleMoves)
 
-const nextTurn = nextDoubleMoves > 0
-  ? turn
-  : roomId && nextPieces.some(
-  (p) =>
-    p.name === 'ファニーゲーム' &&
-    (p.side ?? 'player') === playerSide
-)
-    ? 'funnyGame'
-    : turn === 'player' ? 'opponent' : 'player'
+const nextTurn = squidDarumaPending
+  ? (turn === 'player' ? 'opponent' : 'player')
+  : nextDoubleMoves > 0
+    ? turn
+    : roomId && nextPieces.some(
+        (p) =>
+          p.name === 'ファニーゲーム' &&
+          (p.side ?? 'player') === playerSide
+      )
+      ? 'funnyGame'
+      : turn === 'player' ? 'opponent' : 'player'
 
 updateGameState(
   nextPieces,
