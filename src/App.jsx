@@ -4477,9 +4477,11 @@ updateGameState(
       selectedPiece?.name === 'ミスト' ? 1 : 0
     ),
   },
-  capturedPieces.some((captured) => captured.name === 'タイタニック'),
-  capturedPieces.some((captured) => captured.name === 'タイタニック')
-    ? playerSide
+  capturedPieces.some((captured) => captured.name === 'タイタニック') || darumaTitanicFell,
+capturedPieces.some((captured) => captured.name === 'タイタニック')
+  ? playerSide
+  : darumaTitanicFell
+    ? (playerSide === 'player' ? 'opponent' : 'player')
     : null,
     nextFunnyGameNextTarget,
   squidDarumaSignal,
