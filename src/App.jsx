@@ -2196,8 +2196,12 @@ updateGameState(
   playerSide === 'player' ? 'opponent' : 'player',
   nextPlayerHand,
   mistMoveCount,
-  capturedPiece?.name === 'タイタニック',
-  capturedPiece?.name === 'タイタニック' ? playerSide : null,
+  capturedPiece?.name === 'タイタニック' || darumaTitanicFell,
+capturedPiece?.name === 'タイタニック'
+  ? playerSide
+  : darumaTitanicFell
+    ? (playerSide === 'player' ? 'opponent' : 'player')
+    : null,
   nextFunnyGameNextTarget
 )
 
@@ -4428,7 +4432,17 @@ p !== trapCubeCaptured &&
       : p
   )
 
+  const darumaTitanicFell =
+  roomId &&
+  squidDarumaPending &&
+  turn === playerSide &&
+  selectedPiece.name === 'タイタニック'
+
 setPieces(nextPieces)
+
+if (darumaTitanicFell) {
+  setResult('敗北')
+}
 
 if (
   reverseWinCondition &&
