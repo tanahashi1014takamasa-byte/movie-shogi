@@ -642,6 +642,7 @@ previousTurnRef.current = gameState.turn
         setFunnyGameNextTarget(gameState.funnyGameNextTarget ?? 'own')
         setSquidDoubleMoves(gameState.squidDoubleMoves ?? 0)
         setSquidGlassBridge(gameState.squidGlassBridge ?? null)
+        setSquidDarumaPending(gameState.squidDarumaPending ?? false)
         setReverseWinCondition(gameState.reverseWinCondition ?? false)
        if (
   gameState.squidDarumaSignal !== undefined &&
@@ -687,6 +688,7 @@ previousTurnRef.current = gameState.turn
   const [showSquidDarumaVideo, setShowSquidDarumaVideo] = useState(false)
   const squidDarumaVideoRef = useRef(null)
   const [squidDarumaSignal, setSquidDarumaSignal] = useState(0)
+  const [squidDarumaPending, setSquidDarumaPending] = useState(false)
   const [reverseWinCondition, setReverseWinCondition] = useState(false)
   const squidDarumaSignalRef = useRef(0)
   const [squidGlassBridge, setSquidGlassBridge] = useState(null)
@@ -1998,7 +2000,8 @@ const updateGameState = async (
   winnerSide = null,
   nextFunnyGameNextTarget = funnyGameNextTarget,
 nextSquidDarumaSignal = squidDarumaSignal,
-nextSquidGlassBridge = squidGlassBridge
+nextSquidGlassBridge = squidGlassBridge,
+nextSquidDarumaPending = squidDarumaPending
 ) => {
   if (!roomId) return
 
@@ -2026,6 +2029,7 @@ funnyGameNextTarget: nextFunnyGameNextTarget,
 squidDoubleMoves,
 squidDarumaSignal: nextSquidDarumaSignal,
 squidGlassBridge: nextSquidGlassBridge,
+squidDarumaPending: nextSquidDarumaPending,
 reverseWinCondition,
 mistMoveCount: nextMistMoveCount,
         trapCube: currentState.trapCube,
@@ -4388,7 +4392,8 @@ const nextPieces = pieces
   .filter(
     (p) =>
       !capturedPieces.includes(p) &&
-      p !== trapCubeCaptured &&
+!(roomId && squidDarumaPending && turn === playerSide && p === selectedPiece) &&
+p !== trapCubeCaptured &&
             !(
   reverseWinCondition &&
   selectedPiece.name === 'タイタニック' &&
@@ -4455,7 +4460,10 @@ updateGameState(
   capturedPieces.some((captured) => captured.name === 'タイタニック')
     ? playerSide
     : null,
-  nextFunnyGameNextTarget
+    nextFunnyGameNextTarget,
+  squidDarumaSignal,
+  squidGlassBridge,
+  false
 )
 
 if (selectedPiece?.name === 'デスノート') {
@@ -4730,24 +4738,28 @@ onClick={() => {
   setSquidTugSelectMode(false)
   setSquidBridgeSelectMode(false)
 
-  if (index === 0) {
+if (index === 0) {
   setShowSquidDarumaVideo(true)
   setSquidDarumaUsed(true)
   setSquidDarumaSignal((prev) => prev + 1)
   setSelectedPiece(null)
 
   if (roomId) {
-  updateGameState(
-    pieces,
-    turn,
-    playerHand,
-    mistMoveCount,
-    false,
-    null,
-    funnyGameNextTarget,
-    squidDarumaSignal + 1
-  )
-}
+    setSquidDarumaPending(true)
+
+    updateGameState(
+            pieces,
+      turn === 'player' ? 'opponent' : 'player',
+      playerHand,
+      mistMoveCount,
+      false,
+      null,
+      funnyGameNextTarget,
+      squidDarumaSignal + 1,
+      squidGlassBridge,
+      true
+    )
+  }
 }
 
   if (index === 1) {
