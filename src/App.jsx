@@ -710,6 +710,7 @@ const squidDarumaAudioRef = useRef(new Audio(squidDarumaVideo))
 
   const getLegalMoves = (piece, pieces) => {
   if (!piece) return []
+    if (piece.name === '関心領域') return []
 if (piece.name === 'ミッドサマー') {
   if (!piece.inheritedMoves) return []
 
@@ -3914,6 +3915,9 @@ setPlayerHand([
   : []),
   ...(rentedMovies.includes('イカゲーム')
     ? [{ name: 'イカゲーム', image: squidGamePiece }]
+    : []),
+  ...(rentedMovies.includes('関心領域')
+    ? [{ name: '関心領域', image: interestArea }]
     : [])
 ])
 
@@ -3949,6 +3953,9 @@ setPlayerHand([
   : []),
     ...(rentedMovies.includes('イカゲーム')
     ? [{ name: 'イカゲーム', image: squidGamePiece }]
+    : []),
+      ...(rentedMovies.includes('関心領域')
+    ? [{ name: '関心領域', image: interestArea }]
     : [])
 ])
 setOpponentHand([])
@@ -4121,7 +4128,17 @@ const isBrokenGlass = isGlassBridge &&
       ? '2px solid #111'
       : '2px solid rgba(190,245,255,0.9)'
     : undefined,
-  boxShadow: isGlassBridge && !isBrokenGlass
+  boxShadow: pieces.some((area) =>
+  area.name === '関心領域' &&
+  (
+    (row === area.row - 1 && col === area.col) ||
+    (row === area.row + 1 && col === area.col) ||
+    (row === area.row && col === area.col - 1) ||
+    (row === area.row && col === area.col + 1)
+  )
+)
+  ? 'inset 0 0 12px rgba(255,255,255,0.9), 0 0 12px rgba(255,255,255,0.8)'
+  : isGlassBridge && !isBrokenGlass
     ? 'inset 0 0 8px rgba(255,255,255,0.9), 0 0 8px rgba(100,220,255,0.6)'
     : undefined,
 }}
@@ -4470,7 +4487,16 @@ const trapCubeCaptured =
       )
     : (p.side ?? 'player') !== (selectedPiece.side ?? 'player')
 ) &&
-p.name !== 'ファニーゲーム'
+p.name !== 'ファニーゲーム' &&
+!pieces.some((area) =>
+  area.name === '関心領域' &&
+  (
+    (p.row === area.row - 1 && p.col === area.col) ||
+    (p.row === area.row + 1 && p.col === area.col) ||
+    (p.row === area.row && p.col === area.col - 1) ||
+    (p.row === area.row && p.col === area.col + 1)
+  )
+)
   )
 })
 
