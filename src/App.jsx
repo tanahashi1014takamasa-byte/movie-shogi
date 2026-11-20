@@ -4403,7 +4403,21 @@ if (!roomId) {
 return
   }
 
- 
+ if (
+  selectedPiece &&
+  piece &&
+  piece !== selectedPiece &&
+  pieces.some((area) =>
+    area.name === '関心領域' &&
+    (
+      (piece.row === area.row && piece.col === area.col) ||
+      (piece.row === area.row - 1 && piece.col === area.col) ||
+      (piece.row === area.row + 1 && piece.col === area.col) ||
+      (piece.row === area.row && piece.col === area.col - 1) ||
+      (piece.row === area.row && piece.col === area.col + 1)
+    )
+  )
+) return
 
   if (
   legalMoves.some((move) => move.row === row && move.col === col)
