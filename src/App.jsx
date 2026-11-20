@@ -519,7 +519,17 @@ const timer = setTimeout(() => {
         ? (piece.side ?? 'player') === (cpuMove.piece.side ?? 'player')
         : (piece.side ?? 'player') !== (cpuMove.piece.side ?? 'player')
     )
-  : (piece.side ?? 'player') !== (cpuMove.piece.side ?? 'player')
+   : (piece.side ?? 'player') !== (cpuMove.piece.side ?? 'player')
+    ) &&
+    !currentPieces.some((area) =>
+      area.name === '関心領域' &&
+      (
+        (piece.row === area.row && piece.col === area.col) ||
+        (piece.row === area.row - 1 && piece.col === area.col) ||
+        (piece.row === area.row + 1 && piece.col === area.col) ||
+        (piece.row === area.row && piece.col === area.col - 1) ||
+        (piece.row === area.row && piece.col === area.col + 1)
+      )
     )
 )
 
@@ -4314,9 +4324,34 @@ playerHand,
     playSyogiSound()
 
     const nextPieces = [
-  ...pieces,
+  ...pieces.map((piece) =>
+  selectedPiece.name === '関心領域' &&
+  (
+    (piece.row === row && piece.col === col) ||
+    (piece.row === row - 1 && piece.col === col) ||
+    (piece.row === row + 1 && piece.col === col) ||
+    (piece.row === row && piece.col === col - 1) ||
+    (piece.row === row && piece.col === col + 1)
+  )
+    ? { ...piece, interestAreaInitial: true }
+    : piece
+),
   {
     ...selectedPiece,
+
+interestAreaInitial: selectedPiece.name === '関心領域'
+  ? false
+  : pieces.some((area) =>
+      area.name === '関心領域' &&
+      (
+        (row === area.row && col === area.col) ||
+        (row === area.row - 1 && col === area.col) ||
+        (row === area.row + 1 && col === area.col) ||
+        (row === area.row && col === area.col - 1) ||
+        (row === area.row && col === area.col + 1)
+      )
+    ),
+
     row,
     col,
     side: playerSide,
@@ -4472,6 +4507,25 @@ const trapCubeCaptured =
       (p.side ?? 'player') !== (selectedPiece?.side ?? 'player')
   )
 
+  const isInsideInterestArea = (r, c) =>
+  pieces.some((area) =>
+    area.name === '関心領域' &&
+    (
+      (r === area.row && c === area.col) ||
+      (r === area.row - 1 && c === area.col) ||
+      (r === area.row + 1 && c === area.col) ||
+      (r === area.row && c === area.col - 1) ||
+      (r === area.row && c === area.col + 1)
+    )
+  )
+
+if (
+  selectedPiece.interestAreaEntered &&
+  !selectedPiece.interestAreaInitial &&
+  !isInsideInterestArea(selectedPiece.row, selectedPiece.col) &&
+  isInsideInterestArea(row, col)
+) return
+
   const capturedPieces = pieces.filter((p) => {
   return (
     p.row === row &&
@@ -4491,10 +4545,11 @@ p.name !== 'ファニーゲーム' &&
 !pieces.some((area) =>
   area.name === '関心領域' &&
   (
-    (p.row === area.row - 1 && p.col === area.col) ||
-    (p.row === area.row + 1 && p.col === area.col) ||
-    (p.row === area.row && p.col === area.col - 1) ||
-    (p.row === area.row && p.col === area.col + 1)
+(p.row === area.row && p.col === area.col) ||
+(p.row === area.row - 1 && p.col === area.col) ||
+(p.row === area.row + 1 && p.col === area.col) ||
+(p.row === area.row && p.col === area.col - 1) ||
+(p.row === area.row && p.col === area.col + 1)
   )
 )
   )
@@ -4574,6 +4629,23 @@ p !== trapCubeCaptured &&
           ...p,
           row,
           col,
+                    interestAreaEntered:
+            p.interestAreaEntered ||
+            pieces.some((area) =>
+              area.name === '関心領域' &&
+              (
+                (p.row === area.row && p.col === area.col) ||
+                (p.row === area.row - 1 && p.col === area.col) ||
+                (p.row === area.row + 1 && p.col === area.col) ||
+                (p.row === area.row && p.col === area.col - 1) ||
+                (p.row === area.row && p.col === area.col + 1) ||
+                (row === area.row && col === area.col) ||
+                (row === area.row - 1 && col === area.col) ||
+                (row === area.row + 1 && col === area.col) ||
+                (row === area.row && col === area.col - 1) ||
+                (row === area.row && col === area.col + 1)
+              )
+            ),
           direction: selectedPiece.direction,
           absorbedMoves:
             p.name === '武器人間' && capturedPieces.length > 0
