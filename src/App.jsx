@@ -4363,13 +4363,17 @@ playerHand,
   if (selectedPiece?.fromHand) {
     if (turn !== playerSide) return
     if (piece) return
-    if (
+  if (
   selectedPiece.name === '関心領域' &&
-  pieces.some(
-    (p) =>
-      p.row === row &&
-      p.col === col &&
-      (p.side ?? 'player') !== playerSide
+  pieces.some((p) =>
+    (p.side ?? 'player') !== playerSide &&
+    (
+      (p.row === row && p.col === col) ||
+      (p.row === row - 1 && p.col === col) ||
+      (p.row === row + 1 && p.col === col) ||
+      (p.row === row && p.col === col - 1) ||
+      (p.row === row && p.col === col + 1)
+    )
   )
 ) return
 
