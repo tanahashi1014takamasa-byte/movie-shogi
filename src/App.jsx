@@ -4101,28 +4101,41 @@ const piece = squarePieces.find(
         )
     )
 : getLegalMoves(selectedPiece, pieces).filter((move) => {
-    const isInterestArea = pieces.some((area) =>
-      area.name === '関心領域' &&
-      (
-        (move.row === area.row - 1 && move.col === area.col) ||
-        (move.row === area.row + 1 && move.col === area.col) ||
-        (move.row === area.row && move.col === area.col - 1) ||
-        (move.row === area.row && move.col === area.col + 1)
-      )
+    const isInsideArea = (r, c, area) =>
+      (r === area.row - 1 && c === area.col) ||
+      (r === area.row + 1 && c === area.col) ||
+      (r === area.row && c === area.col - 1) ||
+      (r === area.row && c === area.col + 1)
+
+    const areas = pieces.filter(
+      (p) => p.name === '関心領域'
+    )
+
+    const destinationInside = areas.some((area) =>
+      isInsideArea(move.row, move.col, area)
+    )
+
+    const currentInside = areas.some((area) =>
+      isInsideArea(selectedPiece.row, selectedPiece.col, area)
     )
 
     if (
       selectedPiece.name === 'タイタニック' &&
-      isInterestArea
-    ) {
-      return false
-    }
+      destinationInside
+    ) return false
 
-    if ((selectedPiece.side ?? 'player') !== 'opponent') {
-      return true
-    }
+    if (
+      (selectedPiece.side ?? 'player') === 'opponent' &&
+      destinationInside
+    ) return false
 
-    return !isInterestArea
+    if (
+      selectedPiece.interestAreaEntered &&
+      !currentInside &&
+      destinationInside
+    ) return false
+
+    return true
   })
 
 const bridge = squidGlassBridge
@@ -4366,7 +4379,7 @@ playerHand,
     (piece.row === row && piece.col === col - 1) ||
     (piece.row === row && piece.col === col + 1)
   )
-    ? { ...piece, interestAreaInitial: true }
+    ? { ...piece, interestAreaInitial: true, interestAreaEntered: true }
     : piece
 ),
   {
