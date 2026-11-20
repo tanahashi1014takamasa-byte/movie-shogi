@@ -4101,11 +4101,7 @@ const piece = squarePieces.find(
         )
     )
 : getLegalMoves(selectedPiece, pieces).filter((move) => {
-    if ((selectedPiece.side ?? 'player') !== 'opponent') {
-      return true
-    }
-
-    return !pieces.some((area) =>
+    const isInterestArea = pieces.some((area) =>
       area.name === '関心領域' &&
       (
         (move.row === area.row - 1 && move.col === area.col) ||
@@ -4114,6 +4110,19 @@ const piece = squarePieces.find(
         (move.row === area.row && move.col === area.col + 1)
       )
     )
+
+    if (
+      selectedPiece.name === 'タイタニック' &&
+      isInterestArea
+    ) {
+      return false
+    }
+
+    if ((selectedPiece.side ?? 'player') !== 'opponent') {
+      return true
+    }
+
+    return !isInterestArea
   })
 
 const bridge = squidGlassBridge
