@@ -35,6 +35,7 @@ import midsummerVHS from './assets/ミッドサマー_VHS.png'
 import funnygameVHS from './assets/ファニーゲーム.png'
 import squidGameVhs from './assets/イカゲーム_VHS.png'
 import usoguiVHS from './assets/嘘喰い_VHS.png'
+import interestAreaVHS from './assets/関心領域_VHS.png'
 import dNote from './assets/D_note.png'
 import character from './assets/chracter.gif'
 
@@ -59,6 +60,7 @@ import deathNotePiece from './assets/デスノート.png'
 import midsummerPiece from './assets/ミッドサマー.png'
 import squidGamePiece from './assets/イカゲーム.png'
 import usoguiPiece from './assets/嘘喰い.png'
+import interestArea from './assets/関心領域.png'
 
 import squidDarumaVideo from './assets/だるまさんがころんだ.mp4'
 
@@ -1722,6 +1724,7 @@ const [usedDeathNoteLetters, setUsedDeathNoteLetters] = useState([])
 const [deathNoteSelected, setDeathNoteSelected] = useState([])
 const [deathNoteTime, setDeathNoteTime] = useState(10)
 const [deathNoteLocked, setDeathNoteLocked] = useState(false)
+const [showInterestArea, setShowInterestArea] = useState(false)
 const createDeathNoteLetters = () => {
   const getDeathNoteName = (name) =>
   name === 'CUBE' ? 'キューブ' : name
@@ -2630,6 +2633,10 @@ if (x >= 1096 && x <= 1128 && y >= 200 && y <= 200) {
   setShowUsogui(true)
 }
 
+if (x >= 104 && x <= 392 && y === 744) {
+  setShowInterestArea(true)
+}
+
 }}
 >
   A
@@ -3455,7 +3462,131 @@ alignSelf: 'center',
   </div>
 )}
 
+{showInterestArea && (
+  <div
+    style={{
+      position: 'absolute',
+      inset: '10%',
+      zIndex: 20,
+      background: 'black',
+      color: 'white',
+      border: '2px solid white',
+      borderRadius: '8px',
+      padding: '16px',
+      display: 'flex',
+      flexDirection: 'column',
+      boxSizing: 'border-box',
+    }}
+  >
+    <h2
+      style={{
+        textAlign: 'center',
+        fontFamily: '"Yu Mincho", "Hiragino Mincho ProN", serif',
+        color: 'white',
+        fontSize: '30px',
+        fontWeight: 'bold',
+        letterSpacing: '8px',
+        margin: '0 0 16px',
+        paddingBottom: '10px',
+        borderBottom: '1px solid #555',
+      }}
+    >
+      関心領域
+    </h2>
 
+    <div
+      style={{
+        textAlign: 'center',
+        color: 'white',
+        fontSize: '20px',
+        fontWeight: 'bold',
+        marginTop: '20px',
+        marginBottom: '20px',
+      }}
+    >
+      能力：関心領域
+    </div>
+
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '24px',
+        flex: 1,
+        minHeight: 0,
+      }}
+    >
+      <img
+        src={interestAreaVHS}
+        alt="関心領域 VHS"
+        style={{
+          width: '110px',
+          maxHeight: '180px',
+          objectFit: 'contain',
+          flexShrink: 0,
+        }}
+      />
+
+      <div
+        style={{
+          flex: 1,
+          minWidth: 0,
+          textAlign: 'left',
+          overflowY: 'auto',
+        }}
+      >
+        <p>
+          盤上に配置すると、その駒を中心に十字状の領域を展開する。
+          領域内にいる駒は敵味方を問わず、相手に捕獲されなくなる。
+          この駒自身は移動できない。
+        </p>
+      </div>
+    </div>
+
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '16px',
+        paddingTop: '12px',
+      }}
+    >
+      <button
+        onClick={() => {
+          new Audio(rentalSound).play()
+          setRentalCart(prev =>
+            prev.includes('関心領域') ? prev : [...prev, '関心領域']
+          )
+          setShowInterestArea(false)
+        }}
+        style={{
+          padding: '10px 24px',
+          background: '#173d24',
+          color: 'white',
+          border: '1px solid #7cff9b',
+          fontSize: '15px',
+          cursor: 'pointer',
+        }}
+      >
+        レンタルする
+      </button>
+
+      <button
+        onClick={() => setShowInterestArea(false)}
+        style={{
+          padding: '10px 24px',
+          background: '#222',
+          color: 'white',
+          border: '1px solid #aaa',
+          fontSize: '15px',
+          cursor: 'pointer',
+        }}
+      >
+        レンタルしない
+      </button>
+    </div>
+  </div>
+)}
 
 {showUsogui && (
   <div
