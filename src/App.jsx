@@ -360,10 +360,11 @@ const moves = cpuPieces.flatMap((piece) =>
   !pieces.some((area) =>
     area.name === '関心領域' &&
     (
-      (move.row === area.row - 1 && move.col === area.col) ||
-      (move.row === area.row + 1 && move.col === area.col) ||
-      (move.row === area.row && move.col === area.col - 1) ||
-      (move.row === area.row && move.col === area.col + 1)
+(move.row === area.row && move.col === area.col) ||
+(move.row === area.row - 1 && move.col === area.col) ||
+(move.row === area.row + 1 && move.col === area.col) ||
+(move.row === area.row && move.col === area.col - 1) ||
+(move.row === area.row && move.col === area.col + 1)
     )
   )
 )
@@ -4102,10 +4103,11 @@ const piece = squarePieces.find(
     )
 : getLegalMoves(selectedPiece, pieces).filter((move) => {
     const isInsideArea = (r, c, area) =>
-      (r === area.row - 1 && c === area.col) ||
-      (r === area.row + 1 && c === area.col) ||
-      (r === area.row && c === area.col - 1) ||
-      (r === area.row && c === area.col + 1)
+(r === area.row && c === area.col) ||
+(r === area.row - 1 && c === area.col) ||
+(r === area.row + 1 && c === area.col) ||
+(r === area.row && c === area.col - 1) ||
+(r === area.row && c === area.col + 1)
 
     const areas = pieces.filter(
       (p) => p.name === '関心領域'
@@ -4187,10 +4189,11 @@ const isBrokenGlass = isGlassBridge &&
   boxShadow: pieces.some((area) =>
   area.name === '関心領域' &&
   (
-    (row === area.row - 1 && col === area.col) ||
-    (row === area.row + 1 && col === area.col) ||
-    (row === area.row && col === area.col - 1) ||
-    (row === area.row && col === area.col + 1)
+(row === area.row && col === area.col) ||
+(row === area.row - 1 && col === area.col) ||
+(row === area.row + 1 && col === area.col) ||
+(row === area.row && col === area.col - 1) ||
+(row === area.row && col === area.col + 1)
   )
 )
   ? 'inset 0 0 12px rgba(255,255,255,0.9), 0 0 12px rgba(255,255,255,0.8)'
