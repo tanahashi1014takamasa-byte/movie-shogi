@@ -325,7 +325,7 @@ const [opponentTrapCube, setOpponentTrapCube] = useState(null)
 
   
   useEffect(() => {
-  if (screen !== 'game' || roomId) return
+  if (screen !== 'game' || roomId || result) return
   if (
   turn !== 'funnyGame' &&
   turn !== (playerSide === 'player' ? 'opponent' : 'player')
