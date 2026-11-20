@@ -346,7 +346,7 @@ if (turn === 'funnyGame' && funnyGameNextTarget === null) {
 )
 
 
- const moves = cpuPieces.flatMap((piece) =>
+const moves = cpuPieces.flatMap((piece) =>
   getLegalMoves(
     piece,
     pieces.filter(
@@ -356,6 +356,16 @@ if (turn === 'funnyGame' && funnyGameNextTarget === null) {
     piece,
     move,
   }))
+).filter(({ move }) =>
+  !pieces.some((area) =>
+    area.name === '関心領域' &&
+    (
+      (move.row === area.row - 1 && move.col === area.col) ||
+      (move.row === area.row + 1 && move.col === area.col) ||
+      (move.row === area.row && move.col === area.col - 1) ||
+      (move.row === area.row && move.col === area.col + 1)
+    )
+  )
 )
 
 const safeMoves = moves.filter(({ piece, move }) => {
