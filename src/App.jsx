@@ -4507,24 +4507,7 @@ const trapCubeCaptured =
       (p.side ?? 'player') !== (selectedPiece?.side ?? 'player')
   )
 
-  const isInsideInterestArea = (r, c) =>
-  pieces.some((area) =>
-    area.name === '関心領域' &&
-    (
-      (r === area.row && c === area.col) ||
-      (r === area.row - 1 && c === area.col) ||
-      (r === area.row + 1 && c === area.col) ||
-      (r === area.row && c === area.col - 1) ||
-      (r === area.row && c === area.col + 1)
-    )
-  )
 
-if (
-  selectedPiece.interestAreaEntered &&
-  !selectedPiece.interestAreaInitial &&
-  !isInsideInterestArea(selectedPiece.row, selectedPiece.col) &&
-  isInsideInterestArea(row, col)
-) return
 
   const capturedPieces = pieces.filter((p) => {
   return (
