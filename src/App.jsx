@@ -4090,37 +4090,21 @@ const piece = squarePieces.find(
           (p) => p.row === move.row && p.col === move.col
         )
     )
-    : getLegalMoves(selectedPiece, pieces).filter((move) => {
-      const target = pieces.find(
-        (p) =>
-          p.row === move.row &&
-          p.col === move.col &&
-          !(p.name === '白鯨' && p.whaleHidden)
-      )
-
-      if (!target) return true
-
-      const isProtected = pieces.some(
-        (area) =>
-          area.name === '関心領域' &&
-          (
-            (target.row === area.row && target.col === area.col) ||
-            (target.row === area.row - 1 && target.col === area.col) ||
-            (target.row === area.row + 1 && target.col === area.col) ||
-            (target.row === area.row && target.col === area.col - 1) ||
-            (target.row === area.row && target.col === area.col + 1)
-          )
-      )
-
-      if (
-        isProtected &&
-        (target.side ?? 'player') !== (selectedPiece.side ?? 'player')
-      ) {
-        return false
-      }
-
+: getLegalMoves(selectedPiece, pieces).filter((move) => {
+    if ((selectedPiece.side ?? 'player') !== 'opponent') {
       return true
-    })
+    }
+
+    return !pieces.some((area) =>
+      area.name === '関心領域' &&
+      (
+        (move.row === area.row - 1 && move.col === area.col) ||
+        (move.row === area.row + 1 && move.col === area.col) ||
+        (move.row === area.row && move.col === area.col - 1) ||
+        (move.row === area.row && move.col === area.col + 1)
+      )
+    )
+  })
 
 const bridge = squidGlassBridge
 const isGlassBridge = bridge !== null &&
