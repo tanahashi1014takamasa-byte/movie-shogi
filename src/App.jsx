@@ -1802,6 +1802,7 @@ const [showInterestArea, setShowInterestArea] = useState(false)
 const [showEsther, setShowEsther] = useState(false)
 const [showBugonia, setShowBugonia] = useState(false)
 const [showBackrooms, setShowBackrooms] = useState(false)
+const [showNpcDialogue, setShowNpcDialogue] = useState(false)
 const createDeathNoteLetters = () => {
   const getDeathNoteName = (name) =>
   name === 'CUBE' ? 'キューブ' : name
@@ -2489,6 +2490,29 @@ return () => clearTimeout(timer)
       />
     </div>
 
+    {showNpcDialogue && (
+  <div
+    style={{
+      position: 'absolute',
+      bottom: '140px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      zIndex: 10,
+      background: 'black',
+      color: 'white',
+      border: '3px solid white',
+      borderRadius: '8px',
+      padding: '20px 30px',
+      minWidth: '300px',
+      textAlign: 'center',
+      fontSize: '24px',
+      fontWeight: 'bold',
+    }}
+  >
+    ↑↓BBB
+  </div>
+)}
+
     </div>
 
     <div
@@ -2677,6 +2701,17 @@ return () => clearTimeout(timer)
   const x = playerPosition.x
   const y = playerPosition.y
 
+  if (showNpcDialogue) {
+  setShowNpcDialogue(false)
+  return
+}
+
+if (x >= 360 && x <= 392 && y === 200) {
+  setShowNpcDialogue(true)
+  return
+}
+
+
   if (
   y >= 140 && y <= 190 &&
   (
@@ -2686,6 +2721,9 @@ return () => clearTimeout(timer)
 ) {
   setScreen('opening')
   return
+
+  
+
 }
 
   if (x >= 0 && x <= 80 && y >= 190 && y <= 280) {
