@@ -2700,7 +2700,10 @@ if (x >= 952 && x <= 1048 && y >= 152 && y <= 248) {
   setShowBugonia(true)
 }
 
-if (x >= 1512 && x <= 1544 && y >= 584 && y <= 712) {
+if (
+  (x === 1512 && [520, 552, 584].includes(y)) ||
+  (x === 1544 && [616, 648, 680].includes(y))
+) {
   setShowBackrooms(true)
 }
 
