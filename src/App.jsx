@@ -2490,14 +2490,17 @@ return () => clearTimeout(timer)
       />
     </div>
 
+
+    </div>
+
     {showNpcDialogue && (
   <div
     style={{
-      position: 'absolute',
-      bottom: '140px',
+      position: 'fixed',
+      bottom: '100px',
       left: '50%',
       transform: 'translateX(-50%)',
-      zIndex: 10,
+      zIndex: 99999,
       background: 'black',
       color: 'white',
       border: '3px solid white',
@@ -2512,8 +2515,6 @@ return () => clearTimeout(timer)
     ↑↓BBB
   </div>
 )}
-
-    </div>
 
     <div
       style={{
