@@ -4914,36 +4914,28 @@ if (selectedPiece.name === 'バックルームズ') {
   const direction =
     (selectedPiece.side ?? 'player') === 'opponent' ? 1 : -1
 
-const warpRow = row + direction * 2
+  const warpRow = row + direction * 2
 
-if (
-  warpRow >= 0 &&
-  warpRow <= 8 &&
-  !nextPieces.some(
-    piece => piece.row === warpRow && piece.col === col
-  )
-) {
-  const warpZone = {
-    row: warpRow,
-    col: col,
+  if (
+    warpRow >= 0 &&
+    warpRow <= 8 &&
+    !nextPieces.some(
+      piece => piece.row === warpRow && piece.col === col
+    )
+  ) {
+    const warpZone = {
+      row: warpRow,
+      col: col,
+    }
+
+    nextPieces = nextPieces.map(piece =>
+      piece.name === 'バックルームズ' &&
+      piece.row === row &&
+      piece.col === col
+        ? { ...piece, warpZone }
+        : piece
+    )
   }
-
-  nextPieces = nextPieces.map(piece =>
-    piece.name === 'バックルームズ' &&
-    piece.row === row &&
-    piece.col === col
-      ? { ...piece, warpZone }
-      : piece
-  )
-}
-
-  nextPieces = nextPieces.map(piece =>
-    piece.name === 'バックルームズ' &&
-    piece.row === row &&
-    piece.col === col
-      ? { ...piece, warpZone }
-      : piece
-  )
 }
 
 const nextPlayerHand = playerHand.filter(
