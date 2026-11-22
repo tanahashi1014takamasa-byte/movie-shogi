@@ -1936,6 +1936,9 @@ const createRentalHand = () => [
     : []),
   ...(rentedMovies.includes('イカゲーム')
     ? [{ name: 'イカゲーム', image: squidGamePiece }]
+    : []),
+      ...(rentedMovies.includes('関心領域')
+    ? [{ name: '関心領域', image: interestArea }]
     : [])
 ]
 
