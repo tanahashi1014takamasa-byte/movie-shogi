@@ -558,3 +558,55 @@ background-position: center;
 .cpu-turn-select {
   gap: 300px;
 }
+
+.warp-zone {
+  position: absolute;
+  width: 72%;
+  height: 72%;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at center,
+      #000 0%,
+      #000 25%,
+      #171020 42%,
+      #08060d 60%,
+      transparent 72%);
+  overflow: hidden;
+  animation: warp-pulse 2s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.warp-zone::before {
+  content: '';
+  position: absolute;
+  inset: -35%;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    transparent 0deg 18deg,
+    rgba(100, 65, 130, 0.45) 22deg,
+    transparent 38deg 60deg
+  );
+  filter: blur(4px);
+  animation: warp-spin 4s linear infinite;
+}
+
+.warp-zone::after {
+  content: '';
+  position: absolute;
+  inset: 22%;
+  border-radius: 50%;
+  background: #000;
+  box-shadow: 0 0 12px 5px rgba(65, 35, 90, 0.7);
+}
+
+@keyframes warp-spin {
+  from { transform: rotate(0deg) scale(1); }
+  to { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes warp-pulse {
+  from { transform: scale(0.92); }
+  to { transform: scale(1.08); }
+}

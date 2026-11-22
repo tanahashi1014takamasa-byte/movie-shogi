@@ -38,6 +38,7 @@ import usoguiVHS from './assets/嘘喰い_VHS.png'
 import interestAreaVHS from './assets/関心領域_VHS.png'
 import bugoniaVhs from './assets/ブゴニア_VHS.png'
 import estherVhs from './assets/エスター_VHS.png'
+import backroomsVhs from './assets/バックルームズ_VHS.png'
 import dNote from './assets/D_note.png'
 import character from './assets/chracter.gif'
 
@@ -65,6 +66,7 @@ import usoguiPiece from './assets/嘘喰い.png'
 import interestArea from './assets/関心領域.png'
 import esther from './assets/エスター.png'
 import bugonia from './assets/ブゴニア.png'
+import backrooms from './assets/バックルームズ.png'
 
 import squidDarumaVideo from './assets/だるまさんがころんだ.mp4'
 
@@ -1765,6 +1767,7 @@ const [deathNoteLocked, setDeathNoteLocked] = useState(false)
 const [showInterestArea, setShowInterestArea] = useState(false)
 const [showEsther, setShowEsther] = useState(false)
 const [showBugonia, setShowBugonia] = useState(false)
+const [showBackrooms, setShowBackrooms] = useState(false)
 const createDeathNoteLetters = () => {
   const getDeathNoteName = (name) =>
   name === 'CUBE' ? 'キューブ' : name
@@ -1963,7 +1966,10 @@ const createRentalHand = () => [
     : []),
       ...(rentedMovies.includes('ブゴニア')
     ? [{ name: 'ブゴニア', image: bugonia }]
-    : [])
+    : []),
+    ...(rentedMovies.includes('バックルームズ')
+  ? [{ name: 'バックルームズ', image: backrooms }]
+  : [])
 ]
 
 const createRoom = async () => {
@@ -2694,6 +2700,10 @@ if (x >= 952 && x <= 1048 && y >= 152 && y <= 248) {
   setShowBugonia(true)
 }
 
+if (x >= 1512 && x <= 1544 && y >= 584 && y <= 712) {
+  setShowBackrooms(true)
+}
+
 }}
 >
   A
@@ -2741,7 +2751,7 @@ if (x >= 952 && x <= 1048 && y >= 152 && y <= 248) {
 }}>
   VIDEO RENTAL
 </h2>
-   {['白鯨', 'ミッドサマー', 'ファニーゲーム', 'イカゲーム', 'デスノート', '嘘喰い', '関心領域', 'エスター', 'ブゴニア'].map(movie => (
+   {['白鯨', 'ミッドサマー', 'ファニーゲーム', 'イカゲーム', 'デスノート', '嘘喰い', '関心領域', 'エスター', 'ブゴニア', 'バックルームズ'].map(movie => (
 <div
   key={movie}
   onClick={() => {
@@ -4231,7 +4241,10 @@ setPlayerHand([
     : []),
   ...(rentedMovies.includes('ブゴニア')
     ? [{ name: 'ブゴニア', image: bugonia }]
-    : [])
+    : []),
+  ...(rentedMovies.includes('バックルームズ')
+  ? [{ name: 'バックルームズ', image: backrooms }]
+  : [])  
 ])
 
 setOpponentHand([])
@@ -4734,6 +4747,35 @@ if (selectedPiece.name === 'ブゴニア') {
   )
 }
 
+if (selectedPiece.name === 'バックルームズ') {
+  const emptySquares = []
+
+  for (let r = 0; r < 9; r++) {
+    for (let c = 0; c < 9; c++) {
+      const occupied = nextPieces.some(
+        p => p.row === r && p.col === c
+      )
+
+      if (!occupied) {
+        emptySquares.push({ row: r, col: c })
+      }
+    }
+  }
+
+  if (emptySquares.length > 0) {
+    const warpZone =
+      emptySquares[Math.floor(Math.random() * emptySquares.length)]
+
+    nextPieces = nextPieces.map(piece =>
+      piece.name === 'バックルームズ' &&
+      piece.row === row &&
+      piece.col === col
+        ? { ...piece, warpZone }
+        : piece
+    )
+  }
+}
+
 const nextPlayerHand = playerHand.filter(
   (_, index) => index !== selectedPiece.handIndex
 )
@@ -5137,6 +5179,20 @@ if (!roomId) {
 
 >
 
+{pieces.some(
+  (p) =>
+    p.name === 'バックルームズ' &&
+    p.warpZone?.row === row &&
+    p.warpZone?.col === col
+) && (
+  <div
+    className="warp-zone"
+    style={{
+      top: '14%',
+      left: '14%',
+    }}
+  />
+)}
   
 {squarePieces
   .slice()
@@ -5367,6 +5423,63 @@ filter: reverseWinCondition && displayPiece.name === 'タイタニック'
     あちらべこちらべ
   </button>
 )}
+
+{showBackrooms && (
+  <div
+    style={{
+      position: 'absolute',
+      inset: '10%',
+      zIndex: 20,
+      background: '#000',
+      color: '#fff',
+      border: '3px solid #fff',
+      padding: '20px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '12px',
+    }}
+  >
+    <h2>バックルームズ</h2>
+
+    <div style={{ fontSize: '22px', fontWeight: 'bold' }}>
+      能力：ワープゾーン
+    </div>
+
+    <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+      <img
+        src={backroomsVhs}
+        alt="バックルームズ VHS"
+        style={{ width: '220px', objectFit: 'contain' }}
+      />
+
+      <div style={{ overflowY: 'auto' }}>
+        黒い渦のワープゾーンを設置する。
+        ワープゾーンに入った駒は、盤面上の空いているマスへ
+        ランダムに瞬間移動する。
+        通常の移動範囲は無視する。
+      </div>
+    </div>
+
+    <button
+      onClick={() => {
+        setRentalCart(prev =>
+          prev.includes('バックルームズ')
+            ? prev
+            : [...prev, 'バックルームズ']
+        )
+        setShowBackrooms(false)
+      }}
+    >
+      レンタルする
+    </button>
+
+    <button onClick={() => setShowBackrooms(false)}>
+      レンタルしない
+    </button>
+  </div>
+)}
+
 
 
   {selectedPiece?.name === 'イカゲーム' && !selectedPiece.fromHand && (
