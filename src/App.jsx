@@ -41,6 +41,7 @@ import estherVhs from './assets/エスター_VHS.png'
 import backroomsVhs from './assets/バックルームズ_VHS.png'
 import dNote from './assets/D_note.png'
 import character from './assets/chracter.gif'
+import npcFaceIcon from './assets/npc_face_icon.png'
 
 import gameCharacter from './assets/game_character.png'
 
@@ -2492,8 +2493,7 @@ return () => clearTimeout(timer)
 
 
     </div>
-
-    {showNpcDialogue && (
+{showNpcDialogue && (
   <div
     style={{
       position: 'fixed',
@@ -2501,18 +2501,34 @@ return () => clearTimeout(timer)
       left: '50%',
       transform: 'translateX(-50%)',
       zIndex: 99999,
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
       background: 'black',
       color: 'white',
       border: '2px solid white',
       borderRadius: '6px',
-      padding: '12px 20px',
-      minWidth: '240px',
-      textAlign: 'center',
-      fontSize: '18px',
+      padding: '8px 14px',
+      minWidth: '300px',
+      maxWidth: '90vw',
+      fontSize: '16px',
       fontWeight: 'bold',
     }}
   >
-   ブツブツ… 隠しコマンド… 開発者用… ↑↓BBB
+    <img
+      src={npcFaceIcon}
+      alt="店員"
+      style={{
+        width: '64px',
+        height: '64px',
+        objectFit: 'contain',
+        imageRendering: 'pixelated',
+      }}
+    />
+
+    <div>
+      ブツブツ… 隠しコマンド… 開発者用… ↑↓BBB
+    </div>
   </div>
 )}
 
