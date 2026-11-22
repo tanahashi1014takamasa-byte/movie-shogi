@@ -5243,6 +5243,40 @@ p !== trapCubeCaptured &&
   }
 })
 
+const backroomsPortal = nextPieces.find(
+  (p) => p.name === 'バックルームズ' && p.warpZone
+)
+
+if (
+  backroomsPortal &&
+  backroomsPortal.warpZone.row === row &&
+  backroomsPortal.warpZone.col === col
+) {
+  const emptySquares = []
+
+  for (let r = 0; r < 9; r++) {
+    for (let c = 0; c < 9; c++) {
+      if (!nextPieces.some((p) => p.row === r && p.col === c)) {
+        emptySquares.push({ row: r, col: c })
+      }
+    }
+  }
+
+  if (emptySquares.length > 0) {
+    const destination =
+      emptySquares[Math.floor(Math.random() * emptySquares.length)]
+
+    nextPieces = nextPieces.map((p) =>
+      p.name === selectedPiece.name &&
+      (p.side ?? 'player') === (selectedPiece.side ?? 'player') &&
+      p.row === row &&
+      p.col === col
+        ? { ...p, row: destination.row, col: destination.col }
+        : p
+    )
+  }
+}
+
 setPieces(nextPieces)
 
 if (darumaTitanicFell) {
