@@ -4911,32 +4911,21 @@ if (selectedPiece.name === 'ブゴニア') {
 }
 
 if (selectedPiece.name === 'バックルームズ') {
-  const emptySquares = []
+  const direction =
+    (selectedPiece.side ?? 'player') === 'opponent' ? 1 : -1
 
-  for (let r = 0; r < 9; r++) {
-    for (let c = 0; c < 9; c++) {
-      const occupied = nextPieces.some(
-        p => p.row === r && p.col === c
-      )
-
-      if (!occupied) {
-        emptySquares.push({ row: r, col: c })
-      }
-    }
+  const warpZone = {
+    row: row + direction * 2,
+    col: col,
   }
 
-  if (emptySquares.length > 0) {
-    const warpZone =
-      emptySquares[Math.floor(Math.random() * emptySquares.length)]
-
-    nextPieces = nextPieces.map(piece =>
-      piece.name === 'バックルームズ' &&
-      piece.row === row &&
-      piece.col === col
-        ? { ...piece, warpZone }
-        : piece
-    )
-  }
+  nextPieces = nextPieces.map(piece =>
+    piece.name === 'バックルームズ' &&
+    piece.row === row &&
+    piece.col === col
+      ? { ...piece, warpZone }
+      : piece
+  )
 }
 
 const nextPlayerHand = playerHand.filter(
