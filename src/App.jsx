@@ -4130,8 +4130,10 @@ const piece = squarePieces.find(
     ) return false
 
 if (
-  (selectedPiece.side ?? 'player') !== playerSide &&
-  destinationInside
+  areas.some((area) =>
+    (selectedPiece.side ?? 'player') !== (area.side ?? 'player') &&
+    isInsideArea(move.row, move.col, area)
+  )
 ) return false
 
     if (
