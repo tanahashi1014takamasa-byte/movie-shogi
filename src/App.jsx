@@ -4034,6 +4034,135 @@ alignSelf: 'center',
   </div>
 )}
 
+{showBackrooms && (
+  <div
+    style={{
+      position: 'absolute',
+      inset: '10%',
+      zIndex: 20,
+      background: 'black',
+      color: 'white',
+      border: '2px solid white',
+      borderRadius: '8px',
+      padding: '16px',
+      display: 'flex',
+      flexDirection: 'column',
+      boxSizing: 'border-box',
+    }}
+  >
+    <h2
+      style={{
+        textAlign: 'center',
+        fontFamily: '"Yu Mincho", "Hiragino Mincho ProN", serif',
+        color: 'white',
+        fontSize: '30px',
+        fontWeight: 'bold',
+        letterSpacing: '8px',
+        margin: '0 0 16px',
+        paddingBottom: '10px',
+        borderBottom: '1px solid #555',
+      }}
+    >
+      バックルームズ
+    </h2>
+
+    <div
+      style={{
+        textAlign: 'center',
+        color: 'white',
+        fontSize: '26px',
+        fontWeight: 'bold',
+        marginTop: '20px',
+        marginBottom: '20px',
+      }}
+    >
+      能力：ワープゾーン
+    </div>
+
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '24px',
+        flex: 1,
+        minHeight: 0,
+      }}
+    >
+      <img
+        src={backroomsVhs}
+        alt="バックルームズ VHS"
+        style={{
+          width: '110px',
+          maxHeight: '180px',
+          objectFit: 'contain',
+          flexShrink: 0,
+        }}
+      />
+
+      <div
+        style={{
+          flex: 1,
+          minWidth: 0,
+          textAlign: 'left',
+          overflowY: 'auto',
+        }}
+      >
+        <p>
+          黒い渦のワープゾーンを設置する。
+          ワープゾーンに入った駒は、盤面上の空いているマスへ
+          ランダムに瞬間移動する。
+          通常の移動範囲は無視する。
+        </p>
+      </div>
+    </div>
+
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '16px',
+        paddingTop: '12px',
+      }}
+    >
+      <button
+        onClick={() => {
+          new Audio(rentalSound).play()
+          setRentalCart(prev =>
+            prev.includes('バックルームズ')
+              ? prev
+              : [...prev, 'バックルームズ']
+          )
+          setShowBackrooms(false)
+        }}
+        style={{
+          padding: '10px 24px',
+          background: '#173d24',
+          color: 'white',
+          border: '1px solid #7cff9b',
+          fontSize: '15px',
+          cursor: 'pointer',
+        }}
+      >
+        レンタルする
+      </button>
+
+      <button
+        onClick={() => setShowBackrooms(false)}
+        style={{
+          padding: '10px 24px',
+          background: '#222',
+          color: 'white',
+          border: '1px solid #aaa',
+          fontSize: '15px',
+          cursor: 'pointer',
+        }}
+      >
+        レンタルしない
+      </button>
+    </div>
+  </div>
+)}
+
 
 {showDNote && (
   <div
@@ -5424,61 +5553,6 @@ filter: reverseWinCondition && displayPiece.name === 'タイタニック'
   </button>
 )}
 
-{showBackrooms && (
-  <div
-    style={{
-      position: 'absolute',
-      inset: '10%',
-      zIndex: 20,
-      background: '#000',
-      color: '#fff',
-      border: '3px solid #fff',
-      padding: '20px',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      gap: '12px',
-    }}
-  >
-    <h2>バックルームズ</h2>
-
-    <div style={{ fontSize: '22px', fontWeight: 'bold' }}>
-      能力：ワープゾーン
-    </div>
-
-    <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-      <img
-        src={backroomsVhs}
-        alt="バックルームズ VHS"
-        style={{ width: '220px', objectFit: 'contain' }}
-      />
-
-      <div style={{ overflowY: 'auto' }}>
-        黒い渦のワープゾーンを設置する。
-        ワープゾーンに入った駒は、盤面上の空いているマスへ
-        ランダムに瞬間移動する。
-        通常の移動範囲は無視する。
-      </div>
-    </div>
-
-    <button
-      onClick={() => {
-        setRentalCart(prev =>
-          prev.includes('バックルームズ')
-            ? prev
-            : [...prev, 'バックルームズ']
-        )
-        setShowBackrooms(false)
-      }}
-    >
-      レンタルする
-    </button>
-
-    <button onClick={() => setShowBackrooms(false)}>
-      レンタルしない
-    </button>
-  </div>
-)}
 
 
 
