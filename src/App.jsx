@@ -2497,22 +2497,22 @@ return () => clearTimeout(timer)
   <div
     style={{
       position: 'fixed',
-      bottom: '100px',
+      bottom: '45px',
       left: '50%',
       transform: 'translateX(-50%)',
       zIndex: 99999,
       background: 'black',
       color: 'white',
-      border: '3px solid white',
-      borderRadius: '8px',
-      padding: '20px 30px',
-      minWidth: '300px',
+      border: '2px solid white',
+      borderRadius: '6px',
+      padding: '12px 20px',
+      minWidth: '240px',
       textAlign: 'center',
-      fontSize: '24px',
+      fontSize: '18px',
       fontWeight: 'bold',
     }}
   >
-    ↑↓BBB
+   ブツブツ… 隠しコマンド… 開発者用… ↑↓BBB
   </div>
 )}
 
