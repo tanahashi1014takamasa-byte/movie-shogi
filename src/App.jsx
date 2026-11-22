@@ -4853,6 +4853,19 @@ playerHand,
     handPiece.name === selectedPiece.name
 )) return
 
+if (selectedPiece.name === 'バックルームズ') {
+  const direction = playerSide === 'opponent' ? 1 : -1
+  const warpRow = row + direction * 2
+
+  if (
+    warpRow < 0 ||
+    warpRow > 8 ||
+    pieces.some(
+      p => p.row === warpRow && p.col === col
+    )
+  ) return
+}
+
     playSyogiSound()
 
     let nextPieces = [
