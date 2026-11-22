@@ -733,6 +733,20 @@ const squidDarumaAudioRef = useRef(new Audio(squidDarumaVideo))
 
   const getLegalMoves = (piece, pieces) => {
   if (!piece) return []
+    if (piece.name === 'エスター') {
+  return (piece.estherMoves || []).filter(
+    (move) =>
+      move.row >= 0 && move.row < 9 &&
+      move.col >= 0 && move.col < 9 &&
+      !pieces.some(
+        (p) =>
+          p.row === move.row &&
+          p.col === move.col &&
+          (p.side ?? 'player') === (piece.side ?? 'player') &&
+          !(p.name === '白鯨' && p.whaleHidden)
+      )
+  )
+}
     if (piece.name === '関心領域') return []
 if (piece.name === 'ミッドサマー') {
   if (!piece.inheritedMoves) return []
@@ -1942,6 +1956,9 @@ const createRentalHand = () => [
     : []),
       ...(rentedMovies.includes('関心領域')
     ? [{ name: '関心領域', image: interestArea }]
+    : []),
+      ...(rentedMovies.includes('エスター')
+    ? [{ name: 'エスター', image: esther }]
     : [])
 ]
 
@@ -2716,7 +2733,7 @@ if (x >= 616 && x <= 936 && y === 744) {
 }}>
   VIDEO RENTAL
 </h2>
-   {['白鯨', 'ミッドサマー', 'ファニーゲーム', 'イカゲーム', 'デスノート', '嘘喰い', '関心領域'].map(movie => (
+   {['白鯨', 'ミッドサマー', 'ファニーゲーム', 'イカゲーム', 'デスノート', '嘘喰い', '関心領域', 'エスター'].map(movie => (
 <div
   key={movie}
   onClick={() => {
@@ -4555,6 +4572,7 @@ interestAreaInitial: selectedPiece.name === '関心領域'
     row,
     col,
     side: playerSide,
+    ...(selectedPiece.name === 'エスター' ? { estherMoves: [] } : {}),
     fromHand: undefined,
     handIndex: undefined,
   },
@@ -4806,7 +4824,7 @@ if (capturedPieces.some((captured) => captured.name === '国宝')) {
   setPlayerHand(nextPlayerHand)
 }
 
-const nextPieces = pieces
+let nextPieces = pieces
   .filter(
     (p) =>
       !capturedPieces.includes(p) &&
@@ -4863,6 +4881,40 @@ p !== trapCubeCaptured &&
   squidDarumaPending &&
   turn === playerSide &&
   selectedPiece.name === 'タイタニック'
+
+  nextPieces = nextPieces.map((piece) => {
+  if (piece.name !== 'エスター') return piece
+
+  const currentMoves = piece.estherMoves || []
+  const candidates = []
+
+  for (let r = 0; r < 9; r++) {
+    for (let c = 0; c < 9; c++) {
+      const alreadyAdded = currentMoves.some(
+        (move) => move.row === r && move.col === c
+      )
+
+      const occupied = nextPieces.some(
+        (p) => p.row === r && p.col === c
+      )
+
+      if (!alreadyAdded && !occupied) {
+        candidates.push({ row: r, col: c })
+      }
+    }
+  }
+
+  if (candidates.length === 0) return piece
+
+  const growth = candidates[
+    Math.floor(Math.random() * candidates.length)
+  ]
+
+  return {
+    ...piece,
+    estherMoves: [...currentMoves, growth]
+  }
+})
 
 setPieces(nextPieces)
 
