@@ -733,7 +733,7 @@ const squidDarumaAudioRef = useRef(new Audio(squidDarumaVideo))
 
   const getLegalMoves = (piece, pieces) => {
   if (!piece) return []
-    if (piece.name === 'エスター') {
+ if (piece.name === 'エスター') {
   return (piece.estherMoves || []).filter(
     (move) =>
       move.row >= 0 && move.row < 9 &&
@@ -741,9 +741,7 @@ const squidDarumaAudioRef = useRef(new Audio(squidDarumaVideo))
       !pieces.some(
         (p) =>
           p.row === move.row &&
-          p.col === move.col &&
-          (p.side ?? 'player') === (piece.side ?? 'player') &&
-          !(p.name === '白鯨' && p.whaleHidden)
+          p.col === move.col
       )
   )
 }
