@@ -4833,6 +4833,16 @@ playerHand,
   if (selectedPiece?.fromHand) {
     if (turn !== playerSide) return
     if (piece) return
+
+    if (
+  pieces.some(
+    p =>
+      p.name === 'バックルームズ' &&
+      p.warpZone?.row === row &&
+      p.warpZone?.col === col
+  )
+) return
+
   if (
   selectedPiece.name === '関心領域' &&
   pieces.some((p) =>
