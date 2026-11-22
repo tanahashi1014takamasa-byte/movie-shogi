@@ -4092,6 +4092,9 @@ setPlayerHand([
     : []),
   ...(rentedMovies.includes('関心領域')
     ? [{ name: '関心領域', image: interestArea }]
+    : []),
+      ...(rentedMovies.includes('エスター')
+    ? [{ name: 'エスター', image: esther }]
     : [])
 ])
 
