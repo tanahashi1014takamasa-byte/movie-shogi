@@ -4934,8 +4934,7 @@ if (selectedPiece.name === 'ブゴニア') {
 }
 
 if (selectedPiece.name === 'バックルームズ') {
-  const direction =
-    (selectedPiece.side ?? 'player') === 'opponent' ? 1 : -1
+  const direction = playerSide === 'opponent' ? 1 : -1
 
   const warpRow = row + direction * 2
 
