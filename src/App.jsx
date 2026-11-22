@@ -585,7 +585,7 @@ if (
   ])
 }
 
-const nextPieces = currentPieces
+let nextPieces = currentPieces
   .filter((piece) =>
     piece !== capturedPiece &&
     (!cpuTrapCubeCaptured || piece !== cpuMove.piece)
