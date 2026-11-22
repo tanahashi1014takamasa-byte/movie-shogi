@@ -36,6 +36,7 @@ import funnygameVHS from './assets/ファニーゲーム.png'
 import squidGameVhs from './assets/イカゲーム_VHS.png'
 import usoguiVHS from './assets/嘘喰い_VHS.png'
 import interestAreaVHS from './assets/関心領域_VHS.png'
+import bugoniaVhs from './assets/ブゴニア_VHS.png'
 import estherVhs from './assets/エスター_VHS.png'
 import dNote from './assets/D_note.png'
 import character from './assets/chracter.gif'
@@ -63,6 +64,7 @@ import squidGamePiece from './assets/イカゲーム.png'
 import usoguiPiece from './assets/嘘喰い.png'
 import interestArea from './assets/関心領域.png'
 import esther from './assets/エスター.png'
+import bugonia from './assets/ブゴニア.png'
 
 import squidDarumaVideo from './assets/だるまさんがころんだ.mp4'
 
@@ -1762,6 +1764,7 @@ const [deathNoteTime, setDeathNoteTime] = useState(10)
 const [deathNoteLocked, setDeathNoteLocked] = useState(false)
 const [showInterestArea, setShowInterestArea] = useState(false)
 const [showEsther, setShowEsther] = useState(false)
+const [showBugonia, setShowBugonia] = useState(false)
 const createDeathNoteLetters = () => {
   const getDeathNoteName = (name) =>
   name === 'CUBE' ? 'キューブ' : name
@@ -1957,6 +1960,9 @@ const createRentalHand = () => [
     : []),
       ...(rentedMovies.includes('エスター')
     ? [{ name: 'エスター', image: esther }]
+    : []),
+      ...(rentedMovies.includes('ブゴニア')
+    ? [{ name: 'ブゴニア', image: bugonia }]
     : [])
 ]
 
@@ -2684,6 +2690,10 @@ if (x >= 616 && x <= 936 && y === 744) {
   setShowEsther(true)
 }
 
+if (x >= 952 && x <= 1048 && y >= 152 && y <= 248) {
+  setShowBugonia(true)
+}
+
 }}
 >
   A
@@ -2731,7 +2741,7 @@ if (x >= 616 && x <= 936 && y === 744) {
 }}>
   VIDEO RENTAL
 </h2>
-   {['白鯨', 'ミッドサマー', 'ファニーゲーム', 'イカゲーム', 'デスノート', '嘘喰い', '関心領域', 'エスター'].map(movie => (
+   {['白鯨', 'ミッドサマー', 'ファニーゲーム', 'イカゲーム', 'デスノート', '嘘喰い', '関心領域', 'エスター', 'ブゴニア'].map(movie => (
 <div
   key={movie}
   onClick={() => {
@@ -3761,6 +3771,131 @@ alignSelf: 'center',
   </div>
 )}
 
+{showBugonia && (
+  <div
+    style={{
+      position: 'absolute',
+      inset: '10%',
+      zIndex: 20,
+      background: 'black',
+      color: 'white',
+      border: '2px solid white',
+      borderRadius: '8px',
+      padding: '16px',
+      display: 'flex',
+      flexDirection: 'column',
+      boxSizing: 'border-box',
+    }}
+  >
+    <h2
+      style={{
+        textAlign: 'center',
+        fontFamily: '"Yu Mincho", "Hiragino Mincho ProN", serif',
+        color: 'white',
+        fontSize: '30px',
+        fontWeight: 'bold',
+        letterSpacing: '8px',
+        margin: '0 0 16px',
+        paddingBottom: '10px',
+        borderBottom: '1px solid #555',
+      }}
+    >
+      ブゴニア
+    </h2>
+
+    <div
+      style={{
+        textAlign: 'center',
+        color: 'white',
+        fontSize: '20px',
+        fontWeight: 'bold',
+        marginTop: '20px',
+        marginBottom: '20px',
+      }}
+    >
+      能力：侵略
+    </div>
+
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '24px',
+        flex: 1,
+        minHeight: 0,
+      }}
+    >
+      <img
+        src={bugoniaVhs}
+        alt="ブゴニア VHS"
+        style={{
+          width: '110px',
+          maxHeight: '180px',
+          objectFit: 'contain',
+          flexShrink: 0,
+        }}
+      />
+
+      <div
+        style={{
+          flex: 1,
+          minWidth: 0,
+          textAlign: 'left',
+          overflowY: 'auto',
+        }}
+      >
+        <p>
+          盤面に配置した瞬間、盤上にある駒の半数をランダムにタイタニックへ変化させる。
+          対象数は奇数の場合、切り上げる。
+        </p>
+      </div>
+    </div>
+
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '16px',
+        paddingTop: '12px',
+      }}
+    >
+      <button
+        onClick={() => {
+          new Audio(rentalSound).play()
+          setRentalCart(prev =>
+            prev.includes('ブゴニア') ? prev : [...prev, 'ブゴニア']
+          )
+          setShowBugonia(false)
+        }}
+        style={{
+          padding: '10px 24px',
+          background: '#173d24',
+          color: 'white',
+          border: '1px solid #7cff9b',
+          fontSize: '15px',
+          cursor: 'pointer',
+        }}
+      >
+        レンタルする
+      </button>
+
+      <button
+        onClick={() => setShowBugonia(false)}
+        style={{
+          padding: '10px 24px',
+          background: '#222',
+          color: 'white',
+          border: '1px solid #aaa',
+          fontSize: '15px',
+          cursor: 'pointer',
+        }}
+      >
+        レンタルしない
+      </button>
+    </div>
+  </div>
+)}
+
 {showUsogui && (
   <div
     style={{
@@ -4093,6 +4228,9 @@ setPlayerHand([
     : []),
       ...(rentedMovies.includes('エスター')
     ? [{ name: 'エスター', image: esther }]
+    : []),
+  ...(rentedMovies.includes('ブゴニア')
+    ? [{ name: 'ブゴニア', image: bugonia }]
     : [])
 ])
 
@@ -4541,7 +4679,7 @@ playerHand,
 
     playSyogiSound()
 
-    const nextPieces = [
+    let nextPieces = [
   ...pieces.map((piece) =>
   selectedPiece.name === '関心領域' &&
   (
@@ -4578,6 +4716,23 @@ interestAreaInitial: selectedPiece.name === '関心領域'
     handIndex: undefined,
   },
 ]
+
+if (selectedPiece.name === 'ブゴニア') {
+  const invasionTargets = nextPieces.slice(0, -1)
+  const invasionCount = Math.ceil(invasionTargets.length / 2)
+  const selectedTargets = []
+
+  while (selectedTargets.length < invasionCount) {
+    const index = Math.floor(Math.random() * invasionTargets.length)
+    selectedTargets.push(invasionTargets.splice(index, 1)[0])
+  }
+
+  nextPieces = nextPieces.map((piece) =>
+    selectedTargets.includes(piece)
+      ? { ...piece, name: 'タイタニック', image: titanic }
+      : piece
+  )
+}
 
 const nextPlayerHand = playerHand.filter(
   (_, index) => index !== selectedPiece.handIndex
