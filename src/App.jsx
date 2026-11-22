@@ -585,7 +585,7 @@ if (
   ])
 }
 
-return currentPieces
+const nextPieces = currentPieces
   .filter((piece) =>
     piece !== capturedPiece &&
     (!cpuTrapCubeCaptured || piece !== cpuMove.piece)
@@ -594,19 +594,53 @@ return currentPieces
     piece === cpuMove.piece
       ? {
           ...piece,
-            row: cpuMove.move.row,
-            col: cpuMove.move.col,
-            absorbedMoves:
-            
-              piece.name === '武器人間' && capturedPiece
-                ? [capturedPiece.name]
-                : piece.absorbedMoves,
-                            ...(piece.name === 'ミミ' && cpuMove.move.row >= 6
-              ? { name: 'サイコ・ゴアマン', image: psychoGoreman }
-              : {}),
-          }
+          row: cpuMove.move.row,
+          col: cpuMove.move.col,
+          absorbedMoves:
+            piece.name === '武器人間' && capturedPiece
+              ? [capturedPiece.name]
+              : piece.absorbedMoves,
+          ...(piece.name === 'ミミ' && cpuMove.move.row >= 6
+            ? { name: 'サイコ・ゴアマン', image: psychoGoreman }
+            : {}),
+        }
+      : piece
+  )
+
+const backroomsPortal = nextPieces.find(
+  (piece) => piece.name === 'バックルームズ' && piece.warpZone
+)
+
+if (
+  backroomsPortal &&
+  backroomsPortal.warpZone.row === cpuMove.move.row &&
+  backroomsPortal.warpZone.col === cpuMove.move.col
+) {
+  const emptySquares = []
+
+  for (let r = 0; r < 9; r++) {
+    for (let c = 0; c < 9; c++) {
+      if (!nextPieces.some((p) => p.row === r && p.col === c)) {
+        emptySquares.push({ row: r, col: c })
+      }
+    }
+  }
+
+  if (emptySquares.length > 0) {
+    const destination =
+      emptySquares[Math.floor(Math.random() * emptySquares.length)]
+
+    nextPieces = nextPieces.map((piece) =>
+      (piece.side ?? 'player') === (cpuMove.piece.side ?? 'player') &&
+      piece.row === cpuMove.move.row &&
+      piece.col === cpuMove.move.col
+        ? { ...piece, row: destination.row, col: destination.col }
         : piece
     )
+  }
+}
+
+return nextPieces
 })
 
 setTurn(
