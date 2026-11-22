@@ -4126,10 +4126,10 @@ const piece = squarePieces.find(
       destinationInside
     ) return false
 
-    if (
-      (selectedPiece.side ?? 'player') === 'opponent' &&
-      destinationInside
-    ) return false
+if (
+  (selectedPiece.side ?? 'player') !== playerSide &&
+  destinationInside
+) return false
 
     if (
       selectedPiece.interestAreaEntered &&
