@@ -4711,6 +4711,7 @@ setPlayerSide('player')
 
       <div className={`board ${playerSide === 'opponent' ? 'opponent-board' : ''} ${selectedStage === 'ジョーズ' ? 'jaws-stage' : ''}`}>
         {selectedStage === 'ジョーズ' && <div className="jaws-background" />}
+        {selectedStage === 'スパイダーマン' && <div className="spiderman-background" />}
         {Array.from({ length: 81 }, (_, index) => {
           const row = Math.floor(index / 9)
           const col = index % 9

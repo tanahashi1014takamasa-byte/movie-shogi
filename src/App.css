@@ -799,3 +799,17 @@ background-position: center;
 .opponent-board .jaws-background {
   transform: rotate(180deg);
 }
+
+.spiderman-background {
+  position: absolute;
+  inset: 0;
+  background-image: url('./assets/spiderman.jpg');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.opponent-board .spiderman-background {
+  transform: rotate(180deg);
+}
