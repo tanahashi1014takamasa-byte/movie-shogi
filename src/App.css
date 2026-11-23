@@ -845,3 +845,26 @@ background-position: center;
 .opponent-board .jurassic-background {
   transform: rotate(180deg);
 }
+
+/* バック・トゥ・ザ・フューチャーステージ */
+.bttf-stage {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: transparent;
+}
+
+.bttf-background {
+  position: absolute;
+  inset: 0;
+  background-image: url('./assets/btf.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.opponent-board .bttf-background {
+  transform: rotate(180deg);
+}
