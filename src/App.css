@@ -891,3 +891,26 @@ background-position: center;
 .opponent-board .starwars-background {
   transform: rotate(180deg);
 }
+
+/* ユニバステージ */
+.universal-stage {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #87bde5;
+}
+
+.universal-background {
+  position: absolute;
+  inset: 0;
+  background-image: url('./assets/USJ.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.opponent-board .universal-background {
+  transform: rotate(180deg);
+}
