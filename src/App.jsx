@@ -26,6 +26,8 @@ import m3 from './assets/m_3.gif'
 import m4 from './assets/m_4.gif'
 import m5 from './assets/m_5.gif'
 import m6 from './assets/m_6.gif'
+import sharkAttack from './assets/shark-attack.gif'
+import sharkAttack2 from './assets/shark-attack_2.gif'
 import syogiSound from './assets/syogi_s01.mp3'
 import guideText from './assets/guide.txt?raw'
 
@@ -1810,6 +1812,30 @@ const [showBackrooms, setShowBackrooms] = useState(false)
 const [showNpcDialogue, setShowNpcDialogue] = useState(false)
 const [showStageSelect, setShowStageSelect] = useState(false)
 const [selectedStage, setSelectedStage] = useState('normal')
+const [activeSharkAttack, setActiveSharkAttack] = useState(null)
+useEffect(() => {
+  if (selectedStage !== 'ジョーズ') {
+    setActiveSharkAttack(null)
+    return
+  }
+
+  const showShark = () => {
+    const gif = Math.random() < 0.5 ? sharkAttack : sharkAttack2
+    setActiveSharkAttack(gif)
+
+    setTimeout(() => {
+      setActiveSharkAttack(null)
+    }, 5000)
+  }
+
+  const interval = setInterval(() => {
+    if (Math.random() < 0.5) {
+      showShark()
+    }
+  }, 12000)
+
+  return () => clearInterval(interval)
+}, [selectedStage])
 const createDeathNoteLetters = () => {
   const getDeathNoteName = (name) =>
   name === 'CUBE' ? 'キューブ' : name
@@ -5613,11 +5639,16 @@ filter: reverseWinCondition && displayPiece.name === 'タイタニック'
 
             </div>
           )
-        })}
+            })}
+
+        {selectedStage === 'ジョーズ' && activeSharkAttack && (
+          <img
+            src={activeSharkAttack}
+            className="shark-attack-overlay"
+            alt=""
+          />
+        )}
       </div>
-
-           
-
             <div className="hand-box">
   {playerHand.map((piece, index) => (
     <img
