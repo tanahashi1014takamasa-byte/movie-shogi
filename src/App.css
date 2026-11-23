@@ -868,3 +868,26 @@ background-position: center;
 .opponent-board .bttf-background {
   transform: rotate(180deg);
 }
+
+/* スター・ウォーズステージ */
+.starwars-stage {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #080d24;
+}
+
+.starwars-background {
+  position: absolute;
+  inset: 0;
+  background-image: url('./assets/starwars.jpg');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.opponent-board .starwars-background {
+  transform: rotate(180deg);
+}
