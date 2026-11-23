@@ -4394,7 +4394,7 @@ alignSelf: 'center',
 )}
 
 {onlineScreen && (
-  <div className="online-screen turn-select">
+  <div className={`online-screen turn-select ${showStageSelect ? 'stage-selection-active' : ''}`}>
     <video
   ref={squidDarumaVideoRef}
   src={squidDarumaVideo}
@@ -4402,7 +4402,12 @@ alignSelf: 'center',
   playsInline
   style={{ display: 'none' }}
 />
-<div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+<div style={{
+  position: 'relative',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center'
+}}>
   <button onClick={() => {
     const audio = squidDarumaAudioRef.current
     audio.play().then(() => {
@@ -4422,17 +4427,19 @@ alignSelf: 'center',
     setStageTapCount(0)
   }
 }}
-    style={{
-      width: '42px',
-      height: '42px',
-      padding: 0,
-      border: '2px dotted rgba(220, 190, 130, 0.4)',
-      borderRadius: '50%',
-      background: 'transparent',
-      color: 'rgba(220, 190, 130, 0.4)',
-      fontSize: '25px',
-      cursor: 'pointer',
-    }}
+style={{
+  position: 'absolute',
+  right: '0',
+  width: '42px',
+  height: '42px',
+  padding: 0,
+  border: 'none',
+  borderRadius: '50%',
+  background: 'transparent',
+  color: 'rgba(220, 190, 130, 0.4)',
+  fontSize: '25px',
+  cursor: 'pointer',
+}}
   >
     ◎
   </button>
