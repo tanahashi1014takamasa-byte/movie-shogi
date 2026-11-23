@@ -1819,19 +1819,28 @@ useEffect(() => {
     return
   }
 
-  const showShark = () => {
-    const gif = Math.random() < 0.5 ? sharkAttack : sharkAttack2
-    setActiveSharkAttack(gif)
+  const firstTimer = setTimeout(() => {
+    setActiveSharkAttack(sharkAttack)
 
     setTimeout(() => {
       setActiveSharkAttack(null)
-    }, 5000)
+    }, 3000)
+  }, 60000)
+
+  const secondTimer = setTimeout(() => {
+    setActiveSharkAttack(sharkAttack2)
+
+    setTimeout(() => {
+      setActiveSharkAttack(null)
+    }, 3000)
+  }, 120000)
+
+  return () => {
+    clearTimeout(firstTimer)
+    clearTimeout(secondTimer)
   }
-
-  const interval = setInterval(showShark, 12000)
-
-  return () => clearInterval(interval)
 }, [selectedStage])
+
 const createDeathNoteLetters = () => {
   const getDeathNoteName = (name) =>
   name === 'CUBE' ? 'キューブ' : name
