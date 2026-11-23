@@ -1828,11 +1828,7 @@ useEffect(() => {
     }, 5000)
   }
 
-  const interval = setInterval(() => {
-    if (Math.random() < 0.5) {
-      showShark()
-    }
-  }, 12000)
+  const interval = setInterval(showShark, 12000)
 
   return () => clearInterval(interval)
 }, [selectedStage])
