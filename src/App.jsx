@@ -4709,7 +4709,7 @@ setPlayerSide('player')
   ))}
 </div>
 
-      <div className={`board ${playerSide === 'opponent' ? 'opponent-board' : ''} ${selectedStage === 'ジョーズ' ? 'jaws-stage' : ''}`}>
+      <div className={`board ${playerSide === 'opponent' ? 'opponent-board' : ''} ${selectedStage === 'ジョーズ' ? 'jaws-stage' : ''} ${selectedStage === 'スパイダーマン' ? 'spiderman-stage' : ''}`}>
         {selectedStage === 'ジョーズ' && <div className="jaws-background" />}
         {selectedStage === 'スパイダーマン' && <div className="spiderman-background" />}
         {Array.from({ length: 81 }, (_, index) => {

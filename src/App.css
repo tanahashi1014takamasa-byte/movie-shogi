@@ -800,12 +800,21 @@ background-position: center;
   transform: rotate(180deg);
 }
 
+/* スパイダーマンステージ */
+.spiderman-stage {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: transparent;
+}
+
 .spiderman-background {
   position: absolute;
   inset: 0;
   background-image: url('./assets/spiderman.jpg');
-  background-size: cover;
+  background-size: 100% 100%;
   background-position: center;
+  background-repeat: no-repeat;
   z-index: 0;
   pointer-events: none;
 }
