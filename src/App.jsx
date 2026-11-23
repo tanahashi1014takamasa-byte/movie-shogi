@@ -4709,9 +4709,11 @@ setPlayerSide('player')
   ))}
 </div>
 
-      <div className={`board ${playerSide === 'opponent' ? 'opponent-board' : ''} ${selectedStage === 'ジョーズ' ? 'jaws-stage' : ''} ${selectedStage === 'スパイダーマン' ? 'spiderman-stage' : ''}`}>
+      <div className={`board ${playerSide === 'opponent' ? 'opponent-board' : ''} ${selectedStage === 'ジョーズ' ? 'jaws-stage' : ''} ${selectedStage === 'スパイダーマン' ? 'spiderman-stage' : ''}${selectedStage === 'ジュラシック・パーク' ? 'jurassic-stage' : ''}`}>
         {selectedStage === 'ジョーズ' && <div className="jaws-background" />}
         {selectedStage === 'スパイダーマン' && <div className="spiderman-background" />}
+        {selectedStage === 'ジュラシック・パーク' && <div className="jurassic-background" />}
+
         {Array.from({ length: 81 }, (_, index) => {
           const row = Math.floor(index / 9)
           const col = index % 9

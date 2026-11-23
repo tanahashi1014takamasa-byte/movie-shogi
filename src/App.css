@@ -822,3 +822,26 @@ background-position: center;
 .opponent-board .spiderman-background {
   transform: rotate(180deg);
 }
+
+/* ジュラシック・パークステージ */
+.jurassic-stage {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: transparent;
+}
+
+.jurassic-background {
+  position: absolute;
+  inset: 0;
+  background-image: url('./assets/jurassicpark.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.opponent-board .jurassic-background {
+  transform: rotate(180deg);
+}
