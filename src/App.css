@@ -614,10 +614,20 @@ background-position: center;
 /* ジョーズステージ */
 .jaws-stage {
   position: relative;
+  background: transparent;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* 海の背景画像 */
+.jaws-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   background-image: url('./assets/jaws.png');
   background-size: cover;
   background-position: center;
-  overflow: hidden;
+  z-index: -1;
 }
 
 /* 海面のゆらぎ */
@@ -766,4 +776,26 @@ background-position: center;
     rgba(0, 0, 0, 0.85) 65%,
     transparent 100%
   );
+}
+
+.opponent-board .shark-attack-overlay {
+  transform: rotate(180deg);
+}
+
+.opponent-board.jaws-stage::after {
+  transform: rotate(180deg);
+}
+
+.jaws-background {
+  position: absolute;
+  inset: 0;
+  background-image: url('./assets/jaws.png');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.opponent-board .jaws-background {
+  transform: rotate(180deg);
 }
