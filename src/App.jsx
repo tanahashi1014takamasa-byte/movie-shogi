@@ -71,6 +71,8 @@ import backrooms from './assets/バックルームズ.png'
 
 import squidDarumaVideo from './assets/だるまさんがころんだ.mp4'
 
+import jaws from './assets/jaws.png'
+
 import cpuBattle from './assets/CPU対戦.png'
 
 function App() {
@@ -759,6 +761,7 @@ previousTurnRef.current = gameState.turn
   const squidDarumaSignalRef = useRef(0)
   const [squidGlassBridge, setSquidGlassBridge] = useState(null)
   const syogiAudio = useRef(new Audio(syogiSound))
+  const [stageTapCount, setStageTapCount] = useState(0)
 
 const playSyogiSound = () => {
   syogiAudio.current.currentTime = 0
@@ -1786,6 +1789,7 @@ if (absorbedMove === 'サイコ・ゴアマン') {
   { name: 'CUBE', image: cube, row: 2, col: 8, side: 'opponent' },
 ])
 
+
 const [showMovieNotes, setShowMovieNotes] = useState(false)
 const [showWhiteWhale, setShowWhiteWhale] = useState(false)
 const [showMidsummer, setShowMidsummer] = useState(false)
@@ -1804,6 +1808,8 @@ const [showEsther, setShowEsther] = useState(false)
 const [showBugonia, setShowBugonia] = useState(false)
 const [showBackrooms, setShowBackrooms] = useState(false)
 const [showNpcDialogue, setShowNpcDialogue] = useState(false)
+const [showStageSelect, setShowStageSelect] = useState(false)
+const [selectedStage, setSelectedStage] = useState('normal')
 const createDeathNoteLetters = () => {
   const getDeathNoteName = (name) =>
   name === 'CUBE' ? 'キューブ' : name
@@ -2031,6 +2037,7 @@ mistMoveCount: {
   player: 0,
   opponent: 0,
 },
+stage: selectedStage,
 },
     })
 
@@ -2041,6 +2048,7 @@ mistMoveCount: {
   setTrapCube(newTrapCube)
   setOpponentTrapCube(newOpponentTrapCube)
   setRoomId(newRoomId)
+  setSelectedStage(selectedStage)
   setPlayerHand(createRentalHand())
   setPlayerSide('player')
   setOnlineScreen(true)
@@ -2083,6 +2091,7 @@ setPlayerHand(createRentalHand())
 setTrapCube(data[0].game_state.opponentTrapCube)
 setOpponentTrapCube(data[0].game_state.trapCube)
 setOpponentHand(data[0].game_state.playerHand ?? [])
+setSelectedStage(data[0].game_state.stage ?? 'normal')
 setPlayerSide('opponent')
 setScreen('game')
 }
@@ -4393,14 +4402,41 @@ alignSelf: 'center',
   playsInline
   style={{ display: 'none' }}
 />
-    <button onClick={() => {
-  const audio = squidDarumaAudioRef.current
-  audio.play().then(() => {
-    audio.pause()
-    audio.currentTime = 0
-  }).catch(() => {})
-  createRoom()
-}}>CREATE CINEMA ROOM</button>
+<div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+  <button onClick={() => {
+    const audio = squidDarumaAudioRef.current
+    audio.play().then(() => {
+      audio.pause()
+      audio.currentTime = 0
+    }).catch(() => {})
+    createRoom()
+  }}>CREATE CINEMA ROOM</button>
+
+  <button
+    onClick={() => {
+  const nextCount = stageTapCount + 1
+  setStageTapCount(nextCount)
+
+  if (nextCount >= 5) {
+    setShowStageSelect(true)
+    setStageTapCount(0)
+  }
+}}
+    style={{
+      width: '42px',
+      height: '42px',
+      padding: 0,
+      border: '2px dotted rgba(220, 190, 130, 0.4)',
+      borderRadius: '50%',
+      background: 'transparent',
+      color: 'rgba(220, 190, 130, 0.4)',
+      fontSize: '25px',
+      cursor: 'pointer',
+    }}
+  >
+    ◎
+  </button>
+</div>
     <input
       type="number"
       placeholder="ROOM ID"
@@ -4423,6 +4459,37 @@ audio.play().then(() => {
 }).catch(() => {})
   joinRoom()
 }}>JOIN CINEMA ROOM</button>
+{showStageSelect && (
+  <div className="stage-select">
+    <h2>SELECT STAGE</h2>
+
+    {[
+      'ユニバステージ',
+      'ジュラシック・パーク',
+      'バック・トゥ・ザ・フューチャー',
+      'スター・ウォーズ',
+      'スパイダーマン',
+      'ジョーズ'
+    ].map(stage => (
+      <button
+        key={stage}
+        onClick={() => setSelectedStage(stage)}
+        style={{
+          border: selectedStage === stage
+            ? '2px solid gold'
+            : '1px solid white',
+          opacity: selectedStage === stage ? 1 : 0.7
+        }}
+      >
+        {stage}
+      </button>
+    ))}
+
+    <button onClick={() => setShowStageSelect(false)}>
+      CLOSE
+    </button>
+  </div>
+)}
   </div>
 )}
 
@@ -4601,7 +4668,7 @@ setPlayerSide('player')
   ))}
 </div>
 
-      <div className={`board ${playerSide === 'opponent' ? 'opponent-board' : ''}`}>
+      <div className={`board ${playerSide === 'opponent' ? 'opponent-board' : ''} ${selectedStage === 'ジョーズ' ? 'jaws-stage' : ''}`}>
         {Array.from({ length: 81 }, (_, index) => {
           const row = Math.floor(index / 9)
           const col = index % 9

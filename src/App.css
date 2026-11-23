@@ -610,3 +610,69 @@ background-position: center;
   from { transform: scale(0.92); }
   to { transform: scale(1.08); }
 }
+
+/* ジョーズステージ */
+.jaws-stage {
+  position: relative;
+  background-image: url('./assets/jaws.png');
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+/* 海面のゆらぎ */
+.jaws-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(80, 190, 220, 0.08),
+    rgba(0, 70, 110, 0.18),
+    rgba(0, 30, 70, 0.08)
+  );
+  background-size: 100% 200%;
+  animation: jawsOcean 7s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* サメのヒレ */
+.jaws-stage::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 42%;
+  left: -12%;
+  border-left: 13px solid transparent;
+  border-right: 13px solid transparent;
+  border-bottom: 34px solid #172d38;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
+  animation: jawsFin 13s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes jawsOcean {
+  from { background-position: 0% 0%; }
+  to { background-position: 0% 100%; }
+}
+
+@keyframes jawsFin {
+  0% {
+    left: -12%;
+    top: 42%;
+    opacity: 0;
+  }
+  8% { opacity: 0.9; }
+  45% {
+    left: 110%;
+    top: 48%;
+    opacity: 0.9;
+  }
+  50%, 100% {
+    left: 110%;
+    opacity: 0;
+  }
+}
