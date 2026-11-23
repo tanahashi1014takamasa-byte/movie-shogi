@@ -4430,14 +4430,16 @@ alignSelf: 'center',
 }}
 style={{
   position: 'absolute',
-  right: '0',
+  left: 'calc(100% + 8px)',
+  top: '50%',
+  transform: 'translateY(-50%)',
   width: '42px',
   height: '42px',
   padding: 0,
   border: 'none',
   borderRadius: '50%',
   background: 'transparent',
-  color: 'rgba(220, 190, 130, 0.4)',
+  color: 'rgba(255, 255, 255, 0.08)',
   fontSize: '25px',
   cursor: 'pointer',
 }}
