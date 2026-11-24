@@ -73,6 +73,7 @@ import esther from './assets/エスター.png'
 import bugonia from './assets/ブゴニア.png'
 import backrooms from './assets/バックルームズ.png'
 import shark from './assets/shark.gif'
+import blood from './assets/blood.png'
 
 import squidDarumaVideo from './assets/だるまさんがころんだ.mp4'
 
@@ -783,6 +784,7 @@ if (gameState.playerCount === 2) {
   const [showTrex, setShowTrex] = useState(false)
   const [trexPosition, setTrexPosition] = useState(null)
   const jawsFinRef = useRef(null)
+  const [jawsBlood, setJawsBlood] = useState(null)
 
 const playSyogiSound = () => {
   syogiAudio.current.currentTime = 0
@@ -2546,6 +2548,17 @@ const col = Math.floor(
     if (hitPieces.length === 0) return
 
     jawsAttackLockRef.current = true
+
+    const hitPiece = hitPieces[0]
+
+setJawsBlood({
+  row: hitPiece.row,
+  col: hitPiece.col,
+})
+
+setTimeout(() => {
+  setJawsBlood(null)
+}, 400)
 
     const nextPieces = pieces.filter(piece => !hitPieces.includes(piece))
 
@@ -4956,6 +4969,25 @@ setPlayerSide('player')
     ref={jawsFinRef}
   />
 )}
+
+{jawsBlood && (
+  <img
+    src={blood}
+    alt=""
+    className="jaws-blood"
+    style={{
+      position: 'absolute',
+      left: `${jawsBlood.col * 100 / 9}%`,
+      top: `${jawsBlood.row * 100 / 9}%`,
+      width: '11.11%',
+      height: '11.11%',
+      objectFit: 'contain',
+      pointerEvents: 'none',
+      zIndex: 10,
+    }}
+  />
+)}
+
         {selectedStage === 'スパイダーマン' && <div className="spiderman-background" />}
         {selectedStage === 'ジュラシック・パーク' && <div className="jurassic-background" />}
         {selectedStage === 'バック・トゥ・ザ・フューチャー' && <div className="bttf-background" />}
