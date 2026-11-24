@@ -1867,6 +1867,28 @@ useEffect(() => {
   return () => clearTimeout(timer)
 }, [selectedStage, showTrex])
 
+useEffect(() => {
+  if (
+    selectedStage !== 'ジュラシック・パーク' ||
+    !showTrex ||
+    !trexPosition
+  ) return
+
+  setPieces((prevPieces) =>
+    prevPieces.filter((piece) => {
+      if (piece.name === 'タイタニック') return true
+
+      const insideTrexArea =
+        piece.row >= trexPosition.row &&
+        piece.row <= trexPosition.row + 2 &&
+        piece.col >= trexPosition.col &&
+        piece.col <= trexPosition.col + 2
+
+      return !insideTrexArea
+    })
+  )
+}, [selectedStage, showTrex, trexPosition])
+
 const createDeathNoteLetters = () => {
   const getDeathNoteName = (name) =>
   name === 'CUBE' ? 'キューブ' : name
@@ -4755,7 +4777,9 @@ setPlayerSide('player')
       height: `${300 / 9}%`,
       objectFit: 'fill',
       zIndex: 20,
+      transform: playerSide === 'opponent' ? 'rotate(180deg)' : 'none',
       pointerEvents: 'none'
+      
     }}
     
   />
