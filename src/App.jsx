@@ -717,6 +717,7 @@ previousTurnRef.current = gameState.turn
         setJawsStartTime(gameState.jawsStartTime ?? null)
         setJawsAttackCell(gameState.jawsAttackCell ?? null)
         setJawsTrapCell(gameState.jawsTrapCell ?? null)
+        setJawsOpponentTrapCell(gameState.jawsOpponentTrapCell ?? null)
         setMistMoveCount(gameState.mistMoveCount ?? { player: 0, opponent: 0 })
         setFunnyGameNextTarget(gameState.funnyGameNextTarget ?? 'own')
         setSquidDoubleMoves(gameState.squidDoubleMoves ?? 0)
@@ -792,6 +793,7 @@ if (gameState.playerCount === 2) {
   const [jawsBlood, setJawsBlood] = useState([])
   const [jawsAttackCell, setJawsAttackCell] = useState(null)
   const [jawsTrapCell, setJawsTrapCell] = useState(null)
+  const [jawsOpponentTrapCell, setJawsOpponentTrapCell] = useState(null)
   const [jawsStartTime, setJawsStartTime] = useState(null)
   const [jawsAnimationDelay, setJawsAnimationDelay] = useState('0s')
 
@@ -1902,7 +1904,37 @@ if (emptySquares.length > 0) {
   
 }, [roomId, screen, selectedStage, playerSide, jawsStartTime])
 
+useEffect(() => {
+  if (!roomId || screen !== 'game') return
+  if (selectedStage !== 'ジョーズ') return
+  if (playerSide !== 'opponent') return
+  if (jawsOpponentTrapCell) return
 
+  const emptySquares = []
+
+  for (let r = 0; r < 9; r++) {
+    for (let c = 0; c < 9; c++) {
+      if (!pieces.some(p => p.row === r && p.col === c)) {
+        emptySquares.push({ row: r, col: c })
+      }
+    }
+  }
+
+  if (emptySquares.length > 0) {
+    const trap = emptySquares[
+      Math.floor(Math.random() * emptySquares.length)
+    ]
+
+    setJawsOpponentTrapCell(trap)
+    syncJawsState(undefined, undefined, undefined, trap)
+  }
+}, [
+  roomId,
+  screen,
+  selectedStage,
+  playerSide,
+  jawsOpponentTrapCell
+])
 
 useEffect(() => {
   if (selectedStage !== 'ジュラシック・パーク') {
@@ -2321,8 +2353,13 @@ trexPosition: nextTrexPosition,
     .eq('room_id', roomId)
 }
 
-const syncJawsState = async (nextJawsStartTime, nextJawsAttackCell, nextJawsTrapCell) => {
-  if (!roomId || playerSide !== 'player') return
+const syncJawsState = async (
+  nextJawsStartTime,
+  nextJawsAttackCell,
+  nextJawsTrapCell,
+  nextJawsOpponentTrapCell
+) => {
+  if (!roomId) return
 
   const { data } = await supabase
     .from('game')
@@ -2344,6 +2381,9 @@ const syncJawsState = async (nextJawsStartTime, nextJawsAttackCell, nextJawsTrap
         ...(nextJawsTrapCell !== undefined && {
           jawsTrapCell: nextJawsTrapCell,
         }),
+        ...(nextJawsOpponentTrapCell !== undefined && {
+  jawsOpponentTrapCell: nextJawsOpponentTrapCell,
+}),
       }
     })
     .eq('room_id', roomId)
@@ -2394,6 +2434,7 @@ stage: currentState.stage ?? 'normal',
 jawsStartTime: currentState.jawsStartTime ?? null,
 jawsAttackCell: currentState.jawsAttackCell ?? null,
 jawsTrapCell: currentState.jawsTrapCell ?? null,
+jawsOpponentTrapCell: currentState.jawsOpponentTrapCell ?? null,
 mistMoveCount: nextMistMoveCount,
         trapCube: currentState.trapCube,
         opponentTrapCube: currentState.opponentTrapCube,
@@ -5061,10 +5102,17 @@ const isBrokenGlass = isGlassBridge &&
             <div
             
   className={`square ${
-          selectedStage === 'ジョーズ' &&
-      jawsTrapCell?.row === row &&
-      jawsTrapCell?.col === col &&
-      playerSide === 'player'
+selectedStage === 'ジョーズ' &&
+(
+  (
+    jawsTrapCell?.row === row &&
+    jawsTrapCell?.col === col
+  ) ||
+  (
+    jawsOpponentTrapCell?.row === row &&
+    jawsOpponentTrapCell?.col === col
+  )
+)
         ? 'jaws-trap-marker'
         :
       squidTugSelectMode &&
