@@ -2524,9 +2524,9 @@ useEffect(() => {
     const fifthRowTop = boardRect.top + rowHeight * 4
     const fifthRowBottom = fifthRowTop + rowHeight
 
-    const finCenterY = finRect.top + finRect.height / 2
+const finCenterY = finRect.top + finRect.height / 2
 
-    if (finCenterY < fifthRowTop || finCenterY > fifthRowBottom) return
+if (finCenterY < fifthRowTop - 30 || finCenterY > fifthRowBottom + 30) return
 
     const finCenterX = finRect.left + finRect.width / 2
     const col = Math.floor((finCenterX - boardRect.left) / (boardRect.width / 9))
