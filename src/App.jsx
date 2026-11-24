@@ -2566,28 +2566,30 @@ useEffect(() => {
     const board = fin.closest('.board')
     if (!board) return
 
-const boardRect = board.getBoundingClientRect()
-const cellWidth = boardRect.width / 9
-const cellHeight = boardRect.height / 9
+const squares = Array.from(board.querySelectorAll('.square'))
+const hitSquareIndexes = new Set()
 
-const isOpponentBoard = !!board.closest('.opponent-board')
+squares.forEach((square, index) => {
+  const pieceImages = square.querySelectorAll('.piece-image')
 
-const squares = board.querySelectorAll('.square')
+  const isHit = Array.from(pieceImages).some((image) => {
+    const rect = image.getBoundingClientRect()
+
+    return (
+      finRect.left < rect.right &&
+      finRect.right > rect.left &&
+      finRect.top < rect.bottom &&
+      finRect.bottom > rect.top
+    )
+  })
+
+  if (isHit) hitSquareIndexes.add(index)
+})
 
 const hitPieces = pieces.filter((piece) => {
   if (piece.name === 'タイタニック') return false
 
-  const square = squares[piece.row * 9 + piece.col]
-  if (!square) return false
-
-  const squareRect = square.getBoundingClientRect()
-
-  return (
-    finRect.left < squareRect.right &&
-    finRect.right > squareRect.left &&
-    finRect.top < squareRect.bottom &&
-    finRect.bottom > squareRect.top
-  )
+  return hitSquareIndexes.has(piece.row * 9 + piece.col)
 })
 
 if (hitPieces.length === 0) return
