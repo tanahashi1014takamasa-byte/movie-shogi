@@ -1942,7 +1942,7 @@ useEffect(() => {
 
   const bloodTimer = setTimeout(() => {
   setJawsBlood(prev => [...prev, { row, col }])
-}, 1500)
+}, 1000)
 
   if (hitPieces.length > 0) {
     const nextPieces = pieces.filter(
