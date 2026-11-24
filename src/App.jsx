@@ -713,6 +713,7 @@ previousTurnRef.current = gameState.turn
         setTurn(gameState.turn)
         setShowTrex(gameState.showTrex ?? false)
         setTrexPosition(gameState.trexPosition ?? null)
+        setJawsStartTime(gameState.jawsStartTime ?? null)
         setMistMoveCount(gameState.mistMoveCount ?? { player: 0, opponent: 0 })
         setFunnyGameNextTarget(gameState.funnyGameNextTarget ?? 'own')
         setSquidDoubleMoves(gameState.squidDoubleMoves ?? 0)
@@ -785,6 +786,7 @@ if (gameState.playerCount === 2) {
   const [trexPosition, setTrexPosition] = useState(null)
   const jawsFinRef = useRef(null)
   const [jawsBlood, setJawsBlood] = useState(null)
+  const [jawsStartTime, setJawsStartTime] = useState(null)
 
 const playSyogiSound = () => {
   syogiAudio.current.currentTime = 0
@@ -1863,6 +1865,18 @@ useEffect(() => {
 }, [selectedStage])
 
 useEffect(() => {
+  if (!roomId || screen !== 'game') return
+  if (selectedStage !== 'ジョーズ') return
+  if (playerSide !== 'player') return
+  if (jawsStartTime) return
+
+  const startTime = Date.now()
+
+  setJawsStartTime(startTime)
+  syncJawsState(startTime)
+}, [roomId, screen, selectedStage, playerSide, jawsStartTime])
+
+useEffect(() => {
   if (selectedStage !== 'ジュラシック・パーク') {
     setShowTrex(false)
     setTrexPosition(null)
@@ -2272,6 +2286,28 @@ const syncTrexState = async (
 showTrex: nextShowTrex,
 trexPosition: nextTrexPosition,
 ...(nextPieces ? { pieces: nextPieces } : {})
+      }
+    })
+    .eq('room_id', roomId)
+}
+
+const syncJawsState = async (nextJawsStartTime) => {
+  if (!roomId || playerSide !== 'player') return
+
+  const { data } = await supabase
+    .from('game')
+    .select('game_state')
+    .eq('room_id', roomId)
+    .single()
+
+  if (!data) return
+
+  await supabase
+    .from('game')
+    .update({
+      game_state: {
+        ...data.game_state,
+        jawsStartTime: nextJawsStartTime,
       }
     })
     .eq('room_id', roomId)
@@ -4968,6 +5004,11 @@ setPlayerSide('player')
     alt=""
     className="jaws-fin"
     ref={jawsFinRef}
+    style={{
+      animationDelay: jawsStartTime
+        ? `-${((Date.now() - jawsStartTime) % 13000) / 1000}s`
+        : '0s',
+    }}
   />
 )}
 
