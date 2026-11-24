@@ -4981,23 +4981,7 @@ setPlayerSide('player')
         {selectedStage === 'ジョーズ' && <div className="jaws-background" />}
 
 
-{jawsAttackCell && (
-  <img
-    src={shark2}
-    alt=""
- style={{
-  position: 'absolute',
-  left: `${jawsAttackCell.col * 100 / 9}%`,
-  top: `${jawsAttackCell.row * 100 / 9}%`,
-  width: '11.11%',
-  height: '11.11%',
-  objectFit: 'contain',
-  pointerEvents: 'none',
-  zIndex: 2,
-  display: 'block',
-}}
-  />
-)}
+
 
 {jawsBlood.map((bloodMark, index) => (
   <img
@@ -5149,6 +5133,15 @@ const isBrokenGlass = isGlassBridge &&
       ? '#050505'
       : 'linear-gradient(135deg, rgba(210,250,255,0.65), rgba(75,190,220,0.3), rgba(220,255,255,0.7))'
     : undefined,
+    backgroundImage:
+  selectedStage === 'ジョーズ' &&
+  jawsAttackCell?.row === row &&
+  jawsAttackCell?.col === col
+    ? `url(${shark2})`
+    : undefined,
+backgroundSize: 'contain',
+backgroundPosition: 'center',
+backgroundRepeat: 'no-repeat',
   border: isGlassBridge
     ? isBrokenGlass
       ? '2px solid #111'
