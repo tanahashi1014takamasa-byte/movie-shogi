@@ -658,7 +658,7 @@ background-position: center;
   border: none;
   box-shadow: none;
   filter: none;
-  animation: jawsFin 13s linear infinite;
+  animation: jawsFin 60s linear infinite;
   pointer-events: none;
   z-index: 2;
 }

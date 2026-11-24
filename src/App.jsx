@@ -788,6 +788,7 @@ if (gameState.playerCount === 2) {
   const jawsFinRef = useRef(null)
   const jawsAttackLockRef = useRef(false)
   const [jawsBlood, setJawsBlood] = useState(null)
+  const [jawsAttackCell, setJawsAttackCell] = useState(null)
   const [jawsStartTime, setJawsStartTime] = useState(null)
   const [jawsAnimationDelay, setJawsAnimationDelay] = useState('0s')
 
@@ -1881,6 +1882,21 @@ useEffect(() => {
 }, [roomId, screen, selectedStage, playerSide, jawsStartTime])
 
 useEffect(() => {
+  if (!roomId || screen !== 'game') return
+  if (selectedStage !== 'ジョーズ') return
+  if (playerSide !== 'player') return
+
+  const timer = setInterval(() => {
+    const row = Math.floor(Math.random() * 9)
+    const col = Math.floor(Math.random() * 9)
+
+    setJawsAttackCell({ row, col })
+  }, 40000)
+
+  return () => clearInterval(timer)
+}, [roomId, screen, selectedStage, playerSide])
+
+useEffect(() => {
   if (selectedStage !== 'ジュラシック・パーク') {
     setShowTrex(false)
     setTrexPosition(null)
@@ -1910,6 +1926,49 @@ const timer = setTimeout(() => {
 }, [selectedStage, showTrex, playerSide])
 
 
+useEffect(() => {
+  if (!jawsAttackCell) return
+
+  const { row, col } = jawsAttackCell
+
+  const hitPieces = pieces.filter(
+    piece =>
+      piece.row === row &&
+      piece.col === col &&
+      piece.name !== 'タイタニック'
+  )
+
+  setJawsBlood({ row, col })
+
+  if (hitPieces.length > 0) {
+    const nextPieces = pieces.filter(
+      piece => !hitPieces.includes(piece)
+    )
+
+    setPieces(nextPieces)
+
+    updateGameState(
+      nextPieces,
+      turn,
+      playerHand,
+      mistMoveCount,
+      false,
+      null,
+      funnyGameNextTarget,
+      squidDarumaSignal,
+      squidGlassBridge,
+      squidDarumaPending,
+      true
+    )
+  }
+
+  const timer = setTimeout(() => {
+    setJawsAttackCell(null)
+    setJawsBlood(null)
+  }, 1000)
+
+  return () => clearTimeout(timer)
+}, [jawsAttackCell])
 
 useEffect(() => {
   if (
@@ -4921,6 +4980,23 @@ setPlayerSide('player')
     ref={jawsFinRef}
     style={{
 animationDelay: jawsAnimationDelay,
+    }}
+  />
+)}
+
+{jawsAttackCell && (
+  <img
+    src={shark2}
+    alt=""
+    style={{
+      position: 'absolute',
+      left: `${jawsAttackCell.col * 100 / 9}%`,
+      top: `${jawsAttackCell.row * 100 / 9}%`,
+      width: '11.11%',
+      height: '11.11%',
+      objectFit: 'contain',
+      pointerEvents: 'none',
+      zIndex: 10,
     }}
   />
 )}
