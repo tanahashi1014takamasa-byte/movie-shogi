@@ -2214,6 +2214,10 @@ setOpponentHand(data[0].game_state.playerHand ?? [])
 setSelectedStage(data[0].game_state.stage ?? 'normal')
 setPlayerSide('opponent')
 setScreen('game')
+
+if (data[0].game_state.stage === 'ジュラシック・パーク') {
+  playJurassicMusic()
+}
 }
 
 const syncTrexState = async (
