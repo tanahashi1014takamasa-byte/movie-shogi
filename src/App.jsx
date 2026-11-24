@@ -4983,24 +4983,7 @@ setPlayerSide('player')
 
 
 
-{jawsBlood.map((bloodMark, index) => (
-  <img
-    key={index}
-    src={blood}
-    alt=""
-    className="jaws-blood"
-    style={{
-      position: 'absolute',
-      left: `${bloodMark.col * 100 / 9}%`,
-      top: `${bloodMark.row * 100 / 9}%`,
-      width: '11.11%',
-      height: '11.11%',
-      objectFit: 'contain',
-      pointerEvents: 'none',
-      zIndex: 1,
-    }}
-  />
-))}
+
 
         {selectedStage === 'スパイダーマン' && <div className="spiderman-background" />}
         {selectedStage === 'ジュラシック・パーク' && <div className="jurassic-background" />}
