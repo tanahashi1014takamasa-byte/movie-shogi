@@ -73,6 +73,7 @@ import esther from './assets/エスター.png'
 import bugonia from './assets/ブゴニア.png'
 import backrooms from './assets/バックルームズ.png'
 import shark from './assets/shark.gif'
+import shark2 from './assets/shark_2.gif'
 import blood from './assets/blood.png'
 
 import squidDarumaVideo from './assets/だるまさんがころんだ.mp4'
@@ -714,11 +715,6 @@ previousTurnRef.current = gameState.turn
         setShowTrex(gameState.showTrex ?? false)
         setTrexPosition(gameState.trexPosition ?? null)
         setJawsStartTime(gameState.jawsStartTime ?? null)
-        setJawsAnimationDelay(
-  gameState.jawsStartTime
-    ? `-${((Date.now() - gameState.jawsStartTime) % 13000) / 1000}s`
-    : '0s'
-)
         setMistMoveCount(gameState.mistMoveCount ?? { player: 0, opponent: 0 })
         setFunnyGameNextTarget(gameState.funnyGameNextTarget ?? 'own')
         setSquidDoubleMoves(gameState.squidDoubleMoves ?? 0)
