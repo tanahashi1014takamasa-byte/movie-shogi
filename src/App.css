@@ -166,7 +166,7 @@ body {
   position: absolute;
   top: 33%;
   right: -10px;
-  z-index: 2;
+  z-index: 0;
 }
 
 .menu-gif-background {
