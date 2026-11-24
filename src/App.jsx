@@ -790,6 +790,7 @@ if (gameState.playerCount === 2) {
   const [showTrex, setShowTrex] = useState(false)
   const [trexPosition, setTrexPosition] = useState(null)
   const jawsFinRef = useRef(null)
+  const jawsAttackLockRef = useRef(false)
   const [jawsBlood, setJawsBlood] = useState(null)
   const [jawsStartTime, setJawsStartTime] = useState(null)
   const [jawsAnimationDelay, setJawsAnimationDelay] = useState('0s')
