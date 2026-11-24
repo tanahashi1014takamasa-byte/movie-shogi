@@ -2553,6 +2553,12 @@ return () => clearTimeout(timer)
 ])
 
 useEffect(() => {
+  console.log('ジョーズ判定useEffect開始', {
+  roomId,
+  screen,
+  selectedStage,
+  playerSide
+})
   if (!roomId || screen !== 'game') return
   if (selectedStage !== 'ジョーズ') return
   if (playerSide !== 'player') return
