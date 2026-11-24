@@ -648,12 +648,11 @@ background-position: center;
 }
 
 /* サメの背びれ */
-.jaws-stage::after {
-  content: '';
+.jaws-fin {
   position: absolute;
   width: 34px;
   height: 43px;
-  top: 42%;
+  top: 44.44%;
   left: -12%;
 
   background: linear-gradient(
@@ -675,7 +674,6 @@ background-position: center;
   );
 
   filter: drop-shadow(2px 3px 3px rgba(0, 0, 0, 0.7));
-
   animation: jawsFin 13s linear infinite;
   pointer-events: none;
   z-index: 2;
@@ -689,13 +687,11 @@ background-position: center;
 @keyframes jawsFin {
   0% {
     left: -12%;
-    top: 42%;
     opacity: 0;
   }
   8% { opacity: 0.9; }
   45% {
     left: 110%;
-    top: 48%;
     opacity: 0.9;
   }
   50%, 100% {
@@ -797,6 +793,10 @@ background-position: center;
 }
 
 .opponent-board .jaws-background {
+  transform: rotate(180deg);
+}
+
+.opponent-board .jaws-fin {
   transform: rotate(180deg);
 }
 

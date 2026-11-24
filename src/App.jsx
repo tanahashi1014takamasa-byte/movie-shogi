@@ -781,6 +781,7 @@ if (gameState.playerCount === 2) {
   const [stageTapCount, setStageTapCount] = useState(0)
   const [showTrex, setShowTrex] = useState(false)
   const [trexPosition, setTrexPosition] = useState(null)
+  const jawsFinRef = useRef(null)
 
 const playSyogiSound = () => {
   syogiAudio.current.currentTime = 0
@@ -2283,7 +2284,7 @@ const updateGameState = async (
   nextFunnyGameNextTarget = funnyGameNextTarget,
 nextSquidDarumaSignal = squidDarumaSignal,
 nextSquidGlassBridge = squidGlassBridge,
-nextSquidDarumaPending = squidDarumaPending
+nextSquidDarumaPending = squidDarumaPending,allowJawsUpdate = false
 ) => {
   if (!roomId) return
 
@@ -2295,8 +2296,9 @@ nextSquidDarumaPending = squidDarumaPending
 
   if (!data) return
 
-  const currentState = data.game_state
-  if (
+const currentState = data.game_state
+if (
+  !allowJawsUpdate &&
   currentState.turn !== turn &&
   !(turn === 'funnyGame' && currentState.turn === playerSide)
 ) return
@@ -2501,6 +2503,82 @@ return () => clearTimeout(timer)
   funnyGameNextTarget,
   playerHand,
   mistMoveCount,
+])
+
+useEffect(() => {
+  if (!roomId || screen !== 'game') return
+  if (selectedStage !== 'ジョーズ') return
+  if (playerSide !== 'player') return
+
+  const timer = setInterval(() => {
+    const fin = jawsFinRef.current
+    if (!fin || jawsAttackLockRef.current) return
+
+    const finRect = fin.getBoundingClientRect()
+    const board = fin.closest('.board')
+    if (!board) return
+
+    const boardRect = board.getBoundingClientRect()
+    const rowHeight = boardRect.height / 9
+
+    const fifthRowTop = boardRect.top + rowHeight * 4
+    const fifthRowBottom = fifthRowTop + rowHeight
+
+    const finCenterY = finRect.top + finRect.height / 2
+
+    if (finCenterY < fifthRowTop || finCenterY > fifthRowBottom) return
+
+    const finCenterX = finRect.left + finRect.width / 2
+    const col = Math.floor((finCenterX - boardRect.left) / (boardRect.width / 9))
+
+    if (col < 0 || col > 8) return
+
+    const hitPieces = pieces.filter(
+      piece =>
+        piece.row === 4 &&
+        piece.name !== 'タイタニック' &&
+        piece.col === col
+    )
+
+    if (hitPieces.length === 0) return
+
+    jawsAttackLockRef.current = true
+
+    const nextPieces = pieces.filter(piece => !hitPieces.includes(piece))
+
+    setPieces(nextPieces)
+
+    updateGameState(
+      nextPieces,
+      turn,
+      playerHand,
+      mistMoveCount,
+      false,
+      null,
+      funnyGameNextTarget,
+      squidDarumaSignal,
+      squidGlassBridge,
+      squidDarumaPending,
+      true
+    ).finally(() => {
+      jawsAttackLockRef.current = false
+    })
+  }, 100)
+
+  return () => clearInterval(timer)
+}, [
+  roomId,
+  screen,
+  selectedStage,
+  playerSide,
+  pieces,
+  turn,
+  playerHand,
+  mistMoveCount,
+  funnyGameNextTarget,
+  squidDarumaSignal,
+  squidGlassBridge,
+  squidDarumaPending,
 ])
 
   return (
@@ -4867,6 +4945,9 @@ setPlayerSide('player')
 
       <div className={`board ${playerSide === 'opponent' ? 'opponent-board' : ''} ${selectedStage === 'ジョーズ' ? 'jaws-stage' : ''} ${selectedStage === 'スパイダーマン' ? 'spiderman-stage' : ''}${selectedStage === 'ジュラシック・パーク' ? 'jurassic-stage' : ''}${selectedStage === 'バック・トゥ・ザ・フューチャー' ? 'bttf-stage' : ''}${selectedStage === 'スター・ウォーズ' ? 'starwars-stage' : ''}${selectedStage === 'ユニバステージ' ? 'universal-stage' : ''}`}>
         {selectedStage === 'ジョーズ' && <div className="jaws-background" />}
+  {selectedStage === 'ジョーズ' && (
+  <div className="jaws-fin" ref={jawsFinRef} />
+)}
         {selectedStage === 'スパイダーマン' && <div className="spiderman-background" />}
         {selectedStage === 'ジュラシック・パーク' && <div className="jurassic-background" />}
         {selectedStage === 'バック・トゥ・ザ・フューチャー' && <div className="bttf-background" />}
