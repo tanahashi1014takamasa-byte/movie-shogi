@@ -2574,13 +2574,12 @@ useEffect(() => {
     const board = fin.closest('.board')
     if (!board) return
 
-const squares = Array.from(board.querySelectorAll('.square'))
-const hitSquareIndexes = new Set()
+const pieceImages = Array.from(
+  board.querySelectorAll('.piece-image')
+)
 
-squares.forEach((square, index) => {
-  const pieceImages = square.querySelectorAll('.piece-image')
-
-  const isHit = Array.from(pieceImages).some((image) => {
+const hitPieces = pieceImages
+  .filter((image) => {
     const rect = image.getBoundingClientRect()
 
     return (
@@ -2590,15 +2589,22 @@ squares.forEach((square, index) => {
       finRect.bottom > rect.top
     )
   })
+  .map((image) => {
+    const square = image.closest('.square')
+    if (!square) return null
 
-  if (isHit) hitSquareIndexes.add(index)
-})
+    const index = Array.from(board.querySelectorAll('.square')).indexOf(square)
+    const row = Math.floor(index / 9)
+    const col = index % 9
 
-const hitPieces = pieces.filter((piece) => {
-  if (piece.name === 'タイタニック') return false
-
-  return hitSquareIndexes.has(piece.row * 9 + piece.col)
-})
+    return pieces.find((piece) =>
+      piece.row === row &&
+      piece.col === col &&
+      piece.name !== 'タイタニック' &&
+      piece.name === image.alt
+    )
+  })
+  .filter(Boolean)
 
 if (hitPieces.length === 0) return
 
