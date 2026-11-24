@@ -777,6 +777,7 @@ if (gameState.playerCount === 2) {
   const [squidGlassBridge, setSquidGlassBridge] = useState(null)
   const syogiAudio = useRef(new Audio(syogiSound))
   const jurassicMusicPlayedRef = useRef(false)
+  const jurassicAudioRef = useRef(null)
   const [stageTapCount, setStageTapCount] = useState(0)
   const [showTrex, setShowTrex] = useState(false)
   const [trexPosition, setTrexPosition] = useState(null)
@@ -2119,15 +2120,38 @@ const createRentalHand = () => [
 ]
 
 const playJurassicMusic = () => {
-  const audio = new Audio(jurassicMusic)
-  audio.loop = true
-  audio.volume = 0.5
-  audio.play().catch((error) => {
+  if (!jurassicAudioRef.current) {
+    jurassicAudioRef.current = new Audio(jurassicMusic)
+    jurassicAudioRef.current.loop = true
+    jurassicAudioRef.current.volume = 0.5
+  }
+
+  jurassicAudioRef.current.play().catch((error) => {
     console.log('音楽の再生に失敗:', error)
   })
 }
 
+const prepareJurassicMusic = () => {
+  if (!jurassicAudioRef.current) {
+    jurassicAudioRef.current = new Audio(jurassicMusic)
+    jurassicAudioRef.current.loop = true
+    jurassicAudioRef.current.volume = 0.5
+  }
+
+  const audio = jurassicAudioRef.current
+  audio.muted = true
+
+  audio.play().then(() => {
+    audio.pause()
+    audio.currentTime = 0
+    audio.muted = false
+  }).catch((error) => {
+    console.log('音声の準備に失敗:', error)
+  })
+}
+
 const createRoom = async () => {
+  prepareJurassicMusic()
   const newRoomId = Math.floor(100000 + Math.random() * 900000).toString()
 
 const newTrapCube = Math.floor(Math.random() * 9)
@@ -2176,6 +2200,7 @@ setShowSquidDarumaVideo(false)
 }
 
 const joinRoom = async () => {
+  prepareJurassicMusic()
   if (!roomId) {
     alert('ルームIDを入力してください')
     return
@@ -2563,9 +2588,15 @@ return () => clearTimeout(timer)
       </div>
     ))}
 
-    <button onClick={() => setScreen('opening')}>
-      戻る
-    </button>
+    <button onClick={() => {
+  jurassicAudioRef.current?.pause()
+  if (jurassicAudioRef.current) {
+    jurassicAudioRef.current.currentTime = 0
+  }
+  setScreen('opening')
+}}>
+  戻る
+</button>
   </div>
 )}
 
@@ -4793,6 +4824,10 @@ setPlayerSide('player')
         <div>M: 0</div>
 
 <button className="home-button" onClick={async () => {
+  if (jurassicAudioRef.current) {
+  jurassicAudioRef.current.pause()
+  jurassicAudioRef.current.currentTime = 0
+}
   if (roomId) {
     const { data } = await supabase
       .from('game')
