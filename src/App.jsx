@@ -1774,27 +1774,28 @@ if (absorbedMove === 'サイコ・ゴアマン') {
 }
   
   const [pieces, setPieces] = useState([
-  { name: 'ミスト', image: mist, row: 8, col: 0, side: 'player' },
-  { name: '羅生門', image: rashomon, row: 8, col: 1, direction: -1, side: 'player' },
+  { name: 'ミスト', image: mist, row: 8, col: 0 },
+  { name: '羅生門', image: rashomon, row: 8, col: 1, direction: -1 },
 
-  { name: 'ウォーゲーム', image: warGame, row: 8, col: 2, side: 'player' },
- { name: '武器人間', image: weaponHuman, row: 8, col: 3, absorbedMoves: [], side: 'player' },
-{ name: 'タイタニック', image: titanic, row: 8, col: 4, side: 'player' },
-{ name: '国宝', image: kokuhou, row: 8, col: 5, side: 'player' },
-{ name: 'ウォーゲーム', image: warGame, row: 8, col: 6, side: 'player' },
-{ name: 'サスペリア', image: suspiria, row: 8, col: 7, side: 'player' },
-{ name: 'ゾディアック', image: zodiac, row: 8, col: 8, side: 'player' },
-{ name: 'ミミ', image: mimi, row: 7, col: 4, side: 'player' },
+  { name: 'ウォーゲーム', image: warGame, row: 8, col: 2 },
+  { name: '武器人間', image: weaponHuman, row: 8, col: 3, absorbedMoves: [] },
+  { name: 'タイタニック', image: titanic, row: 8, col: 4, side: 'player' },
+  { name: '国宝', image: kokuhou, row: 8, col: 5 },
+  { name: 'ウォーゲーム', image: warGame, row: 8, col: 6 },
+  { name: 'サスペリア', image: suspiria, row: 8, col: 7 },
+  { name: 'ゾディアック', image: zodiac, row: 8, col: 8 },
 
-{ name: 'CUBE', image: cube, row: 6, col: 0, side: 'player' },
-{ name: 'CUBE', image: cube, row: 6, col: 1, side: 'player' },
-{ name: 'CUBE', image: cube, row: 6, col: 2, side: 'player' },
-{ name: 'CUBE', image: cube, row: 6, col: 3, side: 'player' },
-{ name: 'CUBE', image: cube, row: 6, col: 4, side: 'player' },
-{ name: 'CUBE', image: cube, row: 6, col: 5, side: 'player' },
-{ name: 'CUBE', image: cube, row: 6, col: 6, side: 'player' },
-{ name: 'CUBE', image: cube, row: 6, col: 7, side: 'player' },
-{ name: 'CUBE', image: cube, row: 6, col: 8, side: 'player' },
+  { name: 'ミミ', image: mimi, row: 7, col: 4, side: 'player' },
+
+  { name: 'CUBE', image: cube, row: 6, col: 0 },
+  { name: 'CUBE', image: cube, row: 6, col: 1 },
+  { name: 'CUBE', image: cube, row: 6, col: 2 },
+  { name: 'CUBE', image: cube, row: 6, col: 3 },
+  { name: 'CUBE', image: cube, row: 6, col: 4 },
+  { name: 'CUBE', image: cube, row: 6, col: 5 },
+  { name: 'CUBE', image: cube, row: 6, col: 6 },
+  { name: 'CUBE', image: cube, row: 6, col: 7 },
+  { name: 'CUBE', image: cube, row: 6, col: 8 },
     { name: 'ミスト', image: mist, row: 0, col: 0, side: 'opponent' },
   { name: '羅生門', image: rashomon, row: 0, col: 1, side: 'opponent', direction: 1 },
   { name: 'ウォーゲーム', image: warGame, row: 0, col: 2, side: 'opponent' },
@@ -1940,13 +1941,12 @@ useEffect(() => {
 if (jawsProcessedAttack === attackKey) return
 setJawsProcessedAttack(attackKey)
 
-const hitPieces = pieces.filter(
-  piece =>
-    piece.row === row &&
-    piece.col === col &&
-    piece.side === playerSide &&
-    piece.name !== 'タイタニック'
-)
+  const hitPieces = pieces.filter(
+    piece =>
+      piece.row === row &&
+      piece.col === col &&
+      piece.name !== 'タイタニック'
+  )
 
   const bloodTimer = setTimeout(() => {
   setJawsBlood(prev => [...prev, { row, col }])
@@ -1979,7 +1979,7 @@ const hitPieces = pieces.filter(
 }, 1500)
 
   return () => clearTimeout(timer)
-}, [jawsAttackCell, turn, playerSide])
+}, [jawsAttackCell])
 
 useEffect(() => {
   if (
