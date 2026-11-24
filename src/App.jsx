@@ -788,7 +788,7 @@ if (gameState.playerCount === 2) {
   const [trexPosition, setTrexPosition] = useState(null)
   const jawsFinRef = useRef(null)
   const jawsAttackLockRef = useRef(false)
-  const [jawsBlood, setJawsBlood] = useState(null)
+  const [jawsBlood, setJawsBlood] = useState([])
   const [jawsAttackCell, setJawsAttackCell] = useState(null)
   const [jawsStartTime, setJawsStartTime] = useState(null)
   const [jawsAnimationDelay, setJawsAnimationDelay] = useState('0s')
@@ -5008,15 +5008,16 @@ animationDelay: jawsAnimationDelay,
   />
 )}
 
-{jawsBlood && (
+{jawsBlood.map((bloodMark, index) => (
   <img
+    key={index}
     src={blood}
     alt=""
     className="jaws-blood"
     style={{
       position: 'absolute',
-      left: `${jawsBlood.col * 100 / 9}%`,
-      top: `${jawsBlood.row * 100 / 9}%`,
+      left: `${bloodMark.col * 100 / 9}%`,
+      top: `${bloodMark.row * 100 / 9}%`,
       width: '11.11%',
       height: '11.11%',
       objectFit: 'contain',
@@ -5024,7 +5025,7 @@ animationDelay: jawsAnimationDelay,
       zIndex: 10,
     }}
   />
-)}
+))}
 
         {selectedStage === 'スパイダーマン' && <div className="spiderman-background" />}
         {selectedStage === 'ジュラシック・パーク' && <div className="jurassic-background" />}
