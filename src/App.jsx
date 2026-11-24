@@ -4985,16 +4985,17 @@ setPlayerSide('player')
   <img
     src={shark2}
     alt=""
-    style={{
-      position: 'absolute',
-      left: `${jawsAttackCell.col * 100 / 9}%`,
-      top: `${jawsAttackCell.row * 100 / 9}%`,
-      width: '9%',
-      height: '11.11%',
-      objectFit: 'contain',
-      pointerEvents: 'none',
-      zIndex: 0,
-    }}
+ style={{
+  position: 'absolute',
+  left: `${jawsAttackCell.col * 100 / 9}%`,
+  top: `${jawsAttackCell.row * 100 / 9}%`,
+  width: '11.11%',
+  height: '11.11%',
+  objectFit: 'contain',
+  pointerEvents: 'none',
+  zIndex: 2,
+  display: 'block',
+}}
   />
 )}
 
