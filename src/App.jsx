@@ -681,8 +681,7 @@ if (gameState.gameEnded && gameState.winnerSide) {
   setResult(gameState.winnerSide === playerSide ? '勝利' : '敗北')
   setPieces(gameState.pieces)
   setTurn(gameState.turn)
-  setShowTrex(gameState.showTrex ?? false)
-  setTrexPosition(gameState.trexPosition ?? null)
+
   return
 }
 
@@ -709,6 +708,8 @@ previousTurnRef.current = gameState.turn
 
         setPieces(gameState.pieces)
         setTurn(gameState.turn)
+        setShowTrex(gameState.showTrex ?? false)
+        setTrexPosition(gameState.trexPosition ?? null)
         setMistMoveCount(gameState.mistMoveCount ?? { player: 0, opponent: 0 })
         setFunnyGameNextTarget(gameState.funnyGameNextTarget ?? 'own')
         setSquidDoubleMoves(gameState.squidDoubleMoves ?? 0)
