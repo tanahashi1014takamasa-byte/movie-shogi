@@ -43,8 +43,9 @@ body {
   background: #d8b06a;
   border: 3px solid #222;
   display: grid;
-    grid-template-columns: repeat(9, 1fr);
+  grid-template-columns: repeat(9, 1fr);
   grid-template-rows: repeat(9, 1fr);
+  transform: translateZ(0);
 }
 
 .opponent-board {
