@@ -879,3 +879,7 @@ background-position: center;
     transform: translateX(-110%);
   }
 }
+
+.square:nth-child(9n + 8) {
+  border-right: 1px solid #222 !important;
+}
