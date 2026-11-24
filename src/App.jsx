@@ -2120,13 +2120,13 @@ const createRentalHand = () => [
 ]
 
 const playJurassicMusic = () => {
-  if (!jurassicAudioRef.current) {
-    jurassicAudioRef.current = new Audio(jurassicMusic)
-    jurassicAudioRef.current.loop = true
-    jurassicAudioRef.current.volume = 0.5
-  }
+  const audio = jurassicAudioRef.current
+  if (!audio) return
 
-  jurassicAudioRef.current.play().catch((error) => {
+  audio.muted = false
+  audio.volume = 0.5
+
+  audio.play().catch((error) => {
     console.log('音楽の再生に失敗:', error)
   })
 }
@@ -2144,7 +2144,7 @@ const prepareJurassicMusic = () => {
   audio.play().then(() => {
     audio.pause()
     audio.currentTime = 0
-    audio.muted = false
+  
   }).catch((error) => {
     console.log('音声の準備に失敗:', error)
   })
