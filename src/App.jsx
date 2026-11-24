@@ -2563,6 +2563,7 @@ useEffect(() => {
     if (!fin || jawsAttackLockRef.current) return
 
     const finRect = fin.getBoundingClientRect()
+    console.log('サメ判定実行中', finRect.left, finRect.top)
     const board = fin.closest('.board')
     if (!board) return
 
