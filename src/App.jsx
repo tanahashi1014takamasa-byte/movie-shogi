@@ -2528,8 +2528,10 @@ const finCenterY = finRect.top + finRect.height / 2
 
 if (finCenterY < fifthRowTop - 30 || finCenterY > fifthRowBottom + 30) return
 
-    const finCenterX = finRect.left + finRect.width / 2
-    const col = Math.floor((finCenterX - boardRect.left) / (boardRect.width / 9))
+const finCenterX = finRect.left + finRect.width / 2
+const col = Math.floor(
+  ((finCenterX - boardRect.left) / boardRect.width) * 9
+)
 
     if (col < 0 || col > 8) return
 
