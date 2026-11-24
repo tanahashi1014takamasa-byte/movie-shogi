@@ -5133,15 +5133,7 @@ const isBrokenGlass = isGlassBridge &&
       ? '#050505'
       : 'linear-gradient(135deg, rgba(210,250,255,0.65), rgba(75,190,220,0.3), rgba(220,255,255,0.7))'
     : undefined,
-    backgroundImage:
-  selectedStage === 'ジョーズ' &&
-  jawsAttackCell?.row === row &&
-  jawsAttackCell?.col === col
-    ? `url(${shark2})`
-    : undefined,
-backgroundSize: 'contain',
-backgroundPosition: 'center',
-backgroundRepeat: 'no-repeat',
+    
   border: isGlassBridge
     ? isBrokenGlass
       ? '2px solid #111'
