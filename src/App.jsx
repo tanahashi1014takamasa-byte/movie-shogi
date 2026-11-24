@@ -714,6 +714,11 @@ previousTurnRef.current = gameState.turn
         setShowTrex(gameState.showTrex ?? false)
         setTrexPosition(gameState.trexPosition ?? null)
         setJawsStartTime(gameState.jawsStartTime ?? null)
+        setJawsAnimationDelay(
+  gameState.jawsStartTime
+    ? `-${((Date.now() - gameState.jawsStartTime) % 13000) / 1000}s`
+    : '0s'
+)
         setMistMoveCount(gameState.mistMoveCount ?? { player: 0, opponent: 0 })
         setFunnyGameNextTarget(gameState.funnyGameNextTarget ?? 'own')
         setSquidDoubleMoves(gameState.squidDoubleMoves ?? 0)
@@ -787,6 +792,7 @@ if (gameState.playerCount === 2) {
   const jawsFinRef = useRef(null)
   const [jawsBlood, setJawsBlood] = useState(null)
   const [jawsStartTime, setJawsStartTime] = useState(null)
+  const [jawsAnimationDelay, setJawsAnimationDelay] = useState('0s')
 
 const playSyogiSound = () => {
   syogiAudio.current.currentTime = 0
@@ -1873,6 +1879,7 @@ useEffect(() => {
   const startTime = Date.now()
 
   setJawsStartTime(startTime)
+  setJawsAnimationDelay(`-${((Date.now() - startTime) % 13000) / 1000}s`)
   syncJawsState(startTime)
 }, [roomId, screen, selectedStage, playerSide, jawsStartTime])
 
@@ -5005,9 +5012,7 @@ setPlayerSide('player')
     className="jaws-fin"
     ref={jawsFinRef}
     style={{
-      animationDelay: jawsStartTime
-        ? `-${((Date.now() - jawsStartTime) % 13000) / 1000}s`
-        : '0s',
+animationDelay: jawsAnimationDelay,
     }}
   />
 )}
