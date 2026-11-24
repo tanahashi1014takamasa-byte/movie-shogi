@@ -2511,7 +2511,7 @@ return () => clearTimeout(timer)
 useEffect(() => {
   if (!roomId || screen !== 'game') return
   if (selectedStage !== 'ジョーズ') return
-  if (playerSide !== 'player') return
+  
 
   const timer = setInterval(() => {
     const fin = jawsFinRef.current
