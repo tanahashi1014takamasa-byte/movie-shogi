@@ -793,8 +793,8 @@ if (gameState.playerCount === 2) {
   const jawsAttackLockRef = useRef(false)
   const [jawsBlood, setJawsBlood] = useState([])
   const [jawsAttackCell, setJawsAttackCell] = useState(null)
-  const [jawsTrapCell, setJawsTrapCell] = useState(null)
-  const [jawsOpponentTrapCell, setJawsOpponentTrapCell] = useState(null)
+  const [jawsTrapCell, setJawsTrapCell] = useState([])
+  const [jawsOpponentTrapCell, setJawsOpponentTrapCell] = useState([])
   const [jawsStartTime, setJawsStartTime] = useState(null)
   const [jawsAnimationDelay, setJawsAnimationDelay] = useState('0s')
 
@@ -1881,36 +1881,6 @@ useEffect(() => {
   if (jawsStartTime) return
 
   const startTime = Date.now()
-
-  const emptySquares = []
-
-for (let r = 0; r < 9; r++) {
-  for (let c = 0; c < 9; c++) {
-    if (!pieces.some(p => p.row === r && p.col === c)) {
-      emptySquares.push({ row: r, col: c })
-    }
-  }
-}
-
-if (emptySquares.length > 0) {
-  const trap = emptySquares[
-    Math.floor(Math.random() * emptySquares.length)
-  ]
-  setJawsTrapCell(trap)
-  syncJawsState(startTime, undefined, trap)
-}
-
-  setJawsStartTime(startTime)
-  setJawsAnimationDelay(`-${((Date.now() - startTime) % 13000) / 1000}s`)
-  
-}, [roomId, screen, selectedStage, playerSide, jawsStartTime])
-
-useEffect(() => {
-  if (!roomId || screen !== 'game') return
-  if (selectedStage !== 'ジョーズ') return
-  if (playerSide !== 'opponent') return
-  if (jawsOpponentTrapCell) return
-
   const emptySquares = []
 
   for (let r = 0; r < 9; r++) {
@@ -1921,21 +1891,32 @@ useEffect(() => {
     }
   }
 
-  if (emptySquares.length > 0) {
-    const trap = emptySquares[
-      Math.floor(Math.random() * emptySquares.length)
-    ]
+  const traps = []
 
-    setJawsOpponentTrapCell(trap)
-    syncJawsState(undefined, undefined, undefined, trap)
+  while (traps.length < 10 && emptySquares.length > 0) {
+    const index = Math.floor(Math.random() * emptySquares.length)
+    traps.push(emptySquares.splice(index, 1)[0])
   }
-}, [
-  roomId,
-  screen,
-  selectedStage,
-  playerSide,
-  jawsOpponentTrapCell
-])
+
+  const myTraps = traps.slice(0, 5)
+  const opponentTraps = traps.slice(5, 10)
+
+  setJawsTrapCell(myTraps)
+  setJawsOpponentTrapCell(opponentTraps)
+
+  syncJawsState(
+    startTime,
+    undefined,
+    myTraps,
+    opponentTraps
+  )
+
+  setJawsStartTime(startTime)
+  setJawsAnimationDelay(
+    `-${((Date.now() - startTime) % 13000) / 1000}s`
+  )
+}, [roomId, screen, selectedStage, playerSide, jawsStartTime])
+
 
 useEffect(() => {
   if (selectedStage !== 'ジュラシック・パーク') {
@@ -5114,16 +5095,18 @@ selectedStage === 'ジョーズ' &&
 (
   (
     playerSide === 'player' &&
-    jawsTrapCell?.row === row &&
-    jawsTrapCell?.col === col
+    jawsTrapCell.some(trap =>
+      trap.row === row && trap.col === col
+    )
   ) ||
   (
     playerSide === 'opponent' &&
-    jawsOpponentTrapCell?.row === row &&
-    jawsOpponentTrapCell?.col === col
+    jawsOpponentTrapCell.some(trap =>
+      trap.row === row && trap.col === col
+    )
   )
 )
-        ? 'jaws-trap-marker'
+  ? 'jaws-trap-marker'
         :
       squidTugSelectMode &&
   piece &&
@@ -5710,14 +5693,16 @@ const jawsTrapHit =
   selectedStage === 'ジョーズ' &&
   (
     (selectedPiece.side ?? 'player') === 'player'
-      ? jawsOpponentTrapCell?.row === row &&
-        jawsOpponentTrapCell?.col === col
-      : jawsTrapCell?.row === row &&
-        jawsTrapCell?.col === col
+      ? jawsOpponentTrapCell.some(trap =>
+          trap.row === row && trap.col === col
+        )
+      : jawsTrapCell.some(trap =>
+          trap.row === row && trap.col === col
+        )
   )
 
 
-  const nextJawsBlood = jawsTrapHit
+const nextJawsBlood = jawsTrapHit
   ? [
       ...jawsBlood,
       ...(
@@ -5865,12 +5850,16 @@ if (jawsTrapHit) {
 
   const nextJawsTrapCell =
     (selectedPiece.side ?? 'player') === 'opponent'
-      ? null
+      ? jawsTrapCell.filter(trap =>
+          !(trap.row === row && trap.col === col)
+        )
       : jawsTrapCell
 
   const nextJawsOpponentTrapCell =
     (selectedPiece.side ?? 'player') === 'player'
-      ? null
+      ? jawsOpponentTrapCell.filter(trap =>
+          !(trap.row === row && trap.col === col)
+        )
       : jawsOpponentTrapCell
 
   setJawsTrapCell(nextJawsTrapCell)
@@ -5887,7 +5876,7 @@ if (jawsTrapHit) {
   setTimeout(() => {
     setJawsAttackCell(null)
     syncJawsState(undefined, null)
- }, 500)
+  }, 300)
 }
 
 
