@@ -72,6 +72,7 @@ import interestArea from './assets/関心領域.png'
 import esther from './assets/エスター.png'
 import bugonia from './assets/ブゴニア.png'
 import backrooms from './assets/バックルームズ.png'
+import hire from './assets/hire.png'
 
 import squidDarumaVideo from './assets/だるまさんがころんだ.mp4'
 
@@ -4947,8 +4948,13 @@ setPlayerSide('player')
 
       <div className={`board ${playerSide === 'opponent' ? 'opponent-board' : ''} ${selectedStage === 'ジョーズ' ? 'jaws-stage' : ''} ${selectedStage === 'スパイダーマン' ? 'spiderman-stage' : ''}${selectedStage === 'ジュラシック・パーク' ? 'jurassic-stage' : ''}${selectedStage === 'バック・トゥ・ザ・フューチャー' ? 'bttf-stage' : ''}${selectedStage === 'スター・ウォーズ' ? 'starwars-stage' : ''}${selectedStage === 'ユニバステージ' ? 'universal-stage' : ''}`}>
         {selectedStage === 'ジョーズ' && <div className="jaws-background" />}
-  {selectedStage === 'ジョーズ' && (
-  <div className="jaws-fin" ref={jawsFinRef} />
+ {selectedStage === 'ジョーズ' && (
+  <img
+    src={hire}
+    alt=""
+    className="jaws-fin"
+    ref={jawsFinRef}
+  />
 )}
         {selectedStage === 'スパイダーマン' && <div className="spiderman-background" />}
         {selectedStage === 'ジュラシック・パーク' && <div className="jurassic-background" />}

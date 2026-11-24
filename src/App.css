@@ -647,33 +647,15 @@ background-position: center;
   z-index: 1;
 }
 
-/* サメの背びれ */
+/* サメの背びれ画像 */
 .jaws-fin {
   position: absolute;
-  width: 34px;
-  height: 43px;
+  width: 100px;
+  height: 100px;
   top: 44.44%;
-  left: -12%;
-
-  background: linear-gradient(
-    110deg,
-    #07151b 0%,
-    #263d45 38%,
-    #0b171d 72%,
-    #02090d 100%
-  );
-
-  clip-path: polygon(
-    0% 100%,
-    18% 66%,
-    36% 32%,
-    58% 0%,
-    62% 34%,
-    82% 65%,
-    100% 100%
-  );
-
-  filter: drop-shadow(2px 3px 3px rgba(0, 0, 0, 0.7));
+  left: -30%;
+  object-fit: contain;
+  filter: drop-shadow(2px 3px 3px rgba(0, 0, 0, 0.5));
   animation: jawsFin 13s linear infinite;
   pointer-events: none;
   z-index: 2;
