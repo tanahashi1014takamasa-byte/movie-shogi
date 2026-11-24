@@ -5863,18 +5863,31 @@ if (jawsTrapHit) {
   setJawsBlood(nextJawsBlood)
   setJawsAttackCell({ row, col })
 
+  const nextJawsTrapCell =
+    (selectedPiece.side ?? 'player') === 'opponent'
+      ? null
+      : jawsTrapCell
+
+  const nextJawsOpponentTrapCell =
+    (selectedPiece.side ?? 'player') === 'player'
+      ? null
+      : jawsOpponentTrapCell
+
+  setJawsTrapCell(nextJawsTrapCell)
+  setJawsOpponentTrapCell(nextJawsOpponentTrapCell)
+
   await syncJawsState(
     undefined,
     { row, col },
-    undefined,
-    undefined,
+    nextJawsTrapCell,
+    nextJawsOpponentTrapCell,
     nextJawsBlood
   )
 
   setTimeout(() => {
     setJawsAttackCell(null)
     syncJawsState(undefined, null)
-  }, 1000)
+ }, 500)
 }
 
 
