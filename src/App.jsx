@@ -2338,8 +2338,10 @@ const syncJawsState = async (nextJawsStartTime, nextJawsAttackCell, nextJawsTrap
       game_state: {
         ...data.game_state,
         jawsStartTime: nextJawsStartTime,
-        ...(nextJawsAttackCell !== undefined && {
+                ...(nextJawsAttackCell !== undefined && {
           jawsAttackCell: nextJawsAttackCell,
+        }),
+        ...(nextJawsTrapCell !== undefined && {
           jawsTrapCell: nextJawsTrapCell,
         }),
       }
