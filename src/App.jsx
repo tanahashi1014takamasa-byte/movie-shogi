@@ -2159,6 +2159,10 @@ stage: selectedStage,
   setTrapCube(newTrapCube)
   setOpponentTrapCube(newOpponentTrapCube)
   setRoomId(newRoomId)
+  squidDarumaSignalRef.current = 0
+setSquidDarumaSignal(0)
+setSquidDarumaPending(false)
+setShowSquidDarumaVideo(false)
   setSelectedStage(selectedStage)
   setPlayerHand(createRentalHand())
   setPlayerSide('player')
