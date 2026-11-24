@@ -58,6 +58,7 @@ import moviesBest from './assets/BEST.txt?raw'
 import welcomeMusic from './assets/Welcome.mp3'
 import rentalSound from './assets/rental.mp3'
 import rentalCompleteSound from './assets/rental_2.mp3'
+import jurassicMusic from './assets/ジュラシックパーク_テーマ.mp3'
 
 import whiteWhale from './assets/白鯨.png'
 import whiteWhale2 from './assets/白鯨_2.png'
@@ -1876,12 +1877,28 @@ const timer = setTimeout(() => {
   return () => clearTimeout(timer)
 }, [selectedStage, showTrex, playerSide])
 
+  useEffect(() => {
+  if (selectedStage !== 'ジュラシック・パーク') return
+
+  const audio = new Audio(jurassicMusic)
+  audio.loop = true
+  audio.volume = 0.5
+
+  audio.play().catch(() => {})
+
+  return () => {
+    audio.pause()
+    audio.currentTime = 0
+  }
+}, [selectedStage])
+
 useEffect(() => {
   if (
     selectedStage !== 'ジュラシック・パーク' ||
     !showTrex ||
     !trexPosition
   ) return
+
 
   const nextPieces = pieces.filter((piece) => {
     if (piece.name === 'タイタニック') return true
