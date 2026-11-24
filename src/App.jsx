@@ -715,6 +715,7 @@ previousTurnRef.current = gameState.turn
         setShowTrex(gameState.showTrex ?? false)
         setTrexPosition(gameState.trexPosition ?? null)
         setJawsStartTime(gameState.jawsStartTime ?? null)
+        setJawsAttackCell(gameState.jawsAttackCell ?? null)
         setMistMoveCount(gameState.mistMoveCount ?? { player: 0, opponent: 0 })
         setFunnyGameNextTarget(gameState.funnyGameNextTarget ?? 'own')
         setSquidDoubleMoves(gameState.squidDoubleMoves ?? 0)
@@ -1891,6 +1892,7 @@ useEffect(() => {
     const col = Math.floor(Math.random() * 9)
 
     setJawsAttackCell({ row, col })
+    syncJawsState(jawsStartTime, { row, col })
   }, 10000)
 
   return () => clearInterval(timer)
@@ -1965,9 +1967,8 @@ useEffect(() => {
   }
 
   const timer = setTimeout(() => {
-    setJawsAttackCell(null)
-    setJawsBlood(null)
-  }, 1000)
+  setJawsAttackCell(null)
+}, 2500)
 
   return () => clearTimeout(timer)
 }, [jawsAttackCell])
@@ -2356,7 +2357,7 @@ trexPosition: nextTrexPosition,
     .eq('room_id', roomId)
 }
 
-const syncJawsState = async (nextJawsStartTime) => {
+const syncJawsState = async (nextJawsStartTime, nextJawsAttackCell) => {
   if (!roomId || playerSide !== 'player') return
 
   const { data } = await supabase
@@ -2373,6 +2374,9 @@ const syncJawsState = async (nextJawsStartTime) => {
       game_state: {
         ...data.game_state,
         jawsStartTime: nextJawsStartTime,
+        ...(nextJawsAttackCell !== undefined && {
+          jawsAttackCell: nextJawsAttackCell,
+        }),
       }
     })
     .eq('room_id', roomId)
@@ -2421,6 +2425,7 @@ squidDarumaPending: nextSquidDarumaPending,
 reverseWinCondition,
 stage: currentState.stage ?? 'normal',
 jawsStartTime: currentState.jawsStartTime ?? null,
+jawsAttackCell: currentState.jawsAttackCell ?? null,
 mistMoveCount: nextMistMoveCount,
         trapCube: currentState.trapCube,
         opponentTrapCube: currentState.opponentTrapCube,
