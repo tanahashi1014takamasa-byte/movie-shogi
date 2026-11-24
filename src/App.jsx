@@ -2376,7 +2376,9 @@ nextJawsBlood
     .update({
       game_state: {
         ...data.game_state,
-        jawsStartTime: nextJawsStartTime,
+        ...(nextJawsStartTime !== undefined && {
+  jawsStartTime: nextJawsStartTime,
+}),
                 ...(nextJawsAttackCell !== undefined && {
           jawsAttackCell: nextJawsAttackCell,
         }),
@@ -5111,10 +5113,12 @@ const isBrokenGlass = isGlassBridge &&
 selectedStage === 'ジョーズ' &&
 (
   (
+    playerSide === 'player' &&
     jawsTrapCell?.row === row &&
     jawsTrapCell?.col === col
   ) ||
   (
+    playerSide === 'opponent' &&
     jawsOpponentTrapCell?.row === row &&
     jawsOpponentTrapCell?.col === col
   )
@@ -5168,7 +5172,7 @@ selectedStage === 'ジョーズ' &&
     : undefined,
 }}
   key={index}
-  onClick={() => {
+  onClick={async () => {
   if (screen !== 'game') return
 
   if (squidBridgeSelectMode) {
@@ -5859,7 +5863,7 @@ if (jawsTrapHit) {
   setJawsBlood(nextJawsBlood)
   setJawsAttackCell({ row, col })
 
-  syncJawsState(
+  await syncJawsState(
     undefined,
     { row, col },
     undefined,
