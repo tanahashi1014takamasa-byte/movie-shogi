@@ -2570,6 +2570,28 @@ useEffect(() => {
     if (!fin || jawsAttackLockRef.current) return
 
     const finRect = fin.getBoundingClientRect()
+
+if (jawsAttackLockRef.current) {
+  const board = fin.closest('.board')
+  if (!board) return
+
+  const stillOverlapping = Array.from(
+    board.querySelectorAll('.piece-image')
+  ).some((image) => {
+    const rect = image.getBoundingClientRect()
+
+    return (
+      finRect.left < rect.right &&
+      finRect.right > rect.left &&
+      finRect.top < rect.bottom &&
+      finRect.bottom > rect.top
+    )
+  })
+
+  if (stillOverlapping) return
+
+  jawsAttackLockRef.current = false
+}
     console.log('サメ判定実行中', finRect.left, finRect.top)
     const board = fin.closest('.board')
     if (!board) return
@@ -2637,9 +2659,9 @@ setTimeout(() => {
       squidGlassBridge,
       squidDarumaPending,
       true
-    ).finally(() => {
-      jawsAttackLockRef.current = false
-    })
+  ).finally(() => {
+  // ここではロックを解除しない
+})
   }, 100)
 
   return () => clearInterval(timer)
