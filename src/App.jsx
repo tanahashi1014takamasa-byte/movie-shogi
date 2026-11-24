@@ -2125,6 +2125,15 @@ const createRentalHand = () => [
   : [])
 ]
 
+const playJurassicMusic = () => {
+  const audio = new Audio(jurassicMusic)
+  audio.loop = true
+  audio.volume = 0.5
+  audio.play().catch((error) => {
+    console.log('音楽の再生に失敗:', error)
+  })
+}
+
 const createRoom = async () => {
   const newRoomId = Math.floor(100000 + Math.random() * 900000).toString()
 
@@ -2168,6 +2177,7 @@ setShowSquidDarumaVideo(false)
   setPlayerSide('player')
   setOnlineScreen(true)
   setScreen('game')
+  if (selectedStage === 'ジュラシック・パーク') playJurassicMusic()
 }
 
 const joinRoom = async () => {
@@ -2209,6 +2219,7 @@ setOpponentHand(data[0].game_state.playerHand ?? [])
 setSelectedStage(data[0].game_state.stage ?? 'normal')
 setPlayerSide('opponent')
 setScreen('game')
+if (data[0].game_state.stage === 'ジュラシック・パーク') playJurassicMusic()
 }
 
 const syncTrexState = async (
