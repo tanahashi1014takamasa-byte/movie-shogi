@@ -1875,46 +1875,50 @@ useEffect(() => {
 }, [selectedStage])
 
 useEffect(() => {
-  if (!roomId || screen !== 'game') return
-  if (selectedStage !== 'ジョーズ') return
-  if (playerSide !== 'player') return
-  if (jawsStartTime) return
+  const generateTraps = async () => {
+    if (!roomId || screen !== 'game') return
+    if (selectedStage !== 'ジョーズ') return
+    if (playerSide !== 'player') return
+    if (jawsStartTime) return
 
-  const startTime = Date.now()
-  const emptySquares = []
+    const startTime = Date.now()
+    const emptySquares = []
 
-  for (let r = 0; r < 9; r++) {
-    for (let c = 0; c < 9; c++) {
-      if (!pieces.some(p => p.row === r && p.col === c)) {
-        emptySquares.push({ row: r, col: c })
+    for (let r = 0; r < 9; r++) {
+      for (let c = 0; c < 9; c++) {
+        if (!pieces.some(p => p.row === r && p.col === c)) {
+          emptySquares.push({ row: r, col: c })
+        }
       }
     }
+
+    const traps = []
+
+    while (traps.length < 10 && emptySquares.length > 0) {
+      const index = Math.floor(Math.random() * emptySquares.length)
+      traps.push(emptySquares.splice(index, 1)[0])
+    }
+
+    const myTraps = traps.slice(0, 5)
+    const opponentTraps = traps.slice(5, 10)
+
+    setJawsTrapCell(myTraps)
+    setJawsOpponentTrapCell(opponentTraps)
+
+    await syncJawsState(
+      startTime,
+      undefined,
+      myTraps,
+      opponentTraps
+    )
+
+    setJawsStartTime(startTime)
+    setJawsAnimationDelay(
+      `-${((Date.now() - startTime) % 13000) / 1000}s`
+    )
   }
 
-  const traps = []
-
-  while (traps.length < 10 && emptySquares.length > 0) {
-    const index = Math.floor(Math.random() * emptySquares.length)
-    traps.push(emptySquares.splice(index, 1)[0])
-  }
-
-  const myTraps = traps.slice(0, 5)
-  const opponentTraps = traps.slice(5, 10)
-
-  setJawsTrapCell(myTraps)
-  setJawsOpponentTrapCell(opponentTraps)
-
-  syncJawsState(
-    startTime,
-    undefined,
-    myTraps,
-    opponentTraps
-  )
-
-  setJawsStartTime(startTime)
-  setJawsAnimationDelay(
-    `-${((Date.now() - startTime) % 13000) / 1000}s`
-  )
+  generateTraps()
 }, [roomId, screen, selectedStage, playerSide, jawsStartTime])
 
 
