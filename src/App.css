@@ -635,7 +635,7 @@ background-position: center;
   background-size: 100% 200%;
   animation: jawsOcean 7s ease-in-out infinite alternate;
   pointer-events: none;
-  z-index: 1;
+  z-index: -1;
 }
 
 
