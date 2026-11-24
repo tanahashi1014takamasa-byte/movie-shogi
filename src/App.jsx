@@ -1949,7 +1949,7 @@ useEffect(() => {
       piece => !hitPieces.includes(piece)
     )
 
-    setPieces(nextPieces)
+    
 
     updateGameState(
       nextPieces,
