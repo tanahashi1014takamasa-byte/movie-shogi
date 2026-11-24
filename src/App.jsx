@@ -1851,15 +1851,18 @@ useEffect(() => {
     return
   }
 
-  if (showTrex) return
-
   const timer = setTimeout(() => {
-    setTrexPosition({
-      row: Math.floor(Math.random() * 7),
-      col: Math.floor(Math.random() * 7)
-    })
-    setShowTrex(true)
-  }, 30000 + Math.random() * 60000)
+    if (!showTrex) {
+      setTrexPosition({
+        row: Math.floor(Math.random() * 7),
+        col: Math.floor(Math.random() * 7)
+      })
+      setShowTrex(true)
+    } else {
+      setShowTrex(false)
+      setTrexPosition(null)
+    }
+  }, showTrex ? 1000 : 30000)
 
   return () => clearTimeout(timer)
 }, [selectedStage, showTrex])
@@ -4754,7 +4757,7 @@ setPlayerSide('player')
       zIndex: 20,
       pointerEvents: 'none'
     }}
-    onAnimationEnd={() => setShowTrex(false)}
+    
   />
 )}
 
