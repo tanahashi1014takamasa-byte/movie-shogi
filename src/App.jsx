@@ -4993,7 +4993,7 @@ setPlayerSide('player')
       height: '11.11%',
       objectFit: 'contain',
       pointerEvents: 'none',
-      zIndex: 10,
+      zIndex: 2
     }}
   />
 )}
