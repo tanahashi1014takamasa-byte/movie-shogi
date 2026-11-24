@@ -914,3 +914,24 @@ background-position: center;
 .opponent-board .universal-background {
   transform: rotate(180deg);
 }
+
+/* T-REX登場演出 */
+.trex-animation {
+  position: absolute;
+  width: 150%;
+  height: auto;
+  top: 15%;
+  left: 0;
+  z-index: 20;
+  pointer-events: none;
+  animation: trexWalk 5s linear forwards;
+}
+
+@keyframes trexWalk {
+  from {
+    transform: translateX(110%);
+  }
+  to {
+    transform: translateX(-110%);
+  }
+}

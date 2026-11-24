@@ -26,6 +26,7 @@ import m3 from './assets/m_3.gif'
 import m4 from './assets/m_4.gif'
 import m5 from './assets/m_5.gif'
 import m6 from './assets/m_6.gif'
+import trex from './assets/trex.png'
 import sharkAttack from './assets/shark-attack.gif'
 import sharkAttack2 from './assets/shark-attack_2.gif'
 import syogiSound from './assets/syogi_s01.mp3'
@@ -764,6 +765,7 @@ previousTurnRef.current = gameState.turn
   const [squidGlassBridge, setSquidGlassBridge] = useState(null)
   const syogiAudio = useRef(new Audio(syogiSound))
   const [stageTapCount, setStageTapCount] = useState(0)
+  const [showTrex, setShowTrex] = useState(false)
 
 const playSyogiSound = () => {
   syogiAudio.current.currentTime = 0
@@ -1840,6 +1842,21 @@ useEffect(() => {
     clearTimeout(secondTimer)
   }
 }, [selectedStage])
+
+useEffect(() => {
+  if (selectedStage !== 'ジュラシック・パーク') {
+    setShowTrex(false)
+    return
+  }
+
+  if (showTrex) return
+
+  const timer = setTimeout(() => {
+    setShowTrex(true)
+  }, 30000 + Math.random() * 60000)
+
+  return () => clearTimeout(timer)
+}, [selectedStage, showTrex])
 
 const createDeathNoteLetters = () => {
   const getDeathNoteName = (name) =>
@@ -4716,7 +4733,18 @@ setPlayerSide('player')
         {selectedStage === 'バック・トゥ・ザ・フューチャー' && <div className="bttf-background" />}
         {selectedStage === 'スター・ウォーズ' && <div className="starwars-background" />}
         {selectedStage === 'ユニバステージ' && <div className="universal-background" />}
+
+{selectedStage === 'ジュラシック・パーク' && showTrex && (
+  <img
+    src={trex}
+    className="trex-animation"
+    alt="T-Rex"
+    onAnimationEnd={() => setShowTrex(false)}
+  />
+)}
+
         {Array.from({ length: 81 }, (_, index) => {
+         
           const row = Math.floor(index / 9)
           const col = index % 9
 
