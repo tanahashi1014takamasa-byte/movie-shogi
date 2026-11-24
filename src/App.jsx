@@ -1893,7 +1893,7 @@ const timer = setTimeout(() => {
     audio.pause()
     audio.currentTime = 0
   }
-}, [selectedStage])
+}, [selectedStage, screen])
 
 useEffect(() => {
   if (
