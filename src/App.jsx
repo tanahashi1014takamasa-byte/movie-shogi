@@ -1878,7 +1878,10 @@ const timer = setTimeout(() => {
 }, [selectedStage, showTrex, playerSide])
 
   useEffect(() => {
-  if (selectedStage !== 'ジュラシック・パーク') return
+  if (
+  selectedStage !== 'ジュラシック・パーク' ||
+  screen !== 'game'
+) return
 
   const audio = new Audio(jurassicMusic)
   audio.loop = true
