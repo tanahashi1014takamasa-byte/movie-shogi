@@ -737,8 +737,16 @@ previousTurnRef.current = gameState.turn
   setOpponentHand(gameState.playerHand ?? [])
 }
 
-        if (gameState.playerCount === 2) {
+if (gameState.playerCount === 2) {
   setOnlineScreen(false)
+
+  if (
+    gameState.stage === 'ジュラシック・パーク' &&
+    !jurassicMusicPlayedRef.current
+  ) {
+    jurassicMusicPlayedRef.current = true
+    playJurassicMusic()
+  }
 }
       }
     )
@@ -768,6 +776,7 @@ previousTurnRef.current = gameState.turn
   const squidDarumaSignalRef = useRef(0)
   const [squidGlassBridge, setSquidGlassBridge] = useState(null)
   const syogiAudio = useRef(new Audio(syogiSound))
+  const jurassicMusicPlayedRef = useRef(false)
   const [stageTapCount, setStageTapCount] = useState(0)
   const [showTrex, setShowTrex] = useState(false)
   const [trexPosition, setTrexPosition] = useState(null)
@@ -2163,7 +2172,7 @@ setShowSquidDarumaVideo(false)
   setPlayerSide('player')
   setOnlineScreen(true)
   setScreen('game')
-  if (selectedStage === 'ジュラシック・パーク') playJurassicMusic()
+  
 }
 
 const joinRoom = async () => {
@@ -2205,7 +2214,6 @@ setOpponentHand(data[0].game_state.playerHand ?? [])
 setSelectedStage(data[0].game_state.stage ?? 'normal')
 setPlayerSide('opponent')
 setScreen('game')
-if (data[0].game_state.stage === 'ジュラシック・パーク') playJurassicMusic()
 }
 
 const syncTrexState = async (
