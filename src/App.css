@@ -651,7 +651,7 @@ background-position: center;
   position: absolute;
   width: 65px;
   height: 65px;
-  top: 44.44%;
+  top: 40%;
   left: 110%;
   object-fit: contain;
   background: transparent;
@@ -784,6 +784,7 @@ background-position: center;
 
 .opponent-board .jaws-fin {
   transform: rotate(180deg);
+  animation-direction: reverse;
 }
 
 /* スパイダーマンステージ */
