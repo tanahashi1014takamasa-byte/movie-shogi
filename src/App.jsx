@@ -26,7 +26,7 @@ import m3 from './assets/m_3.gif'
 import m4 from './assets/m_4.gif'
 import m5 from './assets/m_5.gif'
 import m6 from './assets/m_6.gif'
-import trex from './assets/trex.png'
+import trex from './assets/trex.gif'
 import sharkAttack from './assets/shark-attack.gif'
 import sharkAttack2 from './assets/shark-attack_2.gif'
 import syogiSound from './assets/syogi_s01.mp3'
@@ -766,6 +766,7 @@ previousTurnRef.current = gameState.turn
   const syogiAudio = useRef(new Audio(syogiSound))
   const [stageTapCount, setStageTapCount] = useState(0)
   const [showTrex, setShowTrex] = useState(false)
+  const [trexPosition, setTrexPosition] = useState(null)
 
 const playSyogiSound = () => {
   syogiAudio.current.currentTime = 0
@@ -1846,12 +1847,17 @@ useEffect(() => {
 useEffect(() => {
   if (selectedStage !== 'ジュラシック・パーク') {
     setShowTrex(false)
+    setTrexPosition(null)
     return
   }
 
   if (showTrex) return
 
   const timer = setTimeout(() => {
+    setTrexPosition({
+      row: Math.floor(Math.random() * 7),
+      col: Math.floor(Math.random() * 7)
+    })
     setShowTrex(true)
   }, 30000 + Math.random() * 60000)
 
@@ -4734,11 +4740,20 @@ setPlayerSide('player')
         {selectedStage === 'スター・ウォーズ' && <div className="starwars-background" />}
         {selectedStage === 'ユニバステージ' && <div className="universal-background" />}
 
-{selectedStage === 'ジュラシック・パーク' && showTrex && (
+{selectedStage === 'ジュラシック・パーク' && showTrex && trexPosition && (
   <img
     src={trex}
-    className="trex-animation"
     alt="T-Rex"
+    style={{
+      position: 'absolute',
+      left: `${trexPosition.col * (100 / 9)}%`,
+      top: `${trexPosition.row * (100 / 9)}%`,
+      width: `${300 / 9}%`,
+      height: `${300 / 9}%`,
+      objectFit: 'fill',
+      zIndex: 20,
+      pointerEvents: 'none'
+    }}
     onAnimationEnd={() => setShowTrex(false)}
   />
 )}
