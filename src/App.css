@@ -63,9 +63,7 @@ body {
   overflow: visible;
 }
 
-.square:nth-child(9n) {
-  border-right: none;
-}
+
 
 .square:nth-last-child(-n + 9) {
   border-bottom: none;

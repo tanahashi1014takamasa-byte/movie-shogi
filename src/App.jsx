@@ -5122,6 +5122,7 @@ const isBrokenGlass = isGlassBridge &&
       ? '2px solid #111'
       : '2px solid rgba(190,245,255,0.9)'
     : undefined,
+    borderRight: col === 8 ? 'none' : undefined,
   boxShadow: pieces.some((area) =>
   area.name === '関心領域' &&
   (
