@@ -1891,7 +1891,7 @@ useEffect(() => {
     const col = Math.floor(Math.random() * 9)
 
     setJawsAttackCell({ row, col })
-  }, 40000)
+  }, 10000)
 
   return () => clearInterval(timer)
 }, [roomId, screen, selectedStage, playerSide])
@@ -1938,7 +1938,9 @@ useEffect(() => {
       piece.name !== 'タイタニック'
   )
 
+  const bloodTimer = setTimeout(() => {
   setJawsBlood({ row, col })
+}, 1500)
 
   if (hitPieces.length > 0) {
     const nextPieces = pieces.filter(
