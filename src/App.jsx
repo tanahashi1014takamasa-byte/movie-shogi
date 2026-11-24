@@ -681,6 +681,8 @@ if (gameState.gameEnded && gameState.winnerSide) {
   setResult(gameState.winnerSide === playerSide ? '勝利' : '敗北')
   setPieces(gameState.pieces)
   setTurn(gameState.turn)
+  setShowTrex(gameState.showTrex ?? false)
+  setTrexPosition(gameState.trexPosition ?? null)
   return
 }
 
@@ -1851,21 +1853,27 @@ useEffect(() => {
     return
   }
 
-  const timer = setTimeout(() => {
-    if (!showTrex) {
-      setTrexPosition({
-        row: Math.floor(Math.random() * 7),
-        col: Math.floor(Math.random() * 7)
-      })
-      setShowTrex(true)
-    } else {
-      setShowTrex(false)
-      setTrexPosition(null)
+  if (playerSide !== 'player') return
+
+const timer = setTimeout(() => {
+  if (!showTrex) {
+    const nextPosition = {
+      row: Math.floor(Math.random() * 7),
+      col: Math.floor(Math.random() * 7)
     }
-  }, showTrex ? 1000 : 30000)
+
+    setTrexPosition(nextPosition)
+    setShowTrex(true)
+    syncTrexState(true, nextPosition)
+  } else {
+    setShowTrex(false)
+    setTrexPosition(null)
+    syncTrexState(false, null)
+  }
+}, showTrex ? 1000 : 30000)
 
   return () => clearTimeout(timer)
-}, [selectedStage, showTrex])
+}, [selectedStage, showTrex, playerSide])
 
 useEffect(() => {
   if (
@@ -1874,20 +1882,23 @@ useEffect(() => {
     !trexPosition
   ) return
 
-  setPieces((prevPieces) =>
-    prevPieces.filter((piece) => {
-      if (piece.name === 'タイタニック') return true
+  const nextPieces = pieces.filter((piece) => {
+    if (piece.name === 'タイタニック') return true
 
-      const insideTrexArea =
-        piece.row >= trexPosition.row &&
-        piece.row <= trexPosition.row + 2 &&
-        piece.col >= trexPosition.col &&
-        piece.col <= trexPosition.col + 2
+    const insideTrexArea =
+      piece.row >= trexPosition.row &&
+      piece.row <= trexPosition.row + 2 &&
+      piece.col >= trexPosition.col &&
+      piece.col <= trexPosition.col + 2
 
-      return !insideTrexArea
-    })
-  )
-}, [selectedStage, showTrex, trexPosition])
+    return !insideTrexArea
+  })
+
+  if (nextPieces.length !== pieces.length) {
+    setPieces(nextPieces)
+    syncTrexState(true, trexPosition, nextPieces)
+  }
+}, [selectedStage, showTrex, trexPosition, pieces])
 
 const createDeathNoteLetters = () => {
   const getDeathNoteName = (name) =>
@@ -2173,6 +2184,34 @@ setOpponentHand(data[0].game_state.playerHand ?? [])
 setSelectedStage(data[0].game_state.stage ?? 'normal')
 setPlayerSide('opponent')
 setScreen('game')
+}
+
+const syncTrexState = async (
+  nextShowTrex,
+  nextTrexPosition,
+  nextPieces = null
+) => {
+  if (!roomId || playerSide !== 'player') return
+
+  const { data } = await supabase
+    .from('game')
+    .select('game_state')
+    .eq('room_id', roomId)
+    .single()
+
+  if (!data) return
+
+  await supabase
+    .from('game')
+    .update({
+      game_state: {
+        ...data.game_state,
+showTrex: nextShowTrex,
+trexPosition: nextTrexPosition,
+...(nextPieces ? { pieces: nextPieces } : {})
+      }
+    })
+    .eq('room_id', roomId)
 }
 
 const updateGameState = async (
