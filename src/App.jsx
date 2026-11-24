@@ -2141,6 +2141,8 @@ mistMoveCount: {
   player: 0,
   opponent: 0,
 },
+squidDarumaSignal: 0,
+squidDarumaPending: false,
 stage: selectedStage,
 },
     })
