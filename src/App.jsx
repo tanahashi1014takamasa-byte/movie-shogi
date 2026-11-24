@@ -716,6 +716,7 @@ previousTurnRef.current = gameState.turn
         setTrexPosition(gameState.trexPosition ?? null)
         setJawsStartTime(gameState.jawsStartTime ?? null)
         setJawsAttackCell(gameState.jawsAttackCell ?? null)
+        setJawsTrapCell(gameState.jawsTrapCell ?? null)
         setMistMoveCount(gameState.mistMoveCount ?? { player: 0, opponent: 0 })
         setFunnyGameNextTarget(gameState.funnyGameNextTarget ?? 'own')
         setSquidDoubleMoves(gameState.squidDoubleMoves ?? 0)
@@ -790,6 +791,7 @@ if (gameState.playerCount === 2) {
   const jawsAttackLockRef = useRef(false)
   const [jawsBlood, setJawsBlood] = useState([])
   const [jawsAttackCell, setJawsAttackCell] = useState(null)
+  const [jawsTrapCell, setJawsTrapCell] = useState(null)
   const [jawsStartTime, setJawsStartTime] = useState(null)
   const [jawsAnimationDelay, setJawsAnimationDelay] = useState('0s')
 
@@ -1877,26 +1879,30 @@ useEffect(() => {
 
   const startTime = Date.now()
 
+  const emptySquares = []
+
+for (let r = 0; r < 9; r++) {
+  for (let c = 0; c < 9; c++) {
+    if (!pieces.some(p => p.row === r && p.col === c)) {
+      emptySquares.push({ row: r, col: c })
+    }
+  }
+}
+
+if (emptySquares.length > 0) {
+  const trap = emptySquares[
+    Math.floor(Math.random() * emptySquares.length)
+  ]
+  setJawsTrapCell(trap)
+  syncJawsState(startTime, undefined, trap)
+}
+
   setJawsStartTime(startTime)
   setJawsAnimationDelay(`-${((Date.now() - startTime) % 13000) / 1000}s`)
-  syncJawsState(startTime)
+  
 }, [roomId, screen, selectedStage, playerSide, jawsStartTime])
 
-useEffect(() => {
-  if (!roomId || screen !== 'game') return
-  if (selectedStage !== 'ジョーズ') return
-  if (playerSide !== 'player') return
 
-  const timer = setInterval(() => {
-    const row = Math.floor(Math.random() * 9)
-    const col = Math.floor(Math.random() * 9)
-
-    setJawsAttackCell({ row, col })
-    syncJawsState(jawsStartTime, { row, col })
-  }, 10000)
-
-  return () => clearInterval(timer)
-}, [roomId, screen, selectedStage, playerSide])
 
 useEffect(() => {
   if (selectedStage !== 'ジュラシック・パーク') {
@@ -1928,58 +1934,7 @@ const timer = setTimeout(() => {
 }, [selectedStage, showTrex, playerSide])
 
 
-useEffect(() => {
-  if (!jawsAttackCell) {
-    setJawsProcessedAttack(null)
-    return
-  }
 
-  if (turn === playerSide) return
-
-  const { row, col } = jawsAttackCell
-  const attackKey = `${row}-${col}`
-if (jawsProcessedAttack === attackKey) return
-setJawsProcessedAttack(attackKey)
-
-  const hitPieces = pieces.filter(
-    piece =>
-      piece.row === row &&
-      piece.col === col &&
-      piece.name !== 'タイタニック'
-  )
-
-  const bloodTimer = setTimeout(() => {
-  setJawsBlood(prev => [...prev, { row, col }])
-}, 1000)
-
-  if (hitPieces.length > 0) {
-    const nextPieces = pieces.filter(
-      piece => !hitPieces.includes(piece)
-    )
-
-    setPieces(nextPieces)
-
-    updateGameState(
-      nextPieces,
-      turn,
-      playerHand,
-      mistMoveCount,
-      false,
-      null,
-      funnyGameNextTarget,
-      squidDarumaSignal,
-      squidGlassBridge,
-      squidDarumaPending,
-      true
-    )
-  }
-
-  const timer = setTimeout(() => {
-  setJawsAttackCell(null)
-}, 1500)
-
-  return () => clearTimeout(timer)
-}, [jawsAttackCell])
 
 useEffect(() => {
   if (
@@ -2366,7 +2321,7 @@ trexPosition: nextTrexPosition,
     .eq('room_id', roomId)
 }
 
-const syncJawsState = async (nextJawsStartTime, nextJawsAttackCell) => {
+const syncJawsState = async (nextJawsStartTime, nextJawsAttackCell, nextJawsTrapCell) => {
   if (!roomId || playerSide !== 'player') return
 
   const { data } = await supabase
@@ -2385,6 +2340,7 @@ const syncJawsState = async (nextJawsStartTime, nextJawsAttackCell) => {
         jawsStartTime: nextJawsStartTime,
         ...(nextJawsAttackCell !== undefined && {
           jawsAttackCell: nextJawsAttackCell,
+          jawsTrapCell: nextJawsTrapCell,
         }),
       }
     })
@@ -5100,7 +5056,14 @@ const isBrokenGlass = isGlassBridge &&
             
 
             <div
+            
   className={`square ${
+          selectedStage === 'ジョーズ' &&
+      jawsTrapCell?.row === row &&
+      jawsTrapCell?.col === col &&
+      playerSide === 'player'
+        ? 'jaws-trap-marker'
+        :
       squidTugSelectMode &&
   piece &&
   (piece.side ?? 'player') !== (selectedPiece?.side ?? 'player')
