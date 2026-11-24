@@ -2521,31 +2521,32 @@ useEffect(() => {
     const board = fin.closest('.board')
     if (!board) return
 
-    const boardRect = board.getBoundingClientRect()
-    const rowHeight = boardRect.height / 9
+const boardRect = board.getBoundingClientRect()
+const cellWidth = boardRect.width / 9
+const cellHeight = boardRect.height / 9
 
-    const fifthRowTop = boardRect.top + rowHeight * 4
-    const fifthRowBottom = fifthRowTop + rowHeight
+const isOpponentBoard = !!board.closest('.opponent-board')
 
-const finCenterY = finRect.top + finRect.height / 2
+const hitPieces = pieces.filter((piece) => {
+  if (piece.name === 'タイタニック') return false
 
-if (finCenterY < fifthRowTop - 30 || finCenterY > fifthRowBottom + 30) return
+  const visualRow = isOpponentBoard ? 8 - piece.row : piece.row
+  const visualCol = isOpponentBoard ? 8 - piece.col : piece.col
 
-const finCenterX = finRect.left + finRect.width / 2
-const col = Math.floor(
-  ((finCenterX - boardRect.left) / boardRect.width) * 9
-)
+  const pieceLeft = boardRect.left + visualCol * cellWidth
+  const pieceTop = boardRect.top + visualRow * cellHeight
+  const pieceRight = pieceLeft + cellWidth
+  const pieceBottom = pieceTop + cellHeight
 
-    if (col < 0 || col > 8) return
+  return (
+    finRect.left < pieceRight &&
+    finRect.right > pieceLeft &&
+    finRect.top < pieceBottom &&
+    finRect.bottom > pieceTop
+  )
+})
 
-    const hitPieces = pieces.filter(
-      piece =>
-        piece.row === 4 &&
-        piece.name !== 'タイタニック' &&
-        piece.col === col
-    )
-
-    if (hitPieces.length === 0) return
+if (hitPieces.length === 0) return
 
     jawsAttackLockRef.current = true
 
