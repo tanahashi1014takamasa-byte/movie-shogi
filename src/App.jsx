@@ -718,6 +718,7 @@ previousTurnRef.current = gameState.turn
         setJawsAttackCell(gameState.jawsAttackCell ?? null)
         setJawsTrapCell(gameState.jawsTrapCell ?? null)
         setJawsOpponentTrapCell(gameState.jawsOpponentTrapCell ?? null)
+        setJawsBlood(gameState.jawsBlood ?? [])
         setMistMoveCount(gameState.mistMoveCount ?? { player: 0, opponent: 0 })
         setFunnyGameNextTarget(gameState.funnyGameNextTarget ?? 'own')
         setSquidDoubleMoves(gameState.squidDoubleMoves ?? 0)
@@ -2357,7 +2358,8 @@ const syncJawsState = async (
   nextJawsStartTime,
   nextJawsAttackCell,
   nextJawsTrapCell,
-  nextJawsOpponentTrapCell
+  nextJawsOpponentTrapCell,
+nextJawsBlood
 ) => {
   if (!roomId) return
 
@@ -2383,6 +2385,9 @@ const syncJawsState = async (
         }),
         ...(nextJawsOpponentTrapCell !== undefined && {
   jawsOpponentTrapCell: nextJawsOpponentTrapCell,
+}),
+...(nextJawsBlood !== undefined && {
+  jawsBlood: nextJawsBlood,
 }),
       }
     })
@@ -2435,6 +2440,7 @@ jawsStartTime: currentState.jawsStartTime ?? null,
 jawsAttackCell: currentState.jawsAttackCell ?? null,
 jawsTrapCell: currentState.jawsTrapCell ?? null,
 jawsOpponentTrapCell: currentState.jawsOpponentTrapCell ?? null,
+jawsBlood: currentState.jawsBlood ?? [],
 mistMoveCount: nextMistMoveCount,
         trapCube: currentState.trapCube,
         opponentTrapCube: currentState.opponentTrapCube,
@@ -5696,10 +5702,35 @@ if (capturedPieces.some((captured) => captured.name === '国宝')) {
   setPlayerHand(nextPlayerHand)
 }
 
+const jawsTrapHit =
+  selectedStage === 'ジョーズ' &&
+  (
+    (selectedPiece.side ?? 'player') === 'player'
+      ? jawsOpponentTrapCell?.row === row &&
+        jawsOpponentTrapCell?.col === col
+      : jawsTrapCell?.row === row &&
+        jawsTrapCell?.col === col
+  )
+
+
+  const nextJawsBlood = jawsTrapHit
+  ? [
+      ...jawsBlood,
+      ...(
+        jawsBlood.some(
+          blood => blood.row === row && blood.col === col
+        )
+          ? []
+          : [{ row, col }]
+      ),
+    ]
+  : jawsBlood
+
 let nextPieces = pieces
   .filter(
     (p) =>
       !capturedPieces.includes(p) &&
+    !(jawsTrapHit && p === selectedPiece) &&
 !(roomId && squidDarumaPending && turn === playerSide && p === selectedPiece) &&
 p !== trapCubeCaptured &&
             !(
@@ -5824,6 +5855,25 @@ if (
 
 setPieces(nextPieces)
 
+if (jawsTrapHit) {
+  setJawsBlood(nextJawsBlood)
+  setJawsAttackCell({ row, col })
+
+  syncJawsState(
+    undefined,
+    { row, col },
+    undefined,
+    undefined,
+    nextJawsBlood
+  )
+
+  setTimeout(() => {
+    setJawsAttackCell(null)
+    syncJawsState(undefined, null)
+  }, 1000)
+}
+
+
 if (darumaTitanicFell) {
   setResult('敗北')
 }
@@ -5898,6 +5948,41 @@ if (!roomId) {
     style={{
       top: '14%',
       left: '14%',
+    }}
+  />
+)}
+
+{jawsBlood.some(
+  bloodCell => bloodCell.row === row && bloodCell.col === col
+) && (
+  <img
+    src={blood}
+    alt=""
+    style={{
+      position: 'absolute',
+      inset: 0,
+      width: '100%',
+      height: '100%',
+      objectFit: 'contain',
+      pointerEvents: 'none',
+      zIndex: 20,
+    }}
+  />
+)}
+
+{jawsAttackCell?.row === row &&
+ jawsAttackCell?.col === col && (
+  <img
+    src={shark2}
+    alt=""
+    style={{
+      position: 'absolute',
+      inset: 0,
+      width: '100%',
+      height: '100%',
+      objectFit: 'contain',
+      pointerEvents: 'none',
+      zIndex: 25,
     }}
   />
 )}
