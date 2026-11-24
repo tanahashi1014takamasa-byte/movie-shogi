@@ -1968,7 +1968,7 @@ useEffect(() => {
 
   const timer = setTimeout(() => {
   setJawsAttackCell(null)
-}, 2500)
+}, 1500)
 
   return () => clearTimeout(timer)
 }, [jawsAttackCell])
@@ -4989,7 +4989,7 @@ setPlayerSide('player')
       position: 'absolute',
       left: `${jawsAttackCell.col * 100 / 9}%`,
       top: `${jawsAttackCell.row * 100 / 9}%`,
-      width: '11.11%',
+      width: '9%',
       height: '11.11%',
       objectFit: 'contain',
       pointerEvents: 'none',
