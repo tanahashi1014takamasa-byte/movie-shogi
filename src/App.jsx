@@ -2362,6 +2362,7 @@ squidGlassBridge: nextSquidGlassBridge,
 squidDarumaPending: nextSquidDarumaPending,
 reverseWinCondition,
 stage: currentState.stage ?? 'normal',
+jawsStartTime: currentState.jawsStartTime ?? null,
 mistMoveCount: nextMistMoveCount,
         trapCube: currentState.trapCube,
         opponentTrapCube: currentState.opponentTrapCube,
@@ -2554,6 +2555,7 @@ return () => clearTimeout(timer)
 useEffect(() => {
   if (!roomId || screen !== 'game') return
   if (selectedStage !== 'ジョーズ') return
+  if (playerSide !== 'player') return
   
 
   const timer = setInterval(() => {
@@ -2570,22 +2572,21 @@ const cellHeight = boardRect.height / 9
 
 const isOpponentBoard = !!board.closest('.opponent-board')
 
+const squares = board.querySelectorAll('.square')
+
 const hitPieces = pieces.filter((piece) => {
   if (piece.name === 'タイタニック') return false
 
-  const visualRow = isOpponentBoard ? 8 - piece.row : piece.row
-  const visualCol = isOpponentBoard ? 8 - piece.col : piece.col
+  const square = squares[piece.row * 9 + piece.col]
+  if (!square) return false
 
-  const pieceLeft = boardRect.left + visualCol * cellWidth
-  const pieceTop = boardRect.top + visualRow * cellHeight
-  const pieceRight = pieceLeft + cellWidth
-  const pieceBottom = pieceTop + cellHeight
+  const squareRect = square.getBoundingClientRect()
 
   return (
-    finRect.left < pieceRight &&
-    finRect.right > pieceLeft &&
-    finRect.top < pieceBottom &&
-    finRect.bottom > pieceTop
+    finRect.left < squareRect.right &&
+    finRect.right > squareRect.left &&
+    finRect.top < squareRect.bottom &&
+    finRect.bottom > squareRect.top
   )
 })
 
