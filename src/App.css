@@ -619,16 +619,7 @@ background-position: center;
   isolation: isolate;
 }
 
-/* 海の背景画像 */
-.jaws-stage::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url('./assets/jaws.png');
-  background-size: cover;
-  background-position: center;
-  z-index: -1;
-}
+
 
 /* 海面のゆらぎ */
 .jaws-stage::before {
@@ -647,44 +638,12 @@ background-position: center;
   z-index: 1;
 }
 
-.jaws-fin {
-  position: absolute;
-  width: 65px;
-  height: 65px;
-  top: 40%;
-  left: 110%;
-  object-fit: contain;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  filter: none;
-  animation: jawsFin 60s linear infinite;
-  pointer-events: none;
-  z-index: 2;
-}
 
 @keyframes jawsOcean {
   from { background-position: 0% 0%; }
   to { background-position: 0% 100%; }
 }
 
-@keyframes jawsFin {
-  0% {
-    left: 110%;
-    opacity: 0;
-  }
-  8% {
-    opacity: 1;
-  }
-  45% {
-    left: -20%;
-    opacity: 1;
-  }
-  50%, 100% {
-    left: -20%;
-    opacity: 0;
-  }
-}
 
 /* ステージ選択中の画面 */
 .stage-selection-active {
@@ -782,10 +741,7 @@ background-position: center;
   transform: rotate(180deg);
 }
 
-.opponent-board .jaws-fin {
-  transform: rotate(180deg);
-  animation-direction: reverse;
-}
+
 
 /* スパイダーマンステージ */
 .spiderman-stage {

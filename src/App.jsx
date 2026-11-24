@@ -72,7 +72,7 @@ import interestArea from './assets/関心領域.png'
 import esther from './assets/エスター.png'
 import bugonia from './assets/ブゴニア.png'
 import backrooms from './assets/バックルームズ.png'
-import shark from './assets/shark.gif'
+
 import shark2 from './assets/shark_2.gif'
 import blood from './assets/blood.png'
 
@@ -4979,17 +4979,7 @@ setPlayerSide('player')
 
       <div className={`board ${playerSide === 'opponent' ? 'opponent-board' : ''} ${selectedStage === 'ジョーズ' ? 'jaws-stage' : ''} ${selectedStage === 'スパイダーマン' ? 'spiderman-stage' : ''}${selectedStage === 'ジュラシック・パーク' ? 'jurassic-stage' : ''}${selectedStage === 'バック・トゥ・ザ・フューチャー' ? 'bttf-stage' : ''}${selectedStage === 'スター・ウォーズ' ? 'starwars-stage' : ''}${selectedStage === 'ユニバステージ' ? 'universal-stage' : ''}`}>
         {selectedStage === 'ジョーズ' && <div className="jaws-background" />}
-{selectedStage === 'ジョーズ' && (
-  <img
-    src={shark}
-    alt=""
-    className="jaws-fin"
-    ref={jawsFinRef}
-    style={{
-animationDelay: jawsAnimationDelay,
-    }}
-  />
-)}
+
 
 {jawsAttackCell && (
   <img
