@@ -5112,6 +5112,7 @@ setPlayerSide('player')
       objectFit: 'fill',
       zIndex: 20,
       pointerEvents: 'none',
+      transform: playerSide === 'opponent' ? 'rotate(180deg)' : 'none',
     }}
   />
 )}
