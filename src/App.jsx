@@ -811,7 +811,7 @@ if (
 }
 
 if (
-  gameState.stage === 'ユニバ' &&
+  gameState.stage === 'ユニバステージ' &&
   !universalMusicPlayedRef.current
 ) {
   universalMusicPlayedRef.current = true
@@ -2568,7 +2568,7 @@ if (data[0].game_state.stage === 'スパイダーマン') {
   playSpiderManMusic()
 }
 
-if (data[0].game_state.stage === 'ユニバ') {
+if (selectedStage === 'ユニバステージ') {
   playUniversalMusic()
 }
 
