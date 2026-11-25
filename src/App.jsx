@@ -847,6 +847,7 @@ if (
   const backToTheFutureMusicPlayedRef = useRef(false)
   const starWarsMusicPlayedRef = useRef(false)
   const jawsMusicPlayedRef = useRef(false)
+  const spiderManMusicPlayedRef = useRef(false)
   const jurassicAudioRef = useRef(null)
   const backToTheFutureAudioRef = useRef(null)
   const starWarsAudioRef = useRef(null)
