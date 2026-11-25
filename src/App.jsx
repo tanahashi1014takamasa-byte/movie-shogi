@@ -2372,9 +2372,7 @@ setShowSquidDarumaVideo(false)
   setPlayerSide('player')
   setOnlineScreen(true)
   setScreen('game')
-  if (selectedStage === 'スター・ウォーズ') {
-  playStarWarsMusic()
-}
+ 
   
 }
 
@@ -4952,11 +4950,13 @@ alignSelf: 'center',
   alignItems: 'center'
 }}>
   <button onClick={() => {
-    const audio = squidDarumaAudioRef.current
-    audio.play().then(() => {
-      audio.pause()
-      audio.currentTime = 0
-    }).catch(() => {})
+const audio = squidDarumaAudioRef.current
+audio.muted = true
+audio.play().then(() => {
+  audio.pause()
+  audio.currentTime = 0
+  audio.muted = false
+}).catch(() => {})
     const deloreanAudio = deloreanAudioRef.current
 deloreanAudio.play().then(() => {
   deloreanAudio.pause()
@@ -5003,16 +5003,18 @@ style={{
    <button onClick={() => {
   const video = squidDarumaVideoRef.current
   if (video) {
-    video.muted = false
+    video.muted = true
     video.play().then(() => {
       video.pause()
       video.currentTime = 0
     }).catch(() => {})
   }
-  const audio = squidDarumaAudioRef.current
+const audio = squidDarumaAudioRef.current
+audio.muted = true
 audio.play().then(() => {
   audio.pause()
   audio.currentTime = 0
+  audio.muted = false
 }).catch(() => {})
 const deloreanAudio = deloreanAudioRef.current
 deloreanAudio.play().then(() => {
