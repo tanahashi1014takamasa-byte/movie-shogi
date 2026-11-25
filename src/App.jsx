@@ -801,6 +801,14 @@ if (
   playJawsMusic()
 }
 
+if (
+  gameState.stage === 'スパイダーマン' &&
+  !spiderManMusicPlayedRef.current
+) {
+  spiderManMusicPlayedRef.current = true
+  playSpiderManMusic()
+}
+
 }
       }
     )
@@ -843,6 +851,7 @@ if (
   const backToTheFutureAudioRef = useRef(null)
   const starWarsAudioRef = useRef(null)
   const jawsAudioRef = useRef(null)
+  const spiderManAudioRef = useRef(null)
   const [stageTapCount, setStageTapCount] = useState(0)
   const [showTrex, setShowTrex] = useState(false)
   const [trexPosition, setTrexPosition] = useState(null)
@@ -2364,11 +2373,41 @@ return audio.play().then(() => {
 }).catch(() => {})
 }
 
+const playSpiderManMusic = () => {
+  const audio = spiderManAudioRef.current
+  if (!audio) return
+
+  audio.muted = false
+  audio.volume = 0.5
+
+  audio.play().catch((error) => {
+    console.log('スパイダーマンのBGM再生に失敗:', error)
+  })
+}
+
+const prepareSpiderManMusic = () => {
+  if (!spiderManAudioRef.current) {
+    spiderManAudioRef.current = new Audio(spiderManMusic)
+    spiderManAudioRef.current.loop = true
+    spiderManAudioRef.current.volume = 0.5
+  }
+
+  const audio = spiderManAudioRef.current
+  audio.muted = true
+
+  return audio.play().then(() => {
+    audio.pause()
+    audio.currentTime = 0
+  }).catch(() => {})
+}
+
+
 const createRoom = async () => {
   prepareJurassicMusic()
   prepareBackToTheFutureMusic()
   prepareStarWarsMusic()
   prepareJawsMusic()
+  await prepareSpiderManMusic()
   const newRoomId = Math.floor(100000 + Math.random() * 900000).toString()
 
 const newTrapCube = Math.floor(Math.random() * 9)
@@ -2422,6 +2461,7 @@ const joinRoom = async () => {
   prepareBackToTheFutureMusic()
   prepareStarWarsMusic()
   await prepareJawsMusic()
+  await prepareSpiderManMusic()
   if (!roomId) {
     alert('ルームIDを入力してください')
     return
@@ -2479,6 +2519,10 @@ if (data[0].game_state.stage === 'スター・ウォーズ') {
 
 if (data[0].game_state.stage === 'ジョーズ') {
   playJawsMusic()
+}
+
+if (data[0].game_state.stage === 'スパイダーマン') {
+  playSpiderManMusic()
 }
 
 }
