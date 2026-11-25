@@ -2303,11 +2303,7 @@ setTrapCube(data[0].game_state.opponentTrapCube)
 setOpponentTrapCube(data[0].game_state.trapCube)
 setOpponentHand(data[0].game_state.playerHand ?? [])
 setSelectedStage(data[0].game_state.stage ?? 'normal')
-setJawsStartTime(data[0].game_state.jawsStartTime ?? null)
-setJawsAttackCell(data[0].game_state.jawsAttackCell ?? null)
-setJawsTrapCell(data[0].game_state.jawsTrapCell ?? [])
-setJawsOpponentTrapCell(data[0].game_state.jawsOpponentTrapCell ?? [])
-setJawsBlood(data[0].game_state.jawsBlood ?? [])
+
 setPlayerSide('opponent')
 setScreen('game')
 
