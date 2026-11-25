@@ -688,10 +688,9 @@ if (
 ) {
   deloreanSignalRef.current = gameState.deloreanSignal
 
-  if (gameState.deloreanPlayerSide !== playerSide) {
-    setDeloreanUsed(true)
-    setShowDeloreanVideo(true)
-  }
+ if (gameState.deloreanPlayerSide !== playerSide) {
+  setShowDeloreanVideo(true)
+}
 }
 
 if (gameState.gameEnded && gameState.winnerSide) {
