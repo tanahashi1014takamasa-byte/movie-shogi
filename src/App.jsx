@@ -2357,10 +2357,10 @@ const prepareJawsMusic = () => {
   const audio = jawsAudioRef.current
   audio.muted = true
 
-  audio.play().then(() => {
-    audio.pause()
-    audio.currentTime = 0
-  }).catch(() => {})
+return audio.play().then(() => {
+  audio.pause()
+  audio.currentTime = 0
+}).catch(() => {})
 }
 
 const createRoom = async () => {
@@ -2420,7 +2420,7 @@ const joinRoom = async () => {
   prepareJurassicMusic()
   prepareBackToTheFutureMusic()
   prepareStarWarsMusic()
-  prepareJawsMusic()
+  await prepareJawsMusic()
   if (!roomId) {
     alert('ルームIDを入力してください')
     return
