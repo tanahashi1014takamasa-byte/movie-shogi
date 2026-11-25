@@ -682,6 +682,17 @@ useEffect(() => {
       },
       (payload) => {
  const gameState = payload.new.game_state
+if (
+  gameState.deloreanSignal !== undefined &&
+  gameState.deloreanSignal !== deloreanSignalRef.current
+) {
+  deloreanSignalRef.current = gameState.deloreanSignal
+
+  if (gameState.deloreanPlayerSide !== playerSide) {
+    setDeloreanUsed(true)
+    setShowDeloreanVideo(true)
+  }
+}
 
 if (gameState.gameEnded && gameState.winnerSide) {
   setResult(gameState.winnerSide === playerSide ? '勝利' : '敗北')
@@ -786,6 +797,7 @@ if (gameState.playerCount === 2) {
   const [deloreanUsed, setDeloreanUsed] = useState(false)
   const [showDeloreanVideo, setShowDeloreanVideo] = useState(false)
   const deloreanVideoRef = useRef(null)
+  const deloreanSignalRef = useRef(0)
   const squidDarumaSignalRef = useRef(0)
   const [squidGlassBridge, setSquidGlassBridge] = useState(null)
   const syogiAudio = useRef(new Audio(syogiSound))
@@ -6244,10 +6256,32 @@ filter: reverseWinCondition && displayPiece.name === 'タイタニック'
 {selectedStage === 'バック・トゥ・ザ・フューチャー' && (
   <button
   className={!deloreanUsed ? 'delorean-logo-blink' : ''}
-  onClick={() => {
+onClick={async () => {
   if (deloreanUsed) return
+
   setDeloreanUsed(true)
   setShowDeloreanVideo(true)
+
+  if (roomId) {
+    const { data } = await supabase
+      .from('game')
+      .select('game_state')
+      .eq('room_id', roomId)
+      .single()
+
+    if (data) {
+      await supabase
+        .from('game')
+        .update({
+          game_state: {
+            ...data.game_state,
+            deloreanSignal: (data.game_state.deloreanSignal ?? 0) + 1,
+            deloreanPlayerSide: playerSide,
+          },
+        })
+        .eq('room_id', roomId)
+    }
+  }
 }}
 disabled={deloreanUsed}
     style={{
