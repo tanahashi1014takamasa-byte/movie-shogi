@@ -5884,7 +5884,7 @@ if (jawsTrapHit) {
   setTimeout(() => {
     setJawsAttackCell(null)
     syncJawsState(undefined, null)
-  }, 300)
+  }, 200)
 }
 
 
