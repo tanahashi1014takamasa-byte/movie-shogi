@@ -2038,7 +2038,10 @@ const createDeathNoteLetters = () => {
 useEffect(() => {
   const audio = backToTheFutureAudioRef.current
 
-  if (selectedStage === 'バック・トゥ・ザ・フューチャー') {
+  if (
+  screen === 'game' &&
+  selectedStage === 'バック・トゥ・ザ・フューチャー'
+) {
     audio.currentTime = 0
     audio.loop = true
     audio.volume = 0.5
@@ -2052,7 +2055,7 @@ useEffect(() => {
     audio.pause()
     audio.currentTime = 0
   }
-}, [selectedStage])
+}, [selectedStage, screen])
 
   useEffect(() => {
   if (!showDeathNoteBoard) return
