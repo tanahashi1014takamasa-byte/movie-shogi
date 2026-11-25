@@ -2468,6 +2468,66 @@ mistMoveCount: nextMistMoveCount,
     .eq('room_id', roomId)
 }
 
+const simulateDeloreanMoves = (initialPieces, initialTurn) => {
+  let nextPieces = [...initialPieces]
+  let nextTurn = initialTurn
+
+  const starterPieces = [
+    'ミスト',
+    '羅生門',
+    '武器人間',
+    '国宝',
+    'サスペリア',
+    'ゾディアック',
+    'ミミ',
+    'CUBE',
+  ]
+
+  for (let i = 0; i < 10; i++) {
+    const movablePieces = nextPieces.filter(
+      (piece) =>
+        starterPieces.includes(piece.name) &&
+        (piece.side ?? 'player') === nextTurn
+    )
+
+    const moves = movablePieces.flatMap((piece) =>
+      getLegalMoves(piece, nextPieces)
+        .filter((move) => {
+          const target = nextPieces.find(
+            (p) => p.row === move.row && p.col === move.col
+          )
+
+          return !target || target.name !== 'タイタニック'
+        })
+        .map((move) => ({ piece, move }))
+    )
+
+if (moves.length > 0) {
+  const choice = moves[Math.floor(Math.random() * moves.length)]
+
+  const target = nextPieces.find(
+    (piece) =>
+      piece.row === choice.move.row &&
+      piece.col === choice.move.col
+  )
+
+  if (target) {
+    nextPieces = nextPieces.filter((piece) => piece !== target)
+  }
+
+  nextPieces = nextPieces.map((piece) =>
+    piece === choice.piece
+      ? { ...piece, row: choice.move.row, col: choice.move.col }
+      : piece
+  )
+}
+
+    nextTurn = nextTurn === 'player' ? 'opponent' : 'player'
+  }
+
+  return { pieces: nextPieces, turn: nextTurn }
+}
+
  useEffect(() => {
   if (!roomId || screen !== 'game') return
   if (turn !== 'funnyGame') return
@@ -6279,18 +6339,28 @@ onClick={async () => {
       .eq('room_id', roomId)
       .single()
 
-    if (data) {
-      await supabase
-        .from('game')
-        .update({
-          game_state: {
-            ...data.game_state,
-            deloreanSignal: (data.game_state.deloreanSignal ?? 0) + 1,
-            deloreanPlayerSide: playerSide,
-          },
-        })
-        .eq('room_id', roomId)
-    }
+if (data) {
+  const result = simulateDeloreanMoves(
+    data.game_state.pieces,
+    data.game_state.turn
+  )
+
+  await supabase
+    .from('game')
+    .update({
+      game_state: {
+        ...data.game_state,
+        pieces: result.pieces,
+        turn: result.turn,
+        deloreanSignal: (data.game_state.deloreanSignal ?? 0) + 1,
+        deloreanPlayerSide: playerSide,
+      },
+    })
+    .eq('room_id', roomId)
+
+  setPieces(result.pieces)
+  setTurn(result.turn)
+}
   }
 }}
 disabled={deloreanUsed}
