@@ -61,6 +61,7 @@ import rentalCompleteSound from './assets/rental_2.mp3'
 import jurassicMusic from './assets/ジュラシックパーク_テーマ.mp3'
 import backToTheFutureLogo from './assets/Back_to_the_Future_logo.png'
 import deloreanVideo from './assets/デロリアン.mp4'
+import lightsaber from './assets/ライトセーバー.gif'
 
 import whiteWhale from './assets/白鯨.png'
 import whiteWhale2 from './assets/白鯨_2.png'
@@ -814,6 +815,7 @@ if (gameState.playerCount === 2) {
   const [jawsOpponentTrapCell, setJawsOpponentTrapCell] = useState([])
   const [jawsStartTime, setJawsStartTime] = useState(null)
   const [jawsAnimationDelay, setJawsAnimationDelay] = useState('0s')
+  const [lightsaberPosition, setLightsaberPosition] = useState({ row: 3, col: 3 })
 
 const playSyogiSound = () => {
   syogiAudio.current.currentTime = 0
@@ -5096,6 +5098,24 @@ setPlayerSide('player')
         {selectedStage === 'ジュラシック・パーク' && <div className="jurassic-background" />}
         {selectedStage === 'バック・トゥ・ザ・フューチャー' && <div className="bttf-background" />}
         {selectedStage === 'スター・ウォーズ' && <div className="starwars-background" />}
+{selectedStage === 'スター・ウォーズ' && (
+  <img
+    src={lightsaber}
+    alt="ライトセーバー"
+    style={{
+      position: 'absolute',
+      left: `${lightsaberPosition.col * (100 / 9)}%`,
+      top: `${lightsaberPosition.row * (100 / 9)}%`,
+      width: `${300 / 9}%`,
+      height: `${200 / 9}%`,
+      objectFit: 'fill',
+      zIndex: 20,
+      pointerEvents: 'none',
+    }}
+  />
+)}
+
+
         {selectedStage === 'ユニバステージ' && <div className="universal-background" />}
 
 {selectedStage === 'ジュラシック・パーク' && showTrex && trexPosition && (
