@@ -66,6 +66,7 @@ import lightsaber from './assets/ライトセーバー.gif'
 import starWarsMusic from './assets/スターウォーズのテーマ.mp3'
 import jawsMusic from './assets/ジョーズのテーマ.mp3'
 import spiderManMusic from './assets/スパイダーマンのテーマ.mp3'
+import universalMusic from './assets/ユニバのテーマ.mp3'
 
 import whiteWhale from './assets/白鯨.png'
 import whiteWhale2 from './assets/白鯨_2.png'
@@ -809,6 +810,14 @@ if (
   playSpiderManMusic()
 }
 
+if (
+  gameState.stage === 'ユニバ' &&
+  !universalMusicPlayedRef.current
+) {
+  universalMusicPlayedRef.current = true
+  playUniversalMusic()
+}
+
 }
       }
     )
@@ -846,6 +855,8 @@ if (
   const jurassicMusicPlayedRef = useRef(false)
   const backToTheFutureMusicPlayedRef = useRef(false)
   const starWarsMusicPlayedRef = useRef(false)
+  const universalMusicPlayedRef = useRef(false)
+  const universalAudioRef = useRef(null)
   const jawsMusicPlayedRef = useRef(false)
   const spiderManMusicPlayedRef = useRef(false)
   const jurassicAudioRef = useRef(null)
@@ -2402,6 +2413,35 @@ const prepareSpiderManMusic = () => {
   }).catch(() => {})
 }
 
+const playUniversalMusic = () => {
+  const audio = universalAudioRef.current
+  if (!audio) return
+
+  audio.muted = false
+  audio.volume = 0.5
+
+  audio.play().catch((error) => {
+    console.log('ユニバのBGM再生に失敗:', error)
+  })
+}
+
+const prepareUniversalMusic = () => {
+  if (!universalAudioRef.current) {
+    universalAudioRef.current = new Audio(universalMusic)
+    universalAudioRef.current.loop = true
+    universalAudioRef.current.volume = 0.5
+  }
+
+  const audio = universalAudioRef.current
+  audio.muted = true
+
+  return audio.play().then(() => {
+    audio.pause()
+    audio.currentTime = 0
+  }).catch(() => {})
+}
+
+
 
 const createRoom = async () => {
   prepareJurassicMusic()
@@ -2409,6 +2449,7 @@ const createRoom = async () => {
   prepareStarWarsMusic()
   prepareJawsMusic()
   prepareSpiderManMusic()
+  prepareUniversalMusic()
   const newRoomId = Math.floor(100000 + Math.random() * 900000).toString()
 
 const newTrapCube = Math.floor(Math.random() * 9)
@@ -2463,6 +2504,7 @@ const joinRoom = async () => {
   prepareStarWarsMusic()
   await prepareJawsMusic()
   await prepareSpiderManMusic()
+  await prepareUniversalMusic()
   if (!roomId) {
     alert('ルームIDを入力してください')
     return
@@ -2524,6 +2566,10 @@ if (data[0].game_state.stage === 'ジョーズ') {
 
 if (data[0].game_state.stage === 'スパイダーマン') {
   playSpiderManMusic()
+}
+
+if (data[0].game_state.stage === 'ユニバ') {
+  playUniversalMusic()
 }
 
 }
