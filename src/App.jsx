@@ -63,7 +63,7 @@ import backToTheFutureLogo from './assets/Back_to_the_Future_logo.png'
 import deloreanVideo from './assets/デロリアン.mp4'
 import backToTheFutureMusic from './assets/BackToTheFuture.mp3'
 import lightsaber from './assets/ライトセーバー.gif'
-import starWarsMusic from './assets/スター・ウォーズのテーマ.mp3'
+import starWarsMusic from './assets/スターウォーズのテーマ.mp3'
 
 import whiteWhale from './assets/白鯨.png'
 import whiteWhale2 from './assets/白鯨_2.png'
