@@ -60,6 +60,7 @@ import rentalSound from './assets/rental.mp3'
 import rentalCompleteSound from './assets/rental_2.mp3'
 import jurassicMusic from './assets/ジュラシックパーク_テーマ.mp3'
 import backToTheFutureLogo from './assets/Back_to_the_Future_logo.png'
+import deloreanVideo from './assets/デロリアン.mp4'
 
 import whiteWhale from './assets/白鯨.png'
 import whiteWhale2 from './assets/白鯨_2.png'
@@ -782,6 +783,9 @@ if (gameState.playerCount === 2) {
   const [squidDarumaSignal, setSquidDarumaSignal] = useState(0)
   const [squidDarumaPending, setSquidDarumaPending] = useState(false)
   const [reverseWinCondition, setReverseWinCondition] = useState(false)
+  const [deloreanUsed, setDeloreanUsed] = useState(false)
+  const [showDeloreanVideo, setShowDeloreanVideo] = useState(false)
+  const deloreanVideoRef = useRef(null)
   const squidDarumaSignalRef = useRef(0)
   const [squidGlassBridge, setSquidGlassBridge] = useState(null)
   const syogiAudio = useRef(new Audio(syogiSound))
@@ -6239,6 +6243,13 @@ filter: reverseWinCondition && displayPiece.name === 'タイタニック'
 
 {selectedStage === 'バック・トゥ・ザ・フューチャー' && (
   <button
+  className={!deloreanUsed ? 'delorean-logo-blink' : ''}
+  onClick={() => {
+  if (deloreanUsed) return
+  setDeloreanUsed(true)
+  setShowDeloreanVideo(true)
+}}
+disabled={deloreanUsed}
     style={{
       padding: 0,
       border: 'none',
@@ -6256,8 +6267,34 @@ filter: reverseWinCondition && displayPiece.name === 'タイタニック'
       }}
     />
   </button>
+  
 )}
 
+{showDeloreanVideo && (
+  <div style={{
+    position: 'fixed',
+    inset: 0,
+    zIndex: 9999,
+    background: 'black',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }}>
+    <video
+      ref={deloreanVideoRef}
+      src={deloreanVideo}
+      autoPlay
+      playsInline
+      controls
+      onEnded={() => setShowDeloreanVideo(false)}
+      style={{
+        width: '100%',
+        maxHeight: '100%',
+        objectFit: 'contain',
+      }}
+    />
+  </div>
+)}
 
 
   {selectedPiece?.name === 'イカゲーム' && !selectedPiece.fromHand && (

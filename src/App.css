@@ -896,3 +896,16 @@ background-position: center;
   z-index: 30;
   pointer-events: none;
 }
+
+.delorean-logo-blink {
+  animation: deloreanBlink 1s infinite alternate;
+}
+
+@keyframes deloreanBlink {
+  from {
+    filter: brightness(1);
+  }
+  to {
+    filter: brightness(2.2) drop-shadow(0 0 15px #00cfff);
+  }
+}
