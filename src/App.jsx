@@ -724,6 +724,7 @@ setScreen('opening')
 previousTurnRef.current = gameState.turn
 
         setPieces(gameState.pieces)
+        setSelectedStage(gameState.stage)
         setTurn(gameState.turn)
         setShowTrex(gameState.showTrex ?? false)
         setTrexPosition(gameState.trexPosition ?? null)
