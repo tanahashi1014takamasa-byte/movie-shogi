@@ -61,6 +61,7 @@ import rentalCompleteSound from './assets/rental_2.mp3'
 import jurassicMusic from './assets/ジュラシックパーク_テーマ.mp3'
 import backToTheFutureLogo from './assets/Back_to_the_Future_logo.png'
 import deloreanVideo from './assets/デロリアン.mp4'
+import backToTheFutureMusic from './assets/BackToTheFuture.mp3'
 import lightsaber from './assets/ライトセーバー.gif'
 
 import whiteWhale from './assets/白鯨.png'
@@ -808,6 +809,7 @@ if (gameState.playerCount === 2) {
   const syogiAudio = useRef(new Audio(syogiSound))
   const jurassicMusicPlayedRef = useRef(false)
   const jurassicAudioRef = useRef(null)
+  const backToTheFutureAudioRef = useRef(new Audio(backToTheFutureMusic))
   const [stageTapCount, setStageTapCount] = useState(0)
   const [showTrex, setShowTrex] = useState(false)
   const [trexPosition, setTrexPosition] = useState(null)
@@ -2033,6 +2035,24 @@ const createDeathNoteLetters = () => {
   setDeathNoteTime(10)
 }
 
+useEffect(() => {
+  const audio = backToTheFutureAudioRef.current
+
+  if (selectedStage === 'バック・トゥ・ザ・フューチャー') {
+    audio.currentTime = 0
+    audio.loop = true
+    audio.volume = 0.5
+    audio.play().catch(() => {})
+  } else {
+    audio.pause()
+    audio.currentTime = 0
+  }
+
+  return () => {
+    audio.pause()
+    audio.currentTime = 0
+  }
+}, [selectedStage])
 
   useEffect(() => {
   if (!showDeathNoteBoard) return
