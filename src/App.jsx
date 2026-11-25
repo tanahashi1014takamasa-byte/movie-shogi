@@ -2483,7 +2483,7 @@ const simulateDeloreanMoves = (initialPieces, initialTurn) => {
     'CUBE',
   ]
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 20; i++) {
     const movablePieces = nextPieces.filter(
       (piece) =>
         starterPieces.includes(piece.name) &&
@@ -2503,7 +2503,21 @@ const simulateDeloreanMoves = (initialPieces, initialTurn) => {
     )
 
 if (moves.length > 0) {
-  const choice = moves[Math.floor(Math.random() * moves.length)]
+  const capturingMoves = moves.filter(({ piece, move }) => {
+    const target = nextPieces.find(
+      (p) => p.row === move.row && p.col === move.col
+    )
+
+    return target &&
+      (target.side ?? 'player') !== (piece.side ?? 'player') &&
+      target.name !== 'タイタニック'
+  })
+
+  const availableMoves =
+    capturingMoves.length > 0 ? capturingMoves : moves
+
+  const choice =
+    availableMoves[Math.floor(Math.random() * availableMoves.length)]
 
   const target = nextPieces.find(
     (piece) =>
