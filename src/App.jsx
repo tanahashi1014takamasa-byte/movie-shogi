@@ -773,6 +773,15 @@ if (gameState.playerCount === 2) {
     jurassicMusicPlayedRef.current = true
     playJurassicMusic()
   }
+
+  if (
+  gameState.stage === 'バック・トゥ・ザ・フューチャー' &&
+  !backToTheFutureMusicPlayedRef.current
+) {
+  backToTheFutureMusicPlayedRef.current = true
+  playBackToTheFutureMusic()
+}
+
 }
       }
     )
@@ -808,8 +817,9 @@ if (gameState.playerCount === 2) {
   const [squidGlassBridge, setSquidGlassBridge] = useState(null)
   const syogiAudio = useRef(new Audio(syogiSound))
   const jurassicMusicPlayedRef = useRef(false)
+  const backToTheFutureMusicPlayedRef = useRef(false)
   const jurassicAudioRef = useRef(null)
-  const backToTheFutureAudioRef = useRef(new Audio(backToTheFutureMusic))
+  const backToTheFutureAudioRef = useRef(null)
   const [stageTapCount, setStageTapCount] = useState(0)
   const [showTrex, setShowTrex] = useState(false)
   const [trexPosition, setTrexPosition] = useState(null)
@@ -2035,27 +2045,7 @@ const createDeathNoteLetters = () => {
   setDeathNoteTime(10)
 }
 
-useEffect(() => {
-  const audio = backToTheFutureAudioRef.current
 
-  if (
-  screen === 'game' &&
-  selectedStage === 'バック・トゥ・ザ・フューチャー'
-) {
-    audio.currentTime = 0
-    audio.loop = true
-    audio.volume = 0.5
-    audio.play().catch(() => {})
-  } else {
-    audio.pause()
-    audio.currentTime = 0
-  }
-
-  return () => {
-    audio.pause()
-    audio.currentTime = 0
-  }
-}, [selectedStage, screen])
 
   useEffect(() => {
   if (!showDeathNoteBoard) return
@@ -2262,8 +2252,39 @@ const prepareJurassicMusic = () => {
   })
 }
 
+const playBackToTheFutureMusic = () => {
+  const audio = backToTheFutureAudioRef.current
+  if (!audio) return
+
+  audio.muted = false
+  audio.volume = 0.5
+
+  audio.play().catch((error) => {
+    console.log('音楽の再生に失敗:', error)
+  })
+}
+
+const prepareBackToTheFutureMusic = () => {
+  if (!backToTheFutureAudioRef.current) {
+    backToTheFutureAudioRef.current = new Audio(backToTheFutureMusic)
+    backToTheFutureAudioRef.current.loop = true
+    backToTheFutureAudioRef.current.volume = 0.5
+  }
+
+  const audio = backToTheFutureAudioRef.current
+  audio.muted = true
+
+  audio.play().then(() => {
+    audio.pause()
+    audio.currentTime = 0
+  }).catch((error) => {
+    console.log('音声の準備に失敗:', error)
+  })
+}
+
 const createRoom = async () => {
   prepareJurassicMusic()
+  prepareBackToTheFutureMusic()
   const newRoomId = Math.floor(100000 + Math.random() * 900000).toString()
 
 const newTrapCube = Math.floor(Math.random() * 9)
@@ -2313,6 +2334,7 @@ setShowSquidDarumaVideo(false)
 
 const joinRoom = async () => {
   prepareJurassicMusic()
+  prepareBackToTheFutureMusic()
   if (!roomId) {
     alert('ルームIDを入力してください')
     return
@@ -2359,6 +2381,11 @@ setScreen('game')
 if (data[0].game_state.stage === 'ジュラシック・パーク') {
   playJurassicMusic()
 }
+
+if (data[0].game_state.stage === 'バック・トゥ・ザ・フューチャー') {
+  playBackToTheFutureMusic()
+}
+
 }
 
 const syncTrexState = async (
@@ -5024,6 +5051,9 @@ setPlayerSide('player')
   setTurn('player')
   setRoomId(null)
   setScreen('game')
+    if (selectedStage === 'バック・トゥ・ザ・フューチャー') {
+    playBackToTheFutureMusic()
+  }
 }}>
    FIRST PLAYER
 </div>
