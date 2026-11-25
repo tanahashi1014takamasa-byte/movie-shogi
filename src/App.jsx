@@ -65,6 +65,7 @@ import backToTheFutureMusic from './assets/BackToTheFuture.mp3'
 import lightsaber from './assets/ライトセーバー.gif'
 import starWarsMusic from './assets/スターウォーズのテーマ.mp3'
 import jawsMusic from './assets/ジョーズのテーマ.mp3'
+import spiderManMusic from './assets/スパイダーマンのテーマ.mp3'
 
 import whiteWhale from './assets/白鯨.png'
 import whiteWhale2 from './assets/白鯨_2.png'
