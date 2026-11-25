@@ -63,6 +63,7 @@ import backToTheFutureLogo from './assets/Back_to_the_Future_logo.png'
 import deloreanVideo from './assets/デロリアン.mp4'
 import backToTheFutureMusic from './assets/BackToTheFuture.mp3'
 import lightsaber from './assets/ライトセーバー.gif'
+import starWarsMusic from './assets/スター・ウォーズのテーマ.mp3'
 
 import whiteWhale from './assets/白鯨.png'
 import whiteWhale2 from './assets/白鯨_2.png'
@@ -782,6 +783,14 @@ if (gameState.playerCount === 2) {
   playBackToTheFutureMusic()
 }
 
+if (
+  gameState.stage === 'スター・ウォーズ' &&
+  !starWarsMusicPlayedRef.current
+) {
+  starWarsMusicPlayedRef.current = true
+  playStarWarsMusic()
+}
+
 }
       }
     )
@@ -818,8 +827,10 @@ if (gameState.playerCount === 2) {
   const syogiAudio = useRef(new Audio(syogiSound))
   const jurassicMusicPlayedRef = useRef(false)
   const backToTheFutureMusicPlayedRef = useRef(false)
+  const starWarsMusicPlayedRef = useRef(false)
   const jurassicAudioRef = useRef(null)
   const backToTheFutureAudioRef = useRef(null)
+  const starWarsAudioRef = useRef(null)
   const [stageTapCount, setStageTapCount] = useState(0)
   const [showTrex, setShowTrex] = useState(false)
   const [trexPosition, setTrexPosition] = useState(null)
@@ -2282,9 +2293,41 @@ const prepareBackToTheFutureMusic = () => {
   })
 }
 
+
+const playStarWarsMusic = () => {
+  const audio = starWarsAudioRef.current
+  if (!audio) return
+
+  audio.muted = false
+  audio.volume = 0.5
+
+  audio.play().catch((error) => {
+    console.log('音楽の再生に失敗:', error)
+  })
+}
+
+const prepareStarWarsMusic = () => {
+  if (!starWarsAudioRef.current) {
+    starWarsAudioRef.current = new Audio(starWarsMusic)
+    starWarsAudioRef.current.loop = true
+    starWarsAudioRef.current.volume = 0.5
+  }
+
+  const audio = starWarsAudioRef.current
+  audio.muted = true
+
+  audio.play().then(() => {
+    audio.pause()
+    audio.currentTime = 0
+  }).catch((error) => {
+    console.log('音声の準備に失敗:', error)
+  })
+}
+
 const createRoom = async () => {
   prepareJurassicMusic()
   prepareBackToTheFutureMusic()
+  prepareStarWarsMusic()
   const newRoomId = Math.floor(100000 + Math.random() * 900000).toString()
 
 const newTrapCube = Math.floor(Math.random() * 9)
@@ -2329,12 +2372,16 @@ setShowSquidDarumaVideo(false)
   setPlayerSide('player')
   setOnlineScreen(true)
   setScreen('game')
+  if (selectedStage === 'スター・ウォーズ') {
+  playStarWarsMusic()
+}
   
 }
 
 const joinRoom = async () => {
   prepareJurassicMusic()
   prepareBackToTheFutureMusic()
+  prepareStarWarsMusic()
   if (!roomId) {
     alert('ルームIDを入力してください')
     return
@@ -2384,6 +2431,10 @@ if (data[0].game_state.stage === 'ジュラシック・パーク') {
 
 if (data[0].game_state.stage === 'バック・トゥ・ザ・フューチャー') {
   playBackToTheFutureMusic()
+}
+
+if (data[0].game_state.stage === 'スター・ウォーズ') {
+  playStarWarsMusic()
 }
 
 }
