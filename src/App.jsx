@@ -59,6 +59,7 @@ import welcomeMusic from './assets/Welcome.mp3'
 import rentalSound from './assets/rental.mp3'
 import rentalCompleteSound from './assets/rental_2.mp3'
 import jurassicMusic from './assets/ジュラシックパーク_テーマ.mp3'
+import backToTheFutureLogo from './assets/Back_to_the_Future_logo.png'
 
 import whiteWhale from './assets/白鯨.png'
 import whiteWhale2 from './assets/白鯨_2.png'
@@ -6236,6 +6237,26 @@ filter: reverseWinCondition && displayPiece.name === 'タイタニック'
   </button>
 )}
 
+{selectedStage === 'バック・トゥ・ザ・フューチャー' && (
+  <button
+    style={{
+      padding: 0,
+      border: 'none',
+      background: 'transparent',
+      cursor: 'pointer',
+    }}
+  >
+    <img
+      src={backToTheFutureLogo}
+      alt="Back to the Future"
+      style={{
+        width: '180px',
+        height: 'auto',
+        objectFit: 'contain',
+      }}
+    />
+  </button>
+)}
 
 
 
