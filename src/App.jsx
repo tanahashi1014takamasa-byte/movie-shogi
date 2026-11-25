@@ -2451,7 +2451,9 @@ setShowSquidDarumaVideo(false)
   setPlayerHand(createRentalHand())
   setPlayerSide('player')
   setOnlineScreen(true)
-  setScreen('game')
+  if (selectedStage === 'スパイダーマン') {
+  playSpiderManMusic()
+}
  
   
 }
