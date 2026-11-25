@@ -6130,7 +6130,7 @@ setPieces(nextPieces)
 if (jawsTrapHit) {
   await updateGameState(
     nextPieces,
-    turn,
+    turn === 'player' ? 'opponent' : 'player',
     playerHand,
     mistMoveCount,
     false,
