@@ -797,6 +797,7 @@ if (gameState.playerCount === 2) {
   const [deloreanUsed, setDeloreanUsed] = useState(false)
   const [showDeloreanVideo, setShowDeloreanVideo] = useState(false)
   const deloreanVideoRef = useRef(null)
+  const deloreanAudioRef = useRef(new Audio(deloreanVideo))
   const deloreanSignalRef = useRef(0)
   const squidDarumaSignalRef = useRef(0)
   const [squidGlassBridge, setSquidGlassBridge] = useState(null)
@@ -4733,6 +4734,11 @@ alignSelf: 'center',
       audio.pause()
       audio.currentTime = 0
     }).catch(() => {})
+    const deloreanAudio = deloreanAudioRef.current
+deloreanAudio.play().then(() => {
+  deloreanAudio.pause()
+  deloreanAudio.currentTime = 0
+}).catch(() => {})
     createRoom()
   }}>CREATE CINEMA ROOM</button>
 
@@ -4784,6 +4790,11 @@ style={{
 audio.play().then(() => {
   audio.pause()
   audio.currentTime = 0
+}).catch(() => {})
+const deloreanAudio = deloreanAudioRef.current
+deloreanAudio.play().then(() => {
+  deloreanAudio.pause()
+  deloreanAudio.currentTime = 0
 }).catch(() => {})
   joinRoom()
 }}>JOIN CINEMA ROOM</button>
@@ -6315,17 +6326,28 @@ disabled={deloreanUsed}
     alignItems: 'center',
   }}>
     <video
-      ref={deloreanVideoRef}
-      src={deloreanVideo}
-      autoPlay
-      playsInline
-      onEnded={() => setShowDeloreanVideo(false)}
-      style={{
-        width: '100%',
-        maxHeight: '100%',
-        objectFit: 'contain',
-      }}
-    />
+  ref={deloreanVideoRef}
+  src={deloreanVideo}
+  autoPlay
+  muted
+  playsInline
+  onLoadedData={(e) => {
+    e.currentTarget.muted = true
+    e.currentTarget.play().catch(() => {})
+
+    const audio = deloreanAudioRef.current
+    audio.currentTime = 0
+    audio.play().catch(() => {})
+  }}
+  onEnded={() => {
+    setShowDeloreanVideo(false)
+  }}
+  style={{
+    width: '100%',
+    maxHeight: '100%',
+    objectFit: 'contain',
+  }}
+/>
   </div>
 )}
 
