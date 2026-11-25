@@ -6285,7 +6285,6 @@ disabled={deloreanUsed}
       src={deloreanVideo}
       autoPlay
       playsInline
-      controls
       onEnded={() => setShowDeloreanVideo(false)}
       style={{
         width: '100%',
