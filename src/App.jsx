@@ -64,6 +64,7 @@ import deloreanVideo from './assets/デロリアン.mp4'
 import backToTheFutureMusic from './assets/BackToTheFuture.mp3'
 import lightsaber from './assets/ライトセーバー.gif'
 import starWarsMusic from './assets/スターウォーズのテーマ.mp3'
+import jawsMusic from './assets/ジョーズのテーマ.mp3'
 
 import whiteWhale from './assets/白鯨.png'
 import whiteWhale2 from './assets/白鯨_2.png'
@@ -791,6 +792,14 @@ if (
   playStarWarsMusic()
 }
 
+if (
+  gameState.stage === 'ジョーズ' &&
+  !jawsMusicPlayedRef.current
+) {
+  jawsMusicPlayedRef.current = true
+  playJawsMusic()
+}
+
 }
       }
     )
@@ -828,9 +837,11 @@ if (
   const jurassicMusicPlayedRef = useRef(false)
   const backToTheFutureMusicPlayedRef = useRef(false)
   const starWarsMusicPlayedRef = useRef(false)
+  const jawsMusicPlayedRef = useRef(false)
   const jurassicAudioRef = useRef(null)
   const backToTheFutureAudioRef = useRef(null)
   const starWarsAudioRef = useRef(null)
+  const jawsAudioRef = useRef(null)
   const [stageTapCount, setStageTapCount] = useState(0)
   const [showTrex, setShowTrex] = useState(false)
   const [trexPosition, setTrexPosition] = useState(null)
@@ -2324,10 +2335,39 @@ const prepareStarWarsMusic = () => {
   })
 }
 
+const playJawsMusic = () => {
+  const audio = jawsAudioRef.current
+  if (!audio) return
+
+  audio.muted = false
+  audio.volume = 0.5
+
+  audio.play().catch((error) => {
+    console.log('ジョーズのBGM再生に失敗:', error)
+  })
+}
+
+const prepareJawsMusic = () => {
+  if (!jawsAudioRef.current) {
+    jawsAudioRef.current = new Audio(jawsMusic)
+    jawsAudioRef.current.loop = true
+    jawsAudioRef.current.volume = 0.5
+  }
+
+  const audio = jawsAudioRef.current
+  audio.muted = true
+
+  audio.play().then(() => {
+    audio.pause()
+    audio.currentTime = 0
+  }).catch(() => {})
+}
+
 const createRoom = async () => {
   prepareJurassicMusic()
   prepareBackToTheFutureMusic()
   prepareStarWarsMusic()
+  prepareJawsMusic()
   const newRoomId = Math.floor(100000 + Math.random() * 900000).toString()
 
 const newTrapCube = Math.floor(Math.random() * 9)
@@ -2380,6 +2420,7 @@ const joinRoom = async () => {
   prepareJurassicMusic()
   prepareBackToTheFutureMusic()
   prepareStarWarsMusic()
+  prepareJawsMusic()
   if (!roomId) {
     alert('ルームIDを入力してください')
     return
@@ -2433,6 +2474,10 @@ if (data[0].game_state.stage === 'バック・トゥ・ザ・フューチャー'
 
 if (data[0].game_state.stage === 'スター・ウォーズ') {
   playStarWarsMusic()
+}
+
+if (data[0].game_state.stage === 'ジョーズ') {
+  playJawsMusic()
 }
 
 }
