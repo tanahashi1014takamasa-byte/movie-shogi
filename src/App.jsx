@@ -724,6 +724,9 @@ setScreen('opening')
 previousTurnRef.current = gameState.turn
 
         setPieces(gameState.pieces)
+        setLightsaberPosition(
+  gameState.lightsaberPosition ?? { row: 3, col: 3 }
+)
         setSelectedStage(gameState.stage)
         setTurn(gameState.turn)
         setShowTrex(gameState.showTrex ?? false)
@@ -2434,11 +2437,54 @@ if (
   !(turn === 'funnyGame' && currentState.turn === playerSide)
 ) return
 
+let updatedPieces = nextPieces
+let nextLightsaberPosition = currentState.lightsaberPosition ?? {
+  row: 3,
+  col: 3,
+}
+
+if (currentState.stage === 'スター・ウォーズ') {
+  const directions = [
+    { row: -1, col: 0 },
+    { row: 1, col: 0 },
+    { row: 0, col: -1 },
+    { row: 0, col: 1 },
+  ]
+
+  const direction =
+    directions[Math.floor(Math.random() * directions.length)]
+
+  nextLightsaberPosition = {
+    row: (nextLightsaberPosition.row + direction.row + 9) % 9,
+    col: (nextLightsaberPosition.col + direction.col + 9) % 9,
+  }
+
+  const saberCells = []
+
+  for (let r = 0; r < 2; r++) {
+    for (let c = 0; c < 3; c++) {
+      saberCells.push({
+        row: (nextLightsaberPosition.row + r) % 9,
+        col: (nextLightsaberPosition.col + c) % 9,
+      })
+    }
+  }
+
+  updatedPieces = nextPieces.filter((piece) => {
+    if (piece.name === 'タイタニック') return true
+
+    return !saberCells.some(
+      (cell) => cell.row === piece.row && cell.col === piece.col
+    )
+  })
+}
+
   await supabase
     .from('game')
     .update({
       game_state: {
-        pieces: nextPieces,
+        pieces: updatedPieces,
+        lightsaberPosition: nextLightsaberPosition,
 turn: nextTurn,
 funnyGameNextTarget: nextFunnyGameNextTarget,
 squidDoubleMoves,
