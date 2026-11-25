@@ -2407,7 +2407,7 @@ const createRoom = async () => {
   prepareBackToTheFutureMusic()
   prepareStarWarsMusic()
   prepareJawsMusic()
-  await prepareSpiderManMusic()
+  prepareSpiderManMusic()
   const newRoomId = Math.floor(100000 + Math.random() * 900000).toString()
 
 const newTrapCube = Math.floor(Math.random() * 9)
@@ -2451,9 +2451,7 @@ setShowSquidDarumaVideo(false)
   setPlayerHand(createRentalHand())
   setPlayerSide('player')
   setOnlineScreen(true)
-  if (selectedStage === 'スパイダーマン') {
-  playSpiderManMusic()
-}
+  setScreen('game')
  
   
 }
