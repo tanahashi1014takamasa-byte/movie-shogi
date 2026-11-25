@@ -2568,7 +2568,7 @@ if (data[0].game_state.stage === 'スパイダーマン') {
   playSpiderManMusic()
 }
 
-if (selectedStage === 'ユニバステージ') {
+if (data[0].game_state.stage === 'ユニバステージ') {
   playUniversalMusic()
 }
 
