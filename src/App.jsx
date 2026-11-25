@@ -6128,6 +6128,22 @@ if (
 setPieces(nextPieces)
 
 if (jawsTrapHit) {
+  await updateGameState(
+    nextPieces,
+    turn,
+    playerHand,
+    mistMoveCount,
+    false,
+    null,
+    funnyGameNextTarget,
+    squidDarumaSignal,
+    squidGlassBridge,
+    squidDarumaPending,
+    true
+  )
+}
+
+if (jawsTrapHit) {
   setJawsBlood(nextJawsBlood)
   setJawsAttackCell({ row, col })
 
