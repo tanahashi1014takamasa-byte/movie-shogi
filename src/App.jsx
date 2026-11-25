@@ -1857,7 +1857,7 @@ useEffect(() => {
 
     setTimeout(() => {
       setActiveSharkAttack(null)
-    }, 3000)
+    }, 1000)
   }, 60000)
 
   const secondTimer = setTimeout(() => {
@@ -1865,7 +1865,7 @@ useEffect(() => {
 
     setTimeout(() => {
       setActiveSharkAttack(null)
-    }, 3000)
+    }, 1000)
   }, 120000)
 
   return () => {
