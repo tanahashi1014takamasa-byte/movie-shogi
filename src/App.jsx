@@ -3307,7 +3307,7 @@ height: '120px',
   <div
     style={{
       position: 'fixed',
-      bottom: '45px',
+      bottom: '20px',
       left: '50%',
       transform: 'translateX(-50%)',
       zIndex: 99999,
@@ -3348,7 +3348,7 @@ height: '120px',
     }}
   />
 </div>
-    <div>キュウリ、食べる？</div>
+    <div>1, 1, 2, 3, □, 8, 13</div>
   </div>
 )}
 
