@@ -3241,10 +3241,10 @@ return () => clearTimeout(timer)
 <div
   style={{
     position: 'absolute',
-    left: '904px',
+    left: '920px',
     top: '168px',
-    width: '96px',
-height: '128px',
+    width: '90px',
+height: '120px',
     zIndex: 3,
   }}
 >
