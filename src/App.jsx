@@ -5586,22 +5586,11 @@ selectedStage === 'ジョーズ' &&
   )
 )
     ? 'jaws-trap-marker'
-  : selectedStage === 'スパイダーマン' &&
-    (
-      (
-        playerSide === 'player' &&
-        spiderWebTraps.player.some(trap =>
-          trap.row === row && trap.col === col
-        )
-      ) ||
-      (
-        playerSide === 'opponent' &&
-        spiderWebTraps.opponent.some(trap =>
-          trap.row === row && trap.col === col
-        )
-      )
-    )
-      ? 'spider-web-trap-marker'
+: selectedStage === 'スパイダーマン' &&
+  spiderWebTrappedPiece &&
+  spiderWebTrappedPiece.row === row &&
+  spiderWebTrappedPiece.col === col
+    ? 'spider-web-trap-marker'
       : squidTugSelectMode &&
   piece &&
   (piece.side ?? 'player') !== (selectedPiece?.side ?? 'player')
