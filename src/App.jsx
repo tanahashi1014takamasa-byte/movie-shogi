@@ -81,6 +81,7 @@ import interestArea from './assets/関心領域.png'
 import esther from './assets/エスター.png'
 import bugonia from './assets/ブゴニア.png'
 import backrooms from './assets/バックルームズ.png'
+import hamukappa from './assets/ハムカッパ.png'
 
 import shark2 from './assets/shark_2.gif'
 import blood from './assets/blood.png'
@@ -3236,6 +3237,29 @@ return () => clearTimeout(timer)
         }}
       />
     </div>
+
+<div
+  style={{
+    position: 'absolute',
+    left: '904px',
+    top: '168px',
+    width: '32px',
+    height: '36px',
+    zIndex: 3,
+  }}
+>
+  <img
+    src={hamukappa}
+    alt="ハムカッパ"
+    style={{
+      width: '100%',
+      height: '100%',
+      objectFit: 'contain',
+      imageRendering: 'pixelated',
+    }}
+  />
+</div>
+
 
 
     </div>
