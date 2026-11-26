@@ -3553,11 +3553,7 @@ if (x >= 360 && x <= 392 && y === 200) {
   return
 }
 
-if (
-  playerDirection === 'up' &&
-  x === 920 &&
-  y === 296
-) {
+if (x === 904 && y === 168) {
   setShowHamukappaDialogue(true)
   return
 }
