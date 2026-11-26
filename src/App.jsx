@@ -3243,8 +3243,8 @@ return () => clearTimeout(timer)
     position: 'absolute',
     left: '904px',
     top: '168px',
-    width: '32px',
-    height: '36px',
+    width: '96px',
+height: '128px',
     zIndex: 3,
   }}
 >
