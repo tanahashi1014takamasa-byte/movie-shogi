@@ -1935,6 +1935,7 @@ const [showEsther, setShowEsther] = useState(false)
 const [showBugonia, setShowBugonia] = useState(false)
 const [showBackrooms, setShowBackrooms] = useState(false)
 const [showNpcDialogue, setShowNpcDialogue] = useState(false)
+const [showHamukappaDialogue, setShowHamukappaDialogue] = useState(false)
 const [showStageSelect, setShowStageSelect] = useState(false)
 const [selectedStage, setSelectedStage] = useState('normal')
 const [activeSharkAttack, setActiveSharkAttack] = useState(null)
@@ -3302,6 +3303,55 @@ height: '120px',
   </div>
 )}
 
+{showHamukappaDialogue && (
+  <div
+    style={{
+      position: 'fixed',
+      bottom: '45px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      zIndex: 99999,
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      background: 'black',
+      color: 'white',
+      border: '2px solid white',
+      borderRadius: '6px',
+      padding: '8px 14px',
+      minWidth: '300px',
+      maxWidth: '90vw',
+      fontSize: '16px',
+      fontWeight: 'bold',
+    }}
+  >
+    <div
+  style={{
+    width: '64px',
+    height: '64px',
+    overflow: 'hidden',
+    position: 'relative',
+    flexShrink: 0,
+  }}
+>
+  <img
+    src={hamukappa}
+    alt="ハムカッパ"
+    style={{
+      position: 'absolute',
+      width: '100px',
+      height: '130px',
+      left: '-18px',
+      top: '0',
+      maxWidth: 'none',
+      imageRendering: 'pixelated',
+    }}
+  />
+</div>
+    <div>キュウリ、食べる？</div>
+  </div>
+)}
+
     <div
       style={{
         position: 'absolute',
@@ -3493,11 +3543,24 @@ height: '120px',
   return
 }
 
+if (showHamukappaDialogue) {
+  setShowHamukappaDialogue(false)
+  return
+}
+
 if (x >= 360 && x <= 392 && y === 200) {
   setShowNpcDialogue(true)
   return
 }
 
+if (
+  playerDirection === 'up' &&
+  x === 920 &&
+  y === 296
+) {
+  setShowHamukappaDialogue(true)
+  return
+}
 
   if (
   y >= 140 && y <= 190 &&
