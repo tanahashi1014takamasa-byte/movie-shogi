@@ -3332,6 +3332,7 @@ height: '120px',
     overflow: 'hidden',
     position: 'relative',
     flexShrink: 0,
+    lineHeight: '1',
   }}
 >
   <img
@@ -3350,10 +3351,14 @@ height: '120px',
 </div>
     <div>
       半径は違う…
-      <br /><br />
+      <br />
       中心は同じ…
-      <br /><br />
+      <br />
       1, 1, 2, 3, □, 8, 13
+       <br />
+       見えないものを見ようとしないで
+       <br />
+       見えてるものをどうにかして
       
       </div>
   </div>
