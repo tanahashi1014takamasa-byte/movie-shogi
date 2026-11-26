@@ -3318,10 +3318,10 @@ height: '120px',
       color: 'white',
       border: '2px solid white',
       borderRadius: '6px',
-      padding: '8px 14px',
-      minWidth: '300px',
+      padding: '5px 9px',
+      minWidth: '240px',
       maxWidth: '90vw',
-      fontSize: '16px',
+      fontSize: '13px',
       fontWeight: 'bold',
     }}
   >
