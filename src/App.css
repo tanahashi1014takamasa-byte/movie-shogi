@@ -909,3 +909,15 @@ background-position: center;
     filter: brightness(2.2) drop-shadow(0 0 15px #00cfff);
   }
 }
+
+.spider-web-trap-marker::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('./assets/web.gif');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 30;
+  pointer-events: none;
+}

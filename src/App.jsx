@@ -67,6 +67,7 @@ import starWarsMusic from './assets/スターウォーズのテーマ.mp3'
 import jawsMusic from './assets/ジョーズのテーマ.mp3'
 import spiderManMusic from './assets/スパイダーマンのテーマ.mp3'
 import universalMusic from './assets/ユニバのテーマ.mp3'
+import spiderWeb from './assets/web.gif'
 
 import whiteWhale from './assets/白鯨.png'
 import whiteWhale2 from './assets/白鯨_2.png'
@@ -688,6 +689,12 @@ useEffect(() => {
       },
       (payload) => {
  const gameState = payload.new.game_state
+ if (gameState.spiderWebTraps !== undefined) {
+  setSpiderWebTraps(gameState.spiderWebTraps)
+  if (gameState.spiderWebTrappedPiece !== undefined) {
+  setSpiderWebTrappedPiece(gameState.spiderWebTrappedPiece)
+}
+}
 if (
   gameState.deloreanSignal !== undefined &&
   gameState.deloreanSignal !== deloreanSignalRef.current
@@ -875,6 +882,11 @@ if (
   const [jawsOpponentTrapCell, setJawsOpponentTrapCell] = useState([])
   const [jawsStartTime, setJawsStartTime] = useState(null)
   const [jawsAnimationDelay, setJawsAnimationDelay] = useState('0s')
+  const [spiderWebTraps, setSpiderWebTraps] = useState({
+  player: [],
+  opponent: [],
+})
+const [spiderWebTrappedPiece, setSpiderWebTrappedPiece] = useState(null)
   const [lightsaberPosition, setLightsaberPosition] = useState({ row: 3, col: 3 })
 
 const playSyogiSound = () => {
@@ -2472,6 +2484,7 @@ mistMoveCount: {
   player: 0,
   opponent: 0,
 },
+spiderWebTraps: newSpiderWebTraps,
 squidDarumaSignal: 0,
 squidDarumaPending: false,
 stage: selectedStage,
@@ -2485,6 +2498,7 @@ stage: selectedStage,
   setTrapCube(newTrapCube)
   setOpponentTrapCube(newOpponentTrapCube)
   setRoomId(newRoomId)
+  setSpiderWebTraps(newSpiderWebTraps)
   squidDarumaSignalRef.current = 0
 setSquidDarumaSignal(0)
 setSquidDarumaPending(false)
@@ -2542,6 +2556,13 @@ setOpponentTrapCube(data[0].game_state.trapCube)
 setOpponentHand(data[0].game_state.playerHand ?? [])
 setJawsStartTime(data[0].game_state.jawsStartTime ?? null)
 setJawsTrapCell(data[0].game_state.jawsTrapCell ?? null)
+setSpiderWebTraps(data[0].game_state.spiderWebTraps ?? {
+  player: [],
+  opponent: [],
+})
+setSpiderWebTrappedPiece(
+  data[0].game_state.spiderWebTrappedPiece ?? null
+)
 setJawsOpponentTrapCell(data[0].game_state.jawsOpponentTrapCell ?? null)
 setSelectedStage(data[0].game_state.stage ?? 'normal')
 
@@ -2607,7 +2628,9 @@ const syncJawsState = async (
   nextJawsAttackCell,
   nextJawsTrapCell,
   nextJawsOpponentTrapCell,
-nextJawsBlood
+nextJawsBlood,
+nextSpiderWebTraps,
+nextSpiderWebTrappedPiece
 ) => {
   if (!roomId) return
 
@@ -2638,6 +2661,12 @@ nextJawsBlood
 }),
 ...(nextJawsBlood !== undefined && {
   jawsBlood: nextJawsBlood,
+}),
+...(nextSpiderWebTraps !== undefined && {
+  spiderWebTraps: nextSpiderWebTraps,
+}),
+...(nextSpiderWebTrappedPiece !== undefined && {
+  spiderWebTrappedPiece: nextSpiderWebTrappedPiece,
 }),
       }
     })
@@ -2732,6 +2761,12 @@ stage: currentState.stage ?? 'normal',
 jawsStartTime: currentState.jawsStartTime ?? null,
 jawsAttackCell: currentState.jawsAttackCell ?? null,
 jawsTrapCell: currentState.jawsTrapCell ?? null,
+spiderWebTraps: currentState.spiderWebTraps ?? {
+  player: [],
+  opponent: [],
+},
+spiderWebTrappedPiece:
+  currentState.spiderWebTrappedPiece ?? null,
 jawsOpponentTrapCell: currentState.jawsOpponentTrapCell ?? null,
 jawsBlood: currentState.jawsBlood ?? [],
 mistMoveCount: nextMistMoveCount,
@@ -5526,9 +5561,24 @@ selectedStage === 'ジョーズ' &&
     )
   )
 )
-  ? 'jaws-trap-marker'
-        :
-      squidTugSelectMode &&
+    ? 'jaws-trap-marker'
+  : selectedStage === 'スパイダーマン' &&
+    (
+      (
+        playerSide === 'player' &&
+        spiderWebTraps.player.some(trap =>
+          trap.row === row && trap.col === col
+        )
+      ) ||
+      (
+        playerSide === 'opponent' &&
+        spiderWebTraps.opponent.some(trap =>
+          trap.row === row && trap.col === col
+        )
+      )
+    )
+      ? 'spider-web-trap-marker'
+      : squidTugSelectMode &&
   piece &&
   (piece.side ?? 'player') !== (selectedPiece?.side ?? 'player')
     ? 'tug-target'
@@ -6122,6 +6172,27 @@ const jawsTrapHit =
   )
 
 
+const spiderWebTrapHit =
+  selectedStage === 'スパイダーマン' &&
+  (
+    (selectedPiece.side ?? 'player') === 'player'
+      ? spiderWebTraps.opponent.some(trap =>
+          trap.row === row && trap.col === col
+        )
+      : spiderWebTraps.player.some(trap =>
+          trap.row === row && trap.col === col
+        )
+  )
+
+  const nextSpiderWebTrappedPiece = spiderWebTrapHit
+  ? {
+      name: selectedPiece.name,
+      side: selectedPiece.side ?? 'player',
+      row,
+      col,
+    }
+  : spiderWebTrappedPiece
+
 const nextJawsBlood = jawsTrapHit
   ? [
       ...jawsBlood,
@@ -6140,6 +6211,7 @@ let nextPieces = pieces
     (p) =>
       !capturedPieces.includes(p) &&
     !(jawsTrapHit && p === selectedPiece) &&
+    
 !(roomId && squidDarumaPending && turn === playerSide && p === selectedPiece) &&
 p !== trapCubeCaptured &&
             !(
@@ -6315,6 +6387,35 @@ if (jawsTrapHit) {
   }, 200)
 }
 
+if (spiderWebTrapHit) {
+  const nextSpiderWebTraps = {
+    player:
+      (selectedPiece.side ?? 'player') === 'opponent'
+        ? spiderWebTraps.player.filter(trap =>
+            !(trap.row === row && trap.col === col)
+          )
+        : spiderWebTraps.player,
+    opponent:
+      (selectedPiece.side ?? 'player') === 'player'
+        ? spiderWebTraps.opponent.filter(trap =>
+            !(trap.row === row && trap.col === col)
+          )
+        : spiderWebTraps.opponent,
+  }
+
+  setSpiderWebTraps(nextSpiderWebTraps)
+  setSpiderWebTrappedPiece(nextSpiderWebTrappedPiece)
+
+  await syncJawsState(
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    nextSpiderWebTraps,
+    nextSpiderWebTrappedPiece
+  )
+}
 
 if (darumaTitanicFell) {
   setResult('敗北')
@@ -6342,6 +6443,24 @@ const nextTurn = squidDarumaPending
       )
       ? 'funnyGame'
       : turn === 'player' ? 'opponent' : 'player'
+
+      if (
+  !spiderWebTrapHit &&
+  spiderWebTrappedPiece &&
+  spiderWebTrappedPiece.side === turn
+) {
+  setSpiderWebTrappedPiece(null)
+
+  await syncJawsState(
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    null
+  )
+}
 
 updateGameState(
   nextPieces,
@@ -6488,6 +6607,13 @@ filter: reverseWinCondition && displayPiece.name === 'タイタニック'
           if (piece?.name === 'ファニーゲーム') return
           if ((displayPiece.side ?? 'player') !== playerSide) return
           if ((displayPiece.side ?? 'player') !== turn) return
+          if (
+  spiderWebTrappedPiece &&
+  spiderWebTrappedPiece.name === displayPiece.name &&
+  spiderWebTrappedPiece.side === (displayPiece.side ?? 'player') &&
+  spiderWebTrappedPiece.row === displayPiece.row &&
+  spiderWebTrappedPiece.col === displayPiece.col
+) return
 
           setSelectedPiece(displayPiece)
         }}
