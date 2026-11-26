@@ -2467,6 +2467,30 @@ const createRoom = async () => {
 const newTrapCube = Math.floor(Math.random() * 9)
 const newOpponentTrapCube = Math.floor(Math.random() * 9)
 
+const emptySpiderWebCells = Array.from(
+  { length: 81 },
+  (_, i) => ({
+    row: Math.floor(i / 9),
+    col: i % 9,
+  })
+).filter(cell =>
+  !pieces.some(p =>
+    p.row === cell.row && p.col === cell.col
+  )
+)
+
+const shuffledSpiderWebCells = [...emptySpiderWebCells]
+  .sort(() => Math.random() - 0.5)
+
+const newSpiderWebTraps = {
+  player: selectedStage === 'スパイダーマン'
+    ? shuffledSpiderWebCells.slice(0, 5)
+    : [],
+  opponent: selectedStage === 'スパイダーマン'
+    ? shuffledSpiderWebCells.slice(5, 10)
+    : [],
+}
+
   const { error } = await supabase
     .from('game')
     .insert({
