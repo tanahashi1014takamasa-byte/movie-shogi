@@ -3214,7 +3214,7 @@ return () => clearTimeout(timer)
         width: '96px',
         height: '128px',
         overflow: 'hidden',
-        zIndex: 2,
+        zIndex: 4,
       }}
     >
       <img
