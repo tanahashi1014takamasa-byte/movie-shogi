@@ -3307,7 +3307,7 @@ height: '120px',
   <div
     style={{
       position: 'fixed',
-      bottom: '20px',
+      bottom: '5px',
       left: '15px',
       transform: 'none',
       zIndex: 99999,
