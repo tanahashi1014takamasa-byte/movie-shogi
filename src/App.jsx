@@ -3170,19 +3170,7 @@ return () => clearTimeout(timer)
 
         <audio src={welcomeMusic} autoPlay loop preload="auto" />
 
-<div
-  style={{
-    position: 'fixed',
-    bottom: '10px',
-    right: '10px',
-    zIndex: 9999,
-    color: 'white',
-    background: 'black',
-    padding: '8px',
-  }}
->
-  x: {playerPosition.x}, y: {playerPosition.y}
-</div>
+
 <div
   style={{
     position: 'absolute',
