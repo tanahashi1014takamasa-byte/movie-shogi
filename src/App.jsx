@@ -3298,7 +3298,9 @@ height: '120px',
     />
 
     <div>
-      ブツブツ… 隠しコマンド… 開発者用… ↑↓BBB
+      ブツブツ… 隠しコマンド… 
+      <br />
+      開発者用… ↑↓BBB
     </div>
   </div>
 )}
@@ -3308,7 +3310,7 @@ height: '120px',
     style={{
       position: 'fixed',
       bottom: '5px',
-      left: '15px',
+      left: '0px',
       transform: 'none',
       zIndex: 99999,
       display: 'flex',
